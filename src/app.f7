@@ -49,20 +49,20 @@
             <a href="#view-codes" class="tab-link">
               <i class="icon f7-icons if-not-md">square_list_fill</i>
               <i class="icon material-icons if-md">view_list</i>
-              <span class="tabbar-label">${t('codes')}</span>
+              <span class="tabbar-label">${i18next.t('codes')}</span>
             </a>
 
             <a href="#view-read" class="tab-link tab-link">
               <i class="icon f7-icons if-not-md">camera_circle_fill</i>
               <i class="icon material-icons if-md">photo_camera</i>
-              <span class="tabbar-label">${t('read')}</span>
+              <span class="tabbar-label">${i18next.t('read')}</span>
             </a>
 
 
             <a href="#view-history" class="tab-link">
               <i class="icon f7-icons if-not-md">clock</i>
               <i class="icon material-icons if-md">history</i>
-              <span class="tabbar-label">${t('history')}</span>
+              <span class="tabbar-label">${i18next.t('history')}</span>
             </a>
 
             <!-- <a href="#view-settings" class="tab-link">
@@ -174,6 +174,7 @@
   </div>
 </template>
 <script>
+  import i18next from 'i18next';
   export default (props, { $f7, $update }) => {
     // Login screen demo data
     let username = '';

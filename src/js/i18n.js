@@ -1,4 +1,3 @@
-// src/js/i18n.js
 import i18next from 'i18next';
 
 const resources = {
@@ -19,13 +18,12 @@ const resources = {
 };
 
 export async function initI18n() {
+    // TODO: save lang
     await i18next.init({
         lng: localStorage.getItem('app_lang') || navigator.language,
         fallbackLng: 'es',
         resources
     });
-
-    window.t = (key, params = {}) => i18next.t(key, params);
 }
 
 export default i18next;
