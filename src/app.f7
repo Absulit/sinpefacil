@@ -41,28 +41,36 @@
       <div class="toolbar tabbar toolbar-bottom tabbar-icons">
         <div class="toolbar-inner">
           <div class="toolbar-pane">
-            <a href="#view-home" class="tab-link tab-link-active">
+            <!-- <a href="#view-home" class="tab-link tab-link-active">
               <i class="icon f7-icons if-not-md">house_fill</i>
               <i class="icon material-icons if-md">home</i>
               <span class="tabbar-label">Home</span>
-            </a>
-
-            <a href="#view-read" class="tab-link tab-link">
-              <i class="icon f7-icons if-not-md">camera_circle_fill</i>
-              <i class="icon material-icons if-md">camera</i>
-              <span class="tabbar-label">Leer</span>
-            </a>
+            </a> -->
 
             <a href="#view-codes" class="tab-link">
               <i class="icon f7-icons if-not-md">square_list_fill</i>
               <i class="icon material-icons if-md">view_list</i>
               <span class="tabbar-label">Códigos</span>
             </a>
-            <a href="#view-settings" class="tab-link">
+
+            <a href="#view-read" class="tab-link tab-link">
+              <i class="icon f7-icons if-not-md">camera_circle_fill</i>
+              <i class="icon material-icons if-md">photo_camera</i>
+              <span class="tabbar-label">Leer</span>
+            </a>
+
+
+            <a href="#view-history" class="tab-link">
+              <i class="icon f7-icons if-not-md">clock</i>
+              <i class="icon material-icons if-md">history</i>
+              <span class="tabbar-label">Historial</span>
+            </a>
+
+            <!-- <a href="#view-settings" class="tab-link">
               <i class="icon f7-icons if-not-md">gear</i>
               <i class="icon material-icons if-md">settings</i>
               <span class="tabbar-label">Settings</span>
-            </a>
+            </a> -->
           </div>
         </div>
       </div>
@@ -82,10 +90,18 @@
         <!-- codes page will be loaded here dynamically from /codes/ route -->
       </div>
 
-      <!-- Settings View -->
-      <div id="view-settings" class="view view-init tab" data-name="settings" data-url="/settings/">
-        <!-- Settings page will be loaded here dynamically from /settings/ route -->
+      <!-- History View -->
+      <div id="view-history" class="view view-init tab" data-name="history" data-url="/history/">
+        <!-- History page will be loaded here dynamically from /history/ route -->
       </div>
+      
+      <!-- Settings View -->
+      <!-- <div id="view-settings" class="view view-init tab" data-name="settings" data-url="/settings/"> -->
+        <!-- Settings page will be loaded here dynamically from /settings/ route -->
+      <!-- </div> -->
+
+
+
     </div>
 
 
