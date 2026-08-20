@@ -3,7 +3,7 @@ import HomePage from '../pages/home.f7';
 import ReadPage from '../pages/read.f7';
 import AboutPage from '../pages/about.f7';
 import FormPage from '../pages/form.f7';
-import CatalogPage from '../pages/catalog.f7';
+import CodesPage from '../pages/codes.f7';
 import ProductPage from '../pages/product.f7';
 import SettingsPage from '../pages/settings.f7';
 
@@ -29,8 +29,8 @@ var routes = [
     component: FormPage,
   },
   {
-    path: '/catalog/',
-    component: CatalogPage,
+    path: '/codes/',
+    component: CodesPage,
   },
   {
     path: '/product/:id/',

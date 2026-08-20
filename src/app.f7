@@ -53,10 +53,10 @@
               <span class="tabbar-label">Leer</span>
             </a>
 
-            <a href="#view-catalog" class="tab-link">
+            <a href="#view-codes" class="tab-link">
               <i class="icon f7-icons if-not-md">square_list_fill</i>
               <i class="icon material-icons if-md">view_list</i>
-              <span class="tabbar-label">Catalog</span>
+              <span class="tabbar-label">Códigos</span>
             </a>
             <a href="#view-settings" class="tab-link">
               <i class="icon f7-icons if-not-md">gear</i>
@@ -77,9 +77,9 @@
         <!-- Read page will be loaded here dynamically from / route -->
       </div>
 
-      <!-- Catalog View -->
-      <div id="view-catalog" class="view view-init tab" data-name="catalog" data-url="/catalog/">
-        <!-- Catalog page will be loaded here dynamically from /catalog/ route -->
+      <!-- Codes View -->
+      <div id="view-codes" class="view view-init tab" data-name="codes" data-url="/codes/">
+        <!-- codes page will be loaded here dynamically from /codes/ route -->
       </div>
 
       <!-- Settings View -->
