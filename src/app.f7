@@ -46,6 +46,13 @@
               <i class="icon material-icons if-md">home</i>
               <span class="tabbar-label">Home</span>
             </a>
+
+            <a href="#view-read" class="tab-link tab-link">
+              <i class="icon f7-icons if-not-md">camera_circle_fill</i>
+              <i class="icon material-icons if-md">camera</i>
+              <span class="tabbar-label">Leer</span>
+            </a>
+
             <a href="#view-catalog" class="tab-link">
               <i class="icon f7-icons if-not-md">square_list_fill</i>
               <i class="icon material-icons if-md">view_list</i>
@@ -63,6 +70,11 @@
       <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
       <div id="view-home" class="view view-main view-init tab tab-active" data-url="/">
         <!-- Home page will be loaded here dynamically from / route -->
+      </div>
+
+      <!-- Read view -->
+      <div id="view-read" class="view view-init tab" data-url="/read/">
+        <!-- Read page will be loaded here dynamically from / route -->
       </div>
 
       <!-- Catalog View -->
