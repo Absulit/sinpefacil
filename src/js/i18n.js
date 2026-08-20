@@ -5,14 +5,16 @@ const resources = {
         translation: {
             codes: "Codes",
             read: "Read",
-            history: "History"
+            history: "History",
+            capture: "capture",
         }
     },
     es: {
         translation: {
             codes: "Códigos",
             read: "Leer",
-            history: "Historial"
+            history: "Historial",
+            capture: "capturar",
         }
     }
 };
