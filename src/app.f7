@@ -50,20 +50,20 @@
             <a href="#view-codes" class="tab-link">
               <i class="icon f7-icons if-not-md">square_list_fill</i>
               <i class="icon material-icons if-md">view_list</i>
-              <span class="tabbar-label">Códigos</span>
+              <span class="tabbar-label">${t('codes')}</span>
             </a>
 
             <a href="#view-read" class="tab-link tab-link">
               <i class="icon f7-icons if-not-md">camera_circle_fill</i>
               <i class="icon material-icons if-md">photo_camera</i>
-              <span class="tabbar-label">Leer</span>
+              <span class="tabbar-label">${t('read')}</span>
             </a>
 
 
             <a href="#view-history" class="tab-link">
               <i class="icon f7-icons if-not-md">clock</i>
               <i class="icon material-icons if-md">history</i>
-              <span class="tabbar-label">Historial</span>
+              <span class="tabbar-label">${t('history')}</span>
             </a>
 
             <!-- <a href="#view-settings" class="tab-link">
