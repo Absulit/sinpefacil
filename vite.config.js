@@ -1,14 +1,13 @@
-
-import path from 'path';
+import { fileURLToPath, URL } from 'node:url';
 import framework7 from 'rollup-plugin-framework7';
 
+const SRC_DIR = fileURLToPath(new URL('./src', import.meta.url));
+const PUBLIC_DIR = fileURLToPath(new URL('./public', import.meta.url));
+const BUILD_DIR = fileURLToPath(new URL('./www', import.meta.url));
 
-const SRC_DIR = path.resolve(__dirname, './src');
-const PUBLIC_DIR = path.resolve(__dirname, './public');
-const BUILD_DIR = path.resolve(__dirname, './www',);
 export default async () => {
 
-  return  {
+  return {
     plugins: [
       framework7({ emitCss: false }),
 
