@@ -20,13 +20,11 @@ const resources = {
 
 export async function initI18n() {
     await i18next.init({
-        lng: localStorage.getItem('app_lang') || 'es', // fallback
+        lng: localStorage.getItem('app_lang') || navigator.language,
         fallbackLng: 'es',
         resources
     });
 
-    // Global helper function so you can use t('key') in F7 components
-    // TODO: maybe change
     window.t = (key, params = {}) => i18next.t(key, params);
 }
 

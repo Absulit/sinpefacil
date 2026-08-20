@@ -1,4 +1,3 @@
-
 <template>
   <div id="app">
 
@@ -94,10 +93,10 @@
       <div id="view-history" class="view view-init tab" data-name="history" data-url="/history/">
         <!-- History page will be loaded here dynamically from /history/ route -->
       </div>
-      
+
       <!-- Settings View -->
       <!-- <div id="view-settings" class="view view-init tab" data-name="settings" data-url="/settings/"> -->
-        <!-- Settings page will be loaded here dynamically from /settings/ route -->
+      <!-- Settings page will be loaded here dynamically from /settings/ route -->
       <!-- </div> -->
 
 
@@ -139,7 +138,8 @@
                   <div class="item-inner">
                     <div class="item-title item-label">Username</div>
                     <div class="item-input-wrap">
-                      <input type="text" name="username" placeholder="Your username" value="${username}" @input="${updateUsername}"/>
+                      <input type="text" name="username" placeholder="Your username" value="${username}"
+                        @input="${updateUsername}" />
 
                     </div>
                   </div>
@@ -148,7 +148,8 @@
                   <div class="item-inner">
                     <div class="item-title item-label">Password</div>
                     <div class="item-input-wrap">
-                      <input type="password" name="password" placeholder="Your password" value="${password}" @input="${updatePassword}"/>
+                      <input type="password" name="password" placeholder="Your password" value="${password}"
+                        @input="${updatePassword}" />
 
                     </div>
                   </div>
@@ -162,7 +163,8 @@
 
                 </li>
               </ul>
-              <div class="block-footer">Some text about login information.<br/>Click "Sign In" to close Login Screen</div>
+              <div class="block-footer">Some text about login information.<br />Click "Sign In" to close Login Screen
+              </div>
             </div>
           </div>
         </div>
