@@ -3,6 +3,7 @@ import i18next from 'i18next';
 const resources = {
     en: {
         translation: {
+            home: "Home",
             codes: "Codes",
             read: "Read",
             history: "History",
@@ -11,6 +12,7 @@ const resources = {
     },
     es: {
         translation: {
+            home: "Inicio",
             codes: "Códigos",
             read: "Leer",
             history: "Historial",
