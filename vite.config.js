@@ -26,6 +26,8 @@ export default async () => {
     resolve: {
       alias: {
         '@': SRC_DIR,
+        '@js': SRC_DIR + '/js/', 
+        'db': SRC_DIR + '/js/db.js',
       },
     },
     server: {
