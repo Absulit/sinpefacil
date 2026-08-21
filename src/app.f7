@@ -130,10 +130,10 @@
 </template>
 <script>
   import i18next from 'i18next';
-  import { getOption } from 'db';
+  import { getOption, Keys } from 'db';
   export default (props, { $f7, $update, $on, $el }) => {
     $f7.on('init', async _ => {
-      const pageIndexToLoad = await getOption('pageIndexToLoad');
+      const pageIndexToLoad = await getOption(Keys.PAGE_TO_LOAD, 0);
       const tab = document.querySelectorAll('div.view-init')[pageIndexToLoad];
       const tabLink = document.querySelectorAll('.tab-link')[pageIndexToLoad];
       $f7.tab.show(`#${tab.id}`, tabLink, true);
