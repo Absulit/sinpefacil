@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import { getOption, Keys } from 'db';
 
 const resources = {
     en: {
@@ -22,10 +23,12 @@ const resources = {
 };
 
 export async function initI18n() {
-    // TODO: save lang
+    // TODO: save lang to enforce it via an option
+    const lng = await getOption(Keys.LANG, navigator.language);
+    
     await i18next.init({
-        lng: localStorage.getItem('app_lang') || navigator.language,
-        fallbackLng: 'es',
+        lng,
+        fallbackLng: 'es-CR',
         resources
     });
 }

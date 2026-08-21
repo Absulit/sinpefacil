@@ -12,7 +12,8 @@ db.version(1).stores({
  * Do not use single strings.
  */
 export const Keys = {
-    PAGE_TO_LOAD: 'PAGE_TO_LOAD'
+    PAGE_TO_LOAD: 'PAGE_TO_LOAD',
+    LANG: 'LANG',
 }
 
 Object.freeze(Keys);

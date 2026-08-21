@@ -68,7 +68,6 @@
     let activeStrongButton = pageIndexToLoad;
 
     const setStrongButton = index => {
-      console.log(index);
       activeStrongButton = index;
       saveOption(Keys.PAGE_TO_LOAD, index);
       $update();
