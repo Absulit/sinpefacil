@@ -4,8 +4,8 @@ const resources = {
     en: {
         translation: {
             home: "Home",
-            codes: "Codes",
-            read: "Read",
+            codes: "My QRs",
+            read: "Read to Pay",
             history: "History",
             capture: "capture",
         }
@@ -13,8 +13,8 @@ const resources = {
     es: {
         translation: {
             home: "Inicio",
-            codes: "Códigos",
-            read: "Leer",
+            codes: "Mis QRs",
+            read: "Leer y Pagar",
             history: "Historial",
             capture: "capturar",
         }

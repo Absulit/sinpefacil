@@ -47,8 +47,8 @@
             </a>
 
             <a href="#view-codes" class="tab-link">
-              <i class="icon f7-icons if-not-md">square_list_fill</i>
-              <i class="icon material-icons if-md">view_list</i>
+              <i class="icon f7-icons if-not-md">qrcode</i>
+              <i class="icon material-icons if-md">qr_code</i>
               <span class="tabbar-label">${i18next.t('codes')}</span>
             </a>
 
