@@ -26,14 +26,45 @@
     <!-- Scrollable page content-->
     <div class="page-content">
       <div class="block">
-        Home content  
+        <div class="block-title">Acerca de:</div>
+        <p>
+          Esta aplicación permite generar Códigos QR (?) para permitir a otras personas pagarte con SINPE MÓVIL. (?)
+        </p>
+
+        <p>
+          También te permite leer códigos QR de otras personas y enviar un SMS para pagarles via SINPE MÓVIL.
+        </p>
+
+      </div>
+      <div class="block">
+        <div class="block-title">Seleccionar qué pantalla cargar al inicio:</div>
+        <p>Prefiere que abra directamente a la cámara o prefiere cargar su lista de códigos QR?</p>
+        <p>Si ud es vendedor, preferirá Mis QRs, si es comprador preferirá Leer y Pagar.</p>
+
+        <div class="segmented segmented-strong">
+          <button class="button ${activeStrongButton===0 ? 'button-active' : '' }"
+            @click=${()=>setStrongButton(0)}>${i18next.t('home')}</button>
+          <button class="button ${activeStrongButton===1 ? 'button-active' : '' }"
+            @click=${()=>setStrongButton(1)}>${i18next.t('codes')}</button>
+          <button class="button ${activeStrongButton===2 ? 'button-active' : '' }"
+            @click=${()=>setStrongButton(2)}>${i18next.t('read')}</button>
+          <span class="segmented-highlight"></span>
+        </div>
       </div>
 
     </div>
   </div>
 </template>
 <script>
-export default () => {
-  return $render;
-}
+  import i18next from 'i18next';
+  export default (props, { $update }) => {
+    let activeStrongButton = 0;
+    const setStrongButton = index => {
+      console.log(index);
+      // TODO: save data to indexDB
+      activeStrongButton = index;
+      $update();
+    }
+    return $render;
+  }
 </script>
