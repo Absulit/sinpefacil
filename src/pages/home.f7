@@ -52,6 +52,10 @@
         </div>
       </div>
 
+      <div class="block">
+        Hecho en Costa Rica 🇨🇷 por <a href="https://mastodon.social/@absulit">@absulit</a>
+      </div>
+
     </div>
   </div>
 </template>
