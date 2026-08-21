@@ -1,9 +1,9 @@
 <template>
-  <div class="page" data-name="catalog">
+  <div class="page" data-name="codes">
     <div class="navbar">
       <div class="navbar-bg"></div>
       <div class="navbar-inner sliding">
-        <div class="title">Catalog</div>
+        <div class="title">Codes</div>
       </div>
     </div>
     <div class="page-content">

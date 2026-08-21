@@ -61,19 +61,18 @@
 </template>
 <script>
   import i18next from 'i18next';
-  import { getOption } from 'db';
+  import { getOption, saveOption } from 'db';
   export default async (props, { $f7, $update }) => {
 
-
     const pageIndexToLoad = await getOption('pageIndexToLoad');
-    console.log(pageIndexToLoad);
 
+    let activeStrongButton = pageIndexToLoad ?? 0;
 
-    let activeStrongButton = 0;
     const setStrongButton = index => {
       console.log(index);
       // TODO: save data to indexDB
       activeStrongButton = index;
+      saveOption('pageIndexToLoad', index);
       $update();
     }
     return $render;

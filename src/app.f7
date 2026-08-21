@@ -40,7 +40,7 @@
       <div class="toolbar tabbar toolbar-bottom tabbar-icons">
         <div class="toolbar-inner">
           <div class="toolbar-pane">
-            <a href="#view-home" class="tab-link tab-link-active">
+            <a href="#view-home" class="tab-link">
               <i class="icon f7-icons if-not-md">house_fill</i>
               <i class="icon material-icons if-md">home</i>
               <span class="tabbar-label">${i18next.t('home')}</span>
@@ -75,18 +75,18 @@
       </div>
 
       <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
-      <div id="view-home" class="view view-main view-init tab tab-active" data-url="/">
+      <div id="view-home" class="view view-main view-init tab" data-url="/">
         <!-- Home page will be loaded here dynamically from / route -->
-      </div>
-
-      <!-- Read view -->
-      <div id="view-read" class="view view-init tab" data-url="/read/">
-        <!-- Read page will be loaded here dynamically from / route -->
       </div>
 
       <!-- Codes View -->
       <div id="view-codes" class="view view-init tab" data-name="codes" data-url="/codes/">
         <!-- codes page will be loaded here dynamically from /codes/ route -->
+      </div>
+
+      <!-- Read view -->
+      <div id="view-read" class="view view-init tab" data-url="/read/">
+        <!-- Read page will be loaded here dynamically from / route -->
       </div>
 
       <!-- History View -->
@@ -130,7 +130,15 @@
 </template>
 <script>
   import i18next from 'i18next';
-  export default (props, { $f7, $update }) => {
+  import { getOption } from 'db';
+  export default (props, { $f7, $update, $on, $el }) => {
+    $f7.on('init', async _ => {
+      const pageIndexToLoad = await getOption('pageIndexToLoad');
+      const tab = document.querySelectorAll('div.view-init')[pageIndexToLoad];
+      const tabLink = document.querySelectorAll('.tab-link')[pageIndexToLoad];
+      $f7.tab.show(`#${tab.id}`, tabLink, true);
+    });
+
     return $render;
   }
 </script>
