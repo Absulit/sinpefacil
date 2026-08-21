@@ -8,11 +8,7 @@ import 'framework7/css/bundle';
 import '../css/icons.css';
 import '../css/app.css';
 
-
-
-// Import Routes
 import routes from './routes.js';
-// Import Store
 import store from './store.js';
 
 // Import main app component
@@ -22,19 +18,17 @@ import { initI18n } from './i18n.js';
 await initI18n();
 
 var app = new Framework7({
-  name: 'sinpefacil', // App name
-  theme: 'auto', // Automatic theme detection
+    name: 'sinpefacil', // App name
+    theme: 'auto', // Automatic theme detection
+    darkMode: 'auto',
 
+    el: '#app', // App root element
+    component: App, // App main component
+    store,
+    routes,
 
-  el: '#app', // App root element
-  component: App, // App main component
-  // App store
-  store: store,
-  // App routes
-  routes: routes,
-
-  // Register service worker (only on production build)
-  serviceWorker: process.env.NODE_ENV === 'production' ? {
-    path: '/service-worker.js',
-  } : {},
+    // Register service worker (only on production build)
+    serviceWorker: process.env.NODE_ENV === 'production' ? {
+        path: '/service-worker.js',
+    } : {},
 });
