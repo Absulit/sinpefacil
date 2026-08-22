@@ -20,20 +20,74 @@
           `)}
         </ul>
       </div>
-      ${products.value.length === 3 && $h`
+
       <div class="block">
-        <button class="button button-fill" @click=${addProduct}>Add Product</Button>
+        <button class="button button-fill popup-open" data-popup=".user-data-popup">
+          Agregar Nuevo
+        </button>
       </div>
-      `}
+
 
       <div id="qr-code-container" class="block"></div>
 
     </div>
+
+
+    <div class="popup user-data-popup">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner">
+            <div class="title">User Details</div>
+            <div class="right">
+              <!-- Close button -->
+              <a class="link popup-close">Close</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-content">
+          <form class="list" id="tab-user-form">
+            <ul>
+              <li class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">Name</div>
+                  <div class="item-input-wrap">
+                    <input type="text" name="name" placeholder="John Doe" required validate />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+
+              <li class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">Email</div>
+                  <div class="item-input-wrap">
+                    <input type="email" name="email" placeholder="john@example.com" required validate />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+
+            <div class="block">
+              <button type="button" class="button button-fill" @click="${submitForm}">
+                Save Information
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
   </div>
+
+
 </template>
 <script>
   import QRCodeStyling from 'qr-code-styling';
-  export default (props, { $store, $on, $el }) => {
+  export default (props, { $f7, $store, $on, $el }) => {
 
     $on('pageInit', () => {
 
@@ -75,13 +129,40 @@
 
     const products = $store.getters.products;
 
-    const addProduct = () => {
+    const showForm = () => {
+      console.log('showform');
+
+    }
+
+    const submitForm = () => {
+      // Extract data using Framework7 form helper
+      const formData = $f7.form.convertToData('#tab-user-form');
+
+      if (!formData.name || !formData.email) {
+        $f7.dialog.alert('Please fill out all fields.');
+        return;
+      }
+
+      console.log('Submitted Data:', formData);
+
       $store.dispatch('addProduct', {
         id: '4',
         title: 'Apple iPhone 12',
         description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.'
       });
-    }
+
+
+      // Close the popup programmatically
+      $f7.popup.close('.user-data-popup');
+
+      // Show confirmation
+      $f7.toast.create({
+        text: 'Form submitted successfully!',
+        closeTimeout: 2000,
+      }).open();
+    };
+
+
 
     return $render;
   }
