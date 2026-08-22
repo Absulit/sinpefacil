@@ -1,0 +1,19 @@
+{
+  "cwd": "/media/absulit/f/shared/repos/sinpefacil",
+  "type": [
+    "pwa",
+    "web"
+  ],
+  "name": "sinpefacil",
+  "framework": "core",
+  "template": "tabs",
+  "bundler": "vite",
+  "cssPreProcessor": false,
+  "theming": {
+    "customColor": false,
+    "color": "#007aff",
+    "darkMode": false,
+    "iconFonts": true
+  },
+  "customBuild": false
+}

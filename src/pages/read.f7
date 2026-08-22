@@ -1,0 +1,32 @@
+<template>
+  <div class="page" data-name="read ">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="title">read </div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block no-margin no-padding">
+        <video id="camera-stream" autoplay playsinline muted
+          style="width: 100%; height: auto; max-height: 80vh; background: #000; display: block;">
+        </video>
+      </div>
+
+      <div class="block">
+        <button class="button button-fill button-large" @click="${takePhoto}">${i18next.t('capture')}</button>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+   import i18next from 'i18next';
+  function takePhoto() {
+    console.log('---- takePhoto');
+
+  }
+
+  export default () => {
+    return $render;
+  };
+</script>
