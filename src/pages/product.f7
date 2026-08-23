@@ -37,25 +37,76 @@
 
 
     <div class="page-content">
-      <div class="block-title">About ${currentProduct.name}</div>
+      <div class="block-title">${currentProduct.name}</div>
       <div class="block">
-        ${currentProduct.detail}
+        <ul>
+          <li>
+            ${currentProduct.phone}
+          </li>
+          <li>
+            ${currentProduct.price}
+          </li>
+          <li>
+            ${currentProduct.detail}
+          </li>
+        </ul>
       </div>
+
+      <div id="qr-code-container" class="block"></div>
     </div>
+
+
+
   </div>
 </template>
 <script>
-  export default (props, { $f7route, $store }) => {
+
+  import QRCodeStyling from 'qr-code-styling';
+  export default (props, { $f7route, $store, $on, $el }) => {
     const products = $store.getters.products;
     const productId = +$f7route.params.id;
     let currentProduct;
     products.value.forEach((product) => {
       console.log(product, productId);
-      
-      if (product.id === productId) {
-        currentProduct = product;
+
+      if (product.id !== productId) {
+        return;
       }
+      currentProduct = product;
     });
+
+    $on('pageInit', () => {
+      // const query = "product=1 Kilo de Papa&price=1000&message=this is the message";
+      // const data = Object.fromEntries(new URLSearchParams(query));
+      // console.log(data);
+
+      const { phone, name, price, detail } = currentProduct;
+      console.log(currentProduct);
+
+      const qrCode = new QRCodeStyling({
+        width: 300,
+        height: 300,
+        type: 'svg',
+        data: `phone=${phone}&name=${name}&price=${price}&detail=${detail}`,
+        image: '', // link to image
+        dotsOptions: {
+          color: '#4267b2',
+          type: 'rounded'
+        },
+        backgroundOptions: {
+          color: '#e9ebee',
+        },
+        imageOptions: {
+          crossOrigin: 'anonymous',
+          margin: 20
+        }
+      });
+
+      const container = $el.value.find('#qr-code-container')[0];
+      qrCode.append(container);
+      // qrCode.download({ name: "qr", extension: "svg" });
+      // window.location.href = `sms:83256474?body=message`;
+    })
 
     return $render;
   };
