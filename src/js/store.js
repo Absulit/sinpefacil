@@ -6,14 +6,13 @@ import { db } from 'db';
 const store = createStore({
     state: {
         products: [
-            {
-                id: '1',
-                phone: 83256474,
-                name: '1 Kilo de Tomate',
-                price: 3000,
-                detail: '1 Kilo de tomate de Vendedor Juan. 20260819'
-            },
-
+            // {
+            //     id: '1',
+            //     phone: 83256474,
+            //     name: '1 Kilo de Tomate',
+            //     price: 3000,
+            //     detail: '1 Kilo de tomate de Vendedor Juan. 20260819'
+            // },
         ]
     },
     getters: {
@@ -27,7 +26,6 @@ const store = createStore({
             console.log(state.products);
 
         },
-
 
         async addProduct({ state }, product) {
             const id = await db.products.add(product);

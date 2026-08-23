@@ -91,7 +91,7 @@
         image: '', // link to image
         dotsOptions: {
           color: '#4267b2',
-          type: 'rounded'
+          type: 'square'
         },
         backgroundOptions: {
           color: '#e9ebee',
