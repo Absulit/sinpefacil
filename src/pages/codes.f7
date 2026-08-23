@@ -28,7 +28,7 @@
       </div>
 
 
-      <div id="qr-code-container" class="block"></div>
+      
 
     </div>
 
@@ -110,49 +110,7 @@
 
 </template>
 <script>
-  import QRCodeStyling from 'qr-code-styling';
   export default (props, { $f7, $store, $on, $el }) => {
-
-    $on('pageInit', () => {
-      const query = "product=1 Kilo de Papa&price=1000&message=this is the message";
-      const data = Object.fromEntries(new URLSearchParams(query));
-      console.log(data);
-
-      const qrCode = new QRCodeStyling({
-        width: 300,
-        height: 300,
-        type: "svg",
-        data: "phone=83256474&product=1 Kilo de Papa&price=1000&detail=this is the message",
-        image: "", // link to image
-        dotsOptions: {
-          color: "#4267b2",
-          type: "rounded"
-        },
-        backgroundOptions: {
-          color: "#e9ebee",
-        },
-        imageOptions: {
-          crossOrigin: "anonymous",
-          margin: 20
-        }
-      });
-
-      const container = $el.value.find('#qr-code-container')[0];
-      qrCode.append(container);
-      // qrCode.download({ name: "qr", extension: "svg" });
-
-      // window.location.href = `sms:83256474?body=message`;
-
-    })
-
-
-
-
-
-
-
-
-
 
     const products = $store.getters.products;
 
