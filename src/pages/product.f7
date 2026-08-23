@@ -27,17 +27,17 @@
     </div>
 
     <!-- Popover for the 3-dot overflow menu -->
-  <div class="popover popover-menu">
-    <div class="popover-inner">
-      <div class="list">
-        <ul>
-          <li><a href="/dialog/" class="list-button popover-close">Delete</a></li>
-          <li><a href="/dialog/" class="list-button popover-close">Print</a></li>
+    <div class="popover popover-menu">
+      <div class="popover-inner">
+        <div class="list">
+          <ul>
+            <li><a href="#" class="list-button popover-close" @click=${()=>deleteProduct()}>Delete</a></li>
+            <li><a href="#" class="list-button popover-close" @click=${()=>printProduct()}>Print</a></li>
 
-        </ul>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
 
     <div class="fab fab-right-bottom">
       <a>
@@ -90,7 +90,7 @@
 <script>
 
   import QRCodeStyling from 'qr-code-styling';
-  export default (props, { $f7route, $store, $on, $el }) => {
+  export default (props, { $f7, $f7route, $store, $on, $el }) => {
     const products = $store.getters.products;
     const productId = +$f7route.params.id;
     let currentProduct;
@@ -135,6 +135,28 @@
       // qrCode.download({ name: "qr", extension: "svg" });
       // window.location.href = `sms:83256474?body=message`;
     })
+
+    const deleteProduct = () => {
+      $f7.dialog.confirm(`Desea borrar '${currentProduct.name}'?`, () => {
+        console.log('Item deleted', currentProduct);
+
+        $f7.preloader.show();
+        // TODO: verify if delete was successful
+        $store.dispatch('deleteProduct', currentProduct.id);
+        $store.dispatch('initApp');
+        $f7.preloader.hide();
+        $f7.views.current.router.back('/codes/', { force: true });
+
+        $f7.toast.create({
+          text: 'Código borrado',
+          closeTimeout: 2000,
+        }).open();
+      });
+    }
+
+    const printProduct = () => {
+      console.log('printProduct');
+    }
 
     return $render;
   };
