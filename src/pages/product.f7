@@ -9,13 +9,41 @@
           </a>
         </div>
         <div class="title">${currentProduct.name}</div>
+
+        <div class="right">
+          <!-- Pin Note -->
+          <a href="#" class="link icon-only" id="btn-pin">
+            <i class="f7-icons">pencil</i>
+          </a>
+          <!-- Overflow / More Menu -->
+          <a href="#" class="link icon-only popover-open" data-popover=".popover-menu">
+            <i class="f7-icons">ellipsis_vertical</i>
+          </a>
+        </div>
+
+
+
       </div>
     </div>
+
+    <!-- Popover for the 3-dot overflow menu -->
+  <div class="popover popover-menu">
+    <div class="popover-inner">
+      <div class="list">
+        <ul>
+          <li><a href="/dialog/" class="list-button popover-close">Delete</a></li>
+          <li><a href="/dialog/" class="list-button popover-close">Print</a></li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
 
     <div class="fab fab-right-bottom">
       <a>
         <i class="icon f7-icons if-not-md">plus</i>
         <i class="icon f7-icons if-not-md">xmark</i>
+
         <i class="icon material-icons md-only">add</i>
         <i class="icon material-icons md-only">close</i>
       </a>
