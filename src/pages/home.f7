@@ -27,14 +27,16 @@
     <div class="page-content">
       <div class="block">
         <p>
-          ${i18next.t('home:about')}
+          ${i18next.t('home:aboutContent')}
         </p>
 
       </div>
       <div class="block">
-        <div class="block-title">Seleccionar qué pantalla cargar al inicio:</div>
-        <p>Prefiere que abra directamente a la cámara o prefiere cargar su lista de códigos QR?</p>
-        <p>Si ud es vendedor, preferirá Mis QRs, si es comprador preferirá Leer y Pagar.</p>
+        <div class="block-title">${i18next.t('home:selectScreen')}:</div>
+        <p>
+          ${i18next.t('home:selectScreenContent')}
+        </p>
+
 
         <div class="segmented segmented-strong">
           <button class="button ${activeStrongButton===0 ? 'button-active' : '' }"
@@ -48,7 +50,7 @@
       </div>
 
       <div class="block">
-        Hecho en Costa Rica 🇨🇷 por <a class="external" target="_blank" href="https://mastodon.social/@absulit">@absulit</a>
+        ${i18next.t('credits')} <a class="external" target="_blank" href="https://mastodon.social/@absulit">@absulit</a>
       </div>
 
     </div>
