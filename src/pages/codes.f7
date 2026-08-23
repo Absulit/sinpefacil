@@ -13,7 +13,7 @@
           <li>
             <a class="item-content item-link" href="/product/${product.id}/">
               <div class="item-inner">
-                <div class="item-title">${product.product}</div>
+                <div class="item-title">${product.name}</div>
               </div>
             </a>
           </li>

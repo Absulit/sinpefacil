@@ -1,24 +1,18 @@
 
 import { createStore } from 'framework7';
 
+//"phone=83256474&product=1 Kilo de Papa&price=1000&detail=this is the message",
 const store = createStore({
     state: {
         products: [
             {
                 id: '1',
-                product: 'Apple iPhone 8',
-                detail: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.'
+                phone: 83256474,
+                name: '1 Kilo de Tomate',
+                price: 3000,
+                detail: '1 Kilo de tomate de Vendedor Juan. 20260819'
             },
-            {
-                id: '2',
-                product: 'Apple iPhone 8 Plus',
-                detail: 'Velit odit autem modi saepe ratione totam minus, aperiam, labore quia provident temporibus quasi est ut aliquid blanditiis beatae suscipit odio vel! Nostrum porro sunt sint eveniet maiores, dolorem itaque!'
-            },
-            {
-                id: '3',
-                product: 'Apple iPhone X',
-                detail: 'Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum.'
-            },
+
         ]
     },
     getters: {
