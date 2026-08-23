@@ -84,7 +84,7 @@
                 <div class="item-inner">
                   <div class="item-title item-label">Detail</div>
                   <div class="item-input-wrap">
-                    <input type="text" name="detail" placeholder="A description" required validate />
+                    <input type="text" name="detail" placeholder="A description" validate />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
