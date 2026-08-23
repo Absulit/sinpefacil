@@ -71,10 +71,6 @@
     });
 
     $on('pageInit', () => {
-      // const query = "product=1 Kilo de Papa&price=1000&message=this is the message";
-      // const data = Object.fromEntries(new URLSearchParams(query));
-      // console.log(data);
-
       const { phone, name, price, detail } = currentProduct;
       console.log(currentProduct);
 
@@ -100,7 +96,7 @@
       const container = $el.value.find('#qr-code-container')[0];
       qrCode.append(container);
       // qrCode.download({ name: "qr", extension: "svg" });
-      // window.location.href = `sms:83256474?body=message`;
+      
     })
 
     const deleteProduct = () => {

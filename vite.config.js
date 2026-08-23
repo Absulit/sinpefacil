@@ -1,5 +1,6 @@
 import { fileURLToPath, URL } from 'node:url';
 import framework7 from 'rollup-plugin-framework7';
+import basicSsl from '@vitejs/plugin-basic-ssl';
 
 const SRC_DIR = fileURLToPath(new URL('./src', import.meta.url));
 const PUBLIC_DIR = fileURLToPath(new URL('./public', import.meta.url));
@@ -10,6 +11,7 @@ export default async () => {
   return {
     plugins: [
       framework7({ emitCss: false }),
+      basicSsl(),
 
     ],
     root: SRC_DIR,
@@ -31,6 +33,7 @@ export default async () => {
       },
     },
     server: {
+      https: true,
       host: true,
     },
     esbuild: {
