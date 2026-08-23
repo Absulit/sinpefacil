@@ -165,7 +165,7 @@
       // Extract data using Framework7 form helper
       const formData = $f7.form.convertToData('#tab-user-form');
 
-      if (!formData.name || !formData.price || !formData.detail) {
+      if (!formData.name || !formData.price) {
         $f7.dialog.alert('Please fill out all fields.');
         return;
       }

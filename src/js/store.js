@@ -1,5 +1,6 @@
 
 import { createStore } from 'framework7';
+import { db } from 'db';
 
 //"phone=83256474&product=1 Kilo de Papa&price=1000&detail=this is the message",
 const store = createStore({
@@ -21,16 +22,16 @@ const store = createStore({
         }
     },
     actions: {
-        // async initApp({ state }) {
-        //   state.items = await db.items.toArray();
-        // },
+        async initApp({ state }) {
+            state.products = await db.products.toArray();
+            console.log(state.products);
+
+        },
 
 
-        addProduct({ state }, product) {
-            // const id = await db.items.add(newItem);
-            state.products = [...state.products, product];
-
-
+        async addProduct({ state }, product) {
+            const id = await db.products.add(product);
+            state.products = [...state.products, { id, ...product }];
         },
     },
 })

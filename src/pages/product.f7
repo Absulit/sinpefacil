@@ -22,9 +22,11 @@
 <script>
   export default (props, { $f7route, $store }) => {
     const products = $store.getters.products;
-    const productId = $f7route.params.id;
+    const productId = +$f7route.params.id;
     let currentProduct;
     products.value.forEach((product) => {
+      console.log(product, productId);
+      
       if (product.id === productId) {
         currentProduct = product;
       }
