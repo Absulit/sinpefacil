@@ -6,6 +6,32 @@
         <div class="title">Codes</div>
       </div>
     </div>
+
+    <div class="fab fab-right-bottom">
+      <a>
+        <i class="icon f7-icons if-not-md">plus</i>
+        <i class="icon f7-icons if-not-md">xmark</i>
+
+        <i class="icon material-icons md-only">add</i>
+        <i class="icon material-icons md-only">close</i>
+      </a>
+
+      <div class="fab-buttons fab-buttons-top">
+        <a href="" class="fab-label-button">
+          <span>1</span>
+          <span class="fab-label">Editar</span>
+        </a>
+        <a href="" class="fab-label-button">
+          <span>2</span>
+          <span class="fab-label">Imprimir</span>
+        </a>
+        <a href="" class="fab-label-button">
+          <span>3</span>
+          <span class="fab-label">Borrar</span>
+        </a>
+      </div>
+    </div>
+
     <div class="page-content">
       <div class="list list-strong list-dividers-ios list-outline-ios inset-md">
         <ul>
