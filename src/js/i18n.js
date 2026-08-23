@@ -8,8 +8,16 @@ const resources = {
             codes: "My QRs",
             read: "Read to Pay",
             history: "History",
-            capture: "capture",
             settings: "Settings",
+        },
+        home: {
+            about: `This app generates QR codes (?) that allow other people pay you with SINPE MÓVIL. (?)
+
+                    It also allows you to read QR codes from other people and send a SMS to pay them via SINPE MÓVIL.
+            `,
+        },
+        read: {
+            capture: "capture",
         }
     },
     es: {
@@ -18,8 +26,16 @@ const resources = {
             codes: "Mis QRs",
             read: "Leer y Pagar",
             history: "Historial",
-            capture: "capturar",
             settings: "Ajustes",
+        },
+        home: {
+            about: `Esta aplicación genera Códigos QR (?) para permitir a otras personas pagarte con SINPE MÓVIL. (?)
+
+                    También te permite leer códigos QR de otras personas y enviar un SMS para pagarles via SINPE MÓVIL.
+            `,
+        },
+        read: {
+            capture: "capturar",
         }
     }
 };
@@ -27,7 +43,7 @@ const resources = {
 export async function initI18n() {
     // TODO: save lang to enforce it via an option
     const lng = await getOption(Keys.LANG, navigator.language);
-    
+
     await i18next.init({
         lng,
         fallbackLng: 'es-CR',
