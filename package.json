@@ -12,7 +12,7 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "cross-env NODE_ENV=development vite",
-    "build": "cross-env NODE_ENV=production vite build && npx workbox generateSW workbox-config.js && npm audit && npm outdated",
+    "build": "cross-env NODE_ENV=production vite build && npx workbox generateSW workbox-config.cjs && npm audit && npm outdated",
     "postinstall": "cpy --flat ./node_modules/framework7-icons/fonts/*.* ./src/fonts/ && cpy --flat ./node_modules/material-icons/iconfont/*.* ./src/fonts/",
     "assets": "npx framework7-cli generate-assets"
   },
