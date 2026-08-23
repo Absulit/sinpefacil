@@ -8,27 +8,122 @@
             <i class="icon icon-back"></i>
           </a>
         </div>
-        <div class="title">${currentProduct.title}</div>
+        <div class="title">${currentProduct.name}</div>
+
+        <div class="right">
+          <!-- Pin Note -->
+          <a href="#" class="link icon-only" id="btn-pin">
+            <i class="f7-icons">pencil</i>
+          </a>
+          <!-- Overflow / More Menu -->
+          <a href="#" class="link icon-only popover-open" data-popover=".popover-menu">
+            <i class="f7-icons">ellipsis_vertical</i>
+          </a>
+        </div>
+
+
+
       </div>
     </div>
+
+    <!-- Popover for the 3-dot overflow menu -->
+    <div class="popover popover-menu">
+      <div class="popover-inner">
+        <div class="list">
+          <ul>
+            <li><a href="#" class="list-button popover-close" @click=${()=>deleteProduct()}>Delete</a></li>
+            <li><a href="#" class="list-button popover-close" @click=${()=>printProduct()}>Print</a></li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
     <div class="page-content">
-      <div class="block-title">About ${currentProduct.title}</div>
+      <div class="block-title">${currentProduct.name}</div>
       <div class="block">
-        ${currentProduct.description}
+        <ul>
+          ${currentProduct && currentProduct.phone ? $h`<li>${currentProduct.phone}</li>` : ''}
+          ${currentProduct && currentProduct.price ? $h`<li>${currentProduct.price}</li>` : ''}
+          ${currentProduct && currentProduct.detail ? $h`<li>${currentProduct.detail}</li>` : ''}
+         </ul>
       </div>
+
+      <div id="qr-code-container" class="block text-align-center"></div>
     </div>
+
   </div>
 </template>
 <script>
-  export default (props, { $f7route, $store }) => {
+
+  import QRCodeStyling from 'qr-code-styling';
+  export default (props, { $f7, $f7route, $store, $on, $el }) => {
     const products = $store.getters.products;
-    const productId = $f7route.params.id;
+    const productId = +$f7route.params.id;
     let currentProduct;
     products.value.forEach((product) => {
-      if (product.id === productId) {
-        currentProduct = product;
+      console.log(product, productId);
+
+      if (product.id !== productId) {
+        return;
       }
+      currentProduct = product;
     });
+
+    $on('pageInit', () => {
+      // const query = "product=1 Kilo de Papa&price=1000&message=this is the message";
+      // const data = Object.fromEntries(new URLSearchParams(query));
+      // console.log(data);
+
+      const { phone, name, price, detail } = currentProduct;
+      console.log(currentProduct);
+
+      const qrCode = new QRCodeStyling({
+        width: 300,
+        height: 300,
+        type: 'svg',
+        data: `phone=${phone}&name=${name}&price=${price}&detail=${detail}`,
+        image: '', // link to image
+        dotsOptions: {
+          color: '#4267b2',
+          type: 'square'
+        },
+        backgroundOptions: {
+          color: '#e9ebee',
+        },
+        imageOptions: {
+          crossOrigin: 'anonymous',
+          margin: 20
+        }
+      });
+
+      const container = $el.value.find('#qr-code-container')[0];
+      qrCode.append(container);
+      // qrCode.download({ name: "qr", extension: "svg" });
+      // window.location.href = `sms:83256474?body=message`;
+    })
+
+    const deleteProduct = () => {
+      $f7.dialog.confirm(`Desea borrar '${currentProduct.name}'?`, () => {
+        console.log('Item deleted', currentProduct);
+
+        $f7.preloader.show();
+        // TODO: verify if delete was successful
+        $store.dispatch('deleteProduct', currentProduct.id);
+        $store.dispatch('initApp');
+        $f7.preloader.hide();
+        $f7.views.current.router.back('/codes/', { force: true });
+
+        $f7.toast.create({
+          text: 'Código borrado',
+          closeTimeout: 2000,
+        }).open();
+      });
+    }
+
+    const printProduct = () => {
+      console.log('printProduct');
+    }
 
     return $render;
   };

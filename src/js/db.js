@@ -4,6 +4,7 @@ export const db = new Dexie('sf');
 
 // Define database schema
 db.version(1).stores({
+    products: '++id, phone, name, price',
     options: 'key, value'
 });
 

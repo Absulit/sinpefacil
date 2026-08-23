@@ -1,35 +1,40 @@
 
 import { createStore } from 'framework7';
+import { db } from 'db';
 
+//"phone=83256474&product=1 Kilo de Papa&price=1000&detail=this is the message",
 const store = createStore({
-  state: {
-    products: [
-      {
-        id: '1',
-        title: 'Apple iPhone 8',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.'
-      },
-      {
-        id: '2',
-        title: 'Apple iPhone 8 Plus',
-        description: 'Velit odit autem modi saepe ratione totam minus, aperiam, labore quia provident temporibus quasi est ut aliquid blanditiis beatae suscipit odio vel! Nostrum porro sunt sint eveniet maiores, dolorem itaque!'
-      },
-      {
-        id: '3',
-        title: 'Apple iPhone X',
-        description: 'Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum.'
-      },
-    ]
-  },
-  getters: {
-    products({ state }) {
-      return state.products;
-    }
-  },
-  actions: {
-    addProduct({ state }, product) {
-      state.products = [...state.products, product];
+    state: {
+        products: [
+            // {
+            //     id: '1',
+            //     phone: 83256474,
+            //     name: '1 Kilo de Tomate',
+            //     price: 3000,
+            //     detail: '1 Kilo de tomate de Vendedor Juan. 20260819'
+            // },
+        ]
     },
-  },
+    getters: {
+        products({ state }) {
+            return state.products;
+        }
+    },
+    actions: {
+        async initApp({ state }) {
+            state.products = await db.products.toArray();
+            console.log(state.products);
+
+        },
+
+        async addProduct({ state }, product) {
+            const id = await db.products.add(product);
+            state.products = [...state.products, { id, ...product }];
+        },
+
+        async deleteProduct({ state }, id) {
+            await db.products.delete(id);
+        }
+    },
 })
 export default store;

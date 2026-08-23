@@ -14,7 +14,7 @@
       </div>
 
       <div class="block">
-        <button class="button button-fill button-large" @click="${takePhoto}">${i18next.t('capture')}</button>
+        <button class="button button-fill button-large" @click="${takePhoto}">${i18next.t('read:capture')}</button>
       </div>
     </div>
   </div>

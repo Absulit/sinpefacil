@@ -19,18 +19,23 @@ import { initI18n } from './i18n.js';
 
 await initI18n();
 
-var app = new Framework7({
-    name: 'sinpefacil', // App name
-    theme: 'auto', // Automatic theme detection
-    darkMode: 'auto',
+store.dispatch('initApp').then(() => {
 
-    el: '#app', // App root element
-    component: App, // App main component
-    store,
-    routes,
+    const app = new Framework7({
+        name: 'sinpefacil', // App name
+        theme: 'auto', // Automatic theme detection
+        darkMode: 'auto',
 
-    // Register service worker (only on production build)
-    serviceWorker: process.env.NODE_ENV === 'production' ? {
-        path: '/service-worker.js',
-    } : {},
+        el: '#app', // App root element
+        component: App, // App main component
+        store,
+        routes,
+
+        // Register service worker (only on production build)
+        serviceWorker: process.env.NODE_ENV === 'production' ? {
+            path: '/service-worker.js',
+        } : {},
+    });
+
 });
+
