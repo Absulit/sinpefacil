@@ -38,7 +38,7 @@
         <div class="navbar">
           <div class="navbar-bg"></div>
           <div class="navbar-inner">
-            <div class="title">User Details</div>
+            <div class="title">New Product</div>
             <div class="right">
               <!-- Close button -->
               <a class="link popup-close">Close</a>
@@ -51,9 +51,10 @@
             <ul>
               <li class="item-content item-input">
                 <div class="item-inner">
-                  <div class="item-title item-label">Name</div>
+                  <div class="item-title item-label">Phone</div>
                   <div class="item-input-wrap">
-                    <input type="text" name="name" placeholder="John Doe" required validate />
+                    <input type="tel" name="phone" placeholder="12345678 (if not set uses the default)" validate
+                      pattern="[0-9]{8}" autocomplete="tel" />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -61,13 +62,36 @@
 
               <li class="item-content item-input">
                 <div class="item-inner">
-                  <div class="item-title item-label">Email</div>
+                  <div class="item-title item-label">Name</div>
                   <div class="item-input-wrap">
-                    <input type="email" name="email" placeholder="john@example.com" required validate />
+                    <input type="text" name="name" placeholder="My Product to sell" required validate />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
               </li>
+
+              <li class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">Price</div>
+                  <div class="item-input-wrap">
+                    <input type="tel" name="price" placeholder="₡0.00" inputmode="decimal" required validate />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+
+              <li class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">Detail</div>
+                  <div class="item-input-wrap">
+                    <input type="text" name="detail" placeholder="A description" required validate />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+
+
+
             </ul>
 
             <div class="block">
@@ -141,18 +165,14 @@
       // Extract data using Framework7 form helper
       const formData = $f7.form.convertToData('#tab-user-form');
 
-      if (!formData.name || !formData.email) {
+      if (!formData.name || !formData.price || !formData.detail) {
         $f7.dialog.alert('Please fill out all fields.');
         return;
       }
 
       console.log('Submitted Data:', formData);
 
-      $store.dispatch('addProduct', {
-        id: '4',
-        product: 'Apple iPhone 12',
-        detail: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis.'
-      });
+      $store.dispatch('addProduct', formData);
 
 
       // Close the popup programmatically

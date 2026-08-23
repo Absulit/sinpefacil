@@ -9,6 +9,7 @@ const resources = {
             read: "Read to Pay",
             history: "History",
             capture: "capture",
+            settings: "Settings",
         }
     },
     es: {
@@ -18,6 +19,7 @@ const resources = {
             read: "Leer y Pagar",
             history: "Historial",
             capture: "capturar",
+            settings: "Ajustes",
         }
     }
 };
