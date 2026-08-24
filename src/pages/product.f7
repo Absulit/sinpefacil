@@ -74,11 +74,13 @@
       const { phone, name, price, detail } = currentProduct;
       console.log(currentProduct);
 
+      const url = encodeURI(`${window.location.origin}?phone=${phone}&name=${name}&price=${price}&detail=${detail}`);
+
       const qrCode = new QRCodeStyling({
         width: 300,
         height: 300,
         type: 'svg',
-        data: `${window.location.origin}?phone=${phone}&name=${name}&price=${price}&detail=${detail}`,
+        data: url,
         image: '', // link to image
         dotsOptions: {
           color: '#000000',
