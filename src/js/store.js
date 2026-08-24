@@ -32,6 +32,10 @@ const store = createStore({
             state.products = [...state.products, { id, ...product }];
         },
 
+        async updateProduct({ state }, product) {
+            await db.products.put(product);
+        },
+
         async deleteProduct({ state }, id) {
             await db.products.delete(id);
         }

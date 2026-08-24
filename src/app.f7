@@ -49,7 +49,7 @@
         </div>
 
         <div class="page-content">
-          <form class="list" id="tab-user-form">
+          <form class="list" id="qr-data-form">
             <ul>
               <li class="item-content item-input">
                 <div class="item-inner">
@@ -205,6 +205,7 @@
   import { getOption, Keys } from 'db';
   export default (props, { $f7, $update, $on, $el, $store }) => {
     let itemId = null;
+    let currentProduct = null;
     $f7.on('init', async _ => {
       const pageIndexToLoad = await getOption(Keys.PAGE_TO_LOAD, 0);
       const tab = document.querySelectorAll('div.view-init')[pageIndexToLoad];
@@ -215,15 +216,27 @@
     $f7.on('openQRDataPopup', async (id = null) => {
       itemId = id;
       console.log(id);
-      
+
       if (itemId) {
         console.log('edit');
+        const products = $store.getters.products;
+        products.value.forEach(product => {
+          if (product.id !== itemId) {
+            return;
+          }
+          currentProduct = product;
+        });
+        console.log(currentProduct);
+
+        $f7.form.fillFromData('#qr-data-form', currentProduct);
 
       } else {
         console.log('create');
+        $f7.$('#qr-data-form')[0].reset();
 
       }
 
+      // Re-render popup UI with updated state before opening
       $update();
       $f7.popup.open('.qr-data-popup');
     });
@@ -233,7 +246,7 @@
 
     const submitForm = () => {
       // Extract data using Framework7 form helper
-      const formData = $f7.form.convertToData('#tab-user-form');
+      const formData = $f7.form.convertToData('#qr-data-form');
 
       if (!formData.name || !formData.price) {
         $f7.dialog.alert('Please fill out all fields.');
@@ -241,9 +254,17 @@
       }
 
       console.log('Submitted Data:', formData);
+      console.log('---- currentProduct:', currentProduct);
 
-      $store.dispatch('addProduct', formData);
+      if (currentProduct) {
+        const { id } = currentProduct;
+        
+        $store.dispatch('updateProduct', { ...formData, id });
+      } else {
+        $store.dispatch('addProduct', formData);
+      }
 
+      currentProduct = null;
 
       // Close the popup programmatically
       $f7.popup.close('.qr-data-popup');
