@@ -256,7 +256,10 @@
 
       if (currentProduct) {
         const { id } = currentProduct;
-        $store.dispatch('updateProduct', { ...formData, id });
+        const productUpdated = { ...formData, id };
+        $store.dispatch('updateProduct', productUpdated);
+        $f7.emit('PRODUCT_UPDATED', productUpdated);
+
       } else {
         $store.dispatch('addProduct', formData);
       }
