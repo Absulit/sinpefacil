@@ -78,7 +78,7 @@
         width: 300,
         height: 300,
         type: 'svg',
-        data: `phone=${phone}&name=${name}&price=${price}&detail=${detail}`,
+        data: `${window.location.origin}?phone=${phone}&name=${name}&price=${price}&detail=${detail}`,
         image: '', // link to image
         dotsOptions: {
           color: '#4267b2',
