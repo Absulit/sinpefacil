@@ -1,6 +1,8 @@
 import i18next from 'i18next';
 import { getOption, Keys } from 'db';
 
+// Spanish, English, German, French, Dutch
+
 const resources = {
     en: {
         translation: {

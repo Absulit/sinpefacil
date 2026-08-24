@@ -12,7 +12,7 @@
 
         <div class="right">
           <!-- Pin Note -->
-          <a href="#" class="link icon-only" id="btn-pin">
+          <a href="#" class="link icon-only popup-open" data-popup=".user-data-popup" id="btn-pin">
             <i class="f7-icons">pencil</i>
           </a>
           <!-- Overflow / More Menu -->

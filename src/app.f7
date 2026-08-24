@@ -34,6 +34,78 @@
       </div>
     </div>
 
+    <!-- Create QR product Popup -->
+    <div class="popup user-data-popup">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-bg"></div>
+          <div class="navbar-inner">
+            <div class="title">New Product</div>
+            <div class="right">
+              <!-- Close button -->
+              <a class="link popup-close">Close</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-content">
+          <form class="list" id="tab-user-form">
+            <ul>
+              <li class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">Phone</div>
+                  <div class="item-input-wrap">
+                    <input type="tel" name="phone" placeholder="12345678 (if not set uses the default)" validate
+                      pattern="[0-9]{8}" autocomplete="tel" />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+
+              <li class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">Name</div>
+                  <div class="item-input-wrap">
+                    <input type="text" name="name" placeholder="My Product to sell" required validate />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+
+              <li class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">Price</div>
+                  <div class="item-input-wrap">
+                    <input type="tel" name="price" placeholder="₡0.00" inputmode="decimal" required validate />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+
+              <li class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">Detail</div>
+                  <div class="item-input-wrap">
+                    <input type="text" name="detail" placeholder="A description" validate />
+                    <span class="input-clear-button"></span>
+                  </div>
+                </div>
+              </li>
+
+
+
+            </ul>
+
+            <div class="block">
+              <button type="button" class="button button-fill" @click="${submitForm}">
+                Save Information
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <!-- Views/Tabs container -->
     <div class="views tabs safe-areas">
       <!-- Tabbar for switching views-tabs -->
@@ -131,13 +203,39 @@
 <script>
   import i18next from 'i18next';
   import { getOption, Keys } from 'db';
-  export default (props, { $f7, $update, $on, $el }) => {
+  export default (props, { $f7, $update, $on, $el, $store }) => {
     $f7.on('init', async _ => {
       const pageIndexToLoad = await getOption(Keys.PAGE_TO_LOAD, 0);
       const tab = document.querySelectorAll('div.view-init')[pageIndexToLoad];
       const tabLink = document.querySelectorAll('.tab-link')[pageIndexToLoad];
       $f7.tab.show(`#${tab.id}`, tabLink, true);
     });
+
+
+    const submitForm = () => {
+      // Extract data using Framework7 form helper
+      const formData = $f7.form.convertToData('#tab-user-form');
+
+      if (!formData.name || !formData.price) {
+        $f7.dialog.alert('Please fill out all fields.');
+        return;
+      }
+
+      console.log('Submitted Data:', formData);
+
+      $store.dispatch('addProduct', formData);
+
+
+      // Close the popup programmatically
+      $f7.popup.close('.user-data-popup');
+
+      // Show confirmation
+      $f7.toast.create({
+        text: 'Form submitted successfully!',
+        closeTimeout: 2000,
+      }).open();
+    };
+
 
     return $render;
   }
