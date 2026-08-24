@@ -48,7 +48,7 @@
       </div>
 
       <div class="block">
-        <button class="button button-fill popup-open" data-popup=".user-data-popup">
+        <button class="button button-fill popup-open" @click="${() => $f7.emit('openQRDataPopup', null)}">
           Agregar Nuevo
         </button>
       </div>
@@ -70,10 +70,6 @@
   export default (props, { $f7, $store, $on, $el }) => {
 
     const products = $store.getters.products;
-
-
-
-
 
 
     return $render;

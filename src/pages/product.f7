@@ -11,8 +11,8 @@
         <div class="title">${currentProduct.name}</div>
 
         <div class="right">
-          <!-- Pin Note -->
-          <a href="#" class="link icon-only popup-open" data-popup=".user-data-popup" id="btn-pin">
+          <!-- Edit QR -->
+          <a href="#" class="link icon-only popup-open" @click="${() => $f7.emit('openQRDataPopup', 88)}"id="btn-pin">
             <i class="f7-icons">pencil</i>
           </a>
           <!-- Overflow / More Menu -->

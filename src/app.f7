@@ -35,12 +35,12 @@
     </div>
 
     <!-- Create QR product Popup -->
-    <div class="popup user-data-popup">
+    <div class="popup qr-data-popup">
       <div class="page">
         <div class="navbar">
           <div class="navbar-bg"></div>
           <div class="navbar-inner">
-            <div class="title">New Product</div>
+            <div class="title">${itemId ? 'Edit Item' : 'Create Item'}</div>
             <div class="right">
               <!-- Close button -->
               <a class="link popup-close">Close</a>
@@ -98,7 +98,7 @@
 
             <div class="block">
               <button type="button" class="button button-fill" @click="${submitForm}">
-                Save Information
+                ${itemId ? 'Update' : 'Create'}
               </button>
             </div>
           </form>
@@ -204,12 +204,31 @@
   import i18next from 'i18next';
   import { getOption, Keys } from 'db';
   export default (props, { $f7, $update, $on, $el, $store }) => {
+    let itemId = null;
     $f7.on('init', async _ => {
       const pageIndexToLoad = await getOption(Keys.PAGE_TO_LOAD, 0);
       const tab = document.querySelectorAll('div.view-init')[pageIndexToLoad];
       const tabLink = document.querySelectorAll('.tab-link')[pageIndexToLoad];
       $f7.tab.show(`#${tab.id}`, tabLink, true);
     });
+
+    $f7.on('openQRDataPopup', async (id = null) => {
+      itemId = id;
+      console.log(id);
+      
+      if (itemId) {
+        console.log('edit');
+
+      } else {
+        console.log('create');
+
+      }
+
+      $update();
+      $f7.popup.open('.qr-data-popup');
+    });
+
+
 
 
     const submitForm = () => {
@@ -227,7 +246,7 @@
 
 
       // Close the popup programmatically
-      $f7.popup.close('.user-data-popup');
+      $f7.popup.close('.qr-data-popup');
 
       // Show confirmation
       $f7.toast.create({
