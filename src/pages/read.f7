@@ -33,8 +33,8 @@
           isNavigating = true;
 
           console.log('decoded qr code:', result)
-          // alert(result.data)
-          const data = Object.fromEntries(new URLSearchParams(result.data));
+          const data = Object.fromEntries(new URL(result.data).searchParams);
+
           // alert(result.data);
           // alert(result.cornerPoints);
           // alert(data);

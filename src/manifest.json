@@ -7,6 +7,10 @@
   "display": "standalone",
   "background_color": "#EE350F",
   "theme_color": "#EE350F",
+  "scope": "/",
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
   "icons": [
     {
       "src": "/icons/128x128.png",
