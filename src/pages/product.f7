@@ -12,7 +12,7 @@
 
         <div class="right">
           <!-- Edit QR -->
-          <a href="#" class="link icon-only popup-open" @click="${() => $f7.emit('openQRDataPopup', 88)}"id="btn-pin">
+          <a href="#" class="link icon-only popup-open" @click="${() => $f7.emit('openQRDataPopup', currentProduct.id)}" id="btn-pin">
             <i class="f7-icons">pencil</i>
           </a>
           <!-- Overflow / More Menu -->
@@ -46,7 +46,7 @@
           ${currentProduct && currentProduct.phone ? $h`<li>${currentProduct.phone}</li>` : ''}
           ${currentProduct && currentProduct.price ? $h`<li>${currentProduct.price}</li>` : ''}
           ${currentProduct && currentProduct.detail ? $h`<li>${currentProduct.detail}</li>` : ''}
-         </ul>
+        </ul>
       </div>
 
       <div id="qr-code-container" class="block text-align-center"></div>
@@ -61,9 +61,7 @@
     const products = $store.getters.products;
     const productId = +$f7route.params.id;
     let currentProduct;
-    products.value.forEach((product) => {
-      console.log(product, productId);
-
+    products.value.forEach(product => {
       if (product.id !== productId) {
         return;
       }
@@ -98,7 +96,6 @@
       const container = $el.value.find('#qr-code-container')[0];
       qrCode.append(container);
       // qrCode.download({ name: "qr", extension: "svg" });
-      
     })
 
     const deleteProduct = () => {
