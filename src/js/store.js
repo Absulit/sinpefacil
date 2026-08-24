@@ -32,8 +32,11 @@ const store = createStore({
             state.products = [...state.products, { id, ...product }];
         },
 
-        async updateProduct({ state }, product) {
-            await db.products.put(product);
+        async updateProduct({ state }, updatedProduct) {
+            await db.products.put(updatedProduct);
+            state.products = state.products.map(product =>
+                product.id === updatedProduct.id ? { ...product, ...updatedProduct } : product
+            );
         },
 
         async deleteProduct({ state }, id) {

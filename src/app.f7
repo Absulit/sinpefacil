@@ -40,7 +40,7 @@
         <div class="navbar">
           <div class="navbar-bg"></div>
           <div class="navbar-inner">
-            <div class="title">${itemId ? 'Edit Item' : 'Create Item'}</div>
+            <div class="title">${productId ? 'Edit Item' : 'Create Item'}</div>
             <div class="right">
               <!-- Close button -->
               <a class="link popup-close">Close</a>
@@ -98,7 +98,7 @@
 
             <div class="block">
               <button type="button" class="button button-fill" @click="${submitForm}">
-                ${itemId ? 'Update' : 'Create'}
+                ${productId ? 'Update' : 'Create'}
               </button>
             </div>
           </form>
@@ -204,7 +204,7 @@
   import i18next from 'i18next';
   import { getOption, Keys } from 'db';
   export default (props, { $f7, $update, $on, $el, $store }) => {
-    let itemId = null;
+    let productId = null;
     let currentProduct = null;
     $f7.on('init', async _ => {
       const pageIndexToLoad = await getOption(Keys.PAGE_TO_LOAD, 0);
@@ -214,14 +214,14 @@
     });
 
     $f7.on('openQRDataPopup', async (id = null) => {
-      itemId = id;
+      productId = id;
       console.log(id);
 
-      if (itemId) {
+      if (productId) {
         console.log('edit');
         const products = $store.getters.products;
         products.value.forEach(product => {
-          if (product.id !== itemId) {
+          if (product.id !== productId) {
             return;
           }
           currentProduct = product;
@@ -229,11 +229,9 @@
         console.log(currentProduct);
 
         $f7.form.fillFromData('#qr-data-form', currentProduct);
-
       } else {
         console.log('create');
         $f7.$('#qr-data-form')[0].reset();
-
       }
 
       // Re-render popup UI with updated state before opening
@@ -258,7 +256,6 @@
 
       if (currentProduct) {
         const { id } = currentProduct;
-        
         $store.dispatch('updateProduct', { ...formData, id });
       } else {
         $store.dispatch('addProduct', formData);
