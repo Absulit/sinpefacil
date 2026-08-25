@@ -4,7 +4,7 @@ name: Publish page
 
 on:
   push:
-    branches: [ main ] # or master, depending on your primary branch name
+    branches: [ master ]
 
 permissions:
   contents: read
