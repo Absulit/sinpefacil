@@ -15,7 +15,7 @@ export default async () => {
 
     ],
     root: SRC_DIR,
-    base: '',
+    base: '/sinpefacil/',
     publicDir: PUBLIC_DIR,
     build: {
       outDir: BUILD_DIR,
