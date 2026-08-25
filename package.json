@@ -10,9 +10,9 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "start": "npm run dev",
+    "start": "npm run dev; npm audit; npm outdated",
     "dev": "cross-env NODE_ENV=development vite",
-    "build": "cross-env NODE_ENV=production vite build && npx workbox generateSW workbox-config.cjs && npm audit && npm outdated",
+    "build": "cross-env NODE_ENV=production vite build && npx workbox generateSW workbox-config.cjs; npm audit; npm outdated",
     "postinstall": "cpy --flat ./node_modules/framework7-icons/fonts/*.* ./src/fonts/ && cpy --flat ./node_modules/material-icons/iconfont/*.* ./src/fonts/",
     "assets": "npx framework7-cli generate-assets"
   },
@@ -42,5 +42,8 @@
     "rollup-plugin-framework7": "1.2.1",
     "vite": "8.2.1",
     "workbox-cli": "7.4.1"
+  },
+  "overrides": {
+    "tmp": "^0.2.3"
   }
 }
