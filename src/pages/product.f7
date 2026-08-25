@@ -11,8 +11,9 @@
         <div class="title">${currentProduct.name}</div>
 
         <div class="right">
-          <!-- Pin Note -->
-          <a href="#" class="link icon-only" id="btn-pin">
+          <!-- Edit QR -->
+          <a href="#" class="link icon-only popup-open" @click="${() => $f7.emit('openQRDataPopup', currentProduct.id)}"
+            id="btn-pin">
             <i class="f7-icons">pencil</i>
           </a>
           <!-- Overflow / More Menu -->
@@ -40,13 +41,13 @@
     </div>
 
     <div class="page-content">
-      <div class="block-title">${currentProduct.name}</div>
+      <!-- <div class="block-title">${currentProduct.name}</div> -->
       <div class="block">
         <ul>
           ${currentProduct && currentProduct.phone ? $h`<li>${currentProduct.phone}</li>` : ''}
           ${currentProduct && currentProduct.price ? $h`<li>${currentProduct.price}</li>` : ''}
           ${currentProduct && currentProduct.detail ? $h`<li>${currentProduct.detail}</li>` : ''}
-         </ul>
+        </ul>
       </div>
 
       <div id="qr-code-container" class="block text-align-center"></div>
@@ -57,13 +58,11 @@
 <script>
 
   import QRCodeStyling from 'qr-code-styling';
-  export default (props, { $f7, $f7route, $store, $on, $el }) => {
+  export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
     const products = $store.getters.products;
     const productId = +$f7route.params.id;
     let currentProduct;
-    products.value.forEach((product) => {
-      console.log(product, productId);
-
+    products.value.forEach(product => {
       if (product.id !== productId) {
         return;
       }
@@ -71,21 +70,19 @@
     });
 
     $on('pageInit', () => {
-      // const query = "product=1 Kilo de Papa&price=1000&message=this is the message";
-      // const data = Object.fromEntries(new URLSearchParams(query));
-      // console.log(data);
-
       const { phone, name, price, detail } = currentProduct;
       console.log(currentProduct);
+
+      const url = encodeURI(`${window.location.origin}?phone=${phone}&name=${name}&price=${price}&detail=${detail}`);
 
       const qrCode = new QRCodeStyling({
         width: 300,
         height: 300,
         type: 'svg',
-        data: `phone=${phone}&name=${name}&price=${price}&detail=${detail}`,
+        data: url,
         image: '', // link to image
         dotsOptions: {
-          color: '#4267b2',
+          color: '#000000',
           type: 'square'
         },
         backgroundOptions: {
@@ -100,8 +97,17 @@
       const container = $el.value.find('#qr-code-container')[0];
       qrCode.append(container);
       // qrCode.download({ name: "qr", extension: "svg" });
-      // window.location.href = `sms:83256474?body=message`;
     })
+    $f7.on('PRODUCT_UPDATED', productUpdated => {
+      console.log('PRODUCT_UPDATED', productUpdated);
+      currentProduct = productUpdated;
+      $update();
+    })
+
+    $on('pageBeforeRemove', () => {
+      console.log('pageBeforeRemove');
+      $f7.off('PRODUCT_UPDATED');
+    });
 
     const deleteProduct = () => {
       $f7.dialog.confirm(`Desea borrar '${currentProduct.name}'?`, () => {

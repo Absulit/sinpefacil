@@ -34,10 +34,35 @@
 
     <div class="page-content">
       <div class="list list-strong list-dividers-ios list-outline-ios inset-md">
+
+        ${products.value.length === 0 ? $h`
+        <div class="empty-state block text-align-center margin-top">
+          <i class="icon f7-icons size-50 color-gray">archivebox</i>
+          <p class="color-gray">No hay productos</p>
+          <p>
+            Agregue aquí un código QR por cada producto que quiera vender, por ejemplo:
+            Palomitas a mil colones.
+          </p>
+
+          <div class="block">
+            <button class="button button-fill popup-open" @click="${() => $f7.emit('openQRDataPopup', null)}">
+              Agregar Nuevo
+            </button>
+          </div>
+
+        </div>
+        `: ''}
+
+
         <ul>
           ${products.value.map((product) => $h`
+          <p>Seleccione un item de la lista para ver el código QR.</p>
           <li>
             <a class="item-content item-link" href="/product/${product.id}/">
+              <div class="item-media">
+                <i class="icon f7-icons if-not-md">qrcode</i>
+                <i class="icon material-icons if-md">qr_code</i>
+              </div>
               <div class="item-inner">
                 <div class="item-title">${product.name}</div>
               </div>
@@ -47,88 +72,15 @@
         </ul>
       </div>
 
-      <div class="block">
-        <button class="button button-fill popup-open" data-popup=".user-data-popup">
-          Agregar Nuevo
-        </button>
-      </div>
 
 
-      
+
+
 
     </div>
 
 
-    <div class="popup user-data-popup">
-      <div class="page">
-        <div class="navbar">
-          <div class="navbar-bg"></div>
-          <div class="navbar-inner">
-            <div class="title">New Product</div>
-            <div class="right">
-              <!-- Close button -->
-              <a class="link popup-close">Close</a>
-            </div>
-          </div>
-        </div>
 
-        <div class="page-content">
-          <form class="list" id="tab-user-form">
-            <ul>
-              <li class="item-content item-input">
-                <div class="item-inner">
-                  <div class="item-title item-label">Phone</div>
-                  <div class="item-input-wrap">
-                    <input type="tel" name="phone" placeholder="12345678 (if not set uses the default)" validate
-                      pattern="[0-9]{8}" autocomplete="tel" />
-                    <span class="input-clear-button"></span>
-                  </div>
-                </div>
-              </li>
-
-              <li class="item-content item-input">
-                <div class="item-inner">
-                  <div class="item-title item-label">Name</div>
-                  <div class="item-input-wrap">
-                    <input type="text" name="name" placeholder="My Product to sell" required validate />
-                    <span class="input-clear-button"></span>
-                  </div>
-                </div>
-              </li>
-
-              <li class="item-content item-input">
-                <div class="item-inner">
-                  <div class="item-title item-label">Price</div>
-                  <div class="item-input-wrap">
-                    <input type="tel" name="price" placeholder="₡0.00" inputmode="decimal" required validate />
-                    <span class="input-clear-button"></span>
-                  </div>
-                </div>
-              </li>
-
-              <li class="item-content item-input">
-                <div class="item-inner">
-                  <div class="item-title item-label">Detail</div>
-                  <div class="item-input-wrap">
-                    <input type="text" name="detail" placeholder="A description" validate />
-                    <span class="input-clear-button"></span>
-                  </div>
-                </div>
-              </li>
-
-
-
-            </ul>
-
-            <div class="block">
-              <button type="button" class="button button-fill" @click="${submitForm}">
-                Save Information
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
 
 
   </div>
@@ -139,36 +91,6 @@
   export default (props, { $f7, $store, $on, $el }) => {
 
     const products = $store.getters.products;
-
-    const showForm = () => {
-      console.log('showform');
-
-    }
-
-    const submitForm = () => {
-      // Extract data using Framework7 form helper
-      const formData = $f7.form.convertToData('#tab-user-form');
-
-      if (!formData.name || !formData.price) {
-        $f7.dialog.alert('Please fill out all fields.');
-        return;
-      }
-
-      console.log('Submitted Data:', formData);
-
-      $store.dispatch('addProduct', formData);
-
-
-      // Close the popup programmatically
-      $f7.popup.close('.user-data-popup');
-
-      // Show confirmation
-      $f7.toast.create({
-        text: 'Form submitted successfully!',
-        closeTimeout: 2000,
-      }).open();
-    };
-
 
 
     return $render;

@@ -31,6 +31,17 @@ store.dispatch('initApp').then(() => {
         store,
         routes,
 
+        on: {
+            init: () => {
+                const urlParams = new URLSearchParams(window.location.search);
+                const data = Object.fromEntries(urlParams.entries());
+                const { phone, name, price, detail } = data;
+                if(phone && name && price){
+                    window.location.href = `sms:${888}?body=PASE ${price} ${phone} ${name} ${detail}`;
+                }
+            }
+        },
+
         // Register service worker (only on production build)
         serviceWorker: process.env.NODE_ENV === 'production' ? {
             path: '/service-worker.js',
