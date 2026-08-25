@@ -41,7 +41,7 @@
     </div>
 
     <div class="page-content">
-      <div class="block-title">${currentProduct.name}</div>
+      <!-- <div class="block-title">${currentProduct.name}</div> -->
       <div class="block">
         <ul>
           ${currentProduct && currentProduct.phone ? $h`<li>${currentProduct.phone}</li>` : ''}
