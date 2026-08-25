@@ -28,14 +28,18 @@ export default async () => {
     resolve: {
       alias: {
         '@': SRC_DIR,
-        '@js': SRC_DIR + '/js/', 
+        '@js': SRC_DIR + '/js/',
         'db': SRC_DIR + '/js/db.js',
         'share': SRC_DIR + '/js/share.js',
       },
     },
     server: {
-      https: true,
+      https: false, // false for serveo, true for ngrok
       host: true,
+      allowedHosts: [
+        '.serveousercontent.com',
+        '.ngrok-free.app',
+      ]
     },
     esbuild: {
       jsxFactory: '$jsx',
