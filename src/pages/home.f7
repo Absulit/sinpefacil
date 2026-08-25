@@ -50,6 +50,10 @@
       </div>
 
       <div class="block">
+        <button id="install" class="button button-raised button-fill display-none">Instalar en teléfono</button>
+      </div>
+
+      <div class="block">
         ${i18next.t('credits')} <a class="external" target="_blank" href="https://mastodon.social/@absulit">@absulit</a>
       </div>
 
@@ -59,7 +63,34 @@
 <script>
   import i18next from 'i18next';
   import { getOption, saveOption, Keys } from 'db';
-  export default async (props, { $f7, $update }) => {
+  export default async (props, { $f7, $update, $on }) => {
+
+    $on('pageInit', async () => {
+
+
+      let installPrompt = null;
+      const installButton = document.querySelector("#install");
+
+      window.addEventListener("beforeinstallprompt", (event) => {
+        event.preventDefault();
+        installPrompt = event;
+        installButton.classList.remove('display-none');
+      });
+
+      installButton.addEventListener("click", async () => {
+        if (!installPrompt) {
+          return;
+        }
+        const result = await installPrompt.prompt();
+        console.log(`Install prompt was: ${result.outcome}`);
+        disableInAppInstallPrompt();
+      });
+
+      function disableInAppInstallPrompt() {
+        installPrompt = null;
+        installButton.classList.add('display-none');
+      }
+    })
 
     const pageIndexToLoad = await getOption(Keys.PAGE_TO_LOAD, 0);
     let activeStrongButton = pageIndexToLoad;

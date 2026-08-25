@@ -34,7 +34,7 @@ export default async () => {
       },
     },
     server: {
-      https: false,
+      https: true,
       host: true,
     },
     esbuild: {
