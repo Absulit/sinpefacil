@@ -7,8 +7,10 @@
       </div>
     </div>
 
+    ${products.value.length > 0 ? $h`
+
     <div class="fab fab-right-bottom">
-      <a>
+      <a @click="${onClickAdd}">
         <i class="icon f7-icons if-not-md">plus</i>
         <i class="icon f7-icons if-not-md">xmark</i>
 
@@ -16,6 +18,8 @@
         <i class="icon material-icons md-only">close</i>
       </a>
 
+      <!-- buttons for later -->
+      <!-- 
       <div class="fab-buttons fab-buttons-top">
         <a href="" class="fab-label-button">
           <span>1</span>
@@ -29,8 +33,10 @@
           <span>3</span>
           <span class="fab-label">Borrar</span>
         </a>
-      </div>
+      </div> 
+      -->
     </div>
+    `: ''}
 
     <div class="page-content">
       <div class="list list-strong list-dividers-ios list-outline-ios inset-md">
@@ -45,7 +51,7 @@
           </p>
 
           <div class="block">
-            <button class="button button-fill popup-open" @click="${() => $f7.emit('openQRDataPopup', null)}">
+            <button class="button button-fill popup-open" @click="${onClickAdd}">
               Agregar Nuevo
             </button>
           </div>
@@ -92,6 +98,9 @@
 
     const products = $store.getters.products;
 
+    const onClickAdd = () => {
+      $f7.emit('openQRDataPopup', null);
+    }
 
     return $render;
   }

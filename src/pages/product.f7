@@ -16,6 +16,11 @@
             id="btn-pin">
             <i class="f7-icons">pencil</i>
           </a>
+          <!-- Share QR -->
+          <a href="#" class="link icon-only popup-open" @click="${share}"
+            id="btn-pin">
+            <i class="f7-icons">square_arrow_up</i>
+          </a>
           <!-- Overflow / More Menu -->
           <a href="#" class="link icon-only popover-open" data-popover=".popover-menu">
             <i class="f7-icons">ellipsis_vertical</i>
@@ -58,6 +63,7 @@
 <script>
 
   import QRCodeStyling from 'qr-code-styling';
+  import shareLink from 'share';
   export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
     const products = $store.getters.products;
     const productId = +$f7route.params.id;
@@ -129,6 +135,17 @@
 
     const printProduct = () => {
       console.log('printProduct');
+    }
+
+    const share = () => {
+      const { phone, name, price, detail } = currentProduct;
+      const url = encodeURI(`${location.origin + location.pathname}?phone=${phone}&name=${name}&price=${price}&detail=${detail}`);
+      shareLink($f7, `
+      ${name}
+      ${phone}
+      ${price}
+      ${detail}
+      `, url)
     }
 
     return $render;
