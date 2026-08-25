@@ -1,25 +1,25 @@
 <template>
   <div class="page" data-name="home">
     <!-- Top Navbar -->
-    <div class="navbar navbar-large">
+    <div class="navbar">
       <div class="navbar-bg"></div>
       <div class="navbar-inner">
-        <div class="left">
+        <!-- <div class="left">
           <a href="#" class="link icon-only panel-open" data-panel="left">
             <i class="icon f7-icons if-not-md">menu</i>
             <i class="icon material-icons if-md">menu</i>
           </a>
-        </div>
-        <div class="title sliding">sinpefacil</div>
+        </div> -->
+        <div class="title sliding ">SINPE Fácil</div>
         <div class="right">
           <a href="/settings/" class="link icon-only" data-name="settings" data-url="/settings/">
             <i class="icon f7-icons if-not-md">gear_alt_fill</i>
             <i class="icon material-icons if-md">settings</i>
           </a>
         </div>
-        <div class="title-large">
-          <div class="title-large-text">sinpefacil</div>
-        </div>
+        <!-- <div class="title-large">
+          <div class="title-large-text">SINPE Fácil</div>
+        </div> -->
       </div>
     </div>
 
