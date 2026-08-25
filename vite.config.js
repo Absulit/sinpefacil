@@ -34,8 +34,12 @@ export default async () => {
       },
     },
     server: {
-      https: true,
+      https: false, // false for serveo, true for ngrok
       host: true,
+      allowedHosts: [
+        '.serveousercontent.com',
+        '.ngrok-free.app',
+      ]
     },
     esbuild: {
       jsxFactory: '$jsx',
