@@ -40,7 +40,7 @@
     "cross-env": "10.1.0",
     "postcss-preset-env": "11.4.0",
     "rollup-plugin-framework7": "1.2.1",
-    "vite": "8.2.1",
+    "vite": "8.2.2",
     "workbox-cli": "7.4.1"
   },
   "overrides": {
