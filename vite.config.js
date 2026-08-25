@@ -30,6 +30,7 @@ export default async () => {
         '@': SRC_DIR,
         '@js': SRC_DIR + '/js/', 
         'db': SRC_DIR + '/js/db.js',
+        'share': SRC_DIR + '/js/share.js',
       },
     },
     server: {
