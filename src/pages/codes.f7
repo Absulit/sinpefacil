@@ -1,0 +1,99 @@
+<template>
+  <div class="page" data-name="codes">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="title">Codes</div>
+      </div>
+    </div>
+
+    <div class="fab fab-right-bottom">
+      <a>
+        <i class="icon f7-icons if-not-md">plus</i>
+        <i class="icon f7-icons if-not-md">xmark</i>
+
+        <i class="icon material-icons md-only">add</i>
+        <i class="icon material-icons md-only">close</i>
+      </a>
+
+      <div class="fab-buttons fab-buttons-top">
+        <a href="" class="fab-label-button">
+          <span>1</span>
+          <span class="fab-label">Editar</span>
+        </a>
+        <a href="" class="fab-label-button">
+          <span>2</span>
+          <span class="fab-label">Imprimir</span>
+        </a>
+        <a href="" class="fab-label-button">
+          <span>3</span>
+          <span class="fab-label">Borrar</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <div class="list list-strong list-dividers-ios list-outline-ios inset-md">
+
+        ${products.value.length === 0 ? $h`
+        <div class="empty-state block text-align-center margin-top">
+          <i class="icon f7-icons size-50 color-gray">archivebox</i>
+          <p class="color-gray">No hay productos</p>
+          <p>
+            Agregue aquí un código QR por cada producto que quiera vender, por ejemplo:
+            Palomitas a mil colones.
+          </p>
+
+          <div class="block">
+            <button class="button button-fill popup-open" @click="${() => $f7.emit('openQRDataPopup', null)}">
+              Agregar Nuevo
+            </button>
+          </div>
+
+        </div>
+        `: ''}
+
+
+        <ul>
+          ${products.value.map((product) => $h`
+          <p>Seleccione un item de la lista para ver el código QR.</p>
+          <li>
+            <a class="item-content item-link" href="/product/${product.id}/">
+              <div class="item-media">
+                <i class="icon f7-icons if-not-md">qrcode</i>
+                <i class="icon material-icons if-md">qr_code</i>
+              </div>
+              <div class="item-inner">
+                <div class="item-title">${product.name}</div>
+              </div>
+            </a>
+          </li>
+          `)}
+        </ul>
+      </div>
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+  </div>
+
+
+</template>
+<script>
+  export default (props, { $f7, $store, $on, $el }) => {
+
+    const products = $store.getters.products;
+
+
+    return $render;
+  }
+
+</script>
