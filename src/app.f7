@@ -18,7 +18,7 @@
       </div>
     </div>
     <!-- Right panel with reveal effect-->
-    <div class="panel panel-right panel-reveal dark">
+    <!-- <div class="panel panel-right panel-reveal dark">
       <div class="view">
         <div class="page">
           <div class="navbar">
@@ -32,7 +32,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Create QR product Popup -->
     <div class="popup qr-data-popup">
