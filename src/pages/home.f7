@@ -77,6 +77,10 @@
         installButton.classList.remove('display-none');
       });
 
+      window.addEventListener("appinstalled", () => {
+        disableInAppInstallPrompt();
+      });
+
       installButton.addEventListener("click", async () => {
         if (!installPrompt) {
           return;
