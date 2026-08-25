@@ -28,13 +28,13 @@ export default async () => {
     resolve: {
       alias: {
         '@': SRC_DIR,
-        '@js': SRC_DIR + '/js/', 
+        '@js': SRC_DIR + '/js/',
         'db': SRC_DIR + '/js/db.js',
         'share': SRC_DIR + '/js/share.js',
       },
     },
     server: {
-      https: true,
+      https: false,
       host: true,
     },
     esbuild: {
