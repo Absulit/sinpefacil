@@ -86,7 +86,7 @@
         displayValues.push(bank.name);
       });
 
-      const bankId = await getOption('selectedBank');
+      let bankId = await getOption('selectedBank');
 
       const bankPicker = $f7.picker.create({
         inputEl: '#bank',
@@ -108,6 +108,7 @@
             // const selectedId = bankPicker.value[0];
             // const selectedName = bankPicker.displayValue[0];
             const selectedId = values[0];
+            bankId = selectedId;
             const selectedName = displayValues[0];
             console.log('bank id:', selectedId);
             saveOption('selectedBank', +selectedId);
