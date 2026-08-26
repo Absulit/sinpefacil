@@ -17,7 +17,7 @@
 <script>
   import i18next from 'i18next';
   import QrScanner from 'qr-scanner';
-  import { getOption, Keys } from 'db';
+  import { getOption, Keys, db } from 'db';
   function takePhoto() {
     console.log('---- takePhoto');
 
@@ -52,67 +52,65 @@
 
 
         }
+
+
+        let isNavigating = false;
+        const cam = document.getElementById('cam');
+        const qrScanner = new QrScanner(
+          cam,
+          async result => {
+            if (isNavigating) return;
+            isNavigating = true;
+
+            console.log('decoded qr code:', result)
+
+            const data = Object.fromEntries(new URL(result.data).searchParams);
+            const { phone, name, price, detail } = data;
+
+            // if ($f7.device.ios) {
+            //   // rawData = rawData.replace('?body=', '&body=');
+            // }
+
+            // qrScanner.stop();
+
+            const bankId = await getOption(Keys.SELECTED_BANK);
+            const bank = await db.banks.get(bankId);
+            $f7.dialog.confirm(
+              `Enviar SMS a ${bank.shortname}?`,
+              'Código QR leído',
+              () => {
+
+
+
+                window.location.href = `sms:${bank.phone}?body=PASE ${price} ${phone} ${name} ${detail}`;
+                isNavigating = false;
+              },
+              () => {
+                // Reset flag if user cancels
+                isNavigating = false;
+              }
+            );
+
+            // const link = document.createElement('a');
+            // link.href = `sms:${888}?body=PASE ${price} ${phone} ${detail}`;
+            // document.body.appendChild(link);
+            // link.click();
+            // document.body.removeChild(link);
+
+
+
+          },
+          {
+            highlightScanRegion: true,
+            returnDetailedScanResult: true
+          }
+        );
+        qrScanner.start();
+
+
       })
 
-      let isNavigating = false;
-      const cam = document.getElementById('cam');
-      const qrScanner = new QrScanner(
-        cam,
-        result => {
-          if (isNavigating) return;
-          isNavigating = true;
 
-          console.log('decoded qr code:', result)
-
-          const data = Object.fromEntries(new URL(result.data).searchParams);
-          const { phone, name, price, detail } = data;
-
-          // if ($f7.device.ios) {
-          //   // rawData = rawData.replace('?body=', '&body=');
-          // }
-
-          // qrScanner.stop();
-
-
-          $f7.dialog.confirm(
-            'Enviar SMS?',
-            'Código QR leído',
-            async () => {
-
-              const bankId = await getOption(Keys.SELECTED_BANK);
-              const bank = await db.banks.get(bankId);
-              
-              window.location.href = `sms:${888}?body=PASE ${price} ${phone} ${name} ${detail}`;
-              isNavigating = false;
-            },
-            () => {
-              // Reset flag if user cancels
-              isNavigating = false;
-            }
-          );
-
-
-
-
-
-
-
-
-          // const link = document.createElement('a');
-          // link.href = `sms:${888}?body=PASE ${price} ${phone} ${detail}`;
-          // document.body.appendChild(link);
-          // link.click();
-          // document.body.removeChild(link);
-
-
-
-        },
-        {
-          highlightScanRegion: true,
-          returnDetailedScanResult: true
-        }
-      );
-      qrScanner.start();
     })
 
     return $render;

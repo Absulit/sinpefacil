@@ -10,15 +10,16 @@ db.version(2).stores({
     phones: '++id, name, &number',
 });
 
-db.on('populate', transaction => {
-    transaction.table('banks').bulkAdd([
+const bankCount = await db.banks.count();
+if (bankCount === 0) {
+    db.banks.bulkAdd([
         { name: 'BAC Credomatic', shortname: 'BAC', phone: 70701222 },
         { name: 'Banco Nacional de Costa Rica', shortname: 'BNCR', phone: 2627 },
         { name: 'Banco de Costa Rica', shortname: 'BCR', phone: 2272 },
         { name: 'Banco Davivienda', shortname: 'Davivienda', phone: 70707474 },
         { name: 'Banco BCT', shortname: 'BCT', phone: 60400300 },
     ])
-})
+}
 
 /**
  * Constant keys for values available to store.
