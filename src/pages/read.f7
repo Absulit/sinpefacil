@@ -17,13 +17,21 @@
 <script>
   import i18next from 'i18next';
   import QrScanner from 'qr-scanner';
+  import { getOption } from 'db'
   function takePhoto() {
     console.log('---- takePhoto');
 
   }
 
-  export default (props, { $f7, $on, }) => {
-    $on('pageInit', () => {
+
+
+  export default (props, { $f7, $on, $el }) => {
+
+    $on('pageInit', async (e, page) => {
+      const bankId = await getOption('selectedBank');
+      console.log('---- bankId', bankId);
+
+
       let isNavigating = false;
       const cam = document.getElementById('cam');
       const qrScanner = new QrScanner(
