@@ -71,8 +71,8 @@
   </div>
 </template>
 <script>
-  import { db } from 'db';
-  export default (props, { $f7, $on }) => {
+  import { db, getOption, saveOption } from 'db';
+  export default async (props, { $f7, $on }) => {
 
     $on('pageInit', async () => {
       const banks = await db.banks.toArray();
@@ -86,6 +86,8 @@
         displayValues.push(bank.name);
       });
 
+      const bankId = await getOption('selectedBank');
+
       const bankPicker = $f7.picker.create({
         inputEl: '#bank',
         cols: [
@@ -94,7 +96,13 @@
             displayValues
           }
         ],
-        formatValue: (values, displayValues) => displayValues[0],
+        formatValue: (values, displayValues) => {
+          if (bankId) {
+            const selectedBank = banks.filter(bank => bank.id === +bankId)[0];
+            return selectedBank.name;
+          }
+        },
+        value: [bankId],
         on: {
           change: (picker, values, displayValues) => {
             // const selectedId = bankPicker.value[0];
@@ -102,27 +110,18 @@
             const selectedId = values[0];
             const selectedName = displayValues[0];
             console.log('bank id:', selectedId);
+            saveOption('selectedBank', +selectedId);
           }
         }
       });
-
-      // Update data dynamically later
-      function updatePickerData(newData) {
-        const values = newData.map(item => item.value);
-        const displayValues = newData.map(item => item.title);
-
-        bankPicker.cols[0].values = values;
-        bankPicker.cols[0].displayValues = displayValues;
-
-        bankPicker.updateValue();
-      }
     })
 
 
-    let isFormDirty = true;
 
-    const handleBack = () => {
-      if (isFormDirty) {
+
+    const handleBack = async () => {
+      const bankId = await getOption('selectedBank')
+      if (!bankId) {
         $f7.dialog.confirm(
           'No ha seleccionado su banco. Salir? ',
           () => {// ok

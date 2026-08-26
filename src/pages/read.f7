@@ -17,7 +17,7 @@
 <script>
   import i18next from 'i18next';
   import QrScanner from 'qr-scanner';
-  import { getOption } from 'db'
+  import { getOption } from 'db';
   function takePhoto() {
     console.log('---- takePhoto');
 
@@ -45,7 +45,8 @@
             },
             () => {
               // Reset flag if user cancels
-
+              const tabLink = document.querySelectorAll('.tab-link')[0]
+              $f7.tab.show(`#view-home`, tabLink, true);
             }
           );
 
@@ -62,9 +63,7 @@
           isNavigating = true;
 
           console.log('decoded qr code:', result)
-          // Object.entries(result).forEach(([key, value]) => {
-          //   alert(`${key}: ${value}`);
-          // });
+
           const data = Object.fromEntries(new URL(result.data).searchParams);
           const { phone, name, price, detail } = data;
 
@@ -76,8 +75,8 @@
 
 
           $f7.dialog.confirm(
-            'Open Messages app to send SMS?',
-            'QR Code Scanned',
+            'Enviar SMS?',
+            'Código QR leído',
             () => {
               window.location.href = `sms:${888}?body=PASE ${price} ${phone} ${name} ${detail}`;
               isNavigating = false;
