@@ -36,7 +36,7 @@ store.dispatch('initApp').then(() => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const data = Object.fromEntries(urlParams.entries());
                 const { phone, name, price, detail } = data;
-                if(phone && name && price){
+                if (phone && name && price) {
                     window.location.href = `sms:${888}?body=PASE ${price} ${phone} ${name} ${detail}`;
                 }
             }
