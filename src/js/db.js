@@ -27,6 +27,7 @@ db.on('populate', transaction => {
 export const Keys = {
     PAGE_TO_LOAD: 'PAGE_TO_LOAD',
     LANG: 'LANG',
+    SELECTED_BANK: 'selectedBank',
 }
 
 Object.freeze(Keys);

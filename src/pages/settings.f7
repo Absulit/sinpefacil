@@ -71,7 +71,7 @@
   </div>
 </template>
 <script>
-  import { db, getOption, saveOption } from 'db';
+  import { db, getOption, saveOption, Keys } from 'db';
   export default async (props, { $f7, $on }) => {
 
     $on('pageInit', async () => {
@@ -86,7 +86,7 @@
         displayValues.push(bank.name);
       });
 
-      let bankId = await getOption('selectedBank');
+      let bankId = await getOption(Keys.SELECTED_BANK);
 
       const bankPicker = $f7.picker.create({
         inputEl: '#bank',
@@ -111,7 +111,7 @@
             bankId = selectedId;
             const selectedName = displayValues[0];
             console.log('bank id:', selectedId);
-            saveOption('selectedBank', +selectedId);
+            saveOption(Keys.SELECTED_BANK, +selectedId);
           }
         }
       });
@@ -121,7 +121,7 @@
 
 
     const handleBack = async () => {
-      const bankId = await getOption('selectedBank')
+      const bankId = await getOption(Keys.SELECTED_BANK)
       if (!bankId) {
         $f7.dialog.confirm(
           'No ha seleccionado su banco. Salir? ',

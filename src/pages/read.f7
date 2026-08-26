@@ -17,7 +17,7 @@
 <script>
   import i18next from 'i18next';
   import QrScanner from 'qr-scanner';
-  import { getOption } from 'db';
+  import { getOption, Keys } from 'db';
   function takePhoto() {
     console.log('---- takePhoto');
 
@@ -31,7 +31,7 @@
         const id = e.target.getAttribute('data-name');
         if ('read' !== id) return;
 
-        const bankId = await getOption('selectedBank');
+        const bankId = await getOption(Keys.SELECTED_BANK);
         console.log('---- bankId', bankId);
 
         if (!bankId) {
@@ -77,7 +77,11 @@
           $f7.dialog.confirm(
             'Enviar SMS?',
             'Código QR leído',
-            () => {
+            async () => {
+
+              const bankId = await getOption(Keys.SELECTED_BANK);
+              const bank = await db.banks.get(bankId);
+              
               window.location.href = `sms:${888}?body=PASE ${price} ${phone} ${name} ${detail}`;
               isNavigating = false;
             },
