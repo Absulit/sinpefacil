@@ -30,13 +30,7 @@
               <div class="item-inner">
                 <div class="item-title item-label">Banco</div>
                 <div class="item-input-wrap">
-                  <select>
-                    <option>BAC</option>
-                    <option>BNCR</option>
-                    <option>BCR</option>
-                    <option>Banco Davivienda</option>
-                    <option>Banco BCT</option>
-                  </select>
+                  <input id="bank" type="text" placeholder="Banco" />
                 </div>
               </div>
             </div>
@@ -77,7 +71,61 @@
   </div>
 </template>
 <script>
-  export default () => {
+  import { db } from 'db';
+  export default (props, { $f7, $on }) => {
+
+    $on('pageInit', async () => {
+      const banks = await db.banks.toArray();
+      console.log(banks);
+
+      let values = [];
+      let displayValues = [];
+
+      banks.forEach(bank => {
+        values.push(bank.id);
+        displayValues.push(bank.name);
+      });
+
+      const bankPicker = $f7.picker.create({
+        inputEl: '#bank',
+        cols: [
+          {
+            values,
+            displayValues
+          }
+        ],
+        formatValue: (values, displayValues) => displayValues[0],
+        on: {
+          change: (picker, values, displayValues) => {
+            // const selectedId = bankPicker.value[0];
+            // const selectedName = bankPicker.displayValue[0];
+            const selectedId = values[0];
+            const selectedName = displayValues[0];
+            console.log('bank id:', selectedId);
+          }
+        }
+      });
+
+      // Update data dynamically later
+      function updatePickerData(newData) {
+        const values = newData.map(item => item.value);
+        const displayValues = newData.map(item => item.title);
+
+        bankPicker.cols[0].values = values;
+        bankPicker.cols[0].displayValues = displayValues;
+
+        bankPicker.updateValue();
+      }
+    })
+
+
+
+
+
+
+
+
+
     return $render;
   };
 </script>

@@ -3,7 +3,7 @@ import { Dexie } from 'dexie';
 export const db = new Dexie('sf');
 
 // Define database schema
-db.version(1).stores({
+db.version(2).stores({
     products: '++id, phone, name, price',
     options: 'key, value',
     banks: '++id, name, shortname, &phone',
