@@ -1,6 +1,5 @@
 import $ from 'dom7';
 import Framework7 from 'framework7/bundle';
-import { Dexie } from 'dexie';
 
 
 // Import F7 Styles

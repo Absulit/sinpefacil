@@ -5,8 +5,20 @@ export const db = new Dexie('sf');
 // Define database schema
 db.version(1).stores({
     products: '++id, phone, name, price',
-    options: 'key, value'
+    options: 'key, value',
+    banks: '++id, name, shortname, &phone',
+    phones: '++id, name, &number',
 });
+
+db.on('populate', transaction => {
+    transaction.table('banks').bulkAdd([
+        { name: 'BAC Credomatic', shortname: 'BAC', phone: 70701222 },
+        { name: 'Banco Nacional de Costa Rica', shortname: 'BNCR', phone: 2627 },
+        { name: 'Banco de Costa Rica', shortname: 'BCR', phone: 2272 },
+        { name: 'Banco Davivienda', shortname: 'Davivienda', phone: 70707474 },
+        { name: 'Banco BCT', shortname: 'BCT', phone: 60400300 },
+    ])
+})
 
 /**
  * Constant keys for values available to store.
