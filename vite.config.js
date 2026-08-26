@@ -15,7 +15,7 @@ export default async () => {
 
     ],
     root: SRC_DIR,
-    base: './',
+    base: '/',
     publicDir: PUBLIC_DIR,
     build: {
       outDir: BUILD_DIR,
