@@ -3,11 +3,11 @@
   "short_name": "sinpefacil",
   "description": "sinpefacil",
   "lang": "en-US",
-  "start_url": "/sinpefacil/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#EE350F",
   "theme_color": "#EE350F",
-  "scope": "/sinpefacil/",
+  "scope": "./",
   "launch_handler": {
     "client_mode": "focus-existing"
   },
