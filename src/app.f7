@@ -18,7 +18,7 @@
       </div>
     </div>
     <!-- Right panel with reveal effect-->
-    <div class="panel panel-right panel-reveal dark">
+    <!-- <div class="panel panel-right panel-reveal dark">
       <div class="view">
         <div class="page">
           <div class="navbar">
@@ -32,7 +32,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Create QR product Popup -->
     <div class="popup qr-data-popup">
@@ -40,10 +40,10 @@
         <div class="navbar">
           <div class="navbar-bg"></div>
           <div class="navbar-inner">
-            <div class="title">${productId ? 'Edit Item' : 'Create Item'}</div>
+            <div class="title">${productId ? 'Editar QR / Producto' : 'Crear QR / Producto'}</div>
             <div class="right">
               <!-- Close button -->
-              <a class="link popup-close">Close</a>
+              <a class="link popup-close">Cerrar</a>
             </div>
           </div>
         </div>
@@ -53,9 +53,9 @@
             <ul>
               <li class="item-content item-input">
                 <div class="item-inner">
-                  <div class="item-title item-label">Phone</div>
+                  <div class="item-title item-label">Teléfono</div>
                   <div class="item-input-wrap">
-                    <input type="tel" name="phone" placeholder="12345678 (if not set uses the default)" validate
+                    <input type="tel" name="phone" placeholder="11118888 (ó el predeterminado)" validate
                       pattern="[0-9]{8}" autocomplete="tel" />
                     <span class="input-clear-button"></span>
                   </div>
@@ -64,9 +64,9 @@
 
               <li class="item-content item-input">
                 <div class="item-inner">
-                  <div class="item-title item-label">Name</div>
+                  <div class="item-title item-label">Nombre</div>
                   <div class="item-input-wrap">
-                    <input type="text" name="name" placeholder="My Product to sell" required validate />
+                    <input type="text" name="name" placeholder="Producto a vender" required validate />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -74,7 +74,7 @@
 
               <li class="item-content item-input">
                 <div class="item-inner">
-                  <div class="item-title item-label">Price</div>
+                  <div class="item-title item-label">Precio</div>
                   <div class="item-input-wrap">
                     <input type="tel" name="price" placeholder="₡0.00" inputmode="decimal" required validate />
                     <span class="input-clear-button"></span>
@@ -84,9 +84,9 @@
 
               <li class="item-content item-input">
                 <div class="item-inner">
-                  <div class="item-title item-label">Detail</div>
+                  <div class="item-title item-label">Detalle </div>
                   <div class="item-input-wrap">
-                    <input type="text" name="detail" placeholder="A description" validate />
+                    <input type="text" name="detail" placeholder="Una descripción" validate />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -147,7 +147,7 @@
       </div>
 
       <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
-      <div id="view-home" class="view view-main view-init tab" data-url="/">
+      <div id="view-home" class="view view-main view-init tab" data-name="home" data-url="/">
         <!-- Home page will be loaded here dynamically from / route -->
       </div>
 
@@ -157,7 +157,7 @@
       </div>
 
       <!-- Read view -->
-      <div id="view-read" class="view view-init tab" data-url="/read/">
+      <div id="view-read" class="view view-init tab" data-name="read" data-url="/read/">
         <!-- Read page will be loaded here dynamically from / route -->
       </div>
 

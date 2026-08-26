@@ -3,7 +3,7 @@
     <div class="navbar">
       <div class="navbar-bg"></div>
       <div class="navbar-inner sliding">
-        <div class="title">read </div>
+        <div class="title">Leer y Pagar</div>
       </div>
     </div>
     <div class="page-content display-flex flex-direction-column">
@@ -17,70 +17,100 @@
 <script>
   import i18next from 'i18next';
   import QrScanner from 'qr-scanner';
+  import { getOption, Keys, db } from 'db';
   function takePhoto() {
     console.log('---- takePhoto');
 
   }
 
-  export default (props, { $f7, $on, }) => {
-    $on('pageInit', () => {
-      let isNavigating = false;
-      const cam = document.getElementById('cam');
-      const qrScanner = new QrScanner(
-        cam,
-        result => {
-          if (isNavigating) return;
-          isNavigating = true;
+  export default (props, { $f7, $on, $el }) => {
 
-          console.log('decoded qr code:', result)
-          // Object.entries(result).forEach(([key, value]) => {
-          //   alert(`${key}: ${value}`);
-          // });
-          const data = Object.fromEntries(new URL(result.data).searchParams);
-          const { phone, name, price, detail } = data;
+    $on('pageInit', async (e, page) => {
 
-          // if ($f7.device.ios) {
-          //   // rawData = rawData.replace('?body=', '&body=');
-          // }
+      $f7.$(document).on('tab:show', async (e, page) => {
+        const id = e.target.getAttribute('data-name');
+        if ('read' !== id) return;
 
-          // qrScanner.stop();
+        const bankId = await getOption(Keys.SELECTED_BANK);
+        console.log('---- bankId', bankId);
 
+        if (!bankId) {
+          console.log('---- request to select bank');
 
           $f7.dialog.confirm(
-            'Open Messages app to send SMS?',
-            'QR Code Scanned',
+            'Antes de leer un código QR, debe seleccionar su banco.',
+            'SINPE Fácil',
             () => {
-              window.location.href = `sms:${888}?body=PASE ${price} ${phone} ${name} ${detail}`;
-              isNavigating = false;
+              $f7.views.current.router.navigate('/settings/')
             },
             () => {
               // Reset flag if user cancels
-              isNavigating = false;
+              const tabLink = document.querySelectorAll('.tab-link')[0]
+              $f7.tab.show(`#view-home`, tabLink, true);
             }
           );
 
 
-
-
-
-
-
-
-          // const link = document.createElement('a');
-          // link.href = `sms:${888}?body=PASE ${price} ${phone} ${detail}`;
-          // document.body.appendChild(link);
-          // link.click();
-          // document.body.removeChild(link);
-
-
-
-        },
-        {
-          highlightScanRegion: true,
-          returnDetailedScanResult: true
         }
-      );
-      qrScanner.start();
+
+
+        let isNavigating = false;
+        const cam = document.getElementById('cam');
+        const qrScanner = new QrScanner(
+          cam,
+          async result => {
+            if (isNavigating) return;
+            isNavigating = true;
+
+            console.log('decoded qr code:', result)
+
+            const data = Object.fromEntries(new URL(result.data).searchParams);
+            const { phone, name, price, detail } = data;
+
+            // if ($f7.device.ios) {
+            //   // rawData = rawData.replace('?body=', '&body=');
+            // }
+
+            // qrScanner.stop();
+
+            const bankId = await getOption(Keys.SELECTED_BANK);
+            const bank = await db.banks.get(bankId);
+            $f7.dialog.confirm(
+              `Enviar SMS a ${bank.shortname}?`,
+              'Código QR leído',
+              () => {
+
+
+
+                window.location.href = `sms:${bank.phone}?body=PASE ${price} ${phone} ${name} ${detail}`;
+                isNavigating = false;
+              },
+              () => {
+                // Reset flag if user cancels
+                isNavigating = false;
+              }
+            );
+
+            // const link = document.createElement('a');
+            // link.href = `sms:${888}?body=PASE ${price} ${phone} ${detail}`;
+            // document.body.appendChild(link);
+            // link.click();
+            // document.body.removeChild(link);
+
+
+
+          },
+          {
+            highlightScanRegion: true,
+            returnDetailedScanResult: true
+          }
+        );
+        qrScanner.start();
+
+
+      })
+
+
     })
 
     return $render;

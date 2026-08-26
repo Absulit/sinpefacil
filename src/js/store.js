@@ -23,8 +23,6 @@ const store = createStore({
     actions: {
         async initApp({ state }) {
             state.products = await db.products.toArray();
-            console.log(state.products);
-
         },
 
         async addProduct({ state }, product) {
