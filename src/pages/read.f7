@@ -29,15 +29,27 @@
 
       $f7.$(document).on('tab:show', async (e, page) => {
         const id = e.target.getAttribute('data-name');
-        console.log(id);
-        if ('read' === id) {
-          const bankId = await getOption('selectedBank');
-          console.log('---- bankId', bankId);
+        if ('read' !== id) return;
 
-          if(!bankId){
-            console.log('---- request to select bank');
-            
-          }
+        const bankId = await getOption('selectedBank');
+        console.log('---- bankId', bankId);
+
+        if (!bankId) {
+          console.log('---- request to select bank');
+
+          $f7.dialog.confirm(
+            'Antes de leer un código QR, debe seleccionar su banco.',
+            'SINPE Fácil',
+            () => {
+              $f7.views.current.router.navigate('/settings/')
+            },
+            () => {
+              // Reset flag if user cancels
+
+            }
+          );
+
+
         }
       })
 

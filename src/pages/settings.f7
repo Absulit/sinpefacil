@@ -4,7 +4,7 @@
       <div class="navbar-bg"></div>
       <div class="navbar-inner sliding">
         <div class="left">
-          <a href="#" class="link back">
+          <a href="#" class="link back" @click="${handleBack}">
             <i class="icon icon-back"></i>
           </a>
         </div>
@@ -119,8 +119,24 @@
     })
 
 
+    let isFormDirty = true;
 
-
+    const handleBack = () => {
+      if (isFormDirty) {
+        $f7.dialog.confirm(
+          'No ha seleccionado su banco. Salir? ',
+          () => {// ok
+            const tabLink = document.querySelectorAll('.tab-link')[0]
+            $f7.tab.show(`#view-home`, tabLink, true);
+          },
+          () => { // cancel
+            $f7.views.current.router.navigate('/settings/')
+          }
+        );
+      } else {
+        $f7.views.current.router.back()
+      }
+    };
 
 
 
