@@ -157,7 +157,7 @@
       </div>
 
       <!-- Read view -->
-      <div id="view-read" class="view view-init tab" data-url="/read/">
+      <div id="view-read" class="view view-init tab" data-name="read" data-url="/read/">
         <!-- Read page will be loaded here dynamically from / route -->
       </div>
 
