@@ -23,14 +23,23 @@
 
   }
 
-
-
   export default (props, { $f7, $on, $el }) => {
 
     $on('pageInit', async (e, page) => {
-      const bankId = await getOption('selectedBank');
-      console.log('---- bankId', bankId);
 
+      $f7.$(document).on('tab:show', async (e, page) => {
+        const id = e.target.getAttribute('data-name');
+        console.log(id);
+        if ('read' === id) {
+          const bankId = await getOption('selectedBank');
+          console.log('---- bankId', bankId);
+
+          if(!bankId){
+            console.log('---- request to select bank');
+            
+          }
+        }
+      })
 
       let isNavigating = false;
       const cam = document.getElementById('cam');
