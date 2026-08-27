@@ -70,7 +70,7 @@
                 <i class="icon material-icons if-md">qr_code</i>
               </div>
               <div class="item-inner">
-                <div class="item-title">${product.name}</div>
+                <div class="item-title">${product.name} - ₡${product.price} </div>
               </div>
             </a>
           </li>
