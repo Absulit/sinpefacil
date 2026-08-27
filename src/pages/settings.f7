@@ -26,14 +26,18 @@
             </div>
           </li>
           <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-title item-label">Banco</div>
-                <div class="item-input-wrap">
-                  <input id="bank" type="text" placeholder="Banco" />
+
+            <a class="item-link smart-select smart-select-init">
+              <select id="banks" name="fruits">
+                <!-- <option value="apple" selected>Apple</option> -->
+              </select>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">Banco</div>
                 </div>
               </div>
-            </div>
+            </a>
+
           </li>
 
           <li>
@@ -88,33 +92,19 @@
 
       let bankId = await getOption(Keys.SELECTED_BANK);
 
-      const bankPicker = $f7.picker.create({
-        inputEl: '#bank',
-        cols: [
-          {
-            values,
-            displayValues
-          }
-        ],
-        formatValue: (values, displayValues) => {
-          if (bankId) {
-            const selectedBank = banks.filter(bank => bank.id === +bankId)[0];
-            return selectedBank.name;
-          }
-        },
-        value: [bankId],
-        on: {
-          change: (picker, values, displayValues) => {
-            // const selectedId = bankPicker.value[0];
-            // const selectedName = bankPicker.displayValue[0];
-            const selectedId = values[0];
-            bankId = selectedId;
-            const selectedName = displayValues[0];
-            console.log('bank id:', selectedId);
-            saveOption(Keys.SELECTED_BANK, +selectedId);
-          }
-        }
-      });
+      const banksSelect = document.getElementById('banks');
+      banks.forEach(bank => {
+        const option = new Option(bank.name, bank.id, bankId === bank.id)
+        banksSelect.append(option);
+        console.log(option);
+        
+      })
+      banksSelect.addEventListener('change', e => {
+        console.log(e.target.value);
+        saveOption(Keys.SELECTED_BANK, +e.target.value);
+      })
+      banksSelect.dispatchEvent(new Event('change', { bubbles: true }));
+
     })
 
 
