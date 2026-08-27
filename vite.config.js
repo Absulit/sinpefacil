@@ -31,6 +31,7 @@ export default async () => {
         '@js': SRC_DIR + '/js/',
         'db': SRC_DIR + '/js/db.js',
         'share': SRC_DIR + '/js/share.js',
+        'sms': SRC_DIR + '/js/sms.js',
       },
     },
     server: {

@@ -18,6 +18,7 @@
   import i18next from 'i18next';
   import QrScanner from 'qr-scanner';
   import { getOption, Keys, db } from 'db';
+  import generateSINPESMS from 'sms';
   function takePhoto() {
     console.log('---- takePhoto');
 
@@ -79,10 +80,7 @@
               `Enviar SMS a ${bank.shortname}?`,
               'Código QR leído',
               () => {
-
-
-
-                window.location.href = `sms:${bank.phone}?body=PASE ${price} ${phone} ${name} ${detail}`;
+                generateSINPESMS(bank.phone, price, phone, name, detail)
                 isNavigating = false;
               },
               () => {
