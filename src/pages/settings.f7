@@ -28,7 +28,7 @@
           <li>
 
             <a class="item-link smart-select smart-select-init">
-              <select id="banks" name="banks">
+              <select id="banksSelect" name="banksSelect">
                 <!-- <option value="apple" selected>Apple</option> -->
               </select>
               <div class="item-content">
@@ -81,48 +81,26 @@
   export default async (props, { $f7, $on, $f7route }) => {
 
     // this means the user received a link to pay, but doesn't have defined bank
-    let linkShared = null
     $on('pageInit', async () => {
       const banks = await db.banks.toArray();
       console.log(banks);
 
       const { phone, name, price, detail } = $f7route.query;
-      linkShared = phone && name && price && detail;
-      if (linkShared) {
-        $f7.toolbar.hide('.toolbar');
-      }
-
-      let values = [];
-      let displayValues = [];
-
-      banks.forEach(bank => {
-        values.push(bank.id);
-        displayValues.push(bank.name);
-      });
 
       let bankId = await getOption(Keys.SELECTED_BANK);
 
-      const banksSelect = document.getElementById('banks');
+      const banksSelect = document.getElementById('banksSelect');
       banks.forEach(bank => {
         const option = new Option(bank.name, bank.id, bankId === bank.id)
         banksSelect.append(option);
-        console.log(option);
-
       })
+      banksSelect.value = bankId;
       banksSelect.addEventListener('change', e => {
-        console.log(e.target.value);
         saveOption(Keys.SELECTED_BANK, +e.target.value);
       })
       banksSelect.dispatchEvent(new Event('change', { bubbles: true }));
 
-      banksSelect.parentNode.addEventListener('click', e => {
-        console.log('open');
-        $f7.toolbar.hide('.toolbar');
-      })
     })
-
-
-
 
     const handleBack = async () => {
       const bankId = await getOption(Keys.SELECTED_BANK)
@@ -138,21 +116,10 @@
           }
         );
       } else {
-        // before we exit we need to generate the SMS for the link shared
-        if (linkShared) {
-          const bank = await db.banks.get(bankId);
-          const { phone, name, price, detail } = $f7route.query;
-          clearParams();
-          generateSINPESMS(bank.phone, price, phone, name, detail);
-        }
-
         $f7.views.current.router.back()
         $f7.toolbar.show('.toolbar');
       }
     };
-
-
-
 
 
     return $render;

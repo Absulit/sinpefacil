@@ -16,7 +16,7 @@ import store from './store.js';
 import App from '../app.f7';
 import { initI18n } from './i18n.js';
 import generateSINPESMS from 'sms';
-import { db, getOption, Keys } from 'db';
+import { db, getOption, saveOption, Keys } from 'db';
 import { clearParams } from 'url';
 
 await initI18n();
@@ -48,8 +48,21 @@ store.dispatch('initApp').then(() => {
                     app.dialog.confirm(
                         'Antes de enviar el SINPE, debe seleccionar su banco.',
                         'SINPE Fácil',
-                        () => { // ok
-                            app.views.current.router.navigate(`/settings/?phone=${phone}&name=${name}&price=${price}&detail=${detail}`)
+                        async () => { // ok
+                            //app.views.current.router.navigate(`/settings/?phone=${phone}&name=${name}&price=${price}&detail=${detail}`)
+                            const banks = await db.banks.toArray();
+                            const options = banks.map(bank => {
+                                return { text: bank.name, onClick: () => handleSelect(bank.id, data) }
+                            })
+
+                            app.actions.create({
+                                buttons: [
+                                    options,
+                                    [
+                                        { text: 'Cancelar', color: 'red' }
+                                    ]
+                                ]
+                            }).open();
                         },
                         () => { // cancel
                             const tabLink = document.querySelectorAll('.tab-link')[0]
@@ -78,3 +91,14 @@ store.dispatch('initApp').then(() => {
 
 });
 
+/**
+ * 
+ * @param {Number} bankId 
+ * @param {{price, phone, name, detail}} payload 
+ */
+async function handleSelect(bankId, { price, phone, name, detail }) {
+    const bank = await db.banks.get(bankId);
+    saveOption(Keys.SELECTED_BANK, bankId); // save bank for future links
+    clearParams();
+    generateSINPESMS(bank.phone, price, phone, name, detail);
+}
