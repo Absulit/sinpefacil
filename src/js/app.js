@@ -92,16 +92,23 @@ store.dispatch('initApp').then(() => {
         } : {},
     });
 
+    // BACK BUTTON: initial state
+    let isExiting = false;
+    if (!window.history.state) {
+        window.history.replaceState({ isInitial: true, tabId: document.querySelector('.tab-active')?.id }, '');
+    }
+
     // BACK BUTTON: This enables the back button on tabs
     app.on('tabShow', function (tabEl) {
         // adds entry to the history
         if (!window.history.state || window.history.state.tabId !== tabEl.id) {
-            window.history.pushState({ tabId: tabEl.id }, '');
+            safePushState({ tabId: tabEl.id }, '');
         }
     });
 
     // BACK BUTTON: change in history
     window.addEventListener('popstate', function (e) {
+        if (isExiting) return;
         const activeView = app.views.current || app.views.main;
 
         // if a page like `/settings/` return via f7
@@ -114,6 +121,12 @@ store.dispatch('initApp').then(() => {
             // load previous tab
             app.tab.show('#' + e.state.tabId, false);
         }
+
+        if (e.state && e.state.isInitial) {
+            window.history.pushState({ isInitial: true, tabId: document.querySelector('.tab-active')?.id }, '');
+            // TODO: ask user to exit
+        }
+
     });
 });
 
@@ -127,4 +140,21 @@ async function handleSelect(bankId, { price, phone, name, detail }) {
     saveOption(Keys.SELECTED_BANK, bankId); // save bank for future links
     clearParams();
     generateSINPESMS(bank.phone, price, phone, name, detail);
+}
+
+
+/**
+ * to avoid a warning on the console
+ * basically a wrapper
+ */
+function safePushState(stateObj, title, url) {
+    try {
+        if (window.history.length > 0) {
+            window.history.pushState(stateObj, title, url);
+        } else {
+            window.history.replaceState(stateObj, title, url);
+        }
+    } catch (e) {
+        window.history.replaceState(stateObj, title, url);
+    }
 }

@@ -27,7 +27,7 @@
           </li>
           <li>
 
-            <a class="item-link smart-select smart-select-init">
+            <a class="item-link smart-select smart-select-init" data-browser-history="true" data-open-in="page">
               <select id="banksSelect" name="banksSelect">
                 <!-- <option value="apple" selected>Apple</option> -->
               </select>
