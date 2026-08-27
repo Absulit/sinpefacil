@@ -33,6 +33,13 @@ store.dispatch('initApp').then(() => {
         store,
         routes,
 
+        view: {
+            pushState: true,
+            pushStateSeparator: '#!',
+            pushStateOnPop: true,
+            pushStatePreventOnMainPage: true,
+        },
+
         on: {
             init: async () => {
                 const urlParams = new URLSearchParams(window.location.search);
@@ -40,7 +47,7 @@ store.dispatch('initApp').then(() => {
                 const { phone, name, price, detail } = data;
                 const linkShared = phone && name && price && detail;
                 const bankId = await getOption(Keys.SELECTED_BANK);
-                
+
                 if (!bankId && linkShared) { // new user, no bank, we ask for it
                     app.dialog.confirm(
                         'Antes de enviar el SINPE, debe seleccionar su banco.',
@@ -85,6 +92,23 @@ store.dispatch('initApp').then(() => {
         } : {},
     });
 
+    // BACK BUTTON: This enables the back button on tabs
+    app.on('tabShow', function (tabEl) {
+        // adds entry to the history
+        if (!window.history.state || window.history.state.tabId !== tabEl.id) {
+            window.history.pushState({ tabId: tabEl.id }, '');
+        }
+    });
+
+    // BACK BUTTON: change in history
+    window.addEventListener('popstate', function (e) {
+        console.log('pop', e.state, e.state.isInitial);
+
+        if (e.state && e.state.tabId) {
+            // load previous tab
+            app.tab.show('#' + e.state.tabId, false);
+        }
+    });
 });
 
 /**
