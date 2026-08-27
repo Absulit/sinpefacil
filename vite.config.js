@@ -31,10 +31,12 @@ export default async () => {
         '@js': SRC_DIR + '/js/',
         'db': SRC_DIR + '/js/db.js',
         'share': SRC_DIR + '/js/share.js',
+        'sms': SRC_DIR + '/js/sms.js',
+        'url': SRC_DIR + '/js/url.js',
       },
     },
     server: {
-      https: false, // false for serveo, true for ngrok
+      https: true, // false for serveo, true for ngrok
       host: true,
       allowedHosts: [
         '.serveousercontent.com',

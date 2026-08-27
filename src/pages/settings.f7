@@ -26,14 +26,18 @@
             </div>
           </li>
           <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-title item-label">Banco</div>
-                <div class="item-input-wrap">
-                  <input id="bank" type="text" placeholder="Banco" />
+
+            <a class="item-link smart-select smart-select-init" data-browser-history="true" data-open-in="page">
+              <select id="banksSelect" name="banksSelect">
+                <!-- <option value="apple" selected>Apple</option> -->
+              </select>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">Banco</div>
                 </div>
               </div>
-            </div>
+            </a>
+
           </li>
 
           <li>
@@ -72,53 +76,27 @@
 </template>
 <script>
   import { db, getOption, saveOption, Keys } from 'db';
-  export default async (props, { $f7, $on }) => {
+  import generateSINPESMS from 'sms';
+  import { clearParams } from 'url';
+  export default async (props, { $f7, $on, $f7route }) => {
 
     $on('pageInit', async () => {
       const banks = await db.banks.toArray();
-      console.log(banks);
-
-      let values = [];
-      let displayValues = [];
+      const { phone, name, price, detail } = $f7route.query;
+      let bankId = await getOption(Keys.SELECTED_BANK);
+      const banksSelect = document.getElementById('banksSelect');
 
       banks.forEach(bank => {
-        values.push(bank.id);
-        displayValues.push(bank.name);
-      });
+        const option = new Option(bank.name, bank.id, bankId === bank.id)
+        banksSelect.append(option);
+      })
+      banksSelect.value = bankId;
+      banksSelect.addEventListener('change', e => {
+        saveOption(Keys.SELECTED_BANK, +e.target.value);
+      })
+      banksSelect.dispatchEvent(new Event('change', { bubbles: true }));
 
-      let bankId = await getOption(Keys.SELECTED_BANK);
-
-      const bankPicker = $f7.picker.create({
-        inputEl: '#bank',
-        cols: [
-          {
-            values,
-            displayValues
-          }
-        ],
-        formatValue: (values, displayValues) => {
-          if (bankId) {
-            const selectedBank = banks.filter(bank => bank.id === +bankId)[0];
-            return selectedBank.name;
-          }
-        },
-        value: [bankId],
-        on: {
-          change: (picker, values, displayValues) => {
-            // const selectedId = bankPicker.value[0];
-            // const selectedName = bankPicker.displayValue[0];
-            const selectedId = values[0];
-            bankId = selectedId;
-            const selectedName = displayValues[0];
-            console.log('bank id:', selectedId);
-            saveOption(Keys.SELECTED_BANK, +selectedId);
-          }
-        }
-      });
     })
-
-
-
 
     const handleBack = async () => {
       const bankId = await getOption(Keys.SELECTED_BANK)
@@ -135,11 +113,9 @@
         );
       } else {
         $f7.views.current.router.back()
+        $f7.toolbar.show('.toolbar');
       }
     };
-
-
-
 
 
     return $render;
