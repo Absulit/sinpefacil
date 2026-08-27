@@ -15,6 +15,9 @@ import store from './store.js';
 // Import main app component
 import App from '../app.f7';
 import { initI18n } from './i18n.js';
+import generateSINPESMS from 'sms';
+import { db, getOption, saveOption, Keys } from 'db';
+import { clearParams } from 'url';
 
 await initI18n();
 
@@ -31,13 +34,48 @@ store.dispatch('initApp').then(() => {
         routes,
 
         on: {
-            init: () => {
+            init: async () => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const data = Object.fromEntries(urlParams.entries());
                 const { phone, name, price, detail } = data;
-                if (phone && name && price) {
-                    window.location.href = `sms:${888}?body=PASE ${price} ${phone} ${name} ${detail}`;
+                const linkShared = phone && name && price && detail;
+                const bankId = await getOption(Keys.SELECTED_BANK);
+                
+                if (!bankId && linkShared) { // new user, no bank, we ask for it
+                    app.dialog.confirm(
+                        'Antes de enviar el SINPE, debe seleccionar su banco.',
+                        'SINPE Fácil',
+                        async () => { // ok
+                            const banks = await db.banks.toArray();
+                            const options = banks.map(bank => {
+                                return { text: bank.name, onClick: () => handleSelect(bank.id, data) }
+                            })
+
+                            app.actions.create({
+                                buttons: [
+                                    options,
+                                    [
+                                        { text: 'Cancelar', color: 'red' }
+                                    ]
+                                ]
+                            }).open();
+                        },
+                        () => { // cancel
+                            const tabLink = document.querySelectorAll('.tab-link')[0]
+                            app.tab.show(`#view-home`, tabLink, true);
+                            clearParams();
+                        }
+                    );
+
+                    return; // exit and SMS will be called after selecting bank
                 }
+
+                if (linkShared) {
+                    const bank = await db.banks.get(bankId);
+                    clearParams();
+                    generateSINPESMS(bank.phone, price, phone, name, detail);
+                }
+
             }
         },
 
@@ -49,3 +87,14 @@ store.dispatch('initApp').then(() => {
 
 });
 
+/**
+ * 
+ * @param {Number} bankId 
+ * @param {{price, phone, name, detail}} payload 
+ */
+async function handleSelect(bankId, { price, phone, name, detail }) {
+    const bank = await db.banks.get(bankId);
+    saveOption(Keys.SELECTED_BANK, bankId); // save bank for future links
+    clearParams();
+    generateSINPESMS(bank.phone, price, phone, name, detail);
+}

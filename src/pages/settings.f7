@@ -28,7 +28,7 @@
           <li>
 
             <a class="item-link smart-select smart-select-init">
-              <select id="banks" name="fruits">
+              <select id="banksSelect" name="banksSelect">
                 <!-- <option value="apple" selected>Apple</option> -->
               </select>
               <div class="item-content">
@@ -76,39 +76,27 @@
 </template>
 <script>
   import { db, getOption, saveOption, Keys } from 'db';
-  export default async (props, { $f7, $on }) => {
+  import generateSINPESMS from 'sms';
+  import { clearParams } from 'url';
+  export default async (props, { $f7, $on, $f7route }) => {
 
     $on('pageInit', async () => {
       const banks = await db.banks.toArray();
-      console.log(banks);
-
-      let values = [];
-      let displayValues = [];
-
-      banks.forEach(bank => {
-        values.push(bank.id);
-        displayValues.push(bank.name);
-      });
-
+      const { phone, name, price, detail } = $f7route.query;
       let bankId = await getOption(Keys.SELECTED_BANK);
+      const banksSelect = document.getElementById('banksSelect');
 
-      const banksSelect = document.getElementById('banks');
       banks.forEach(bank => {
         const option = new Option(bank.name, bank.id, bankId === bank.id)
         banksSelect.append(option);
-        console.log(option);
-        
       })
+      banksSelect.value = bankId;
       banksSelect.addEventListener('change', e => {
-        console.log(e.target.value);
         saveOption(Keys.SELECTED_BANK, +e.target.value);
       })
       banksSelect.dispatchEvent(new Event('change', { bubbles: true }));
 
     })
-
-
-
 
     const handleBack = async () => {
       const bankId = await getOption(Keys.SELECTED_BANK)
@@ -125,11 +113,9 @@
         );
       } else {
         $f7.views.current.router.back()
+        $f7.toolbar.show('.toolbar');
       }
     };
-
-
-
 
 
     return $render;
