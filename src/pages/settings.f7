@@ -28,7 +28,7 @@
           <li>
 
             <a class="item-link smart-select smart-select-init">
-              <select id="banks" name="fruits">
+              <select id="banks" name="banks">
                 <!-- <option value="apple" selected>Apple</option> -->
               </select>
               <div class="item-content">
@@ -77,6 +77,7 @@
 <script>
   import { db, getOption, saveOption, Keys } from 'db';
   import generateSINPESMS from 'sms';
+  import { clearParams } from 'url';
   export default async (props, { $f7, $on, $f7route }) => {
 
     // this means the user received a link to pay, but doesn't have defined bank
@@ -87,7 +88,7 @@
 
       const { phone, name, price, detail } = $f7route.query;
       linkShared = phone && name && price && detail;
-      if(linkShared){
+      if (linkShared) {
         $f7.toolbar.hide('.toolbar');
       }
 
@@ -114,6 +115,10 @@
       })
       banksSelect.dispatchEvent(new Event('change', { bubbles: true }));
 
+      banksSelect.parentNode.addEventListener('click', e => {
+        console.log('open');
+        $f7.toolbar.hide('.toolbar');
+      })
     })
 
 
@@ -137,6 +142,7 @@
         if (linkShared) {
           const bank = await db.banks.get(bankId);
           const { phone, name, price, detail } = $f7route.query;
+          clearParams();
           generateSINPESMS(bank.phone, price, phone, name, detail);
         }
 

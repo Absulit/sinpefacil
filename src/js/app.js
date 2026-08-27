@@ -17,6 +17,7 @@ import App from '../app.f7';
 import { initI18n } from './i18n.js';
 import generateSINPESMS from 'sms';
 import { db, getOption, Keys } from 'db';
+import { clearParams } from 'url';
 
 await initI18n();
 
@@ -47,23 +48,22 @@ store.dispatch('initApp').then(() => {
                     app.dialog.confirm(
                         'Antes de enviar el SINPE, debe seleccionar su banco.',
                         'SINPE Fácil',
-                        () => {
+                        () => { // ok
                             app.views.current.router.navigate(`/settings/?phone=${phone}&name=${name}&price=${price}&detail=${detail}`)
-                            
                         },
-                        () => {
-                            // Reset flag if user cancels
+                        () => { // cancel
                             const tabLink = document.querySelectorAll('.tab-link')[0]
                             app.tab.show(`#view-home`, tabLink, true);
+                            clearParams();
                         }
                     );
 
-
                     return; // exit and SMS will be called after selecting bank
                 }
-                
-                if(linkShared){
+
+                if (linkShared) {
                     const bank = await db.banks.get(bankId);
+                    clearParams();
                     generateSINPESMS(bank.phone, price, phone, name, detail);
                 }
 
