@@ -45,7 +45,7 @@ store.dispatch('initApp').then(() => {
 
 
                     app.dialog.confirm(
-                        'Antes de leer un código QR, debe seleccionar su banco.',
+                        'Antes de enviar el SINPE, debe seleccionar su banco.',
                         'SINPE Fácil',
                         () => {
                             app.views.current.router.navigate(`/settings/?phone=${phone}&name=${name}&price=${price}&detail=${detail}`)
