@@ -34,7 +34,7 @@ export default async () => {
       },
     },
     server: {
-      https: false, // false for serveo, true for ngrok
+      https: true, // false for serveo, true for ngrok
       host: true,
       allowedHosts: [
         '.serveousercontent.com',
