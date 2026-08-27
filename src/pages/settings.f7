@@ -80,16 +80,12 @@
   import { clearParams } from 'url';
   export default async (props, { $f7, $on, $f7route }) => {
 
-    // this means the user received a link to pay, but doesn't have defined bank
     $on('pageInit', async () => {
       const banks = await db.banks.toArray();
-      console.log(banks);
-
       const { phone, name, price, detail } = $f7route.query;
-
       let bankId = await getOption(Keys.SELECTED_BANK);
-
       const banksSelect = document.getElementById('banksSelect');
+
       banks.forEach(bank => {
         const option = new Option(bank.name, bank.id, bankId === bank.id)
         banksSelect.append(option);

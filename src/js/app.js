@@ -39,17 +39,13 @@ store.dispatch('initApp').then(() => {
                 const data = Object.fromEntries(urlParams.entries());
                 const { phone, name, price, detail } = data;
                 const linkShared = phone && name && price && detail;
-
                 const bankId = await getOption(Keys.SELECTED_BANK);
-                if (!bankId && linkShared) {
-                    console.log('---- NEW USER, NO BANK, ASK');
-
-
+                
+                if (!bankId && linkShared) { // new user, no bank, we ask for it
                     app.dialog.confirm(
                         'Antes de enviar el SINPE, debe seleccionar su banco.',
                         'SINPE Fácil',
                         async () => { // ok
-                            //app.views.current.router.navigate(`/settings/?phone=${phone}&name=${name}&price=${price}&detail=${detail}`)
                             const banks = await db.banks.toArray();
                             const options = banks.map(bank => {
                                 return { text: bank.name, onClick: () => handleSelect(bank.id, data) }
