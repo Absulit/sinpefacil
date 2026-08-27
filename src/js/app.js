@@ -102,7 +102,13 @@ store.dispatch('initApp').then(() => {
 
     // BACK BUTTON: change in history
     window.addEventListener('popstate', function (e) {
-        console.log('pop', e.state, e.state.isInitial);
+        const activeView = app.views.current || app.views.main;
+
+        // if a page like `/settings/` return via f7
+        if (activeView && activeView.history.length > 1) {
+            activeView.router.back();
+            return;
+        }
 
         if (e.state && e.state.tabId) {
             // load previous tab
