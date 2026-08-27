@@ -15,6 +15,8 @@ import store from './store.js';
 // Import main app component
 import App from '../app.f7';
 import { initI18n } from './i18n.js';
+import generateSINPESMS from 'sms';
+import { db, getOption, Keys } from 'db';
 
 await initI18n();
 
@@ -31,13 +33,40 @@ store.dispatch('initApp').then(() => {
         routes,
 
         on: {
-            init: () => {
+            init: async () => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const data = Object.fromEntries(urlParams.entries());
                 const { phone, name, price, detail } = data;
-                if (phone && name && price) {
-                    window.location.href = `sms:${888}?body=PASE ${price} ${phone} ${name} ${detail}`;
+                const linkShared = phone && name && price && detail;
+
+                const bankId = await getOption(Keys.SELECTED_BANK);
+                if (!bankId && linkShared) {
+                    console.log('---- NEW USER, NO BANK, ASK');
+
+
+                    app.dialog.confirm(
+                        'Antes de leer un código QR, debe seleccionar su banco.',
+                        'SINPE Fácil',
+                        () => {
+                            app.views.current.router.navigate(`/settings/?phone=${phone}&name=${name}&price=${price}&detail=${detail}`)
+                            
+                        },
+                        () => {
+                            // Reset flag if user cancels
+                            const tabLink = document.querySelectorAll('.tab-link')[0]
+                            app.tab.show(`#view-home`, tabLink, true);
+                        }
+                    );
+
+
+                    return; // exit and SMS will be called after selecting bank
                 }
+                
+                if(linkShared){
+                    const bank = await db.banks.get(bankId);
+                    generateSINPESMS(bank.phone, price, phone, name, detail);
+                }
+
             }
         },
 

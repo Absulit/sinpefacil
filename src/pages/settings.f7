@@ -76,11 +76,20 @@
 </template>
 <script>
   import { db, getOption, saveOption, Keys } from 'db';
-  export default async (props, { $f7, $on }) => {
+  import generateSINPESMS from 'sms';
+  export default async (props, { $f7, $on, $f7route }) => {
 
+    // this means the user received a link to pay, but doesn't have defined bank
+    let linkShared = null
     $on('pageInit', async () => {
       const banks = await db.banks.toArray();
       console.log(banks);
+
+      const { phone, name, price, detail } = $f7route.query;
+      linkShared = phone && name && price && detail;
+      if(linkShared){
+        $f7.toolbar.hide('.toolbar');
+      }
 
       let values = [];
       let displayValues = [];
@@ -97,7 +106,7 @@
         const option = new Option(bank.name, bank.id, bankId === bank.id)
         banksSelect.append(option);
         console.log(option);
-        
+
       })
       banksSelect.addEventListener('change', e => {
         console.log(e.target.value);
@@ -124,7 +133,15 @@
           }
         );
       } else {
+        // before we exit we need to generate the SMS for the link shared
+        if (linkShared) {
+          const bank = await db.banks.get(bankId);
+          const { phone, name, price, detail } = $f7route.query;
+          generateSINPESMS(bank.phone, price, phone, name, detail);
+        }
+
         $f7.views.current.router.back()
+        $f7.toolbar.show('.toolbar');
       }
     };
 
