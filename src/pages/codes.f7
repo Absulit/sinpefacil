@@ -60,9 +60,11 @@
         `: ''}
 
 
-        <ul>
-          ${products.value.map((product) => $h`
+        ${products.value.map((product) => $h`
+        <div class="block">
           <p>Seleccione un item de la lista para ver el código QR.</p>
+        </div>
+        <ul>
           <li>
             <a class="item-content item-link" href="/product/${product.id}/">
               <div class="item-media">
@@ -74,8 +76,8 @@
               </div>
             </a>
           </li>
-          `)}
         </ul>
+        `)}
       </div>
 
 
