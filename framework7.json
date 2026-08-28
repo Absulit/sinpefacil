@@ -4,7 +4,7 @@
     "pwa",
     "web"
   ],
-  "name": "sinpefacil",
+  "name": "SINPE Fácil",
   "framework": "core",
   "template": "tabs",
   "bundler": "vite",

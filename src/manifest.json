@@ -1,7 +1,7 @@
 {
-  "name": "sinpefacil",
-  "short_name": "sinpefacil",
-  "description": "sinpefacil",
+  "name": "SINPE Fácil",
+  "short_name": "SINPE Fácil",
+  "description": "Application made to simplify the use of SINPE Móvil in Costa Rica.",
   "lang": "en-US",
   "start_url": "../",
   "display": "standalone",

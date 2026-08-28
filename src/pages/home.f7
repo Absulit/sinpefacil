@@ -38,15 +38,23 @@
           ${i18next.t('home:selectScreenContent')}
         </p>
 
-
-        <div class="segmented segmented-strong">
-          <button class="button ${activeStrongButton===0 ? 'button-active' : '' }"
-            @click=${()=>setStrongButton(0)}>${i18next.t('home')}</button>
-          <button class="button ${activeStrongButton===1 ? 'button-active' : '' }"
-            @click=${()=>setStrongButton(1)}>${i18next.t('codes')}</button>
-          <button class="button ${activeStrongButton===2 ? 'button-active' : '' }"
-            @click=${()=>setStrongButton(2)}>${i18next.t('read')}</button>
-          <span class="segmented-highlight"></span>
+        <div class="list list-strong-ios list-dividers-ios list-outline-ios">
+          <ul>
+            <li>
+              <a class="item-link smart-select smart-select-init" data-browser-history="true" data-open-in="page">
+                <select id="mainScreenSelect" name="mainScreenSelect">
+                  <option value="0" selected>${i18next.t('home')}</option>
+                  <option value="1">${i18next.t('codes')}</option>
+                  <option value="2">${i18next.t('read')}</option>
+                </select>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title">${i18next.t('home:mainScreen')}</div>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
 
@@ -94,20 +102,20 @@
         installPrompt = null;
         installButton.classList.add('display-none');
       }
+
+      const mainScreenSelect = document.getElementById('mainScreenSelect');
+      mainScreenSelect.value = pageIndexToLoad;
+      mainScreenSelect.addEventListener('change', e => {
+        const index = +e.target.value;
+        saveOption(Keys.PAGE_TO_LOAD, index);
+      })
+
     })
 
     const pageIndexToLoad = await getOption(Keys.PAGE_TO_LOAD, 0);
-    let activeStrongButton = pageIndexToLoad;
-
-    const setStrongButton = index => {
-      activeStrongButton = index;
-      saveOption(Keys.PAGE_TO_LOAD, index);
-      $update();
-    }
 
 
-
-    navigator.serviceWorker.ready.then(registration => {
+    navigator.serviceWorker?.ready.then(registration => {
       registration.addEventListener('updatefound', () => {
         const newWorker = registration.installing;
 

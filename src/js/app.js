@@ -24,7 +24,7 @@ await initI18n();
 store.dispatch('initApp').then(() => {
 
     const app = new Framework7({
-        name: 'sinpefacil', // App name
+        name: 'SINPE Fácil', // App name
         theme: 'auto', // Automatic theme detection
         darkMode: 'auto',
 

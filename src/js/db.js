@@ -41,3 +41,22 @@ export async function getOption(key, defaultValue) {
     const option = await db.options.get(key);
     return option ? option.value : defaultValue;
 }
+
+/**
+ * We save currently only one
+ * @param {{stage}} param0 
+ * @param {Number} number phone number
+ */
+export async function savePhone(number) {
+    const phone = (await db.phones.limit(1).toArray())[0];
+
+    if (phone) {
+        await db.phones.update(phone.id, { number })
+    } else {
+        await db.phones.add({ number });
+    }
+}
+
+export async function getPhone() {
+    return (await db.phones.limit(1).toArray())[0];
+}
