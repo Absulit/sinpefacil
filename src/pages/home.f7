@@ -68,21 +68,20 @@
 
     $on('pageInit', async () => {
 
-
       let installPrompt = null;
-      const installButton = document.querySelector("#install");
+      const installButton = document.querySelector('#install');
 
-      window.addEventListener("beforeinstallprompt", (event) => {
-        event.preventDefault();
+      window.addEventListener('beforeinstallprompt', (event) => {
+        // event.preventDefault(); // to hide default banner
         installPrompt = event;
         installButton.classList.remove('display-none');
       });
 
-      window.addEventListener("appinstalled", () => {
+      window.addEventListener('appinstalled', () => {
         disableInAppInstallPrompt();
       });
 
-      installButton.addEventListener("click", async () => {
+      installButton.addEventListener('click', async () => {
         if (!installPrompt) {
           return;
         }
@@ -105,6 +104,29 @@
       saveOption(Keys.PAGE_TO_LOAD, index);
       $update();
     }
+
+
+
+    navigator.serviceWorker.ready.then(registration => {
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            // show CTA
+            $f7.toast.create({
+              text: 'Actualización disponible!<br>Se actualizará la próxima vez que abra la aplicación.',
+              position: 'top', // 'top' | 'center' | 'bottom'
+              closeButton: true,
+              closeButtonText: 'OK'
+            }).open();
+          }
+        });
+      });
+    });
+
+
+
     return $render;
   }
 </script>
