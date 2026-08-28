@@ -22,6 +22,7 @@ const resources = {
             selectScreenContent: `Do you prefer to load the camera or your QR code list?
                     If you are a seller you will prefer My QRs, if you are a client you will prefer Read to Pay.
             `,
+            mainScreen: `Main Screen`,
         },
         read: {
             capture: "capture",
@@ -46,6 +47,7 @@ const resources = {
 
                     Si ud es vendedor, preferirá Mis QRs, si es comprador preferirá Leer y Pagar.
             `,
+            mainScreen: `Pantalla Principal`,
         },
         read: {
             capture: "capturar",
