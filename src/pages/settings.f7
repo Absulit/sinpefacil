@@ -20,7 +20,7 @@
               <div class="item-inner">
                 <div class="item-title item-label">Teléfono</div>
                 <div class="item-input-wrap">
-                  <input id="phone" inputmode="tel" maxlength="8" minlength="8" type="tel" validate
+                  <input id="phoneInputSettings" inputmode="tel" maxlength="8" minlength="8" type="tel" validate
                     placeholder="Teléfono asociado a SINPE Móvil" />
                 </div>
               </div>
@@ -96,7 +96,8 @@
       })
       banksSelect.dispatchEvent(new Event('change', { bubbles: true }));
 
-      const phoneInput = document.getElementById('phone');
+      const phoneInput = document.getElementById('phoneInputSettings');
+
       const dbPhone = await getPhone();
       console.log(dbPhone);
 

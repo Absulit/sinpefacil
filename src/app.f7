@@ -55,7 +55,7 @@
                 <div class="item-inner">
                   <div class="item-title item-label">Teléfono</div>
                   <div class="item-input-wrap">
-                    <input inputmode="tel" maxlength="8" minlength="8" type="tel" validate
+                    <input id="phone" inputmode="tel" maxlength="8" minlength="8" type="tel" validate
                       placeholder="VALOR DE SETTINGS" />
                     <span class="input-clear-button"></span>
                   </div>
@@ -202,7 +202,7 @@
 </template>
 <script>
   import i18next from 'i18next';
-  import { getOption, Keys } from 'db';
+  import { getOption, Keys, getPhone } from 'db';
   export default (props, { $f7, $update, $on, $el, $store }) => {
     let productId = null;
     let currentProduct = null;
@@ -215,8 +215,13 @@
 
     $f7.on('openQRDataPopup', async (id = null) => {
       productId = id;
-      console.log(id);
-
+      const form = $f7.$('#qr-data-form')[0];
+      const phoneInput = form.querySelector('#phone');
+      const phoneDB = await getPhone();
+      if(phoneDB){
+        phoneInput.placeholder = phoneDB.number;
+      }
+      
       if (productId) {
         console.log('edit');
         const products = $store.getters.products;
@@ -230,8 +235,8 @@
 
         $f7.form.fillFromData('#qr-data-form', currentProduct);
       } else {
-        console.log('create');
-        $f7.$('#qr-data-form')[0].reset();
+        
+        form.reset();
       }
 
       // Re-render popup UI with updated state before opening
