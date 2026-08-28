@@ -20,13 +20,14 @@
               <div class="item-inner">
                 <div class="item-title item-label">Teléfono</div>
                 <div class="item-input-wrap">
-                  <input type="tel" placeholder="Teléfono" />
+                  <input id="phoneInputSettings" inputmode="tel" maxlength="8" minlength="8" type="tel" validate
+                    placeholder="Teléfono asociado a SINPE Móvil" required/>
                 </div>
               </div>
             </div>
           </li>
-          <li>
 
+          <li>
             <a class="item-link smart-select smart-select-init" data-browser-history="true" data-open-in="page">
               <select id="banksSelect" name="banksSelect">
                 <!-- <option value="apple" selected>Apple</option> -->
@@ -37,7 +38,6 @@
                 </div>
               </div>
             </a>
-
           </li>
 
           <li>
@@ -75,7 +75,7 @@
   </div>
 </template>
 <script>
-  import { db, getOption, saveOption, Keys } from 'db';
+  import { db, getOption, saveOption, Keys, savePhone, getPhone } from 'db';
   import generateSINPESMS from 'sms';
   import { clearParams } from 'url';
   export default async (props, { $f7, $on, $f7route }) => {
@@ -96,13 +96,39 @@
       })
       banksSelect.dispatchEvent(new Event('change', { bubbles: true }));
 
+      const phoneInput = document.getElementById('phoneInputSettings');
+
+      const dbPhone = await getPhone();
+      console.log(dbPhone);
+
+      if (dbPhone) {
+        phoneInput.value = dbPhone.number;
+      }
+      phoneInput.addEventListener('input', async e => {
+        const input = e.target;
+        input.setCustomValidity('');
+
+        const number = +input.value
+        if (Number.isNaN(number)) {
+          input.setCustomValidity('Número de teléfono incorrecto');
+          return
+        }
+
+        if (!input.checkValidity()) {
+          return;
+        }
+
+        savePhone(number);
+
+      })
+
     })
 
     const handleBack = async () => {
       const bankId = await getOption(Keys.SELECTED_BANK)
       if (!bankId) {
         $f7.dialog.confirm(
-          'No ha seleccionado su banco. Salir? ',
+          'No ha seleccionado su banco. Salir?',
           () => {// ok
             const tabLink = document.querySelectorAll('.tab-link')[0]
             $f7.tab.show(`#view-home`, tabLink, true);
@@ -116,6 +142,7 @@
         $f7.toolbar.show('.toolbar');
       }
     };
+
 
 
     return $render;
