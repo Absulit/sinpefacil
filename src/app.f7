@@ -55,8 +55,8 @@
                 <div class="item-inner">
                   <div class="item-title item-label">Teléfono</div>
                   <div class="item-input-wrap">
-                    <input type="tel" name="phone" placeholder="11118888 (ó el predeterminado)" validate
-                      pattern="[0-9]{8}" autocomplete="tel" />
+                    <input inputmode="tel" maxlength="8" minlength="8" type="tel" validate
+                      placeholder="VALOR DE SETTINGS" />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
