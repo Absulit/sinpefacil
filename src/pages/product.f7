@@ -17,8 +17,7 @@
             <i class="f7-icons">pencil</i>
           </a>
           <!-- Share QR -->
-          <a href="#" class="link icon-only popup-open" @click="${share}"
-            id="btn-pin">
+          <a href="#" class="link icon-only popup-open" @click="${share}" id="btn-pin">
             <i class="f7-icons">square_arrow_up</i>
           </a>
           <!-- Overflow / More Menu -->
@@ -64,6 +63,7 @@
 
   import QRCodeStyling from 'qr-code-styling';
   import shareLink from 'share';
+  import { getPhone } from 'db';
   export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
     const products = $store.getters.products;
     const productId = +$f7route.params.id;
@@ -75,11 +75,16 @@
       currentProduct = product;
     });
 
-    $on('pageInit', () => {
+    $on('pageInit', async () => {
       const { phone, name, price, detail } = currentProduct;
-      console.log(currentProduct);
+      
+      let finalPhone = phone;
+      if (!phone) {
+        const phoneDB = await getPhone();
+        finalPhone = phoneDB.number;
+      }
 
-      const url = encodeURI(`${location.origin + location.pathname}?phone=${phone}&name=${name}&price=${price}&detail=${detail}`);
+      const url = encodeURI(`${location.origin + location.pathname}?phone=${finalPhone}&name=${name}&price=${price}&detail=${detail}`);
 
       const qrCode = new QRCodeStyling({
         width: 300,

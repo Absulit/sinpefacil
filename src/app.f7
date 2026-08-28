@@ -56,7 +56,7 @@
                   <div class="item-title item-label">Teléfono</div>
                   <div class="item-input-wrap">
                     <input id="phone" inputmode="tel" maxlength="8" minlength="8" type="tel" validate
-                      placeholder="VALOR DE SETTINGS" />
+                      placeholder="Nuevo número o cree uno en Ajustes." required/>
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -98,7 +98,7 @@
 
             <div class="block">
               <button type="button" class="button button-fill" @click="${submitForm}">
-                ${productId ? 'Update' : 'Create'}
+                ${productId ? 'Actualizar' : 'Crear'}
               </button>
             </div>
           </form>
@@ -214,14 +214,16 @@
     });
 
     $f7.on('openQRDataPopup', async (id = null) => {
-      productId = id;
+      console.log('---- POP UP OPEN PRODUCT');
       const form = $f7.$('#qr-data-form')[0];
+      productId = id;
       const phoneInput = form.querySelector('#phone');
       const phoneDB = await getPhone();
-      if(phoneDB){
+      if (phoneDB) {
         phoneInput.placeholder = phoneDB.number;
+        phoneInput.required = false;
       }
-      
+
       if (productId) {
         console.log('edit');
         const products = $store.getters.products;
@@ -235,7 +237,7 @@
 
         $f7.form.fillFromData('#qr-data-form', currentProduct);
       } else {
-        
+
         form.reset();
       }
 
@@ -249,10 +251,10 @@
 
     const submitForm = () => {
       // Extract data using Framework7 form helper
+      const form = $f7.$('#qr-data-form')[0];      
       const formData = $f7.form.convertToData('#qr-data-form');
 
-      if (!formData.name || !formData.price) {
-        $f7.dialog.alert('Please fill out all fields.');
+      if (!form.reportValidity()) {
         return;
       }
 

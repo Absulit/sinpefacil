@@ -21,7 +21,7 @@
                 <div class="item-title item-label">Teléfono</div>
                 <div class="item-input-wrap">
                   <input id="phoneInputSettings" inputmode="tel" maxlength="8" minlength="8" type="tel" validate
-                    placeholder="Teléfono asociado a SINPE Móvil" />
+                    placeholder="Teléfono asociado a SINPE Móvil" required/>
                 </div>
               </div>
             </div>
