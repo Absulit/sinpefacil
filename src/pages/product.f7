@@ -77,7 +77,7 @@
 
     $on('pageInit', async () => {
       const { phone, name, price, detail } = currentProduct;
-      
+
       let finalPhone = phone;
       if (!phone) {
         const phoneDB = await getPhone();
@@ -142,9 +142,14 @@
       console.log('printProduct');
     }
 
-    const share = () => {
+    const share = async () => {
       const { phone, name, price, detail } = currentProduct;
-      const url = encodeURI(`${location.origin + location.pathname}?phone=${phone}&name=${name}&price=${price}&detail=${detail}`);
+      let finalPhone = phone;
+      if (!phone) {
+        const phoneDB = await getPhone();
+        finalPhone = phoneDB.number;
+      }
+      const url = encodeURI(`${location.origin + location.pathname}?phone=${finalPhone}&name=${name}&price=${price}&detail=${detail}`);
       shareLink($f7, `
       ${name}
       ${phone}
