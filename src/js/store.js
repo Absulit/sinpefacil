@@ -5,26 +5,24 @@ import { db } from 'db';
 //"phone=83256474&product=1 Kilo de Papa&price=1000&detail=this is the message",
 const store = createStore({
     state: {
-        products: [
-            // {
-            //     id: '1',
-            //     phone: 83256474,
-            //     name: '1 Kilo de Tomate',
-            //     price: 3000,
-            //     detail: '1 Kilo de tomate de Vendedor Juan. 20260819'
-            // },
-        ]
+        products: [],
+        history: [],
     },
     getters: {
         products({ state }) {
             return state.products;
+        },
+        history({ state }) {
+            return state.history;
         }
     },
     actions: {
         async initApp({ state }) {
             state.products = await db.products.toArray();
+            state.history = await db.history.toArray();
         },
 
+        // Products / QR Codes
         async addProduct({ state }, product) {
             const id = await db.products.add(product);
             state.products = [...state.products, { id, ...product }];
@@ -39,7 +37,18 @@ const store = createStore({
 
         async deleteProduct({ state }, id) {
             await db.products.delete(id);
+        },
+
+        // History
+        async addHistoryItem({ state }, historyItem) {
+            const id = await db.history.add(historyItem);
+            state.history = [...state.history, { id, ...historyItem }];
+        },
+
+        async deleteHistoryItem({ state }, id) {
+            await db.history.delete(id);
         }
+
     },
 })
 export default store;
