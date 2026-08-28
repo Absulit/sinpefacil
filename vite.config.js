@@ -36,7 +36,8 @@ export default async () => {
       },
     },
     server: {
-      https: true, // false for serveo, true for ngrok
+      https: false, // false for serveo and ngrok / true to test camera
+      hmr: true, // false to disable hot reloading
       host: true,
       allowedHosts: [
         '.serveousercontent.com',
