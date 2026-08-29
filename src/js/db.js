@@ -8,6 +8,7 @@ db.version(2).stores({
     options: 'key, value',
     banks: '++id, name, shortname, &phone',
     phones: '++id, name, &number',
+    history: '++id, price, phone, name, detail, createdAt'
 });
 
 const bankCount = await db.banks.count();

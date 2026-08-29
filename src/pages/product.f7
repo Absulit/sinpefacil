@@ -18,7 +18,8 @@
           </a>
           <!-- Share QR -->
           <a href="#" class="link icon-only popup-open" @click="${share}" id="btn-pin">
-            <i class="f7-icons">square_arrow_up</i>
+            <i class="icon f7-icons if-not-md">square_arrow_up</i>
+            <i class="icon material-icons if-md">share</i>
           </a>
           <!-- Overflow / More Menu -->
           <a href="#" class="link icon-only popover-open" data-popover=".popover-menu">

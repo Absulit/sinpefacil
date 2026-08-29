@@ -14,7 +14,7 @@ import store from './store.js';
 
 // Import main app component
 import App from '../app.f7';
-import { initI18n } from './i18n.js';
+import { initI18n } from 'i18n';
 import generateSINPESMS from 'sms';
 import { db, getOption, saveOption, Keys } from 'db';
 import { clearParams } from 'url';
@@ -80,6 +80,7 @@ store.dispatch('initApp').then(() => {
                 if (linkShared) {
                     const bank = await db.banks.get(bankId);
                     clearParams();
+                    store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
                     generateSINPESMS(bank.phone, price, phone, name, detail);
                 }
 
