@@ -12,7 +12,12 @@
 
         <div class="right">
           <!-- Share QR -->
-          <a href="#" class="link icon-only popup-open" @click="${share}" id="btn-pin">
+          <a href="#" class="link icon-only popup-open" @click="${share}">
+            <i class="icon f7-icons if-not-md">paperplane_fill</i>
+            <i class="icon material-icons if-md">send</i>
+          </a>
+          <!-- Share QR -->
+          <a href="#" class="link icon-only popup-open" @click="${share}">
             <i class="icon f7-icons if-not-md">square_arrow_up</i>
             <i class="icon material-icons if-md">share</i>
           </a>
@@ -41,16 +46,20 @@
     </div>
 
     <div class="page-content">
-      <!-- <div class="block-title">${currentHistoryItem.name}</div> -->
-      <div class="block">
-        <ul>
-          ${currentHistoryItem && currentHistoryItem.phone ? $h`<li>${currentHistoryItem.phone}</li>` : ''}
-          ${currentHistoryItem && currentHistoryItem.price ? $h`<li>${currentHistoryItem.price}</li>` : ''}
-          ${currentHistoryItem && currentHistoryItem.detail ? $h`<li>${currentHistoryItem.detail}</li>` : ''}
-        </ul>
+
+      <div class="card card-raised">
+        <div class="card-header">${currentHistoryItem.name} - ${currentHistoryItem.phone}</div>
+        <div class="card-content card-content-padding">
+
+          <div id="qr-code-container" class="block text-align-center"></div>
+          <p></p>
+          <p>${currentHistoryItem.detail ? $h`${currentHistoryItem.detail}` : '<Sin descripción>'}</p>
+        </div>
+        <div class="card-footer">
+          <span class="date">${formatDate(currentHistoryItem.createdAt)}</span><span>₡${currentHistoryItem.price}</span>
+        </div>
       </div>
 
-      <div id="qr-code-container" class="block text-align-center"></div>
     </div>
 
   </div>
@@ -60,6 +69,7 @@
   import QRCodeStyling from 'qr-code-styling';
   import shareLink from 'share';
   import { getPhone } from 'db';
+  import { formatDate } from 'i18n';
   export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
     const history = $store.getters.history;
     const historyItemId = +$f7route.params.id;
