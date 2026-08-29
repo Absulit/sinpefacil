@@ -55,7 +55,7 @@
                 <div class="item-inner">
                   <div class="item-title item-label">Teléfono</div>
                   <div class="item-input-wrap">
-                    <input id="phone" inputmode="tel" maxlength="8" minlength="8" type="tel" validate
+                    <input id="phone" name="phone" autocomplete="tel" inputmode="tel" maxlength="8" minlength="8" type="tel" validate
                       placeholder="Nuevo número o cree uno en Ajustes." required/>
                     <span class="input-clear-button"></span>
                   </div>
@@ -66,7 +66,7 @@
                 <div class="item-inner">
                   <div class="item-title item-label">Nombre</div>
                   <div class="item-input-wrap">
-                    <input type="text" name="name" placeholder="Producto a vender" required validate />
+                    <input type="text" name="name" autocomplete="name" placeholder="Producto a vender" required validate />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
