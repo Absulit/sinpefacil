@@ -19,7 +19,7 @@ const store = createStore({
     actions: {
         async initApp({ state }) {
             state.products = await db.products.toArray();
-            state.history = await db.history.toArray();
+            state.history = (await db.history.toArray()).reverse();
         },
 
         // Products / QR Codes
