@@ -107,7 +107,7 @@
         data: url,
         image: '', // link to image
         dotsOptions: {
-          color: '#000000',
+          color: '#ff5500',
           type: 'square'
         },
         backgroundOptions: {
