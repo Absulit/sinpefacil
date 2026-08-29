@@ -84,6 +84,16 @@ store.dispatch('initApp').then(() => {
                     generateSINPESMS(bank.phone, price, phone, name, detail);
                 }
 
+            },
+            pageAfterIn: page => {
+                if (typeof gtag === 'function') {
+                    console.log(page.name, page.router.currentRoute.url);
+                    gtag('event', 'page_view', {
+                        page_title: page.name,
+                        page_location: window.location.href,
+                        page_path: page.router.currentRoute.url
+                    });
+                }
             }
         },
 
@@ -105,6 +115,19 @@ store.dispatch('initApp').then(() => {
         if (!window.history.state || window.history.state.tabId !== tabEl.id) {
             safePushState({ tabId: tabEl.id }, '');
         }
+        if (typeof gtag === 'function') {
+            const tabId = tabEl.getAttribute('id') || tabEl.dataset.name || 'unknown-tab';
+            console.log(tabId);
+
+            gtag('event', 'page_view', {
+                page_title: `Tab: ${tabId}`,
+                page_location: `${window.location.origin}/#${tabId}`,
+                page_path: `/#${tabId}`
+            });
+        }
+
+
+
     });
 
     // BACK BUTTON: change in history

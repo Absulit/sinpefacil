@@ -28,7 +28,7 @@
           </li>
 
           <li>
-            <a class="item-link smart-select smart-select-init" data-browser-history="true" data-open-in="page">
+            <a class="item-link smart-select smart-select-init" data-browser-history="true" data-open-in="page" data-name="select-bank">
               <select id="banksSelect" name="banksSelect">
                 <!-- <option value="apple" selected>Apple</option> -->
               </select>
@@ -99,7 +99,6 @@
       const phoneInput = document.getElementById('phoneInputSettings');
 
       const dbPhone = await getPhone();
-      console.log(dbPhone);
 
       if (dbPhone) {
         phoneInput.value = dbPhone.number;

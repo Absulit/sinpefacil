@@ -10,7 +10,7 @@ Made with Framework7
 ## Install
 SINPE Fácil is a PWA, so open the link and install.
 
-https://absulit.github.io/sinpefacil/
+https://app.sinpefacil.com/
 
 ## Use
 
