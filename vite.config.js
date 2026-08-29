@@ -33,6 +33,7 @@ export default async () => {
         'share': SRC_DIR + '/js/share.js',
         'sms': SRC_DIR + '/js/sms.js',
         'url': SRC_DIR + '/js/url.js',
+        'i18n': SRC_DIR + '/js/i18n.js',
       },
     },
     server: {

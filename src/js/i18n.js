@@ -66,4 +66,11 @@ export async function initI18n() {
     });
 }
 
+export function formatDate(date) {
+    return new Intl.DateTimeFormat(i18next.language, {
+        dateStyle: 'medium',
+        timeStyle: 'short'
+    }).format(date);
+}
+
 export default i18next;
