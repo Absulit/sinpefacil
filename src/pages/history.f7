@@ -35,14 +35,17 @@
             Lea algún código QR o acepte un link de pago y le aparecerá luego aquí.
           </p>
         </div>
-        `: ''}
-
-
-        ${history.value.map((historyItem) => $h`
+        `: $h`
         <div class="block">
           <p>Seleccione un item para ver el detalle</p>
         </div>
+
+        `}
+
+
         <ul>
+          ${history.value.map((historyItem) => $h`
+
 
           <li>
             <a class="item-link item-content">
@@ -57,13 +60,13 @@
                 </div>
                 <div class="item-subtitle">${historyItem.phone}</div>
                 <div class="item-text">${formatDate(historyItem.createdAt)}</div>
- 
+
               </div>
             </a>
           </li>
 
+          `)}
         </ul>
-        `)}
       </div>
 
     </div>
