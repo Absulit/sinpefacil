@@ -48,7 +48,7 @@
 
 
           <li>
-            <a class="item-link item-content">
+            <a class="item-link item-content" href="/history/${historyItem.id}/">
               <div class="item-media">
                 <i class="icon f7-icons if-not-md">checklist</i>
                 <i class="icon material-icons if-md">fact_check</i>

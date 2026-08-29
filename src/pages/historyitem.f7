@@ -1,0 +1,149 @@
+<template>
+  <div class="page" data-name="product">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+          </a>
+        </div>
+        <div class="title">${currentHistoryItem.name}</div>
+
+        <div class="right">
+          <!-- Share QR -->
+          <a href="#" class="link icon-only popup-open" @click="${share}" id="btn-pin">
+            <i class="icon f7-icons if-not-md">square_arrow_up</i>
+            <i class="icon material-icons if-md">share</i>
+          </a>
+          <!-- Overflow / More Menu -->
+          <a href="#" class="link icon-only popover-open" data-popover=".popover-menu">
+            <i class="f7-icons">ellipsis_vertical</i>
+          </a>
+        </div>
+
+
+
+      </div>
+    </div>
+
+    <!-- Popover for the 3-dot overflow menu -->
+    <div class="popover popover-menu">
+      <div class="popover-inner">
+        <div class="list">
+          <ul>
+            <li><a href="#" class="list-button popover-close" @click=${()=>deleteProduct()}>Delete</a></li>
+            <li><a href="#" class="list-button popover-close" @click=${()=>printProduct()}>Print</a></li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <!-- <div class="block-title">${currentHistoryItem.name}</div> -->
+      <div class="block">
+        <ul>
+          ${currentHistoryItem && currentHistoryItem.phone ? $h`<li>${currentHistoryItem.phone}</li>` : ''}
+          ${currentHistoryItem && currentHistoryItem.price ? $h`<li>${currentHistoryItem.price}</li>` : ''}
+          ${currentHistoryItem && currentHistoryItem.detail ? $h`<li>${currentHistoryItem.detail}</li>` : ''}
+        </ul>
+      </div>
+
+      <div id="qr-code-container" class="block text-align-center"></div>
+    </div>
+
+  </div>
+</template>
+<script>
+
+  import QRCodeStyling from 'qr-code-styling';
+  import shareLink from 'share';
+  import { getPhone } from 'db';
+  export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
+    const history = $store.getters.history;
+    const historyItemId = +$f7route.params.id;
+    let currentHistoryItem;
+    history.value.forEach(historyItem => {
+      if (historyItem.id !== historyItemId) {
+        return;
+      }
+      currentHistoryItem = historyItem;
+    });
+
+    $on('pageInit', async () => {
+      const { phone, name, price, detail } = currentHistoryItem;
+
+      let finalPhone = phone;
+      if (!phone) {
+        const phoneDB = await getPhone();
+        finalPhone = phoneDB.number;
+      }
+
+      const url = encodeURI(`${location.origin + location.pathname}?phone=${finalPhone}&name=${name}&price=${price}&detail=${detail}`);
+
+      const qrCode = new QRCodeStyling({
+        width: 300,
+        height: 300,
+        type: 'svg',
+        data: url,
+        image: '', // link to image
+        dotsOptions: {
+          color: '#000000',
+          type: 'square'
+        },
+        backgroundOptions: {
+          color: '#e9ebee',
+        },
+        imageOptions: {
+          crossOrigin: 'anonymous',
+          margin: 20
+        }
+      });
+
+      const container = $el.value.find('#qr-code-container')[0];
+      qrCode.append(container);
+      // qrCode.download({ name: "qr", extension: "svg" });
+    })
+
+    const deleteProduct = () => {
+      $f7.dialog.confirm(`Desea borrar '${currentHistoryItem.name}'?`, () => {
+        console.log('Item deleted', currentHistoryItem);
+
+        $f7.preloader.show();
+        // TODO: verify if delete was successful
+        $store.dispatch('deleteHistoryItem', currentHistoryItem.id);
+        $store.dispatch('initApp');
+        $f7.preloader.hide();
+        $f7.views.current.router.back('/history/', { force: true });
+
+        $f7.toast.create({
+          text: 'Recibo borrado',
+          closeTimeout: 2000,
+        }).open();
+      });
+    }
+
+    const printProduct = () => {
+      console.log('printProduct');
+    }
+
+    const share = async () => {
+      const { phone, name, price, detail } = currentHistoryItem;
+      let finalPhone = phone;
+      if (!phone) {
+        const phoneDB = await getPhone();
+        finalPhone = phoneDB.number;
+      }
+      const url = encodeURI(`${location.origin + location.pathname}?phone=${finalPhone}&name=${name}&price=${price}&detail=${detail}`);
+      shareLink($f7, `
+      ${name}
+      ${phone}
+      ${price}
+      ${detail}
+      `, url)
+    }
+
+    return $render;
+  };
+</script>

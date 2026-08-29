@@ -67,7 +67,7 @@
         <ul>
           ${products.value.map((product) => $h`
           <li>
-            <a class="item-link item-content" href="/product/${product.id}/">
+            <a class="item-link item-content" href="/codes/${product.id}/">
               <div class="item-media">
                 <i class="icon f7-icons if-not-md">qrcode</i>
                 <i class="icon material-icons if-md">qr_code</i>
