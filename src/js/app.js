@@ -45,7 +45,7 @@ store.dispatch('initApp').then(() => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const data = Object.fromEntries(urlParams.entries());
                 const { phone, name, price, detail } = data;
-                const linkShared = phone && name && price && detail;
+                const linkShared = phone && name && price;
                 const bankId = await getOption(Keys.SELECTED_BANK);
 
                 if (!bankId && linkShared) { // new user, no bank, we ask for it
