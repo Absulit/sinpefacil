@@ -42,7 +42,7 @@ const store = createStore({
         // History
         async addHistoryItem({ state }, historyItem) {
             const id = await db.history.add(historyItem);
-            state.history = [...state.history, { id, ...historyItem }];
+            state.history = [{ id, ...historyItem }, ...state.history];
         },
 
         async deleteHistoryItem({ state }, id) {
