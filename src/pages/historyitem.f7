@@ -12,7 +12,7 @@
 
         <div class="right">
           <!-- Share QR -->
-          <a href="#" class="link icon-only popup-open" @click="${share}">
+          <a href="#" class="link icon-only popup-open" @click="${resend}">
             <i class="icon f7-icons if-not-md">paperplane_fill</i>
             <i class="icon material-icons if-md">send</i>
           </a>
@@ -76,8 +76,9 @@
 
   import QRCodeStyling from 'qr-code-styling';
   import shareLink from 'share';
-  import { getPhone } from 'db';
+  import { getPhone, getOption, Keys, db } from 'db';
   import { formatDate } from 'i18n';
+  import generateSINPESMS from 'sms';
   export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
     const history = $store.getters.history;
     const historyItemId = +$f7route.params.id;
@@ -160,6 +161,14 @@
       ${price}
       ${detail}
       `, url)
+    }
+
+    const resend = async () => {
+      const bankId = await getOption(Keys.SELECTED_BANK);
+      const bank = await db.banks.get(bankId);
+      const { price, phone, name, detail } = currentHistoryItem;
+      $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
+      generateSINPESMS(bank.phone, price, phone, name, detail);
     }
 
     return $render;

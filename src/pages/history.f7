@@ -9,7 +9,7 @@
 
     ${history.value.length > 0 ? $h`
 
-    <div class="fab fab-right-bottom">
+    <!-- <div class="fab fab-right-bottom">
       <a>
         <i class="icon f7-icons if-not-md">plus</i>
         <i class="icon f7-icons if-not-md">xmark</i>
@@ -17,7 +17,7 @@
         <i class="icon material-icons md-only">add</i>
         <i class="icon material-icons md-only">close</i>
       </a>
-    </div>
+    </div> -->
     `: ''}
 
     <div class="page-content">
