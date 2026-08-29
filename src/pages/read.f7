@@ -24,7 +24,7 @@
 
   }
 
-  export default (props, { $f7, $on, $el }) => {
+  export default (props, { $f7, $on, $el, $store }) => {
 
     $on('pageInit', async (e, page) => {
 
@@ -67,7 +67,7 @@
 
             const data = Object.fromEntries(new URL(result.data).searchParams);
             const { phone, name, price, detail } = data;
-
+            $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
             // if ($f7.device.ios) {
             //   // rawData = rawData.replace('?body=', '&body=');
             // }

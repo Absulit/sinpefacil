@@ -6,11 +6,81 @@
         <div class="title">Historial</div>
       </div>
     </div>
+
+    ${history.value.length > 0 ? $h`
+
+    <div class="fab fab-right-bottom">
+      <a>
+        <i class="icon f7-icons if-not-md">plus</i>
+        <i class="icon f7-icons if-not-md">xmark</i>
+
+        <i class="icon material-icons md-only">add</i>
+        <i class="icon material-icons md-only">close</i>
+      </a>
+    </div>
+    `: ''}
+
     <div class="page-content">
-      <div class="block">
-        contenido
+      <div class="list media-list  list-outline-ios list-strong-ios list-dividers-ios">
+
+        ${history.value.length === 0 ? $h`
+        <div class="empty-state block text-align-center margin-top">
+
+          <i class="icon f7-icons if-not-md">archivebox</i>
+          <i class="icon material-icons if-md">history_toggle_off</i>
+
+
+          <p class="color-gray">No hay historial</p>
+          <p>
+            Lea algún código QR o acepte un link de pago y le aparecerá luego aquí.
+          </p>
+        </div>
+        `: $h`
+        <div class="block">
+          <p>Seleccione un item para ver el detalle</p>
+        </div>
+
+        `}
+
+
+        <ul>
+          ${history.value.map((historyItem) => $h`
+
+
+          <li>
+            <a class="item-link item-content">
+              <div class="item-media">
+                <i class="icon f7-icons if-not-md">checklist</i>
+                <i class="icon material-icons if-md">fact_check</i>
+              </div>
+              <div class="item-inner">
+                <div class="item-title-row">
+                  <div class="item-title">${historyItem.name}</div>
+                  <div class="item-after">₡${historyItem.price}</div>
+                </div>
+                <div class="item-subtitle">${historyItem.phone}</div>
+                <div class="item-text">${formatDate(historyItem.createdAt)}</div>
+
+              </div>
+            </a>
+          </li>
+
+          `)}
+        </ul>
       </div>
 
     </div>
+
   </div>
+
+
 </template>
+<script>
+  import { formatDate } from 'i18n';
+  export default (props, { $f7, $store, $on, $el }) => {
+
+    const history = $store.getters.history;
+    return $render;
+  }
+
+</script>

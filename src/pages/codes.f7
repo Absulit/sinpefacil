@@ -39,7 +39,7 @@
     `: ''}
 
     <div class="page-content">
-      <div class="list list-strong list-dividers-ios list-outline-ios inset-md">
+      <div class="list media-list  list-outline-ios list-strong-ios list-dividers-ios">
 
         ${products.value.length === 0 ? $h`
         <div class="empty-state block text-align-center margin-top">
@@ -57,20 +57,29 @@
           </div>
 
         </div>
-        `: ''}
+        `: $h`
+        <div class="block">
+          <p>Seleccione un item de la lista para ver el código QR.</p>
+        </div>
+        `}
 
 
         <ul>
           ${products.value.map((product) => $h`
-          <p>Seleccione un item de la lista para ver el código QR.</p>
           <li>
-            <a class="item-content item-link" href="/product/${product.id}/">
+            <a class="item-link item-content" href="/product/${product.id}/">
               <div class="item-media">
                 <i class="icon f7-icons if-not-md">qrcode</i>
                 <i class="icon material-icons if-md">qr_code</i>
               </div>
               <div class="item-inner">
-                <div class="item-title">${product.name} - ₡${product.price} </div>
+                <div class="item-title-row">
+                  <div class="item-title">${product.name}</div>
+                  <div class="item-after">₡${product.price}</div>
+                </div>
+                <div class="item-subtitle">${product.phone}</div>
+                <div class="item-text">${product.detail}</div>
+
               </div>
             </a>
           </li>
@@ -78,16 +87,7 @@
         </ul>
       </div>
 
-
-
-
-
-
     </div>
-
-
-
-
 
   </div>
 
