@@ -8,16 +8,16 @@
             <i class="icon icon-back"></i>
           </a>
         </div>
-        <div class="title">${currentProduct.name}</div>
+        <div class="title">${currentHistoryItem.name}</div>
 
         <div class="right">
-          <!-- Edit QR -->
-          <a href="#" class="link icon-only popup-open" @click="${() => $f7.emit('openQRDataPopup', currentProduct.id)}"
-            id="btn-pin">
-            <i class="f7-icons">pencil</i>
+          <!-- Share QR -->
+          <a href="#" class="link icon-only popup-open" @click="${resend}">
+            <i class="icon f7-icons if-not-md">paperplane_fill</i>
+            <i class="icon material-icons if-md">send</i>
           </a>
           <!-- Share QR -->
-          <a href="#" class="link icon-only popup-open" @click="${share}" id="btn-pin">
+          <a href="#" class="link icon-only popup-open" @click="${share}">
             <i class="icon f7-icons if-not-md">square_arrow_up</i>
             <i class="icon material-icons if-md">share</i>
           </a>
@@ -48,7 +48,7 @@
     <div class="page-content">
 
       <div class="card card-raised">
-        <div class="card-header">${currentProduct.name}</div>
+        <div class="card-header">${currentHistoryItem.name}</div>
         <div class="card-content card-content-padding">
 
           <div id="qr-code-container" class="block text-align-center"></div>
@@ -56,15 +56,15 @@
         <div class="card-content card-content-padding">
           <div class="card-content-padding">
             <p>
-              ${currentProduct.phone}
+              ${currentHistoryItem.phone}
             </p>
             <p>
-              ${currentProduct.detail ? $h`${currentProduct.detail}` : '<Sin descripción>'}
+              ${currentHistoryItem.detail ? $h`${currentHistoryItem.detail}` : '<Sin descripción>'}
             </p>
           </div>
         </div>
         <div class="card-footer">
-          <span class="date"></span><span>₡${currentProduct.price}</span>
+          <span class="date">${formatDate(currentHistoryItem.createdAt)}</span><span>₡${currentHistoryItem.price}</span>
         </div>
       </div>
 
@@ -76,21 +76,22 @@
 
   import QRCodeStyling from 'qr-code-styling';
   import shareLink from 'share';
-  import { getPhone } from 'db';
+  import { getPhone, getOption, Keys, db } from 'db';
   import { formatDate } from 'i18n';
+  import generateSINPESMS from 'sms';
   export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
-    const products = $store.getters.products;
-    const productId = +$f7route.params.id;
-    let currentProduct;
-    products.value.forEach(product => {
-      if (product.id !== productId) {
+    const history = $store.getters.history;
+    const historyItemId = +$f7route.params.id;
+    let currentHistoryItem;
+    history.value.forEach(historyItem => {
+      if (historyItem.id !== historyItemId) {
         return;
       }
-      currentProduct = product;
+      currentHistoryItem = historyItem;
     });
 
     $on('pageInit', async () => {
-      const { phone, name, price, detail } = currentProduct;
+      const { phone, name, price, detail } = currentHistoryItem;
 
       let finalPhone = phone;
       if (!phone) {
@@ -107,7 +108,7 @@
         data: url,
         image: '', // link to image
         dotsOptions: {
-          color: '#000000',
+          color: '#ff5500',
           type: 'square'
         },
         backgroundOptions: {
@@ -123,30 +124,20 @@
       qrCode.append(container);
       // qrCode.download({ name: "qr", extension: "svg" });
     })
-    $f7.on('PRODUCT_UPDATED', productUpdated => {
-      console.log('PRODUCT_UPDATED', productUpdated);
-      currentProduct = productUpdated;
-      $update();
-    })
-
-    $on('pageBeforeRemove', () => {
-      console.log('pageBeforeRemove');
-      $f7.off('PRODUCT_UPDATED');
-    });
 
     const deleteProduct = () => {
-      $f7.dialog.confirm(`Desea borrar '${currentProduct.name}'?`, () => {
-        console.log('Item deleted', currentProduct);
+      $f7.dialog.confirm(`Desea borrar '${currentHistoryItem.name}'?`, () => {
+        console.log('Item deleted', currentHistoryItem);
 
         $f7.preloader.show();
         // TODO: verify if delete was successful
-        $store.dispatch('deleteProduct', currentProduct.id);
+        $store.dispatch('deleteHistoryItem', currentHistoryItem.id);
         $store.dispatch('initApp');
         $f7.preloader.hide();
-        $f7.views.current.router.back('/codes/', { force: true });
+        $f7.views.current.router.back('/history/', { force: true });
 
         $f7.toast.create({
-          text: 'Código borrado',
+          text: 'Recibo borrado',
           closeTimeout: 2000,
         }).open();
       });
@@ -157,7 +148,7 @@
     }
 
     const share = async () => {
-      const { phone, name, price, detail } = currentProduct;
+      const { phone, name, price, detail } = currentHistoryItem;
       let finalPhone = phone;
       if (!phone) {
         const phoneDB = await getPhone();
@@ -170,6 +161,14 @@
       ${price}
       ${detail}
       `, url)
+    }
+
+    const resend = async () => {
+      const bankId = await getOption(Keys.SELECTED_BANK);
+      const bank = await db.banks.get(bankId);
+      const { price, phone, name, detail } = currentHistoryItem;
+      $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
+      generateSINPESMS(bank.phone, price, phone, name, detail);
     }
 
     return $render;
