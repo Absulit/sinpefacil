@@ -48,12 +48,20 @@
     <div class="page-content">
 
       <div class="card card-raised">
-        <div class="card-header">${currentHistoryItem.name} - ${currentHistoryItem.phone}</div>
+        <div class="card-header">${currentHistoryItem.name}</div>
         <div class="card-content card-content-padding">
 
           <div id="qr-code-container" class="block text-align-center"></div>
-          <p></p>
-          <p>${currentHistoryItem.detail ? $h`${currentHistoryItem.detail}` : '<Sin descripción>'}</p>
+        </div>
+        <div class="card-content card-content-padding">
+          <div class="card-content-padding">
+            <p>
+              ${currentHistoryItem.phone}
+            </p>
+            <p>
+              ${currentHistoryItem.detail ? $h`${currentHistoryItem.detail}` : '<Sin descripción>'}
+            </p>
+          </div>
         </div>
         <div class="card-footer">
           <span class="date">${formatDate(currentHistoryItem.createdAt)}</span><span>₡${currentHistoryItem.price}</span>
