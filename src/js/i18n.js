@@ -30,6 +30,11 @@ const resources = {
         codes: {
             explainer: `Select an item from the list to see the QR code.`
         },
+        history: {
+            explainer: `Select an item to see the detail.`,
+            noHistory: `No history`,
+            noHistoryExplainer: `Read a QR code or accept a payment link and it will show up here.`,
+        },
     },
     es: {
         translation: {
@@ -57,6 +62,11 @@ const resources = {
         },
         codes: {
             explainer: `Seleccione un item de la lista para ver el código QR.`
+        },
+        history: {
+            explainer: `Seleccione un item para ver el detalle.`,
+            noHistory: `No hay historial`,
+            noHistoryExplainer: `Lea algún código QR o acepte un link de pago y le aparecerá luego aquí.`,
         },
     }
 };
