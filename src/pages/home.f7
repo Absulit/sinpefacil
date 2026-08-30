@@ -10,7 +10,10 @@
             <i class="icon material-icons if-md">menu</i>
           </a>
         </div> -->
-        <div class="title sliding ">SINPE Fácil</div>
+        <div class="title sliding display-flex align-items-center">
+          <img src="../icons/128x128.png" width="28" height="28" style="margin-right: 8px;" alt="Logo" />
+          <span>SINPE Fácil</span>
+        </div>
         <div class="right">
           <a href="/settings/" class="link icon-only" data-name="settings" data-url="/settings/"
             data-browser-history="true">
