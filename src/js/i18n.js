@@ -11,7 +11,9 @@ const resources = {
             read: "Read to Pay",
             history: "History",
             settings: "Settings",
-            credits: `Made in Costa Rica 🇨🇷 by`
+            credits: `Made in Costa Rica 🇨🇷 by`,
+            delete: `Delete`,
+            print: `Print`,
         },
         home: {
             aboutContent: `This app generates QR codes (?) that allow other people pay you with SINPE MÓVIL. (?)
@@ -64,7 +66,9 @@ const resources = {
             read: "Leer y Pagar",
             history: "Historial",
             settings: "Ajustes",
-            credits: `Hecho en Costa Rica 🇨🇷 por`
+            credits: `Hecho en Costa Rica 🇨🇷 por`,
+            delete: `Borrar`,
+            print: `Imprimir`,
         },
         home: {
             aboutContent: `Esta aplicación genera Códigos QR (?) para permitir a otras personas pagarte con SINPE MÓVIL. (?)
