@@ -18,6 +18,7 @@ import { initI18n } from 'i18n';
 import generateSINPESMS from 'sms';
 import { db, getOption, saveOption, Keys } from 'db';
 import { clearParams } from 'url';
+import i18next from 'i18next';
 
 await initI18n();
 
@@ -50,7 +51,7 @@ store.dispatch('initApp').then(() => {
 
                 if (!bankId && linkShared) { // new user, no bank, we ask for it
                     app.dialog.confirm(
-                        'Antes de enviar el SINPE, debe seleccionar su banco.',
+                        i18next.t('read:CTASelectBank'),
                         'SINPE Fácil',
                         async () => { // ok
                             const banks = await db.banks.toArray();
@@ -58,11 +59,12 @@ store.dispatch('initApp').then(() => {
                                 return { text: bank.name, onClick: () => handleSelect(bank.id, data) }
                             })
 
+                            // list of banks dropdown
                             app.actions.create({
                                 buttons: [
                                     options,
                                     [
-                                        { text: 'Cancelar', color: 'red' }
+                                        { text: i18next.t('cancel'), color: 'red' }
                                     ]
                                 ]
                             }).open();
