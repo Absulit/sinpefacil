@@ -64,6 +64,10 @@ const resources = {
             phonePlaceholder: `Phone associated with SINPE Móvil`,
             bank: `Bank`,
             lang: `Force Language`,
+        },
+        share: {
+            copyLink: `Copy Link`,
+            copyConfirmation: `Link copied to clipboard`
         }
     },
     es: {
@@ -128,6 +132,10 @@ const resources = {
             phonePlaceholder: `Teléfono asociado a SINPE Móvil`,
             bank: `Banco`,
             lang: `Forzar Idioma`,
+        },
+        share: {
+            copyLink: `Copiar Link`,
+            copyConfirmation: `Link copiado al portapapeles`
         }
     }
 };

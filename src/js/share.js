@@ -1,3 +1,5 @@
+import i18next from 'i18next';
+
 export default function shareLink(app, text, url) {
     const shareData = {
         title: 'SINPE Fácil',
@@ -16,18 +18,18 @@ export default function shareLink(app, text, url) {
             buttons: [
                 [
                     {
-                        text: 'Copiar Link',
+                        text: i18next.t('share:copyLink'),
                         icon: '<i class="icon f7-icons if-not-md">square_on_square</i><i class="icon material-icons if-md">content_copy</i>',
                         onClick: () => {
                             navigator.clipboard.writeText(shareData.url);
                             app.toast.create({
-                                text: 'Link copiado',
+                                text: i18next.t('share:copyConfirmation'),
                                 closeTimeout: 2000,
                             }).open();
                         }
                     },
                     {
-                        text: 'Cancelar',
+                        text: i18next.t('cancel'),
                         color: 'red',
                     }
                 ]
