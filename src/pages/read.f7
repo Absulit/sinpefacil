@@ -19,11 +19,8 @@
   import QrScanner from 'qr-scanner';
   import { getOption, Keys, db } from 'db';
   import generateSINPESMS from 'sms';
-  function takePhoto() {
-    console.log('---- takePhoto');
 
-  }
-
+  let qrScanner = null;
   export default (props, { $f7, $on, $el, $store }) => {
 
     $on('pageInit', async (e, page) => {
@@ -33,11 +30,8 @@
         if ('read' !== id) return;
 
         const bankId = await getOption(Keys.SELECTED_BANK);
-        console.log('---- bankId', bankId);
 
         if (!bankId) {
-          console.log('---- request to select bank');
-
           $f7.dialog.confirm(
             'Antes de leer un código QR, debe seleccionar su banco.',
             'SINPE Fácil',
@@ -50,14 +44,11 @@
               $f7.tab.show(`#view-home`, tabLink, true);
             }
           );
-
-
         }
-
 
         let isNavigating = false;
         const cam = document.getElementById('cam');
-        const qrScanner = new QrScanner(
+        qrScanner = new QrScanner(
           cam,
           async result => {
             if (isNavigating) return;
@@ -71,8 +62,6 @@
             // if ($f7.device.ios) {
             //   // rawData = rawData.replace('?body=', '&body=');
             // }
-
-            // qrScanner.stop();
 
             const bankId = await getOption(Keys.SELECTED_BANK);
             const bank = await db.banks.get(bankId);
@@ -94,9 +83,6 @@
             // document.body.appendChild(link);
             // link.click();
             // document.body.removeChild(link);
-
-
-
           },
           {
             highlightScanRegion: true,
@@ -105,10 +91,15 @@
         );
         qrScanner.start();
 
-
       })
 
-
+      $f7.$(document).on('tab:hide', async (e, page) => {
+        const id = e.target.getAttribute('data-name');
+        if ('read' !== id) return;
+        qrScanner?.stop();;
+        qrScanner?.destroy();
+        qrScanner = null;
+      })
     })
 
     return $render;
