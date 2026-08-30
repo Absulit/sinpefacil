@@ -93,12 +93,39 @@
       $f7.$(document).on('tab:hide', async (e, page) => {
         const id = e.target.getAttribute('data-name');
         if ('read' !== id) return;
-        qrScanner?.stop();;
-        qrScanner?.destroy();
-        qrScanner = null;
+        stopQRScanner();
       })
     })
 
     return $render;
   };
+
+  function stopQRScanner() {
+    qrScanner?.stop();;
+    // qrScanner?.destroy();
+    // qrScanner = null;
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      console.log('User left the tab or minimized the app');
+      stopQRScanner();
+    } else {
+      console.log('User returned to the tab');
+      qrScanner?.start();
+    }
+  });
+
+  // Backup check for mobile focus loss (app switching, control center popups)
+  window.addEventListener('blur', () => {
+    console.log('Window lost focus');
+    stopQRScanner();
+  });
+
+  window.addEventListener('focus', () => {
+    console.log('Window gained focus');
+    qrScanner?.start();
+  });
+
+
 </script>
