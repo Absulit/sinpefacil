@@ -25,7 +25,9 @@ const resources = {
             mainScreen: `Main Screen`,
         },
         read: {
-            CTASelectBank: `Antes de leer un código QR, debe seleccionar su banco.`,
+            CTASelectBank: `Before reading a QR code, you must select your bank.`,
+            CTASendSMS: `Send SMS to {{bank}}?`,
+            CTASendSMSTitle: `QR Code read`,
         },
         codes: {
             explainer: `Select an item from the list to see the QR code.`,
@@ -62,6 +64,8 @@ const resources = {
         },
         read: {
             CTASelectBank: `Antes de leer un código QR, debe seleccionar su banco.`,
+            CTASendSMS: `¿Enviar SMS a {{bank}}?`,
+            CTASendSMSTitle: `Código QR leído`,
         },
         codes: {
             explainer: `Seleccione un item de la lista para ver el código QR.`,
