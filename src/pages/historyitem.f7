@@ -157,10 +157,10 @@
       const url = encodeURI(`${location.origin + location.pathname}?phone=${finalPhone}&name=${name}&price=${price}&detail=${detail}`);
       shareLink($f7, `
       ${name}
-      ${phone}
+      ${finalPhone}
       ${price}
       ${detail}
-      `, url)
+      `.trim().replace(/^ +/gm, ''), url)
     }
 
     const resend = async () => {
