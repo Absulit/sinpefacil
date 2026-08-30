@@ -68,6 +68,10 @@ const resources = {
         share: {
             copyLink: `Copy Link`,
             copyConfirmation: `Link copied to clipboard`
+        },
+        code404:{
+            title: `Not Found`,
+            message: `Requested content not found.`
         }
     },
     es: {
@@ -136,6 +140,10 @@ const resources = {
         share: {
             copyLink: `Copiar Link`,
             copyConfirmation: `Link copiado al portapapeles`
+        },
+        code404:{
+            title: `No encontrado`,
+            message: `No se encontró el contenido solicitado.`
         }
     }
 };
