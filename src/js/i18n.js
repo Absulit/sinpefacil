@@ -46,7 +46,10 @@ const resources = {
             detail: `Detail`,
             detailPlaceholder: `Description`,
             submitButtonEdit: `Update`,
-            submitButtonAdd: `Create`
+            submitButtonAdd: `Create`,
+
+            CTADelete: `Do you want to delete '{{name}}'?`,
+            deleteConfirmation: `Code deleted`,
         },
         history: {
             explainer: `Select an item to see the detail.`,
@@ -98,7 +101,10 @@ const resources = {
             detail: `Detalle`,
             detailPlaceholder: `Una descripción`,
             submitButtonEdit: `Actualizar`,
-            submitButtonAdd: `Crear`
+            submitButtonAdd: `Crear`,
+
+            CTADelete: `¿Desea borrar '{{name}}'?`,
+            deleteConfirmation: `Código borrado`,
         },
         history: {
             explainer: `Seleccione un item para ver el detalle.`,
