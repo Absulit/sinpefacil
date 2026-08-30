@@ -58,6 +58,12 @@ const resources = {
             noHistory: `No history`,
             noHistoryExplainer: `Read a QR code or accept a payment link and it will show up here.`,
         },
+        settings: {
+            phone: `Phone number`,
+            phonePlaceholder: `Phone associated with SINPE Móvil`,
+            bank: `Bank`,
+            lang: `Force Language`,
+        }
     },
     es: {
         translation: {
@@ -115,6 +121,12 @@ const resources = {
             noHistory: `No hay historial`,
             noHistoryExplainer: `Lea algún código QR o acepte un link de pago y le aparecerá luego aquí.`,
         },
+        settings: {
+            phone: `Teléfono`,
+            phonePlaceholder: `Teléfono asociado a SINPE Móvil`,
+            bank: `Banco`,
+            lang: `Forzar Idioma`,
+        }
     }
 };
 

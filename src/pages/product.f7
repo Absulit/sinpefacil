@@ -39,7 +39,6 @@
           <ul>
             <li><a href="#" class="list-button popover-close" @click=${()=>deleteProduct()}>${i18next.t('delete')}</a></li>
             <li><a href="#" class="list-button popover-close" @click=${()=>printProduct()}>${i18next.t('print')}</a></li>
-
           </ul>
         </div>
       </div>

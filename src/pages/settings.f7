@@ -8,7 +8,7 @@
             <i class="icon icon-back"></i>
           </a>
         </div>
-        <div class="title">Ajustes</div>
+        <div class="title">${i18next.t('settings')}</div>
       </div>
     </div>
     <div class="page-content">
@@ -18,23 +18,24 @@
           <li>
             <div class="item-content item-input">
               <div class="item-inner">
-                <div class="item-title item-label">Teléfono</div>
+                <div class="item-title item-label">${i18next.t('settings:phone')}</div>
                 <div class="item-input-wrap">
                   <input id="phoneInputSettings" inputmode="tel" maxlength="8" minlength="8" type="tel" validate
-                    placeholder="Teléfono asociado a SINPE Móvil" required/>
+                    placeholder="${i18next.t('settings:phonePlaceholder')}" required />
                 </div>
               </div>
             </div>
           </li>
 
           <li>
-            <a class="item-link smart-select smart-select-init" data-browser-history="true" data-open-in="page" data-name="select-bank">
+            <a class="item-link smart-select smart-select-init" data-browser-history="true" data-open-in="page"
+              data-name="select-bank">
               <select id="banksSelect" name="banksSelect">
                 <!-- <option value="apple" selected>Apple</option> -->
               </select>
               <div class="item-content">
                 <div class="item-inner">
-                  <div class="item-title">Banco</div>
+                  <div class="item-title">${i18next.t('settings:bank')}</div>
                 </div>
               </div>
             </a>
@@ -43,7 +44,7 @@
           <li>
             <div class="item-content">
               <div class="item-inner">
-                <div class="item-title">Forzar Idioma</div>
+                <div class="item-title">${i18next.t('settings:lang')}</div>
                 <div class="item-after">
                   <label class="toggle toggle-init">
                     <input type="checkbox" />
@@ -78,6 +79,7 @@
   import { db, getOption, saveOption, Keys, savePhone, getPhone } from 'db';
   import generateSINPESMS from 'sms';
   import { clearParams } from 'url';
+  import i18next from 'i18next';
   export default async (props, { $f7, $on, $f7route }) => {
 
     $on('pageInit', async () => {
