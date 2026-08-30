@@ -33,7 +33,20 @@ const resources = {
             explainer: `Select an item from the list to see the QR code.`,
             noCodes: `No products`,
             noCodesExplainer: `Add here a QR code per product you want to sell, e.g: Popcorn for 1000 colones.`,
-            addNew: `Add New QR Code`
+            addNew: `Add New QR Code`,
+
+            editTitle: `Edit QR / Product`,
+            addTitle: `Create QR / Product`,
+            phone: `Phone number`,
+            phonePlaceholder: `New number or create one in Settings`,
+            name: `Name`,
+            namePlaceholder: `Product to sell`,
+            price: `Price`,
+            pricePlaceholder: `₡0.00`,
+            detail: `Detail`,
+            detailPlaceholder: `Description`,
+            submitButtonEdit: `Update`,
+            submitButtonAdd: `Create`
         },
         history: {
             explainer: `Select an item to see the detail.`,
@@ -72,7 +85,20 @@ const resources = {
             noCodes: `No hay productos`,
             noCodesExplainer: `Agregue aquí un código QR por cada producto que quiera vender, por ejemplo:
             Palomitas a mil colones.`,
-            addNew: `Agregar Nuevo`
+            addNew: `Agregar Nuevo`,
+
+            editTitle: `Editar QR / Producto`,
+            addTitle: `Crear QR / Producto`,
+            phone: `Teléfono`,
+            phonePlaceholder: `Nuevo número o cree uno en Ajustes`,
+            name: `Nombre`,
+            namePlaceholder: `Producto a vender`,
+            price: `Precio`,
+            pricePlaceholder: `₡0.00`,
+            detail: `Detalle`,
+            detailPlaceholder: `Una descripción`,
+            submitButtonEdit: `Actualizar`,
+            submitButtonAdd: `Crear`
         },
         history: {
             explainer: `Seleccione un item para ver el detalle.`,

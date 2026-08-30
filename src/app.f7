@@ -40,10 +40,13 @@
         <div class="navbar">
           <div class="navbar-bg"></div>
           <div class="navbar-inner">
-            <div class="title">${productId ? 'Editar QR / Producto' : 'Crear QR / Producto'}</div>
+            <div class="title">${productId ? i18next.t('codes:editTitle') : i18next.t('codes:addTitle') }</div>
             <div class="right">
               <!-- Close button -->
-              <a class="link popup-close">Cerrar</a>
+              <a class="link popup-close">
+                <i class="icon if-not-md f7-icons">xmark</i>
+                <i class="icon if-md material-icons">close</i>
+              </a>
             </div>
           </div>
         </div>
@@ -53,10 +56,10 @@
             <ul>
               <li class="item-content item-input">
                 <div class="item-inner">
-                  <div class="item-title item-label">Teléfono</div>
+                  <div class="item-title item-label">${i18next.t('codes:phone')}</div>
                   <div class="item-input-wrap">
-                    <input id="phone" name="phone" autocomplete="tel" inputmode="tel" maxlength="8" minlength="8" type="tel" validate
-                      placeholder="Nuevo número o cree uno en Ajustes." required/>
+                    <input id="phone" name="phone" autocomplete="tel" inputmode="tel" maxlength="8" minlength="8"
+                      type="tel" validate placeholder="${i18next.t('codes:phonePlaceholder')}" required />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -64,9 +67,10 @@
 
               <li class="item-content item-input">
                 <div class="item-inner">
-                  <div class="item-title item-label">Nombre</div>
+                  <div class="item-title item-label">${i18next.t('codes:name')}</div>
                   <div class="item-input-wrap">
-                    <input type="text" name="name" autocomplete="name" placeholder="Producto a vender" required validate />
+                    <input type="text" name="name" autocomplete="name" placeholder="${i18next.t('codes:namePlaceholder')}" required
+                      validate />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -74,9 +78,9 @@
 
               <li class="item-content item-input">
                 <div class="item-inner">
-                  <div class="item-title item-label">Precio</div>
+                  <div class="item-title item-label">${i18next.t('codes:price')}</div>
                   <div class="item-input-wrap">
-                    <input type="tel" name="price" placeholder="₡0.00" inputmode="decimal" required validate />
+                    <input type="tel" name="price" placeholder="${i18next.t('codes:pricePlaceholder')}" inputmode="decimal" required validate />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -84,21 +88,19 @@
 
               <li class="item-content item-input">
                 <div class="item-inner">
-                  <div class="item-title item-label">Detalle </div>
+                  <div class="item-title item-label">${i18next.t('codes:detail')}</div>
                   <div class="item-input-wrap">
-                    <input type="text" name="detail" placeholder="Una descripción" validate />
+                    <input type="text" name="detail" placeholder="${i18next.t('codes:detailPlaceholder')}" validate />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
               </li>
-
-
 
             </ul>
 
             <div class="block">
               <button type="button" class="button button-fill" @click="${submitForm}">
-                ${productId ? 'Actualizar' : 'Crear'}
+                ${productId ? i18next.t('codes:submitButtonEdit') : i18next.t('codes:submitButtonAdd')}
               </button>
             </div>
           </form>
@@ -251,7 +253,7 @@
 
     const submitForm = () => {
       // Extract data using Framework7 form helper
-      const form = $f7.$('#qr-data-form')[0];      
+      const form = $f7.$('#qr-data-form')[0];
       const formData = $f7.form.convertToData('#qr-data-form');
 
       if (!form.reportValidity()) {
