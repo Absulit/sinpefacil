@@ -87,7 +87,6 @@ store.dispatch('initApp').then(() => {
             },
             pageAfterIn: page => {
                 if (typeof gtag === 'function') {
-                    console.log(page.name, page.router.currentRoute.url);
                     gtag('event', 'page_view', {
                         page_title: page.name,
                         page_location: window.location.href,
@@ -117,8 +116,6 @@ store.dispatch('initApp').then(() => {
         }
         if (typeof gtag === 'function') {
             const tabId = tabEl.getAttribute('id') || tabEl.dataset.name || 'unknown-tab';
-            console.log(tabId);
-
             gtag('event', 'page_view', {
                 page_title: `Tab: ${tabId}`,
                 page_location: `${window.location.origin}/#${tabId}`,
