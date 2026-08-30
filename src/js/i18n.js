@@ -11,7 +11,10 @@ const resources = {
             read: "Read to Pay",
             history: "History",
             settings: "Settings",
-            credits: `Made in Costa Rica 🇨🇷 by`
+            credits: `Made in Costa Rica 🇨🇷 by`,
+            delete: `Delete`,
+            print: `Print`,
+            cancel: `Cancel`,
         },
         home: {
             aboutContent: `This app generates QR codes (?) that allow other people pay you with SINPE MÓVIL. (?)
@@ -25,7 +28,50 @@ const resources = {
             mainScreen: `Main Screen`,
         },
         read: {
-            capture: "capture",
+            CTASelectBank: `Before reading a QR code, you must select your bank.`,
+            CTASendSMS: `Send SMS to {{bank}}?`,
+            CTASendSMSTitle: `QR Code read`,
+        },
+        codes: {
+            explainer: `Select an item from the list to see the QR code.`,
+            noCodes: `No products`,
+            noCodesExplainer: `Add here a QR code per product you want to sell, e.g: Popcorn for 1000 colones.`,
+            addNew: `Add New QR Code`,
+
+            editTitle: `Edit QR / Product`,
+            addTitle: `Create QR / Product`,
+            phone: `Phone number`,
+            phonePlaceholder: `New number or create one in Settings`,
+            name: `Name`,
+            namePlaceholder: `Product to sell`,
+            price: `Price`,
+            pricePlaceholder: `₡0.00`,
+            detail: `Detail`,
+            detailPlaceholder: `Description`,
+            submitButtonEdit: `Update`,
+            submitButtonAdd: `Create`,
+
+            CTADelete: `Do you want to delete '{{name}}'?`,
+            deleteConfirmation: `Code deleted`,
+        },
+        history: {
+            explainer: `Select an item to see the detail.`,
+            noHistory: `No history`,
+            noHistoryExplainer: `Read a QR code or accept a payment link and it will show up here.`,
+        },
+        settings: {
+            phone: `Phone number`,
+            phonePlaceholder: `Phone associated with SINPE Móvil`,
+            bank: `Bank`,
+            lang: `Force Language`,
+        },
+        share: {
+            copyLink: `Copy Link`,
+            copyConfirmation: `Link copied to clipboard`
+        },
+        code404:{
+            title: `Not Found`,
+            message: `Requested content not found.`
         }
     },
     es: {
@@ -35,7 +81,10 @@ const resources = {
             read: "Leer y Pagar",
             history: "Historial",
             settings: "Ajustes",
-            credits: `Hecho en Costa Rica 🇨🇷 por`
+            credits: `Hecho en Costa Rica 🇨🇷 por`,
+            delete: `Borrar`,
+            print: `Imprimir`,
+            cancel: `Cancelar`,
         },
         home: {
             aboutContent: `Esta aplicación genera Códigos QR (?) para permitir a otras personas pagarte con SINPE MÓVIL. (?)
@@ -50,7 +99,51 @@ const resources = {
             mainScreen: `Pantalla Principal`,
         },
         read: {
-            capture: "capturar",
+            CTASelectBank: `Antes de leer un código QR, debe seleccionar su banco.`,
+            CTASendSMS: `¿Enviar SMS a {{bank}}?`,
+            CTASendSMSTitle: `Código QR leído`,
+        },
+        codes: {
+            explainer: `Seleccione un item de la lista para ver el código QR.`,
+            noCodes: `No hay productos`,
+            noCodesExplainer: `Agregue aquí un código QR por cada producto que quiera vender, por ejemplo:
+            Palomitas a mil colones.`,
+            addNew: `Agregar Nuevo`,
+
+            editTitle: `Editar QR / Producto`,
+            addTitle: `Crear QR / Producto`,
+            phone: `Teléfono`,
+            phonePlaceholder: `Nuevo número o cree uno en Ajustes`,
+            name: `Nombre`,
+            namePlaceholder: `Producto a vender`,
+            price: `Precio`,
+            pricePlaceholder: `₡0.00`,
+            detail: `Detalle`,
+            detailPlaceholder: `Una descripción`,
+            submitButtonEdit: `Actualizar`,
+            submitButtonAdd: `Crear`,
+
+            CTADelete: `¿Desea borrar '{{name}}'?`,
+            deleteConfirmation: `Código borrado`,
+        },
+        history: {
+            explainer: `Seleccione un item para ver el detalle.`,
+            noHistory: `No hay historial`,
+            noHistoryExplainer: `Lea algún código QR o acepte un link de pago y le aparecerá luego aquí.`,
+        },
+        settings: {
+            phone: `Teléfono`,
+            phonePlaceholder: `Teléfono asociado a SINPE Móvil`,
+            bank: `Banco`,
+            lang: `Forzar Idioma`,
+        },
+        share: {
+            copyLink: `Copiar Link`,
+            copyConfirmation: `Link copiado al portapapeles`
+        },
+        code404:{
+            title: `No encontrado`,
+            message: `No se encontró el contenido solicitado.`
         }
     }
 };
