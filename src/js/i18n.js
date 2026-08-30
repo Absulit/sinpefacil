@@ -28,7 +28,10 @@ const resources = {
             capture: "capture",
         },
         codes: {
-            explainer: `Select an item from the list to see the QR code.`
+            explainer: `Select an item from the list to see the QR code.`,
+            noCodes: `No products`,
+            noCodesExplainer: `Add here a QR code per product you want to sell, e.g: Popcorn for 1000 colones.`,
+            addNew: `Add New QR Code`
         },
         history: {
             explainer: `Select an item to see the detail.`,
@@ -61,7 +64,11 @@ const resources = {
             capture: "capturar",
         },
         codes: {
-            explainer: `Seleccione un item de la lista para ver el código QR.`
+            explainer: `Seleccione un item de la lista para ver el código QR.`,
+            noCodes: `No hay productos`,
+            noCodesExplainer: `Agregue aquí un código QR por cada producto que quiera vender, por ejemplo:
+            Palomitas a mil colones.`,
+            addNew: `Agregar Nuevo`
         },
         history: {
             explainer: `Seleccione un item para ver el detalle.`,

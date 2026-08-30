@@ -44,15 +44,12 @@
         ${products.value.length === 0 ? $h`
         <div class="empty-state block text-align-center margin-top">
           <i class="icon f7-icons size-50 color-gray">archivebox</i>
-          <p class="color-gray">No hay productos</p>
-          <p>
-            Agregue aquí un código QR por cada producto que quiera vender, por ejemplo:
-            Palomitas a mil colones.
-          </p>
+          <p class="color-gray">${i18next.t('codes:noCodes')}</p>
+          <p>${i18next.t('codes:noCodesExplainer')}</p>
 
           <div class="block">
             <button class="button button-fill popup-open" @click="${onClickAdd}">
-              Agregar Nuevo
+              ${i18next.t('codes:addNew')}
             </button>
           </div>
 
