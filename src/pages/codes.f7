@@ -3,7 +3,7 @@
     <div class="navbar">
       <div class="navbar-bg"></div>
       <div class="navbar-inner sliding">
-        <div class="title">Mis QRs</div>
+        <div class="title">${i18next.t('codes')}</div>
       </div>
     </div>
 
@@ -59,7 +59,7 @@
         </div>
         `: $h`
         <div class="block">
-          <p>Seleccione un item de la lista para ver el código QR.</p>
+          <p>${i18next.t('codes:explainer')}</p>
         </div>
         `}
 
@@ -94,6 +94,7 @@
 
 </template>
 <script>
+  import i18next from 'i18next';
   export default (props, { $f7, $store, $on, $el }) => {
 
     const products = $store.getters.products;

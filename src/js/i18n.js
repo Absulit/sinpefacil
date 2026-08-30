@@ -26,7 +26,10 @@ const resources = {
         },
         read: {
             capture: "capture",
-        }
+        },
+        codes: {
+            explainer: `Select an item from the list to see the QR code.`
+        },
     },
     es: {
         translation: {
@@ -51,7 +54,10 @@ const resources = {
         },
         read: {
             capture: "capturar",
-        }
+        },
+        codes: {
+            explainer: `Seleccione un item de la lista para ver el código QR.`
+        },
     }
 };
 
