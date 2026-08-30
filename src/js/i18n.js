@@ -25,7 +25,7 @@ const resources = {
             mainScreen: `Main Screen`,
         },
         read: {
-            capture: "capture",
+            CTASelectBank: `Antes de leer un código QR, debe seleccionar su banco.`,
         },
         codes: {
             explainer: `Select an item from the list to see the QR code.`,
@@ -61,7 +61,7 @@ const resources = {
             mainScreen: `Pantalla Principal`,
         },
         read: {
-            capture: "capturar",
+            CTASelectBank: `Antes de leer un código QR, debe seleccionar su banco.`,
         },
         codes: {
             explainer: `Seleccione un item de la lista para ver el código QR.`,

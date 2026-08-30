@@ -3,7 +3,7 @@
     <div class="navbar">
       <div class="navbar-bg"></div>
       <div class="navbar-inner sliding">
-        <div class="title">Leer y Pagar</div>
+        <div class="title">${i18next.t('read')}</div>
       </div>
     </div>
     <div class="page-content display-flex flex-direction-column">
@@ -33,7 +33,7 @@
 
         if (!bankId) {
           $f7.dialog.confirm(
-            'Antes de leer un código QR, debe seleccionar su banco.',
+            i18next.t('read:CTASelectBank'),
             'SINPE Fácil',
             () => {
               $f7.views.current.router.navigate('/settings/')
