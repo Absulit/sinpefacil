@@ -153,6 +153,24 @@ store.dispatch('initApp').then(() => {
     });
 });
 
+navigator.serviceWorker?.ready.then(registration => {
+    registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+
+        newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                // show CTA
+                $f7.toast.create({
+                    text: i18next.t('updateAvailable'),
+                    position: 'top', // 'top' | 'center' | 'bottom'
+                    closeButton: true,
+                    closeButtonText: 'OK'
+                }).open();
+            }
+        });
+    });
+});
+
 /**
  * 
  * @param {Number} bankId 

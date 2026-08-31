@@ -126,7 +126,7 @@
           if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
             // show CTA
             $f7.toast.create({
-              text: 'Actualización disponible!<br>Se actualizará la próxima vez que abra la aplicación.',
+              text: i18next.t('updateAvailable'),
               position: 'top', // 'top' | 'center' | 'bottom'
               closeButton: true,
               closeButtonText: 'OK'
