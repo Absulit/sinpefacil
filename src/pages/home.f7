@@ -4,22 +4,22 @@
     <div class="navbar">
       <div class="navbar-bg"></div>
       <div class="navbar-inner">
-        <!-- <div class="left">
-          <a href="#" class="link icon-only panel-open" data-panel="left">
+        <div class="left">
+          <!-- <a href="#" class="link icon-only panel-open" data-panel="left">
             <i class="icon f7-icons if-not-md">menu</i>
             <i class="icon material-icons if-md">menu</i>
-          </a>
-        </div> -->
+          </a> -->
+        </div>
         <div class="title sliding display-flex align-items-center">
           <img src="../icons/128x128.png" width="28" height="28" style="margin-right: 8px;" alt="Logo" />
           <span>SINPE Fácil</span>
         </div>
         <div class="right">
-          <a href="/settings/" class="link icon-only" data-name="settings" data-url="/settings/"
-            data-browser-history="true">
-            <i class="icon f7-icons if-not-md">gear_alt_fill</i>
-            <i class="icon material-icons if-md">settings</i>
+          <a href="#" class="link icon-only panel-open" data-panel="right">
+            <i class="icon f7-icons if-not-md">menu</i>
+            <i class="icon material-icons if-md">menu</i>
           </a>
+
         </div>
         <!-- <div class="title-large">
           <div class="title-large-text">SINPE Fácil</div>

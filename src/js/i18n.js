@@ -15,6 +15,7 @@ const resources = {
             delete: `Delete`,
             print: `Print`,
             cancel: `Cancel`,
+            about: `About`,
         },
         home: {
             aboutContent: `This app generates QR codes (?) that allow other people pay you with SINPE MÓVIL. (?)
@@ -64,6 +65,8 @@ const resources = {
             phonePlaceholder: `Phone associated with SINPE Móvil`,
             bank: `Bank`,
             lang: `Force Language`,
+            CTAselectBank: `You haven't selected your bank. Exit?`,
+            phoneValidity: `Wrong phone number`,
         },
         share: {
             copyLink: `Copy Link`,
@@ -85,6 +88,7 @@ const resources = {
             delete: `Borrar`,
             print: `Imprimir`,
             cancel: `Cancelar`,
+            about: `Acerca de`,
         },
         home: {
             aboutContent: `Esta aplicación genera Códigos QR (?) para permitir a otras personas pagarte con SINPE MÓVIL. (?)
@@ -136,6 +140,8 @@ const resources = {
             phonePlaceholder: `Teléfono asociado a SINPE Móvil`,
             bank: `Banco`,
             lang: `Forzar Idioma`,
+            CTAselectBank: `No ha seleccionado su banco. ¿Salir?`,
+            phoneValidity: `Número de teléfono incorrecto`,
         },
         share: {
             copyLink: `Copiar Link`,

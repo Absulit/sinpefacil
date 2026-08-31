@@ -111,7 +111,7 @@
 
         const number = +input.value
         if (Number.isNaN(number)) {
-          input.setCustomValidity('Número de teléfono incorrecto');
+          input.setCustomValidity(i18next.t('settings:phoneValidity'));
           return
         }
 
@@ -129,10 +129,9 @@
       const bankId = await getOption(Keys.SELECTED_BANK)
       if (!bankId) {
         $f7.dialog.confirm(
-          'No ha seleccionado su banco. Salir?',
+          i18next.t('settings:CTAselectBank'),
           () => {// ok
-            const tabLink = document.querySelectorAll('.tab-link')[0]
-            $f7.tab.show(`#view-home`, tabLink, true);
+            $f7.views.current.router.back();
           },
           () => { // cancel
             $f7.views.current.router.navigate('/settings/')
