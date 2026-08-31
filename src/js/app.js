@@ -19,10 +19,14 @@ import generateSINPESMS from 'sms';
 import { db, getOption, saveOption, Keys } from 'db';
 import { clearParams } from 'url';
 import i18next from 'i18next';
+import {
+    requestNotificationPermission,
+    sendSystemNotification
+} from 'systemnotifications';
 
 await initI18n();
 
-store.dispatch('initApp').then(() => {
+store.dispatch('initApp').then(async () => {
 
     const app = new Framework7({
         name: 'SINPE Fácil', // App name
@@ -151,22 +155,22 @@ store.dispatch('initApp').then(() => {
         }
 
     });
-});
 
-navigator.serviceWorker?.ready.then(registration => {
-    registration.addEventListener('updatefound', () => {
-        const newWorker = registration.installing;
+    navigator.serviceWorker?.ready.then(registration => {
+        registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
 
-        newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                // show CTA
-                $f7.toast.create({
-                    text: i18next.t('updateAvailable'),
-                    position: 'top', // 'top' | 'center' | 'bottom'
-                    closeButton: true,
-                    closeButtonText: 'OK'
-                }).open();
-            }
+            newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    // show CTA
+                    app.toast.create({
+                        text: i18next.t('updateAvailable'),
+                        position: 'top', // 'top' | 'center' | 'bottom'
+                        closeButton: true,
+                        closeButtonText: 'OK'
+                    }).open();
+                }
+            });
         });
     });
 });

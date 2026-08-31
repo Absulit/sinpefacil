@@ -42,6 +42,7 @@ export default async () => {
         'sms': SRC_DIR + '/js/sms.js',
         'url': SRC_DIR + '/js/url.js',
         'i18n': SRC_DIR + '/js/i18n.js',
+        'systemnotifications': SRC_DIR + '/js/systemnotifications.js',
       },
     },
     server: {
