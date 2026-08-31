@@ -30,6 +30,7 @@ export const Keys = {
     PAGE_TO_LOAD: 'PAGE_TO_LOAD',
     LANG: 'LANG',
     SELECTED_BANK: 'selectedBank',
+    FIRST_TIME: 'FIRST_TIME',
 }
 
 Object.freeze(Keys);

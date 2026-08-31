@@ -174,7 +174,7 @@
       <!-- </div> -->
 
       <!-- Codes View -->
-      <div id="view-codes" class="view view-init tab" data-name="codes" data-url="/codes/">
+      <div id="view-codes" class="view view-main view-init tab" data-name="codes" data-url="/codes/">
         <!-- codes page will be loaded here dynamically from /codes/ route -->
       </div>
 
@@ -224,7 +224,7 @@
 </template>
 <script>
   import i18next from 'i18next';
-  import { getOption, Keys, getPhone } from 'db';
+  import { getOption, Keys, getPhone, saveOption } from 'db';
   export default (props, { $f7, $update, $on, $el, $store }) => {
     let productId = null;
     let currentProduct = null;
@@ -233,6 +233,12 @@
       const tab = document.querySelectorAll('div.view-init')[pageIndexToLoad];
       const tabLink = document.querySelectorAll('.tab-link')[pageIndexToLoad];
       $f7.tab.show(`#${tab.id}`, tabLink, true);
+      
+      const firtTime = await getOption(Keys.FIRST_TIME, true);
+      if (firtTime) {
+        $f7.views.current.router.navigate('/about/')
+        await saveOption(Keys.FIRST_TIME, false);
+      }
     });
 
     $f7.on('openQRDataPopup', async (id = null) => {
