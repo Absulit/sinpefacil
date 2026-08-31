@@ -15,11 +15,6 @@
           <span>SINPE Fácil</span>
         </div>
         <div class="right">
-          <a href="/settings/" class="link icon-only" data-name="settings" data-url="/settings/"
-            data-browser-history="true">
-            <i class="icon f7-icons if-not-md">gear_alt_fill</i>
-            <i class="icon material-icons if-md">settings</i>
-          </a>
           <a href="#" class="link icon-only panel-open" data-panel="right">
             <i class="icon f7-icons if-not-md">menu</i>
             <i class="icon material-icons if-md">menu</i>
