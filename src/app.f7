@@ -36,14 +36,14 @@
                   <a href="/about/" class="panel-close" data-view="current">
                     <i class="icon if-not-md f7-icons">info_circle</i>
                     <i class="icon if-md material-icons">info</i>
-                    <span>Acerca de</span>
+                    <span>${i18next.t('about')}</span>
                   </a>
                 </li>
                 <li>
                   <a href="/settings/" class="panel-close" data-view="current">
                     <i class="icon if-not-md f7-icons">gear_alt</i>
                     <i class="icon if-md material-icons">settings</i>
-                    <span>Ajustes</span>
+                    <span>${i18next.t('settings')}</span>
                   </a>
                 </li>
               </ul>
@@ -233,7 +233,7 @@
       const tab = document.querySelectorAll('div.view-init')[pageIndexToLoad];
       const tabLink = document.querySelectorAll('.tab-link')[pageIndexToLoad];
       $f7.tab.show(`#${tab.id}`, tabLink, true);
-      
+
       const firtTime = await getOption(Keys.FIRST_TIME, true);
       if (firtTime) {
         $f7.views.current.router.navigate('/about/')
