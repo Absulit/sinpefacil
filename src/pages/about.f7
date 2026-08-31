@@ -1,34 +1,108 @@
 <template>
-<div class="page" data-name="about">
-  <div class="navbar">
-    <div class="navbar-bg"></div>
-    <div class="navbar-inner sliding">
-      <div class="left">
-        <a href="#" class="link back">
-          <i class="icon icon-back"></i>
-        </a>
+  <div class="page" data-name="about">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+          </a>
+        </div>
+        <div class="title">${i18next.t('about')}</div>
       </div>
-      <div class="title">About</div>
+    </div>
+    <div class="page-content">
+      <div class="block">
+        <div class="title sliding display-flex align-items-center">
+          <img src="../icons/128x128.png" width="28" height="28" style="margin-right: 8px;" alt="Logo" />
+          <span>SINPE Fácil</span>
+        </div>
+        <p>
+          ${i18next.t('home:aboutContent')}
+        </p>
+
+      </div>
+      <div class="block">
+        <div class="block-title">${i18next.t('home:selectScreen')}:</div>
+        <p>
+          ${i18next.t('home:selectScreenContent')}
+        </p>
+
+        <div class="list list-strong-ios list-dividers-ios list-outline-ios">
+          <ul>
+            <li>
+              <a class="item-link smart-select smart-select-init" data-browser-history="true" data-open-in="page">
+                <select id="mainScreenSelect" name="mainScreenSelect">
+                  <option value="0">${i18next.t('codes')}</option>
+                  <option value="1">${i18next.t('read')}</option>
+                </select>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title">${i18next.t('home:mainScreen')}</div>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="block">
+        <button id="install" class="button button-raised button-fill display-none">Instalar en teléfono</button>
+      </div>
+
+      <div class="block">
+        ${i18next.t('credits')} <a class="external" target="_blank" href="https://mastodon.social/@absulit">@absulit</a>
+      </div>
+
     </div>
   </div>
-  <div class="page-content">
-    <div class="block-title">About My App</div>
-    <div class="block">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni molestiae laudantium dignissimos est nobis
-        delectus nemo ea alias voluptatum architecto, amet similique, saepe iste consectetur in repellat ut minus
-        quibusdam!</p>
-      <p>Molestias et distinctio porro nesciunt ratione similique, magni doloribus, rerum nobis, aliquam quae reiciendis
-        quasi modi. Nam a recusandae, fugiat in ea voluptates fuga eius, velit corrupti reprehenderit dignissimos
-        consequatur!</p>
-      <p>Blanditiis, cumque quo adipisci. Molestiae, dolores dolorum quos doloremque ipsa ullam eligendi commodi
-        deserunt doloribus inventore magni? Ea mollitia veniam nostrum nihil, iusto doloribus a at! Ea molestiae ullam
-        delectus!</p>
-    </div>
-  </div>
-</div>
 </template>
 <script>
-export default () => {
-  return $render;
-};
+  import i18next from 'i18next';
+  import { getOption, saveOption, Keys } from 'db';
+  export default async (props, { $f7, $update, $on }) => {
+
+    $on('pageInit', async () => {
+
+      let installPrompt = null;
+      const installButton = document.querySelector('#install');
+
+      window.addEventListener('beforeinstallprompt', (event) => {
+        // event.preventDefault(); // to hide default banner
+        installPrompt = event;
+        installButton.classList.remove('display-none');
+      });
+
+      window.addEventListener('appinstalled', () => {
+        disableInAppInstallPrompt();
+      });
+
+      installButton.addEventListener('click', async () => {
+        if (!installPrompt) {
+          return;
+        }
+        const result = await installPrompt.prompt();
+        console.log(`Install prompt was: ${result.outcome}`);
+        disableInAppInstallPrompt();
+      });
+
+      function disableInAppInstallPrompt() {
+        installPrompt = null;
+        installButton.classList.add('display-none');
+      }
+
+      const mainScreenSelect = document.getElementById('mainScreenSelect');
+      mainScreenSelect.value = pageIndexToLoad;
+      mainScreenSelect.addEventListener('change', e => {
+        const index = +e.target.value;
+        saveOption(Keys.PAGE_TO_LOAD, index);
+      })
+
+    })
+
+    const pageIndexToLoad = await getOption(Keys.PAGE_TO_LOAD, 0);
+
+    return $render;
+  }
 </script>

@@ -1,16 +1,36 @@
 <template>
   <div class="page" data-name="read ">
+    
+    <!-- Top Navbar -->
     <div class="navbar">
       <div class="navbar-bg"></div>
-      <div class="navbar-inner sliding">
-        <div class="title">Leer y Pagar</div>
+      <div class="navbar-inner">
+        <div class="left">
+          <!-- <a href="#" class="link icon-only panel-open" data-panel="left">
+            <i class="icon f7-icons if-not-md">menu</i>
+            <i class="icon material-icons if-md">menu</i>
+          </a> -->
+        </div>
+        <div class="title sliding display-flex align-items-center">
+          <div class="title">${i18next.t('codes')}</div>
+        </div>
+        <div class="right">
+          <a href="#" class="link icon-only panel-open" data-panel="right">
+            <i class="icon f7-icons if-not-md">menu</i>
+            <i class="icon material-icons if-md">menu</i>
+          </a>
+
+        </div>
+        <!-- <div class="title-large">
+          <div class="title-large-text">SINPE Fácil</div>
+        </div> -->
       </div>
     </div>
+
     <div class="page-content display-flex flex-direction-column">
       <video id="cam" autoplay playsinline muted
         style="width: 100%; height: 100%; max-height: 100vh; background: #000; display: block;">
       </video>
-
     </div>
   </div>
 </template>
@@ -19,11 +39,8 @@
   import QrScanner from 'qr-scanner';
   import { getOption, Keys, db } from 'db';
   import generateSINPESMS from 'sms';
-  function takePhoto() {
-    console.log('---- takePhoto');
 
-  }
-
+  let qrScanner = null;
   export default (props, { $f7, $on, $el, $store }) => {
 
     $on('pageInit', async (e, page) => {
@@ -33,13 +50,10 @@
         if ('read' !== id) return;
 
         const bankId = await getOption(Keys.SELECTED_BANK);
-        console.log('---- bankId', bankId);
 
         if (!bankId) {
-          console.log('---- request to select bank');
-
           $f7.dialog.confirm(
-            'Antes de leer un código QR, debe seleccionar su banco.',
+            i18next.t('read:CTASelectBank'),
             'SINPE Fácil',
             () => {
               $f7.views.current.router.navigate('/settings/')
@@ -50,20 +64,15 @@
               $f7.tab.show(`#view-home`, tabLink, true);
             }
           );
-
-
         }
-
 
         let isNavigating = false;
         const cam = document.getElementById('cam');
-        const qrScanner = new QrScanner(
+        qrScanner = new QrScanner(
           cam,
           async result => {
             if (isNavigating) return;
             isNavigating = true;
-
-            console.log('decoded qr code:', result)
 
             const data = Object.fromEntries(new URL(result.data).searchParams);
             const { phone, name, price, detail } = data;
@@ -72,13 +81,11 @@
             //   // rawData = rawData.replace('?body=', '&body=');
             // }
 
-            // qrScanner.stop();
-
             const bankId = await getOption(Keys.SELECTED_BANK);
             const bank = await db.banks.get(bankId);
             $f7.dialog.confirm(
-              `Enviar SMS a ${bank.shortname}?`,
-              'Código QR leído',
+              i18next.t('read:CTASendSMS', { bank: bank.shortname }),
+              i18next.t('read:CTASendSMSTitle'),
               () => {
                 generateSINPESMS(bank.phone, price, phone, name, detail)
                 isNavigating = false;
@@ -94,9 +101,6 @@
             // document.body.appendChild(link);
             // link.click();
             // document.body.removeChild(link);
-
-
-
           },
           {
             highlightScanRegion: true,
@@ -105,10 +109,15 @@
         );
         qrScanner.start();
 
-
       })
 
-
+      $f7.$(document).on('tab:hide', async (e, page) => {
+        const id = e.target.getAttribute('data-name');
+        if ('read' !== id) return;
+        qrScanner?.stop();;
+        qrScanner?.destroy();
+        qrScanner = null;
+      })
     })
 
     return $render;

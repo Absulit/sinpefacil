@@ -1,9 +1,28 @@
 <template>
   <div class="page" data-name="history">
+    <!-- Top Navbar -->
     <div class="navbar">
       <div class="navbar-bg"></div>
-      <div class="navbar-inner sliding">
-        <div class="title">Historial</div>
+      <div class="navbar-inner">
+        <div class="left">
+          <!-- <a href="#" class="link icon-only panel-open" data-panel="left">
+            <i class="icon f7-icons if-not-md">menu</i>
+            <i class="icon material-icons if-md">menu</i>
+          </a> -->
+        </div>
+        <div class="title sliding display-flex align-items-center">
+          <div class="title">${i18next.t('history')}</div>
+        </div>
+        <div class="right">
+          <a href="#" class="link icon-only panel-open" data-panel="right">
+            <i class="icon f7-icons if-not-md">menu</i>
+            <i class="icon material-icons if-md">menu</i>
+          </a>
+
+        </div>
+        <!-- <div class="title-large">
+          <div class="title-large-text">SINPE Fácil</div>
+        </div> -->
       </div>
     </div>
 
@@ -30,22 +49,17 @@
           <i class="icon material-icons if-md">history_toggle_off</i>
 
 
-          <p class="color-gray">No hay historial</p>
-          <p>
-            Lea algún código QR o acepte un link de pago y le aparecerá luego aquí.
-          </p>
+          <p class="color-gray">${i18next.t('history:noHistory')}</p>
+          <p>${i18next.t('history:noHistoryExplainer')}</p>
         </div>
         `: $h`
         <div class="block">
-          <p>Seleccione un item para ver el detalle</p>
+          <p>${i18next.t('history:explainer')}</p>
         </div>
-
         `}
-
 
         <ul>
           ${history.value.map((historyItem) => $h`
-
 
           <li>
             <a class="item-link item-content" href="/history/${historyItem.id}/">
@@ -77,6 +91,7 @@
 </template>
 <script>
   import { formatDate } from 'i18n';
+  import i18next from 'i18next';
   export default (props, { $f7, $store, $on, $el }) => {
 
     const history = $store.getters.history;

@@ -37,9 +37,8 @@
       <div class="popover-inner">
         <div class="list">
           <ul>
-            <li><a href="#" class="list-button popover-close" @click=${()=>deleteProduct()}>Delete</a></li>
-            <li><a href="#" class="list-button popover-close" @click=${()=>printProduct()}>Print</a></li>
-
+            <li><a href="#" class="list-button popover-close" @click=${()=>deleteProduct()}>${i18next.t('delete')}</a></li>
+            <li><a href="#" class="list-button popover-close" @click=${()=>printProduct()}>${i18next.t('print')}</a></li>
           </ul>
         </div>
       </div>
@@ -79,6 +78,7 @@
   import { getPhone, getOption, Keys, db } from 'db';
   import { formatDate } from 'i18n';
   import generateSINPESMS from 'sms';
+  import i18next from 'i18next';
   export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
     const history = $store.getters.history;
     const historyItemId = +$f7route.params.id;
