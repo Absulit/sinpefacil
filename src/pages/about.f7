@@ -13,6 +13,10 @@
     </div>
     <div class="page-content">
       <div class="block">
+        <div class="title sliding display-flex align-items-center">
+          <img src="../icons/128x128.png" width="28" height="28" style="margin-right: 8px;" alt="Logo" />
+          <span>SINPE Fácil</span>
+        </div>
         <p>
           ${i18next.t('home:aboutContent')}
         </p>
