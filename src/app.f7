@@ -31,14 +31,14 @@
             <div class="list links-list">
               <ul>
                 <li>
-                  <a href="/about/" class="panel-close">
+                  <a href="/about/" class="panel-close" data-view="current">
                     <i class="icon if-not-md f7-icons">info_circle</i>
                     <i class="icon if-md material-icons">info</i>
                     <span>Acerca de</span>
                   </a>
                 </li>
                 <li>
-                  <a href="/settings/" class="panel-close">
+                  <a href="/settings/" class="panel-close" data-view="current">
                     <i class="icon if-not-md f7-icons">gear_alt</i>
                     <i class="icon if-md material-icons">settings</i>
                     <span>Ajustes</span>
