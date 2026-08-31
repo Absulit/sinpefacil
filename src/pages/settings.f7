@@ -111,7 +111,7 @@
 
         const number = +input.value
         if (Number.isNaN(number)) {
-          input.setCustomValidity('Número de teléfono incorrecto');
+          input.setCustomValidity(i18next.t('settings:phoneValidity'));
           return
         }
 
@@ -129,7 +129,7 @@
       const bankId = await getOption(Keys.SELECTED_BANK)
       if (!bankId) {
         $f7.dialog.confirm(
-          'No ha seleccionado su banco. Salir?',
+          i18next.t('settings:CTAselectBank'),
           () => {// ok
             $f7.views.current.router.back();
           },

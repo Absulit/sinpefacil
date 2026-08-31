@@ -65,6 +65,8 @@ const resources = {
             phonePlaceholder: `Phone associated with SINPE Móvil`,
             bank: `Bank`,
             lang: `Force Language`,
+            CTAselectBank: `You haven't selected your bank. Exit?`,
+            phoneValidity: `Wrong phone number`,
         },
         share: {
             copyLink: `Copy Link`,
@@ -138,6 +140,8 @@ const resources = {
             phonePlaceholder: `Teléfono asociado a SINPE Móvil`,
             bank: `Banco`,
             lang: `Forzar Idioma`,
+            CTAselectBank: `No ha seleccionado su banco. ¿Salir?`,
+            phoneValidity: `Número de teléfono incorrecto`,
         },
         share: {
             copyLink: `Copiar Link`,
