@@ -16,6 +16,7 @@ const resources = {
             print: `Print`,
             cancel: `Cancel`,
             about: `About`,
+            updateAvailable: `Update available!<br>It will update next time you open the app.`,
         },
         home: {
             aboutContent: `This app generates QR codes (?) that allow other people pay you with SINPE MÓVIL. (?)
@@ -89,6 +90,7 @@ const resources = {
             print: `Imprimir`,
             cancel: `Cancelar`,
             about: `Acerca de`,
+            updateAvailable: `¡Actualización disponible!<br>Se actualizará la próxima vez que abra la aplicación.`,
         },
         home: {
             aboutContent: `Esta aplicación genera Códigos QR (?) para permitir a otras personas pagarte con SINPE MÓVIL. (?)
