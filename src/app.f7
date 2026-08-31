@@ -24,7 +24,9 @@
           <div class="navbar">
             <div class="navbar-bg"></div>
             <div class="navbar-inner">
-              <div class="title">Right Panel</div>
+              <div class="title">
+                <span>SINPE Fácil</span>
+              </div>
             </div>
           </div>
           <div class="page-content">
@@ -132,11 +134,11 @@
       <div class="toolbar tabbar toolbar-bottom tabbar-icons">
         <div class="toolbar-inner">
           <div class="toolbar-pane">
-            <a href="#view-home" class="tab-link">
+            <!-- <a href="#view-home" class="tab-link">
               <i class="icon f7-icons if-not-md">house_fill</i>
               <i class="icon material-icons if-md">home</i>
               <span class="tabbar-label">${i18next.t('home')}</span>
-            </a>
+            </a> -->
 
             <a href="#view-codes" class="tab-link">
               <i class="icon f7-icons if-not-md">qrcode</i>
@@ -167,9 +169,9 @@
       </div>
 
       <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
-      <div id="view-home" class="view view-main view-init tab" data-name="home" data-url="/">
-        <!-- Home page will be loaded here dynamically from / route -->
-      </div>
+      <!-- <div id="view-home" class="view view-main view-init tab" data-name="home" data-url="/"> -->
+      <!-- Home page will be loaded here dynamically from / route -->
+      <!-- </div> -->
 
       <!-- Codes View -->
       <div id="view-codes" class="view view-init tab" data-name="codes" data-url="/codes/">

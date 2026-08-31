@@ -33,9 +33,8 @@
             <li>
               <a class="item-link smart-select smart-select-init" data-browser-history="true" data-open-in="page">
                 <select id="mainScreenSelect" name="mainScreenSelect">
-                  <option value="0" selected>${i18next.t('home')}</option>
-                  <option value="1">${i18next.t('codes')}</option>
-                  <option value="2">${i18next.t('read')}</option>
+                  <option value="0">${i18next.t('codes')}</option>
+                  <option value="1">${i18next.t('read')}</option>
                 </select>
                 <div class="item-content">
                   <div class="item-inner">

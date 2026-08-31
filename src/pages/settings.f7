@@ -131,8 +131,7 @@
         $f7.dialog.confirm(
           'No ha seleccionado su banco. Salir?',
           () => {// ok
-            const tabLink = document.querySelectorAll('.tab-link')[0]
-            $f7.tab.show(`#view-home`, tabLink, true);
+            $f7.views.current.router.back();
           },
           () => { // cancel
             $f7.views.current.router.navigate('/settings/')
