@@ -55,6 +55,10 @@
         ${i18next.t('credits')} <a class="external" target="_blank" href="https://mastodon.social/@absulit">@absulit</a>
       </div>
 
+      <div class="block">
+        ${i18next.t('version')} ${VERSION}
+      </div>
+
     </div>
   </div>
 </template>
