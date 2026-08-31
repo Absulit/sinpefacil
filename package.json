@@ -1,7 +1,7 @@
 {
   "name": "SINPE Fácil",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Application made to simplify the use of SINPE Móvil in Costa Rica.",
   "repository": {
     "type": "git",
@@ -12,7 +12,7 @@
   "scripts": {
     "start": "npm run dev; npm audit; npm outdated",
     "dev": "cross-env NODE_ENV=development vite",
-    "build": "cross-env NODE_ENV=production vite build && npx workbox generateSW workbox-config.cjs && npx cpy assets-src/SINPEFACIL_OGTAGS_LOGO.png www/icons/og.png",
+    "build": "cross-env NODE_ENV=production vite build && npx workbox generateSW workbox-config.cjs && npx cpy assets-src/SINPEFACIL_OGTAGS_LOGO.png www/icons/og.png && npx cpy src/js/sw-extra.js www/sw-extra.js",
     "postinstall": "cpy --flat ./node_modules/framework7-icons/fonts/*.* ./src/fonts/ && cpy --flat ./node_modules/material-icons/iconfont/*.* ./src/fonts/",
     "assets": "npx framework7-cli generate-assets"
   },

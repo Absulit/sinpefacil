@@ -24,7 +24,7 @@ export async function sendSystemNotification(title, options = {}) {
     registration.showNotification(title, {
         body: body || '',
         icon: icon || '/icons/192x192.png',
-        badge: badge || '', // Android monochrome status bar icon
+        badge: badge || '/icons/128x128.png', // Android monochrome status bar icon
         vibrate: vibrate || [100, 50, 100],
         data: {
             url: url || '/', // Path to open when clicked

@@ -26,7 +26,7 @@ import {
 
 await initI18n();
 
-store.dispatch('initApp').then(async () => {
+store.dispatch('initApp').then(() => {
 
     const app = new Framework7({
         name: 'SINPE Fácil', // App name
@@ -160,19 +160,33 @@ store.dispatch('initApp').then(async () => {
         registration.addEventListener('updatefound', () => {
             const newWorker = registration.installing;
 
-            newWorker.addEventListener('statechange', () => {
+            newWorker.addEventListener('statechange', async () => {
                 if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+
+                    const body = i18next.t('updateAvailable');
+
+                    const enabled = await requestNotificationPermission();
+                    if (enabled) {
+                        await sendSystemNotification('SINPE Fácil', { body });
+                        return;
+                    }
+
                     // show CTA
                     app.toast.create({
-                        text: i18next.t('updateAvailable'),
+                        text: body,
                         position: 'top', // 'top' | 'center' | 'bottom'
                         closeButton: true,
                         closeButtonText: 'OK'
                     }).open();
+
+
                 }
             });
         });
     });
+
+
+
 });
 
 /**
@@ -203,3 +217,31 @@ function safePushState(stateObj, title, url) {
         window.history.replaceState(stateObj, title, url);
     }
 }
+
+
+// js/app.js - Register periodic update check when app is open
+async function registerBackgroundUpdateCheck() {
+    const registration = await navigator.serviceWorker.ready;
+
+    if ('periodicSync' in registration) {
+        try {
+            // Request browser to check for SW updates every 12 hours in background
+            await registration.periodicSync.register('check-app-update', {
+                minInterval: 12 * 60 * 60 * 1000, // 12 hours
+            });
+        } catch (error) {
+            console.log('Periodic background sync not allowed or supported.');
+        }
+    }
+}
+registerBackgroundUpdateCheck()
+
+// let refreshing = false;
+// navigator.serviceWorker.addEventListener('controllerchange', () => {
+//     if (!refreshing) {
+//         refreshing = true;
+//         window.location.reload();
+//     }
+// });
+
+

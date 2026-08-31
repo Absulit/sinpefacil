@@ -7,4 +7,5 @@ module.exports = {
   ignoreURLParametersMatching: [/^utm_/, /^fbclid$/],
   swDest: 'www/service-worker.js',
   cacheId: `v${pkg.version}`,
+  importScripts: ['sw-extra.js'],
 };
