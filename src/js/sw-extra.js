@@ -34,12 +34,14 @@ self.addEventListener('activate', (event) => {
 
             if (Notification.permission === 'granted') {
                 // if (permission === 'granted') {
-                await self.registration.showNotification('App Updated!', {
-                    body: i18next.t('updateDownloaded'),
-                    icon: '/icons/192x192.png',
-                    badge: '/icons/badge.png',
-                    data: { url: '/' },
-                });
+
+                // bad practice to send a system notification for an update
+                // await self.registration.showNotification('App Updated!', {
+                //     body: i18next.t('updateDownloaded'),
+                //     icon: '/icons/192x192.png',
+                //     badge: '/icons/badge.png',
+                //     data: { url: '/' },
+                // });
             }
         })()
     );

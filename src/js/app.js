@@ -210,7 +210,8 @@ function safePushState(stateObj, title, url) {
 }
 
 
-// js/app.js - Register periodic update check when app is open
+// it is a bad practive to send a notification to the user
+// to let them know about a non actionable update
 async function registerBackgroundUpdateCheck() {
     const registration = await navigator.serviceWorker.ready;
 
@@ -225,7 +226,7 @@ async function registerBackgroundUpdateCheck() {
         }
     }
 }
-registerBackgroundUpdateCheck()
+// registerBackgroundUpdateCheck()
 
 // let refreshing = false;
 // navigator.serviceWorker.addEventListener('controllerchange', () => {

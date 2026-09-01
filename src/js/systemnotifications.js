@@ -1,3 +1,13 @@
+/* 
+ use example
+
+const enabled = await requestNotificationPermission();
+if (enabled) {
+    await sendSystemNotification('SINPE Fácil', { body });
+    return;
+}
+ */
+
 export async function requestNotificationPermission() {
     if (!('Notification' in window)) {
         return false;
