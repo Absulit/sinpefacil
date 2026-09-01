@@ -255,6 +255,7 @@
   import { getOption, Keys, getPhone, saveOption } from 'db';
   import { strLen } from 'i18n';
   let numChars = 5;
+  const SMS_START = 'PASE ';
   export default (props, { $f7, $update, $on, $el, $store }) => {
     let productId = null;
     let currentProduct = null;
@@ -274,6 +275,7 @@
     $f7.on('openQRDataPopup', async (id = null) => {
       console.log('---- POP UP OPEN PRODUCT');
       const form = $f7.$('#qr-data-form')[0];
+      const inputs = Array.from(form.querySelectorAll('input'));
       productId = id;
       const phoneInput = form.querySelector('#phone');
       const phoneDB = await getPhone();
@@ -305,13 +307,13 @@
       const formName = form.elements['name'];
       const formDetail = form.elements['detail'];
       form.addEventListener('input', e => {
-        const inputs = Array.from(form.querySelectorAll('input'));
-        let smsText = 'PASE ';
-        inputs.forEach(input => {
-          smsText += input.value + ' '
-        })
-        smsText = smsText.trim();
-        numChars = smsText.length;
+        
+        let smsText = SMS_START;
+        inputs.forEach(input => smsText += input.value + ' ');
+        
+        smsText = smsText.trim().replace(/\s+/g, ' ');
+        numChars = strLen(smsText);
+        
 
         const hasUnicode = isUnicode(smsText);
         smsexample.innerText = smsText;
