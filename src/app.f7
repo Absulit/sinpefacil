@@ -77,7 +77,7 @@
                 <i class="icon f7-icons if-not-md">info_circle</i>
                 <i class="icon material-icons if-md">info</i>
               </span>
-              Máximo total de 70 si hay caracteres especiales, sino 160.
+              160 caracteres máximo, 70 si hay especiales. Usados: ${numChars}.
             </div>
           </div>
 
@@ -121,7 +121,8 @@
                 <div class="item-inner">
                   <div class="item-title item-label">${i18next.t('codes:detail')}</div>
                   <div class="item-input-wrap">
-                    <input type="text" name="detail" placeholder="${i18next.t('codes:detailPlaceholder')}" validate maxlength="160" />
+                    <input type="text" name="detail" placeholder="${i18next.t('codes:detailPlaceholder')}" validate
+                      maxlength="160" />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -143,7 +144,7 @@
             <div id="smsexample" class="card-content card-content-padding force-text-wrap">
               PASE PRECIO NUMERO NOMBRE DETALLE
             </div>
-            <div id="numchars" class="card-footer"></div>
+
           </div>
 
 
@@ -253,6 +254,7 @@
   import { isUnicode } from 'sms'
   import { getOption, Keys, getPhone, saveOption } from 'db';
   import { strLen } from 'i18n';
+  let numChars = 5;
   export default (props, { $f7, $update, $on, $el, $store }) => {
     let productId = null;
     let currentProduct = null;
@@ -281,7 +283,6 @@
       }
 
       if (productId) {
-        console.log('edit');
         const products = $store.getters.products;
         products.value.forEach(product => {
           if (product.id !== productId) {
@@ -289,11 +290,9 @@
           }
           currentProduct = product;
         });
-        console.log(currentProduct);
 
         $f7.form.fillFromData('#qr-data-form', currentProduct);
       } else {
-
         form.reset();
       }
 
@@ -303,41 +302,31 @@
 
 
       const smsexample = document.getElementById('smsexample');
-      const numchars = document.getElementById('numchars');
       const formName = form.elements['name'];
       const formDetail = form.elements['detail'];
       form.addEventListener('input', e => {
         const inputs = Array.from(form.querySelectorAll('input'));
-        const numChars = inputs
-          .map(input => strLen(input.value))
-          .reduce((acc, cv) => acc + cv) + 5;
-
         let smsText = 'PASE ';
         inputs.forEach(input => {
           smsText += input.value + ' '
         })
         smsText = smsText.trim();
+        numChars = smsText.length;
 
         const hasUnicode = isUnicode(smsText);
-
         smsexample.innerText = smsText;
-        numchars.innerText = `Número de caracteres: ${numChars}, Tiene caracteres especiales: ${hasUnicode ? 'Sí' : 'No'}`;
-
 
         // check validity of length and unicode
         const maxLength = hasUnicode ? 70 : 160;
         formName.setCustomValidity('');
         formDetail.setCustomValidity('');
-        console.log(numChars, maxLength);
 
         if (numChars > maxLength) {
           formName.setCustomValidity(`Excede el límite total de ${maxLength} caracteres (${numChars})`);
           formDetail.setCustomValidity(`Excede el límite total de ${maxLength} caracteres (${numChars})`);
         }
-        // formName.reportValidity();
-        // formDetail.reportValidity();
 
-
+        $update();
       });
 
 
