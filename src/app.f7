@@ -124,6 +124,22 @@
               </button>
             </div>
           </form>
+
+
+
+          <div class="block-title">Ejemplo de SMS</div>
+          <div class="block" class="card">
+            <div id="smsexample" class="card-content card-content-padding">
+              PASE 2000 83256474 title desc
+            </div>
+            <div id="numchars" class="card-footer"></div>
+          </div>
+
+
+
+
+
+
         </div>
       </div>
     </div>
@@ -224,7 +240,9 @@
 </template>
 <script>
   import i18next from 'i18next';
+  import { isUnicode } from 'sms'
   import { getOption, Keys, getPhone, saveOption } from 'db';
+  import { strLen } from 'i18n';
   export default (props, { $f7, $update, $on, $el, $store }) => {
     let productId = null;
     let currentProduct = null;
@@ -272,6 +290,32 @@
       // Re-render popup UI with updated state before opening
       $update();
       $f7.popup.open('.qr-data-popup');
+
+
+      const smsexample = document.getElementById('smsexample');
+      const numchars = document.getElementById('numchars');
+      form.addEventListener('input', e => {
+        const inputs = Array.from(form.querySelectorAll('input'));
+        const numChars = inputs
+          .map(input => strLen(input.value))
+          .reduce((acc, cv) => acc + cv) + 5;
+
+        let smsText = 'PASE ';
+        inputs.forEach(input => {
+          smsText += input.value + ' '
+        })
+        smsText = smsText.trim();
+
+        const limitTo70 = isUnicode(smsText);
+
+        smsexample.innerText = smsText;
+        numchars.innerText = `Número de caracteres: ${numChars}, Tiene caracteres especiales: ${limitTo70 ? 'Sí' : 'No'}`;
+
+      });
+
+
+
+
     });
 
 
@@ -306,10 +350,12 @@
 
       // Show confirmation
       $f7.toast.create({
-        text: 'Form submitted successfully!',
+        text: 'Producto creado',
         closeTimeout: 2000,
       }).open();
     };
+
+
 
 
     return $render;

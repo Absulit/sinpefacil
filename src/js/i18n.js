@@ -180,4 +180,15 @@ export function formatDate(date) {
     }).format(date);
 }
 
+/**
+ * Checks for a string that could have emojis, so then provide
+ * the length of 1 emoji as 1 char instead of 
+ * it's inner representation
+ * @param {String} val 
+ * @return {Number}
+ */
+export function strLen(val) {
+    return [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(val)].length;
+}
+
 export default i18next;
