@@ -37,7 +37,7 @@ self.addEventListener('activate', (event) => {
                 await self.registration.showNotification('App Updated!', {
                     body: i18next.t('updateDownloaded'),
                     icon: '/icons/192x192.png',
-                    badge: '/icons/128x128.png',
+                    badge: '/icons/badge.png',
                     data: { url: '/' },
                 });
             }
