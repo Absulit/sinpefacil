@@ -256,6 +256,15 @@
   import { strLen } from 'i18n';
   let numChars = 5;
   const SMS_START = 'PASE ';
+
+  function cleanTextAndLength(inputs) {
+    let smsText = SMS_START;
+    inputs.forEach(input => smsText += input.value + ' ');
+    smsText = smsText.trim().replace(/\s+/g, ' ');
+    numChars = strLen(smsText);
+    return { smsText, numChars }
+  }
+
   export default (props, { $f7, $update, $on, $el, $store }) => {
     let productId = null;
     let currentProduct = null;
@@ -307,13 +316,8 @@
       const formName = form.elements['name'];
       const formDetail = form.elements['detail'];
       form.addEventListener('input', e => {
-        
-        let smsText = SMS_START;
-        inputs.forEach(input => smsText += input.value + ' ');
-        
-        smsText = smsText.trim().replace(/\s+/g, ' ');
-        numChars = strLen(smsText);
-        
+
+        const { smsText, numChars } = cleanTextAndLength(inputs);
 
         const hasUnicode = isUnicode(smsText);
         smsexample.innerText = smsText;
