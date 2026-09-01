@@ -165,12 +165,6 @@ store.dispatch('initApp').then(() => {
 
                     const body = i18next.t('updateAvailable');
 
-                    const enabled = await requestNotificationPermission();
-                    if (enabled) {
-                        await sendSystemNotification('SINPE Fácil', { body });
-                        return;
-                    }
-
                     // show CTA
                     app.toast.create({
                         text: body,
@@ -179,13 +173,10 @@ store.dispatch('initApp').then(() => {
                         closeButtonText: 'OK'
                     }).open();
 
-
                 }
             });
         });
     });
-
-
 
 });
 
