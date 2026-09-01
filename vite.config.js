@@ -6,9 +6,17 @@ const SRC_DIR = fileURLToPath(new URL('./src', import.meta.url));
 const PUBLIC_DIR = fileURLToPath(new URL('./public', import.meta.url));
 const BUILD_DIR = fileURLToPath(new URL('./www', import.meta.url));
 
+// to print the version number on the app
+import pkg from './package.json';
+
+
 export default async () => {
 
   return {
+    define: {
+      VERSION: JSON.stringify(pkg.version),
+    },
+
     plugins: [
       framework7({ emitCss: false }),
       basicSsl(),
@@ -34,6 +42,7 @@ export default async () => {
         'sms': SRC_DIR + '/js/sms.js',
         'url': SRC_DIR + '/js/url.js',
         'i18n': SRC_DIR + '/js/i18n.js',
+        'systemnotifications': SRC_DIR + '/js/systemnotifications.js',
       },
     },
     server: {

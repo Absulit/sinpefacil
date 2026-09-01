@@ -46,7 +46,7 @@
 
     <div class="page-content">
 
-      <div class="card card-raised">
+      <div class="card card-raised print-area">
         <div class="card-header">${currentHistoryItem.name}</div>
         <div class="card-content card-content-padding">
 
@@ -144,7 +144,7 @@
     }
 
     const printProduct = () => {
-      console.log('printProduct');
+      window.print();
     }
 
     const share = async () => {

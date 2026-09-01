@@ -16,7 +16,10 @@ const resources = {
             print: `Print`,
             cancel: `Cancel`,
             about: `About`,
-            updateAvailable: `Update available!<br>It will update next time you open the app.`,
+            updateAvailable: `Update available!\nIt will update next time you open the app.`,
+            updateDownloadedTitle: `App Updated!`,
+            updateDownloaded: `A new version of SINPE Fácil has been installed and is ready to use.`,
+            version: `version`,
         },
         home: {
             aboutContent: `This app generates QR codes (?) that allow other people pay you with SINPE MÓVIL. (?)
@@ -73,7 +76,7 @@ const resources = {
             copyLink: `Copy Link`,
             copyConfirmation: `Link copied to clipboard`
         },
-        code404:{
+        code404: {
             title: `Not Found`,
             message: `Requested content not found.`
         }
@@ -90,7 +93,10 @@ const resources = {
             print: `Imprimir`,
             cancel: `Cancelar`,
             about: `Acerca de`,
-            updateAvailable: `¡Actualización disponible!<br>Se actualizará la próxima vez que abra la aplicación.`,
+            updateAvailable: `¡Actualización disponible!\nSe actualizará la próxima vez que abra la aplicación.`,
+            updateDownloadedTitle: `¡Aplicación Actualizada!`,
+            updateDownloaded: `Una nueva versión de SINPE Fácil se ha instalado y está lista para usarse.`,
+            version: `version`,
         },
         home: {
             aboutContent: `Esta aplicación genera Códigos QR (?) para permitir a otras personas pagarte con SINPE MÓVIL. (?)
@@ -149,7 +155,7 @@ const resources = {
             copyLink: `Copiar Link`,
             copyConfirmation: `Link copiado al portapapeles`
         },
-        code404:{
+        code404: {
             title: `No encontrado`,
             message: `No se encontró el contenido solicitado.`
         }

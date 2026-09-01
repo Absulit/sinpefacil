@@ -50,7 +50,7 @@
         <div class="card-header">${currentProduct.name}</div>
         <div class="card-content card-content-padding">
 
-          <div id="qr-code-container" class="block text-align-center"></div>
+          <div id="qr-code-container" class="block text-align-center print-area"></div>
         </div>
         <div class="card-content card-content-padding">
           <div class="card-content-padding">
@@ -153,7 +153,7 @@
     }
 
     const printProduct = () => {
-      console.log('printProduct');
+      window.print();
     }
 
     const share = async () => {
