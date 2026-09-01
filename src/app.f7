@@ -308,16 +308,21 @@
         form.reset();
       }
 
-      const { smsText, numChars } = cleanTextAndLength(SMS_START + phoneDB?.number, inputs);
+      const formName = form.elements['name'];
+      const formDetail = form.elements['detail'];
+      const formPhone = form.elements['phone'];
+
+      let phone = formPhone.value.length ? '' : phoneDB?.number;
+      const { smsText, numChars } = cleanTextAndLength(SMS_START + phone, inputs);
       smsexample.innerText = smsText;
+      console.log(smsText, numChars);
+
 
       // Re-render popup UI with updated state before opening
       $update();
       $f7.popup.open('.qr-data-popup');
 
-      const formName = form.elements['name'];
-      const formDetail = form.elements['detail'];
-      const formPhone = form.elements['phone'];
+
 
       form.addEventListener('input', e => {
 
