@@ -19,6 +19,10 @@ import generateSINPESMS from 'sms';
 import { db, getOption, saveOption, Keys } from 'db';
 import { clearParams } from 'url';
 import i18next from 'i18next';
+import {
+    requestNotificationPermission,
+    sendSystemNotification
+} from 'systemnotifications';
 
 await initI18n();
 
@@ -151,24 +155,29 @@ store.dispatch('initApp').then(() => {
         }
 
     });
-});
 
-navigator.serviceWorker?.ready.then(registration => {
-    registration.addEventListener('updatefound', () => {
-        const newWorker = registration.installing;
+    navigator.serviceWorker?.ready.then(registration => {
+        registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
 
-        newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                // show CTA
-                $f7.toast.create({
-                    text: i18next.t('updateAvailable'),
-                    position: 'top', // 'top' | 'center' | 'bottom'
-                    closeButton: true,
-                    closeButtonText: 'OK'
-                }).open();
-            }
+            newWorker.addEventListener('statechange', async () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+
+                    const body = i18next.t('updateAvailable');
+
+                    // show CTA
+                    app.toast.create({
+                        text: body,
+                        position: 'top', // 'top' | 'center' | 'bottom'
+                        closeButton: true,
+                        closeButtonText: 'OK'
+                    }).open();
+
+                }
+            });
         });
     });
+
 });
 
 /**
@@ -199,3 +208,32 @@ function safePushState(stateObj, title, url) {
         window.history.replaceState(stateObj, title, url);
     }
 }
+
+
+// it is a bad practive to send a notification to the user
+// to let them know about a non actionable update
+async function registerBackgroundUpdateCheck() {
+    const registration = await navigator.serviceWorker.ready;
+
+    if ('periodicSync' in registration) {
+        try {
+            // Request browser to check for SW updates every 12 hours in background
+            await registration.periodicSync.register('check-app-update', {
+                minInterval: 12 * 60 * 60 * 1000, // 12 hours
+            });
+        } catch (error) {
+            console.log('Periodic background sync not allowed or supported.');
+        }
+    }
+}
+// registerBackgroundUpdateCheck()
+
+// let refreshing = false;
+// navigator.serviceWorker.addEventListener('controllerchange', () => {
+//     if (!refreshing) {
+//         refreshing = true;
+//         window.location.reload();
+//     }
+// });
+
+
