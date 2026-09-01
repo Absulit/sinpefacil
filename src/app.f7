@@ -294,6 +294,8 @@
       }
 
       productId = id;
+      currentProduct = null;
+      
       if (productId) {
         const products = $store.getters.products;
         products.value.forEach(product => {
