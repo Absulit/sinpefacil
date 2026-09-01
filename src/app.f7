@@ -312,7 +312,7 @@
       const formDetail = form.elements['detail'];
       const formPhone = form.elements['phone'];
 
-      let phone = formPhone.value.length ? '' : phoneDB?.number;
+      let phone = formPhone.value.length ? '' : phoneDB?.number ?? '';
       const { smsText, numChars } = cleanTextAndLength(SMS_START + phone, inputs);
       smsexample.innerText = smsText;
       console.log(smsText, numChars);
@@ -326,7 +326,7 @@
 
       form.addEventListener('input', e => {
 
-        let phone = formPhone.value.length ? '' : phoneDB?.number;
+        let phone = formPhone.value.length ? '' : phoneDB?.number ?? '';
         const { smsText, numChars } = cleanTextAndLength(SMS_START + phone, inputs);
 
         const hasUnicode = isUnicode(smsText);
