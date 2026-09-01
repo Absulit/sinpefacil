@@ -71,6 +71,17 @@
         </div>
 
         <div class="page-content">
+          <div class="toolbar toolbar-bottom messagebar-area no-shadow">
+            <div class="toolbar-inner display-flex justify-content-center align-items-center padding-horizontal">
+              <span class="text-color-gray size-12 padding-half">
+                <i class="icon f7-icons if-not-md">info_circle</i>
+                <i class="icon material-icons if-md">info</i>
+              </span>
+              Máximo total de 70 si hay caracteres especiales, sino 160.
+            </div>
+          </div>
+
+
           <form class="list" id="qr-data-form">
             <ul>
               <li class="item-content item-input">
@@ -110,7 +121,7 @@
                 <div class="item-inner">
                   <div class="item-title item-label">${i18next.t('codes:detail')}</div>
                   <div class="item-input-wrap">
-                    <input type="text" name="detail" placeholder="${i18next.t('codes:detailPlaceholder')}" validate />
+                    <input type="text" name="detail" placeholder="${i18next.t('codes:detailPlaceholder')}" validate maxlength="160" />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -129,12 +140,11 @@
 
           <div class="block-title">Ejemplo de SMS</div>
           <div class="block" class="card">
-            <div id="smsexample" class="card-content card-content-padding">
-              PASE 2000 83256474 title desc
+            <div id="smsexample" class="card-content card-content-padding force-text-wrap">
+              PASE PRECIO NUMERO NOMBRE DETALLE
             </div>
             <div id="numchars" class="card-footer"></div>
           </div>
-
 
 
 
@@ -294,6 +304,8 @@
 
       const smsexample = document.getElementById('smsexample');
       const numchars = document.getElementById('numchars');
+      const formName = form.elements['name'];
+      const formDetail = form.elements['detail'];
       form.addEventListener('input', e => {
         const inputs = Array.from(form.querySelectorAll('input'));
         const numChars = inputs
@@ -306,10 +318,25 @@
         })
         smsText = smsText.trim();
 
-        const limitTo70 = isUnicode(smsText);
+        const hasUnicode = isUnicode(smsText);
 
         smsexample.innerText = smsText;
-        numchars.innerText = `Número de caracteres: ${numChars}, Tiene caracteres especiales: ${limitTo70 ? 'Sí' : 'No'}`;
+        numchars.innerText = `Número de caracteres: ${numChars}, Tiene caracteres especiales: ${hasUnicode ? 'Sí' : 'No'}`;
+
+
+        // check validity of length and unicode
+        const maxLength = hasUnicode ? 70 : 160;
+        formName.setCustomValidity('');
+        formDetail.setCustomValidity('');
+        console.log(numChars, maxLength);
+
+        if (numChars > maxLength) {
+          formName.setCustomValidity(`Excede el límite total de ${maxLength} caracteres (${numChars})`);
+          formDetail.setCustomValidity(`Excede el límite total de ${maxLength} caracteres (${numChars})`);
+        }
+        // formName.reportValidity();
+        // formDetail.reportValidity();
+
 
       });
 
