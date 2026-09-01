@@ -257,8 +257,8 @@
   let numChars = 5;
   const SMS_START = 'PASE ';
 
-  function cleanTextAndLength(inputs) {
-    let smsText = SMS_START;
+  function cleanTextAndLength(smsStartText, inputs) {
+    let smsText = smsStartText;
     inputs.forEach(input => smsText += input.value + ' ');
     smsText = smsText.trim().replace(/\s+/g, ' ');
     numChars = strLen(smsText);
@@ -285,14 +285,15 @@
       console.log('---- POP UP OPEN PRODUCT');
       const form = $f7.$('#qr-data-form')[0];
       const inputs = Array.from(form.querySelectorAll('input'));
-      productId = id;
+      const smsexample = document.getElementById('smsexample');
       const phoneInput = form.querySelector('#phone');
       const phoneDB = await getPhone();
       if (phoneDB) {
         phoneInput.placeholder = phoneDB.number;
         phoneInput.required = false;
       }
-
+      
+      productId = id;
       if (productId) {
         const products = $store.getters.products;
         products.value.forEach(product => {
@@ -307,17 +308,19 @@
         form.reset();
       }
 
+      const { smsText, numChars } = cleanTextAndLength(SMS_START + phoneDB?.number, inputs);
+      smsexample.innerText = smsText;
+
       // Re-render popup UI with updated state before opening
       $update();
       $f7.popup.open('.qr-data-popup');
 
-
-      const smsexample = document.getElementById('smsexample');
       const formName = form.elements['name'];
       const formDetail = form.elements['detail'];
+
       form.addEventListener('input', e => {
 
-        const { smsText, numChars } = cleanTextAndLength(inputs);
+        const { smsText, numChars } = cleanTextAndLength(SMS_START + phoneDB?.number, inputs);
 
         const hasUnicode = isUnicode(smsText);
         smsexample.innerText = smsText;
@@ -335,13 +338,7 @@
         $update();
       });
 
-
-
-
     });
-
-
-
 
     const submitForm = () => {
       // Extract data using Framework7 form helper
@@ -376,9 +373,6 @@
         closeTimeout: 2000,
       }).open();
     };
-
-
-
 
     return $render;
   }
