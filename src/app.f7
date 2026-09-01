@@ -292,7 +292,7 @@
         phoneInput.placeholder = phoneDB.number;
         phoneInput.required = false;
       }
-      
+
       productId = id;
       if (productId) {
         const products = $store.getters.products;
@@ -317,10 +317,12 @@
 
       const formName = form.elements['name'];
       const formDetail = form.elements['detail'];
+      const formPhone = form.elements['phone'];
 
       form.addEventListener('input', e => {
 
-        const { smsText, numChars } = cleanTextAndLength(SMS_START + phoneDB?.number, inputs);
+        let phone = formPhone.value.length ? '' : phoneDB?.number;
+        const { smsText, numChars } = cleanTextAndLength(SMS_START + phone, inputs);
 
         const hasUnicode = isUnicode(smsText);
         smsexample.innerText = smsText;
