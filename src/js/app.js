@@ -53,13 +53,15 @@ store.dispatch('initApp').then(() => {
                 const linkShared = phone && name && price;
                 const bankId = await getOption(Keys.SELECTED_BANK);
 
+                const isValid = validateSMS(SMS_START, price, phone, name, detail);
+                if (!isValid) {
+                    clearParams();
+                    app.dialog.confirm(i18next.t('validation:linkLength'), 'SINPE Fácil')
+                    return;
+                }
+
                 if (!bankId && linkShared) { // new user, no bank, we ask for it
 
-                    const isValid = validateSMS(SMS_START, price, phone, name, detail);
-                    if (!isValid) {
-                        app.dialog.confirm(i18next.t('validation:linkLength'), 'SINPE Fácil')
-                        return;
-                    }
 
                     app.dialog.confirm(
                         i18next.t('read:CTASelectBank'),
