@@ -361,7 +361,7 @@
 
       // Show confirmation
       $f7.toast.create({
-        text: 'Producto creado',
+        text: i18next.t('codes:productCreatedConfirmation'),
         closeTimeout: 2000,
       }).open();
     };

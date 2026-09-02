@@ -63,6 +63,8 @@ const resources = {
             smsExample: `SMS Example`,
             smsExampleContent: `PASE PRICE PHONE NAME DETAIL`,
             smsInfo: `160 characters max, 70 if there are special ones. Used: {{numChars}}.`,
+
+            productCreatedConfirmation: `Product created`,
         },
         history: {
             explainer: `Select an item to see the detail.`,
@@ -151,6 +153,8 @@ const resources = {
             smsExample: `Ejemplo de SMS`,
             smsExampleContent: `PASE PRECIO TELÉFONO NOMBRE DETALLE`,
             smsInfo: `160 caracteres máximo, 70 si hay especiales. Usados: {{numChars}}.`,
+
+            productCreatedConfirmation: `Producto creado`,
         },
         history: {
             explainer: `Seleccione un item para ver el detalle.`,
