@@ -37,8 +37,10 @@
       <div class="popover-inner">
         <div class="list">
           <ul>
-            <li><a href="#" class="list-button popover-close" @click=${()=>deleteProduct()}>${i18next.t('delete')}</a></li>
-            <li><a href="#" class="list-button popover-close" @click=${()=>printProduct()}>${i18next.t('print')}</a></li>
+            <li><a href="#" class="list-button popover-close" @click=${()=>deleteProduct()}>${i18next.t('delete')}</a>
+            </li>
+            <li><a href="#" class="list-button popover-close" @click=${()=>printProduct()}>${i18next.t('print')}</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -77,7 +79,7 @@
   import shareLink from 'share';
   import { getPhone, getOption, Keys, db } from 'db';
   import { formatDate } from 'i18n';
-  import generateSINPESMS from 'sms';
+  import generateSINPESMS, { validateSMS, SMS_START } from 'sms';
   import i18next from 'i18next';
   export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
     const history = $store.getters.history;
@@ -165,6 +167,13 @@
       const bankId = await getOption(Keys.SELECTED_BANK);
       const bank = await db.banks.get(bankId);
       const { price, phone, name, detail } = currentHistoryItem;
+
+      const isValid = validateSMS(SMS_START, price, phone, name, detail);
+      if (!isValid) {
+        $f7.dialog.confirm(i18next.t('validation:linkLength'), 'SINPE Fácil')
+        return;
+      }
+
       $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
       generateSINPESMS(bank.phone, price, phone, name, detail);
     }
