@@ -251,19 +251,10 @@
 </template>
 <script>
   import i18next from 'i18next';
-  import { isUnicode } from 'sms'
+  import { isUnicode, SMS_START, cleanTextAndLength } from 'sms'
   import { getOption, Keys, getPhone, saveOption } from 'db';
   import { strLen } from 'i18n';
   let numChars = 5;
-  const SMS_START = 'PASE ';
-
-  function cleanTextAndLength(smsStartText, inputs) {
-    let smsText = smsStartText;
-    inputs.forEach(input => smsText += input.value + ' ');
-    smsText = smsText.trim().replace(/\s+/g, ' ');
-    numChars = strLen(smsText);
-    return { smsText, numChars }
-  }
 
   export default (props, { $f7, $update, $on, $el, $store }) => {
     let productId = null;
@@ -294,7 +285,7 @@
 
       productId = id;
       currentProduct = null;
-      
+
       if (productId) {
         const products = $store.getters.products;
         products.value.forEach(product => {
@@ -314,19 +305,22 @@
       const formPhone = form.elements['phone'];
 
       let phone = formPhone.value.length ? '' : phoneDB?.number ?? '';
-      const { smsText, numChars } = cleanTextAndLength(SMS_START + phone, inputs);
+      const inputValues = inputs.map(i => i.value);
+      const { smsText, numChars: nc } = cleanTextAndLength(SMS_START + phone, inputValues);
+      numChars = nc;// upper scope
       smsexample.innerText = smsText;
 
       // Re-render popup UI with updated state before opening
       $update();
       $f7.popup.open('.qr-data-popup');
 
-
-
       form.addEventListener('input', e => {
 
         let phone = formPhone.value.length ? '' : phoneDB?.number ?? '';
-        const { smsText, numChars } = cleanTextAndLength(SMS_START + phone, inputs);
+        const inputValues = inputs.map(i => i.value);
+        const { smsText, numChars: nc } = cleanTextAndLength(SMS_START + phone, inputValues);
+        numChars = nc; // upper scope
+        console.log(numChars);
 
         const hasUnicode = isUnicode(smsText);
         smsexample.innerText = smsText;

@@ -28,7 +28,7 @@ export function isUnicode(text) {
  * @param {Array} values 
  * @returns 
  */
-function cleanTextAndLength(smsStartText, values) {
+export function cleanTextAndLength(smsStartText, values) {
     let smsText = smsStartText;
     values.forEach(v => smsText += v + ' ');
     smsText = smsText.trim().replace(/\s+/g, ' ');
