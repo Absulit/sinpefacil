@@ -7,7 +7,7 @@ const PUBLIC_DIR = fileURLToPath(new URL('./public', import.meta.url));
 const BUILD_DIR = fileURLToPath(new URL('./www', import.meta.url));
 
 // to print the version number on the app
-import pkg from './package.json';
+import pkg from './package.json' with { type: 'json' };
 
 
 export default async () => {

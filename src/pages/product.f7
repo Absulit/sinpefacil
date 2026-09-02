@@ -124,13 +124,11 @@
       // qrCode.download({ name: "qr", extension: "svg" });
     })
     $f7.on('PRODUCT_UPDATED', productUpdated => {
-      console.log('PRODUCT_UPDATED', productUpdated);
       currentProduct = productUpdated;
       $update();
     })
 
     $on('pageBeforeRemove', () => {
-      console.log('pageBeforeRemove');
       $f7.off('PRODUCT_UPDATED');
     });
 

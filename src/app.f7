@@ -71,6 +71,16 @@
         </div>
 
         <div class="page-content">
+          <div class="toolbar toolbar-bottom messagebar-area no-shadow">
+            <div class="toolbar-inner display-flex justify-content-center align-items-center padding-horizontal">
+              <span class="text-color-gray size-12 padding-half">
+                <i class="icon f7-icons if-not-md">info_circle</i>
+                <i class="icon material-icons if-md">info</i>
+              </span>
+              ${i18next.t('codes:smsInfo', {numChars})}
+            </div>
+          </div>
+
           <form class="list" id="qr-data-form">
             <ul>
               <li class="item-content item-input">
@@ -110,7 +120,8 @@
                 <div class="item-inner">
                   <div class="item-title item-label">${i18next.t('codes:detail')}</div>
                   <div class="item-input-wrap">
-                    <input type="text" name="detail" placeholder="${i18next.t('codes:detailPlaceholder')}" validate />
+                    <input type="text" name="detail" placeholder="${i18next.t('codes:detailPlaceholder')}" validate
+                      maxlength="160" />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -124,6 +135,17 @@
               </button>
             </div>
           </form>
+
+
+
+          <div class="block-title">${i18next.t('codes:smsExample')}</div>
+          <div class="block" class="card">
+            <div id="smsexample" class="card-content card-content-padding force-text-wrap">
+              ${i18next.t('codes:smsExampleContent')}
+            </div>
+
+          </div>
+
         </div>
       </div>
     </div>
@@ -224,7 +246,11 @@
 </template>
 <script>
   import i18next from 'i18next';
+  import { isUnicode, SMS_START, cleanTextAndLength } from 'sms'
   import { getOption, Keys, getPhone, saveOption } from 'db';
+  import { strLen } from 'i18n';
+  let numChars = 5;
+
   export default (props, { $f7, $update, $on, $el, $store }) => {
     let productId = null;
     let currentProduct = null;
@@ -242,9 +268,9 @@
     });
 
     $f7.on('openQRDataPopup', async (id = null) => {
-      console.log('---- POP UP OPEN PRODUCT');
       const form = $f7.$('#qr-data-form')[0];
-      productId = id;
+      const inputs = Array.from(form.querySelectorAll('input'));
+      const smsexample = document.getElementById('smsexample');
       const phoneInput = form.querySelector('#phone');
       const phoneDB = await getPhone();
       if (phoneDB) {
@@ -252,8 +278,10 @@
         phoneInput.required = false;
       }
 
+      productId = id;
+      currentProduct = null;
+
       if (productId) {
-        console.log('edit');
         const products = $store.getters.products;
         products.value.forEach(product => {
           if (product.id !== productId) {
@@ -261,21 +289,51 @@
           }
           currentProduct = product;
         });
-        console.log(currentProduct);
 
         $f7.form.fillFromData('#qr-data-form', currentProduct);
       } else {
-
         form.reset();
       }
+
+      const formName = form.elements['name'];
+      const formDetail = form.elements['detail'];
+      const formPhone = form.elements['phone'];
+
+      let phone = formPhone.value.length ? '' : phoneDB?.number ?? '';
+      const inputValues = inputs.map(i => i.value);
+      const { smsText, numChars: nc } = cleanTextAndLength(SMS_START + phone, inputValues);
+      numChars = nc;// upper scope
+      smsexample.innerText = smsText;
 
       // Re-render popup UI with updated state before opening
       $update();
       $f7.popup.open('.qr-data-popup');
+
+      form.addEventListener('input', e => {
+
+        let phone = formPhone.value.length ? '' : phoneDB?.number ?? '';
+        const inputValues = inputs.map(i => i.value);
+        const { smsText, numChars: nc } = cleanTextAndLength(SMS_START + phone, inputValues);
+        numChars = nc; // upper scope
+
+        const hasUnicode = isUnicode(smsText);
+        smsexample.innerText = smsText;
+
+        // check validity of length and unicode
+        const maxLength = hasUnicode ? 70 : 160;
+        formName.setCustomValidity('');
+        formDetail.setCustomValidity('');
+
+        if (numChars > maxLength) {
+          const message = i18next.t('codes:charLengthValidation', { maxLength, numChars });
+          formName.setCustomValidity(message);
+          formDetail.setCustomValidity(message);
+        }
+
+        $update();
+      });
+
     });
-
-
-
 
     const submitForm = () => {
       // Extract data using Framework7 form helper
@@ -285,9 +343,6 @@
       if (!form.reportValidity()) {
         return;
       }
-
-      console.log('Submitted Data:', formData);
-      console.log('---- currentProduct:', currentProduct);
 
       if (currentProduct) {
         const { id } = currentProduct;
@@ -306,11 +361,10 @@
 
       // Show confirmation
       $f7.toast.create({
-        text: 'Form submitted successfully!',
+        text: i18next.t('codes:productCreatedConfirmation'),
         closeTimeout: 2000,
       }).open();
     };
-
 
     return $render;
   }
