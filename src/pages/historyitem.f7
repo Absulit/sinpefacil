@@ -127,8 +127,6 @@
 
     const deleteProduct = () => {
       $f7.dialog.confirm(`Desea borrar '${currentHistoryItem.name}'?`, () => {
-        console.log('Item deleted', currentHistoryItem);
-
         $f7.preloader.show();
         // TODO: verify if delete was successful
         $store.dispatch('deleteHistoryItem', currentHistoryItem.id);

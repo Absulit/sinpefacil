@@ -282,7 +282,6 @@
     });
 
     $f7.on('openQRDataPopup', async (id = null) => {
-      console.log('---- POP UP OPEN PRODUCT');
       const form = $f7.$('#qr-data-form')[0];
       const inputs = Array.from(form.querySelectorAll('input'));
       const smsexample = document.getElementById('smsexample');
@@ -317,8 +316,6 @@
       let phone = formPhone.value.length ? '' : phoneDB?.number ?? '';
       const { smsText, numChars } = cleanTextAndLength(SMS_START + phone, inputs);
       smsexample.innerText = smsText;
-      console.log(smsText, numChars);
-
 
       // Re-render popup UI with updated state before opening
       $update();
@@ -357,9 +354,6 @@
       if (!form.reportValidity()) {
         return;
       }
-
-      console.log('Submitted Data:', formData);
-      console.log('---- currentProduct:', currentProduct);
 
       if (currentProduct) {
         const { id } = currentProduct;
