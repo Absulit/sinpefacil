@@ -58,10 +58,11 @@ const resources = {
 
             CTADelete: `Do you want to delete '{{name}}'?`,
             deleteConfirmation: `Code deleted`,
-            
+
             charLengthValidation: `Exceedes the {{maxLength}} char limit ({{numChars}})`,
             smsExample: `SMS Example`,
             smsExampleContent: `PASE PRICE PHONE NAME DETAIL`,
+            smsInfo: `160 characters max, 70 if there are special ones. Used: {{numChars}}.`,
         },
         history: {
             explainer: `Select an item to see the detail.`,
@@ -149,6 +150,7 @@ const resources = {
             charLengthValidation: `Excede el límite total de {{maxLength}} caracteres ({{numChars}})`,
             smsExample: `Ejemplo de SMS`,
             smsExampleContent: `PASE PRECIO TELÉFONO NOMBRE DETALLE`,
+            smsInfo: `160 caracteres máximo, 70 si hay especiales. Usados: {{numChars}}.`,
         },
         history: {
             explainer: `Seleccione un item para ver el detalle.`,
