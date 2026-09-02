@@ -139,7 +139,7 @@
 
 
 
-          <div class="block-title">Ejemplo de SMS</div>
+          <div class="block-title">${i18next.t('codes:smsExample')}</div>
           <div class="block" class="card">
             <div id="smsexample" class="card-content card-content-padding force-text-wrap">
               PASE PRECIO NUMERO NOMBRE DETALLE
