@@ -77,8 +77,6 @@
 </template>
 <script>
   import { db, getOption, saveOption, Keys, savePhone, getPhone } from 'db';
-  import generateSINPESMS from 'sms';
-  import { clearParams } from 'url';
   import i18next from 'i18next';
   export default async (props, { $f7, $on, $f7route }) => {
 

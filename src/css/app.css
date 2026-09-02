@@ -17,3 +17,11 @@
         width: 100%;
     }
 }
+
+.force-text-wrap {
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    white-space: normal;
+    max-width: 100%;
+    box-sizing: border-box;
+}

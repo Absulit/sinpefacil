@@ -58,6 +58,13 @@ const resources = {
 
             CTADelete: `Do you want to delete '{{name}}'?`,
             deleteConfirmation: `Code deleted`,
+
+            charLengthValidation: `Exceedes the {{maxLength}} char limit ({{numChars}})`,
+            smsExample: `SMS Example`,
+            smsExampleContent: `PASE PRICE PHONE NAME DETAIL`,
+            smsInfo: `160 characters max, 70 if there are special ones. Used: {{numChars}}.`,
+
+            productCreatedConfirmation: `Product created`,
         },
         history: {
             explainer: `Select an item to see the detail.`,
@@ -79,7 +86,11 @@ const resources = {
         code404: {
             title: `Not Found`,
             message: `Requested content not found.`
-        }
+        },
+        validation: {
+            linkLength: `The link shared exceeds the number of characters allowed.\nAsk the sender to fix the link.`,
+            linkLength: `The QR code exceeds the number of characters allowed.\nAsk the sender to fix the code.`,
+        },
     },
     es: {
         translation: {
@@ -137,6 +148,13 @@ const resources = {
 
             CTADelete: `¿Desea borrar '{{name}}'?`,
             deleteConfirmation: `Código borrado`,
+
+            charLengthValidation: `Excede el límite total de {{maxLength}} caracteres ({{numChars}})`,
+            smsExample: `Ejemplo de SMS`,
+            smsExampleContent: `PASE PRECIO TELÉFONO NOMBRE DETALLE`,
+            smsInfo: `160 caracteres máximo, 70 si hay especiales. Usados: {{numChars}}.`,
+
+            productCreatedConfirmation: `Producto creado`,
         },
         history: {
             explainer: `Seleccione un item para ver el detalle.`,
@@ -158,7 +176,11 @@ const resources = {
         code404: {
             title: `No encontrado`,
             message: `No se encontró el contenido solicitado.`
-        }
+        },
+        validation: {
+            linkLength: `El enlance compartido excede el número de caracteres permitidos.\n Solicite al emisor que corrija el enlace.`,
+            QRLength: `El código QR leído excede el número de caracteres permitidos.\n Solicite al emisor que corrija el código.`,
+        },
     }
 };
 
@@ -178,6 +200,17 @@ export function formatDate(date) {
         dateStyle: 'medium',
         timeStyle: 'short'
     }).format(date);
+}
+
+/**
+ * Checks for a string that could have emojis, so then provide
+ * the length of 1 emoji as 1 char instead of 
+ * it's inner representation
+ * @param {String} val 
+ * @return {Number}
+ */
+export function strLen(val) {
+    return [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(val)].length;
 }
 
 export default i18next;
