@@ -87,8 +87,8 @@
                 <div class="item-inner">
                   <div class="item-title item-label">${i18next.t('codes:phone')}</div>
                   <div class="item-input-wrap">
-                    <input id="phone" name="phone" autocomplete="tel" inputmode="tel" maxlength="8" minlength="8"
-                      type="tel" validate placeholder="${i18next.t('codes:phonePlaceholder')}" required />
+                    <input id="phone" data-index="1" name="phone" autocomplete="tel" inputmode="tel" maxlength="8"
+                      minlength="8" type="tel" validate placeholder="${i18next.t('codes:phonePlaceholder')}" required />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -98,7 +98,7 @@
                 <div class="item-inner">
                   <div class="item-title item-label">${i18next.t('codes:name')}</div>
                   <div class="item-input-wrap">
-                    <input type="text" name="name" autocomplete="name"
+                    <input type="text" data-index="2" name="name" autocomplete="name"
                       placeholder="${i18next.t('codes:namePlaceholder')}" required validate />
                     <span class="input-clear-button"></span>
                   </div>
@@ -109,7 +109,7 @@
                 <div class="item-inner">
                   <div class="item-title item-label">${i18next.t('codes:price')}</div>
                   <div class="item-input-wrap">
-                    <input type="tel" name="price" placeholder="${i18next.t('codes:pricePlaceholder')}"
+                    <input type="tel" data-index="0" name="price" placeholder="${i18next.t('codes:pricePlaceholder')}"
                       inputmode="decimal" required validate />
                     <span class="input-clear-button"></span>
                   </div>
@@ -120,8 +120,8 @@
                 <div class="item-inner">
                   <div class="item-title item-label">${i18next.t('codes:detail')}</div>
                   <div class="item-input-wrap">
-                    <input type="text" name="detail" placeholder="${i18next.t('codes:detailPlaceholder')}" validate
-                      maxlength="160" />
+                    <input type="text" data-index="3" name="detail"
+                      placeholder="${i18next.t('codes:detailPlaceholder')}" validate maxlength="160" />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -300,7 +300,7 @@
       const formPhone = form.elements['phone'];
 
       let phone = formPhone.value.length ? '' : phoneDB?.number ?? '';
-      const inputValues = inputs.map(i => i.value);
+      const inputValues = inputs.sort((a,b) => a.dataset.index - b.dataset.index).map(i => i.value);
       const { smsText, numChars: nc } = cleanTextAndLength(SMS_START + phone, inputValues);
       numChars = nc;// upper scope
       smsexample.innerText = smsText;
@@ -312,7 +312,7 @@
       form.addEventListener('input', e => {
 
         let phone = formPhone.value.length ? '' : phoneDB?.number ?? '';
-        const inputValues = inputs.map(i => i.value);
+        const inputValues = inputs.sort((a,b) => a.dataset.index - b.dataset.index).map(i => i.value);
         const { smsText, numChars: nc } = cleanTextAndLength(SMS_START + phone, inputValues);
         numChars = nc; // upper scope
 
