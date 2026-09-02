@@ -79,7 +79,10 @@ const resources = {
         code404: {
             title: `Not Found`,
             message: `Requested content not found.`
-        }
+        },
+        validation: {
+            linkLength: `The link shared exceeds the number of characters allowed.\nAsk the sender to fix the link.`,
+        },
     },
     es: {
         translation: {
@@ -158,7 +161,10 @@ const resources = {
         code404: {
             title: `No encontrado`,
             message: `No se encontró el contenido solicitado.`
-        }
+        },
+        validation: {
+            linkLength: `El enlance compartido excede el número de caracteres permitidos.\n Solicite al emisor que corrija el enlace.`,
+        },
     }
 };
 

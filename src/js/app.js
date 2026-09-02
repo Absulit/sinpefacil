@@ -15,7 +15,7 @@ import store from './store.js';
 // Import main app component
 import App from '../app.f7';
 import { initI18n } from 'i18n';
-import generateSINPESMS from 'sms';
+import generateSINPESMS, { SMS_START, validateSMS } from 'sms';
 import { db, getOption, saveOption, Keys } from 'db';
 import { clearParams } from 'url';
 import i18next from 'i18next';
@@ -54,6 +54,13 @@ store.dispatch('initApp').then(() => {
                 const bankId = await getOption(Keys.SELECTED_BANK);
 
                 if (!bankId && linkShared) { // new user, no bank, we ask for it
+
+                    const isValid = validateSMS(SMS_START, price, phone, name, detail);
+                    if (!isValid) {
+                        app.dialog.confirm(i18next.t('validation:linkLength'), 'SINPE Fácil')
+                        return;
+                    }
+
                     app.dialog.confirm(
                         i18next.t('read:CTASelectBank'),
                         'SINPE Fácil',
@@ -86,6 +93,8 @@ store.dispatch('initApp').then(() => {
                 if (linkShared) {
                     const bank = await db.banks.get(bankId);
                     clearParams();
+                    console.log('---- validate link');
+
                     store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
                     generateSINPESMS(bank.phone, price, phone, name, detail);
                 }
@@ -185,7 +194,7 @@ store.dispatch('initApp').then(() => {
  * @param {Number} bankId 
  * @param {{price, phone, name, detail}} payload 
  */
-async function handleSelect(bankId, { price, phone, name, detail }) {
+async function handleSelect(bankId, { price, phone, name, detail },) {
     const bank = await db.banks.get(bankId);
     saveOption(Keys.SELECTED_BANK, bankId); // save bank for future links
     clearParams();
