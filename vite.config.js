@@ -43,6 +43,7 @@ export default async () => {
         'url': SRC_DIR + '/js/url.js',
         'i18n': SRC_DIR + '/js/i18n.js',
         'systemnotifications': SRC_DIR + '/js/systemnotifications.js',
+        'crypto': SRC_DIR + '/js/crypto.js',
       },
     },
     server: {

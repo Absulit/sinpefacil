@@ -95,8 +95,8 @@ store.dispatch('initApp').then(() => {
                 if (linkShared) {
                     const bank = await db.banks.get(bankId);
                     clearParams();
-                    store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
-                    generateSINPESMS(bank.phone, price, phone, name, detail);
+                    await store.dispatch('addHistoryItem', { price, phone: atob(phone), name, detail, createdAt: new Date() })
+                    window.location.href = generateSINPESMS(bank.phone, price, phone, name, detail);
                 }
 
             },
@@ -198,9 +198,9 @@ async function handleSelect(bankId, { price, phone, name, detail },) {
     const bank = await db.banks.get(bankId);
     saveOption(Keys.SELECTED_BANK, bankId); // save bank for future links
     clearParams();
-    generateSINPESMS(bank.phone, price, phone, name, detail);
+    await store.dispatch('addHistoryItem', { price, phone: atob(phone), name, detail, createdAt: new Date() })
+    window.location.href = generateSINPESMS(bank.phone, price, phone, name, detail);
 }
-
 
 /**
  * to avoid a warning on the console

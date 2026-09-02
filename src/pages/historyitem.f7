@@ -76,7 +76,7 @@
 <script>
 
   import QRCodeStyling from 'qr-code-styling';
-  import shareLink from 'share';
+  import shareLink, { createURL } from 'share';
   import { getPhone, getOption, Keys, db } from 'db';
   import { formatDate } from 'i18n';
   import generateSINPESMS, { validateSMS, SMS_START } from 'sms';
@@ -95,13 +95,7 @@
     $on('pageInit', async () => {
       const { phone, name, price, detail } = currentHistoryItem;
 
-      let finalPhone = phone;
-      if (!phone) {
-        const phoneDB = await getPhone();
-        finalPhone = phoneDB.number;
-      }
-
-      const url = encodeURI(`${location.origin + location.pathname}?phone=${finalPhone}&name=${name}&price=${price}&detail=${detail}`);
+      const url = createURL(phone, name, price, detail);
 
       const qrCode = new QRCodeStyling({
         width: 300,
@@ -149,15 +143,11 @@
 
     const share = async () => {
       const { phone, name, price, detail } = currentHistoryItem;
-      let finalPhone = phone;
-      if (!phone) {
-        const phoneDB = await getPhone();
-        finalPhone = phoneDB.number;
-      }
-      const url = encodeURI(`${location.origin + location.pathname}?phone=${finalPhone}&name=${name}&price=${price}&detail=${detail}`);
+      const url = createURL(phone, name, price, detail);
+
       shareLink($f7, `
       ${name}
-      ${finalPhone}
+      ${phone}
       ${price}
       ${detail}
       `.trim().replace(/^ +/gm, ''), url)
@@ -174,8 +164,8 @@
         return;
       }
 
-      $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
-      generateSINPESMS(bank.phone, price, phone, name, detail);
+      await $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
+      window.location.href = generateSINPESMS(bank.phone, price, phone, name, detail);
     }
 
     return $render;

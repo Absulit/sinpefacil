@@ -1,7 +1,10 @@
 import { strLen } from 'i18n';
 
+export const SMS_START = 'PASE ';
+
 /**
- * Redirects to the SMS app to generate the SINPE message
+ * Generates the SINPE message
+ * to be used with window.location.assign or window.location.href
  * PASE price phone name detail
  * @param {Number} bankPhone 
  * @param {Number} price 
@@ -9,8 +12,20 @@ import { strLen } from 'i18n';
  * @param {String} name 
  * @param {String} detail 
  */
+
 export default function generateSINPESMS(bankPhone, price, phone, name, detail) {
-    window.location.href = `sms:${bankPhone}?body=PASE ${price} ${phone} ${name} ${detail}`;
+    // encode to avoid possible exploit
+    bankPhone = encodeURIComponent(bankPhone);
+    price = encodeURIComponent(price);
+    phone = encodeURIComponent(phone);
+    name = encodeURIComponent(name);
+    detail = encodeURIComponent(detail);
+    return `sms:${bankPhone}?body=${SMS_START}${price} ${phone} ${name} ${detail}`;
+}
+
+// tests only
+if (import.meta.env.DEV) {
+    window.generateSINPESMS = generateSINPESMS;
 }
 
 /**
@@ -35,8 +50,6 @@ export function cleanTextAndLength(smsStartText, values) {
     const numChars = strLen(smsText);
     return { smsText, numChars }
 }
-
-export const SMS_START = 'PASE ';
 
 export function validateSMS(smsStartText, price, phone, name, detail) {
     const values = [price, phone, name, detail];
