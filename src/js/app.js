@@ -95,8 +95,6 @@ store.dispatch('initApp').then(() => {
                 if (linkShared) {
                     const bank = await db.banks.get(bankId);
                     clearParams();
-                    console.log('---- validate link');
-
                     store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
                     generateSINPESMS(bank.phone, price, phone, name, detail);
                 }

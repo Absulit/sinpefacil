@@ -320,7 +320,6 @@
         const inputValues = inputs.map(i => i.value);
         const { smsText, numChars: nc } = cleanTextAndLength(SMS_START + phone, inputValues);
         numChars = nc; // upper scope
-        console.log(numChars);
 
         const hasUnicode = isUnicode(smsText);
         smsexample.innerText = smsText;
@@ -331,8 +330,9 @@
         formDetail.setCustomValidity('');
 
         if (numChars > maxLength) {
-          formName.setCustomValidity(`Excede el límite total de ${maxLength} caracteres (${numChars})`);
-          formDetail.setCustomValidity(`Excede el límite total de ${maxLength} caracteres (${numChars})`);
+          const message = i18next.t('codes:charLengthValidation', { maxLength, numChars });
+          formName.setCustomValidity(message);
+          formDetail.setCustomValidity(message);
         }
 
         $update();

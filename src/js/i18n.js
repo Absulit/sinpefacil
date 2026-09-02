@@ -58,6 +58,7 @@ const resources = {
 
             CTADelete: `Do you want to delete '{{name}}'?`,
             deleteConfirmation: `Code deleted`,
+            charLengthValidation: `Exceedes the {{maxLength}} char limit ({{numChars}})`
         },
         history: {
             explainer: `Select an item to see the detail.`,
@@ -141,6 +142,8 @@ const resources = {
 
             CTADelete: `¿Desea borrar '{{name}}'?`,
             deleteConfirmation: `Código borrado`,
+
+            charLengthValidation: `Excede el límite total de {{maxLength}} caracteres ({{numChars}})`
         },
         history: {
             explainer: `Seleccione un item para ver el detalle.`,
