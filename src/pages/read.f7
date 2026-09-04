@@ -41,7 +41,49 @@
   import generateSINPESMS, { validateSMS, SMS_START } from 'sms';
 
   let qrScanner = null;
-  export default (props, { $f7, $on, $el, $store }) => {
+  export default (props, { $f7, $on, $el, $store, $update }) => {
+
+    let isNavigating = false;
+    const onDecode = async result => {
+      if (isNavigating) return;
+      isNavigating = true;
+
+      const data = Object.fromEntries(new URL(result.data).searchParams);
+      const { phone, name, price, detail } = data;
+      const finalPhone = atob(phone);
+
+      const isValid = validateSMS(SMS_START, price, finalPhone, name, detail);
+      if (!isValid) {
+        $f7.dialog.confirm(i18next.t('validation:linkLength'), 'SINPE Fácil')
+        return;
+      }
+
+      $store.dispatch('addHistoryItem', { price, phone: finalPhone, name, detail, createdAt: new Date() })
+      // if ($f7.device.ios) {
+      //   // rawData = rawData.replace('?body=', '&body=');
+      // }
+
+      const bankId = await getOption(Keys.SELECTED_BANK);
+      const bank = await db.banks.get(bankId);
+      $f7.dialog.confirm(
+        i18next.t('read:CTASendSMS', { bank: bank.shortname }),
+        i18next.t('read:CTASendSMSTitle'),
+        () => {
+          window.location.href = generateSINPESMS(bank.phone, price, finalPhone, name, detail)
+          isNavigating = false;
+        },
+        () => {
+          // Reset flag if user cancels
+          isNavigating = false;
+        }
+      );
+
+      // const link = document.createElement('a');
+      // link.href = `sms:${888}?body=PASE ${price} ${phone} ${detail}`;
+      // document.body.appendChild(link);
+      // link.click();
+      // document.body.removeChild(link);
+    }
 
     $on('pageInit', async (e, page) => {
 
@@ -66,50 +108,11 @@
           );
         }
 
-        let isNavigating = false;
+        isNavigating = false;
         const cam = document.getElementById('cam');
         qrScanner = new QrScanner(
           cam,
-          async result => {
-            if (isNavigating) return;
-            isNavigating = true;
-
-            const data = Object.fromEntries(new URL(result.data).searchParams);
-            const { phone, name, price, detail } = data;
-            const finalPhone = atob(phone);
-
-            const isValid = validateSMS(SMS_START, price, finalPhone, name, detail);
-            if (!isValid) {
-              $f7.dialog.confirm(i18next.t('validation:linkLength'), 'SINPE Fácil')
-              return;
-            }
-
-            $store.dispatch('addHistoryItem', { price, phone:finalPhone, name, detail, createdAt: new Date() })
-            // if ($f7.device.ios) {
-            //   // rawData = rawData.replace('?body=', '&body=');
-            // }
-
-            const bankId = await getOption(Keys.SELECTED_BANK);
-            const bank = await db.banks.get(bankId);
-            $f7.dialog.confirm(
-              i18next.t('read:CTASendSMS', { bank: bank.shortname }),
-              i18next.t('read:CTASendSMSTitle'),
-              () => {
-                window.location.href = generateSINPESMS(bank.phone, price, finalPhone, name, detail)
-                isNavigating = false;
-              },
-              () => {
-                // Reset flag if user cancels
-                isNavigating = false;
-              }
-            );
-
-            // const link = document.createElement('a');
-            // link.href = `sms:${888}?body=PASE ${price} ${phone} ${detail}`;
-            // document.body.appendChild(link);
-            // link.click();
-            // document.body.removeChild(link);
-          },
+          onDecode,
           {
             highlightScanRegion: true,
             returnDetailedScanResult: true
@@ -126,6 +129,23 @@
         qrScanner?.destroy();
         qrScanner = null;
       })
+
+
+      $f7.on('RESTART_CAM', async () => {
+        isNavigating = false;
+        const cam = document.getElementById('cam');
+        if (!cam) return;
+        qrScanner = new QrScanner(
+          cam,
+          onDecode,
+          {
+            highlightScanRegion: true,
+            returnDetailedScanResult: true
+          }
+        );
+        qrScanner.start();
+      })
+
     })
 
     return $render;
