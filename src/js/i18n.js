@@ -70,6 +70,9 @@ const resources = {
             explainer: `Select an item to see the detail.`,
             noHistory: `No history`,
             noHistoryExplainer: `Read a QR code or accept a payment link and it will show up here.`,
+
+            CTADelete: `Do you want to delete '{{name}}'?`,
+            deleteConfirmation: `Receipt deleted`,
         },
         settings: {
             phone: `Phone number`,
@@ -160,6 +163,9 @@ const resources = {
             explainer: `Seleccione un item para ver el detalle.`,
             noHistory: `No hay historial`,
             noHistoryExplainer: `Lea algún código QR o acepte un link de pago y le aparecerá luego aquí.`,
+
+            CTADelete: `¿Desea borrar '{{name}}'?`,
+            deleteConfirmation: `Recibo borrado`,            
         },
         settings: {
             phone: `Teléfono`,
