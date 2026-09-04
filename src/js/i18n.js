@@ -130,7 +130,7 @@ const resources = {
             CTASendSMSTitle: `Código QR leído`,
         },
         codes: {
-            explainer: `Seleccione un item de la lista para ver el código QR.`,
+            explainer: `Seleccione un ítem de la lista para ver el código QR.`,
             noCodes: `No hay productos`,
             noCodesExplainer: `Agregue aquí un código QR por cada producto que quiera vender, por ejemplo:
             Palomitas a mil colones.`,
@@ -160,7 +160,7 @@ const resources = {
             productCreatedConfirmation: `Producto creado`,
         },
         history: {
-            explainer: `Seleccione un item para ver el detalle.`,
+            explainer: `Seleccione un ítem para ver el detalle.`,
             noHistory: `No hay historial`,
             noHistoryExplainer: `Lea algún código QR o acepte un link de pago y le aparecerá luego aquí.`,
 

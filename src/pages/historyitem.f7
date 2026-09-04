@@ -132,7 +132,7 @@
         $f7.views.current.router.back('/history/', { force: true });
 
         $f7.toast.create({
-          text: i18next.t('codes:deleteConfirmation'),
+          text: i18next.t('history:deleteConfirmation'),
           closeTimeout: 2000,
         }).open();
       });
