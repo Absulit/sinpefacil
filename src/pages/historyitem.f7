@@ -122,16 +122,17 @@
     })
 
     const deleteProduct = () => {
-      $f7.dialog.confirm(`Desea borrar '${currentHistoryItem.name}'?`, () => {
+      const { id, name } = currentHistoryItem;
+      $f7.dialog.confirm(i18next.t('history:CTADelete', { name }), async () => {
         $f7.preloader.show();
         // TODO: verify if delete was successful
-        $store.dispatch('deleteHistoryItem', currentHistoryItem.id);
-        $store.dispatch('initApp');
+        await $store.dispatch('deleteHistoryItem', id);
+        await $store.dispatch('initApp');
         $f7.preloader.hide();
         $f7.views.current.router.back('/history/', { force: true });
 
         $f7.toast.create({
-          text: 'Recibo borrado',
+          text: i18next.t('history:deleteConfirmation'),
           closeTimeout: 2000,
         }).open();
       });
