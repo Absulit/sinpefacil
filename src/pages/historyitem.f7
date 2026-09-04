@@ -17,7 +17,7 @@
             <i class="icon material-icons if-md">send</i>
           </a>
           <!-- Share QR -->
-          <a href="#" class="link icon-only popup-open" @click="${share}">
+          <a href="#" class="link icon-only popover-open" data-popover=".popover-menu-share">
             <i class="icon f7-icons if-not-md">square_arrow_up</i>
             <i class="icon material-icons if-md">share</i>
           </a>
@@ -29,6 +29,20 @@
 
 
 
+      </div>
+    </div>
+
+    <!-- Popover for share -->
+    <div class="popover popover-menu-share">
+      <div class="popover-inner">
+        <div class="list">
+          <ul>
+            <li><a href="#" class="list-button popover-close" @click=${()=>share()}>${i18next.t('IMAGEN')}</a>
+            </li>
+            <li><a href="#" class="list-button popover-close" @click=${()=>share()}>${i18next.t('LINK')}</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
