@@ -141,7 +141,9 @@
       }
     };
 
-
+    $on('pageAfterOut', (e, page) => {
+      $f7.emit('RESTART_CAM')
+    });
 
     return $render;
   };
