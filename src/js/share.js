@@ -37,3 +37,20 @@ export default function shareLink(app, text, url) {
         }).open();
     }
 }
+
+/**
+ * Encode url to hide phone
+ * @param {Number} phone 
+ * @param {String} name 
+ * @param {Number} price 
+ * @param {String} detail 
+ * @returns 
+ */
+export function createURL(phone, name, price, detail) {
+    return encodeURI(`${location.origin + location.pathname}?phone=${btoa(phone)}&name=${name}&price=${price}&detail=${detail}`);
+}
+
+// tests only
+if (import.meta.env.DEV) {
+    window.createURL = createURL;
+}

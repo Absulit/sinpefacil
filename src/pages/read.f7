@@ -76,14 +76,15 @@
 
             const data = Object.fromEntries(new URL(result.data).searchParams);
             const { phone, name, price, detail } = data;
+            const finalPhone = atob(phone);
 
-            const isValid = validateSMS(SMS_START, price, phone, name, detail);
+            const isValid = validateSMS(SMS_START, price, finalPhone, name, detail);
             if (!isValid) {
               $f7.dialog.confirm(i18next.t('validation:linkLength'), 'SINPE Fácil')
               return;
             }
 
-            $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
+            $store.dispatch('addHistoryItem', { price, phone:finalPhone, name, detail, createdAt: new Date() })
             // if ($f7.device.ios) {
             //   // rawData = rawData.replace('?body=', '&body=');
             // }
@@ -94,7 +95,7 @@
               i18next.t('read:CTASendSMS', { bank: bank.shortname }),
               i18next.t('read:CTASendSMSTitle'),
               () => {
-                generateSINPESMS(bank.phone, price, phone, name, detail)
+                window.location.href = generateSINPESMS(bank.phone, price, finalPhone, name, detail)
                 isNavigating = false;
               },
               () => {

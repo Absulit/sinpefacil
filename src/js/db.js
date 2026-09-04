@@ -1,6 +1,12 @@
 import { Dexie } from 'dexie';
+import { encryptData, decryptData } from 'crypto';
 
 export const db = new Dexie('sf');
+
+// tests only
+if (import.meta.env.DEV) {
+    window.db = db;
+}
 
 // Define database schema
 db.version(2).stores({
@@ -31,6 +37,7 @@ export const Keys = {
     LANG: 'LANG',
     SELECTED_BANK: 'selectedBank',
     FIRST_TIME: 'FIRST_TIME',
+    HMAC_SECRET: 'HMAC_SECRET',
 }
 
 Object.freeze(Keys);
@@ -52,6 +59,8 @@ export async function getOption(key, defaultValue) {
 export async function savePhone(number) {
     const phone = (await db.phones.limit(1).toArray())[0];
 
+    number = await encryptData(number);
+
     if (phone) {
         await db.phones.update(phone.id, { number })
     } else {
@@ -60,5 +69,15 @@ export async function savePhone(number) {
 }
 
 export async function getPhone() {
-    return (await db.phones.limit(1).toArray())[0];
+    const phone = (await db.phones.limit(1).toArray())[0];
+    if(!phone){
+        return null;
+    }
+    const { ciphertext, iv } = phone.number;
+    if (!ciphertext) {
+        return {}
+    }
+    phone.number = await decryptData(ciphertext, iv);
+    return phone;
 }
+

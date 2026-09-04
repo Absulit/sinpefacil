@@ -74,7 +74,7 @@
 <script>
 
   import QRCodeStyling from 'qr-code-styling';
-  import shareLink from 'share';
+  import shareLink, {createURL} from 'share';
   import { getPhone } from 'db';
   import { formatDate } from 'i18n';
   import i18next from 'i18next';
@@ -98,7 +98,7 @@
         finalPhone = phoneDB.number;
       }
 
-      const url = encodeURI(`${location.origin + location.pathname}?phone=${finalPhone}&name=${name}&price=${price}&detail=${detail}`);
+      const url = createURL(finalPhone, name, price, detail);
 
       const qrCode = new QRCodeStyling({
         width: 300,
@@ -161,7 +161,9 @@
         const phoneDB = await getPhone();
         finalPhone = phoneDB.number;
       }
-      const url = encodeURI(`${location.origin + location.pathname}?phone=${finalPhone}&name=${name}&price=${price}&detail=${detail}`);
+
+      const url = createURL(finalPhone, name, price, detail);
+
       shareLink($f7, `
       ${name}
       ${finalPhone}

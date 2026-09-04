@@ -21,7 +21,7 @@
           <div class="title">${i18next.t('codes')}</div>
         </div>
         <div class="right">
-          <a href="#" class="link icon-only panel-open" data-panel="right">
+          <a href="#" class="link icon-only panel-open right-menu" data-panel="right">
             <i class="icon f7-icons if-not-md">menu</i>
             <i class="icon material-icons if-md">menu</i>
           </a>
@@ -37,7 +37,7 @@
     ${products.value.length > 0 ? $h`
 
     <div class="fab fab-right-bottom">
-      <a @click="${onClickAdd}">
+      <a @click="${onClickAdd}" class="onClickAdd">
         <i class="icon f7-icons if-not-md">plus</i>
         <i class="icon f7-icons if-not-md">xmark</i>
 
@@ -75,7 +75,7 @@
           <p>${i18next.t('codes:noCodesExplainer')}</p>
 
           <div class="block">
-            <button class="button button-fill popup-open" @click="${onClickAdd}">
+            <button id="addNewCode" class="button button-fill popup-open onClickAdd" @click="${onClickAdd}">
               ${i18next.t('codes:addNew')}
             </button>
           </div>
@@ -101,7 +101,7 @@
                   <div class="item-title">${product.name}</div>
                   <div class="item-after">₡${product.price}</div>
                 </div>
-                <div class="item-subtitle">${product.phone}</div>
+                <div class="item-subtitle">${product.phone || phone?.number}</div>
                 <div class="item-text">${product.detail}</div>
 
               </div>
@@ -119,7 +119,11 @@
 </template>
 <script>
   import i18next from 'i18next';
-  export default (props, { $f7, $store, $on, $el }) => {
+  import { getPhone } from 'db';
+  export default async (props, { $f7, $store, $on, $el }) => {
+
+    // phone from settings if defined
+    const phone = await getPhone();
 
     const products = $store.getters.products;
 

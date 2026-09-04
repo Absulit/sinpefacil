@@ -40,7 +40,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="/settings/" class="panel-close" data-view="current">
+                  <a href="/settings/" class="panel-close settings" data-view="current">
                     <i class="icon if-not-md f7-icons">gear_alt</i>
                     <i class="icon if-md material-icons">settings</i>
                     <span>${i18next.t('settings')}</span>
@@ -98,7 +98,7 @@
                 <div class="item-inner">
                   <div class="item-title item-label">${i18next.t('codes:name')}</div>
                   <div class="item-input-wrap">
-                    <input type="text" data-index="2" name="name" autocomplete="name"
+                    <input id="name" type="text" data-index="2" name="name" autocomplete="name"
                       placeholder="${i18next.t('codes:namePlaceholder')}" required validate />
                     <span class="input-clear-button"></span>
                   </div>
@@ -109,7 +109,7 @@
                 <div class="item-inner">
                   <div class="item-title item-label">${i18next.t('codes:price')}</div>
                   <div class="item-input-wrap">
-                    <input type="tel" data-index="0" name="price" placeholder="${i18next.t('codes:pricePlaceholder')}"
+                    <input id="price" type="tel" data-index="0" name="price" placeholder="${i18next.t('codes:pricePlaceholder')}"
                       inputmode="decimal" required validate />
                     <span class="input-clear-button"></span>
                   </div>
@@ -120,7 +120,7 @@
                 <div class="item-inner">
                   <div class="item-title item-label">${i18next.t('codes:detail')}</div>
                   <div class="item-input-wrap">
-                    <input type="text" data-index="3" name="detail"
+                    <input id="detail" type="text" data-index="3" name="detail"
                       placeholder="${i18next.t('codes:detailPlaceholder')}" validate maxlength="160" />
                     <span class="input-clear-button"></span>
                   </div>
@@ -130,7 +130,7 @@
             </ul>
 
             <div class="block">
-              <button type="button" class="button button-fill" @click="${submitForm}">
+              <button id="submitCodeForm" type="button" class="button button-fill" @click="${submitForm}">
                 ${productId ? i18next.t('codes:submitButtonEdit') : i18next.t('codes:submitButtonAdd')}
               </button>
             </div>
@@ -335,7 +335,7 @@
 
     });
 
-    const submitForm = () => {
+    const submitForm = async () => {
       // Extract data using Framework7 form helper
       const form = $f7.$('#qr-data-form')[0];
       const formData = $f7.form.convertToData('#qr-data-form');
@@ -347,11 +347,10 @@
       if (currentProduct) {
         const { id } = currentProduct;
         const productUpdated = { ...formData, id };
-        $store.dispatch('updateProduct', productUpdated);
+        await $store.dispatch('updateProduct', productUpdated);
         $f7.emit('PRODUCT_UPDATED', productUpdated);
-
       } else {
-        $store.dispatch('addProduct', formData);
+        await $store.dispatch('addProduct', formData);
       }
 
       currentProduct = null;
