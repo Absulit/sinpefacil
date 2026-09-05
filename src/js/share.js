@@ -38,6 +38,71 @@ export default function shareLink(app, text, url) {
     }
 }
 
+
+async function downloadImage(blob) {
+    try {
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = 'qr.png';
+        link.setAttribute('prevent-router', true)
+        link.classList.add('external');
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(blobUrl);
+    } catch (err) {
+        console.error('Error al descargar imagen:', err);
+    }
+}
+
+export function shareImage(app, text, blob) {
+    const shareData = {
+        title: 'SINPE Fácil',
+        text,
+        files: [
+            new File([blob], 'qr.png', { type: blob.type }),
+        ],
+    };
+
+    /**
+     * Navigator exists on Firefox mobile
+     * but file share is not supported
+     */
+    const isFirefox = /Firefox|FxiOS/i.test(navigator.userAgent);
+
+    if (navigator.share && !isFirefox) {
+        navigator.share(shareData)
+            .catch((err) => {
+                // suppress errors caused by the user closing the share dialog
+                if (err.name !== 'AbortError') console.error('Error al compartir:', err);
+            });
+    } else {
+
+        app.actions.create({
+            buttons: [
+                [
+                    {
+                        text: i18next.t('share:saveImage'),
+                        icon: `
+                                <i class="icon f7-icons if-not-md">photo</i>
+                                <i class="icon material-icons if-md">image</i>
+                            `,
+                        onClick: () => downloadImage(blob)
+                    },
+                    {
+                        text: i18next.t('cancel'),
+                        color: 'red',
+                    }
+                ]
+            ]
+        }).open();
+
+    }
+
+}
+
 /**
  * Encode url to hide phone
  * @param {Number} phone 
@@ -48,6 +113,24 @@ export default function shareLink(app, text, url) {
  */
 export function createURL(phone, name, price, detail) {
     return encodeURI(`${location.origin + location.pathname}?phone=${btoa(phone)}&name=${name}&price=${price}&detail=${detail}`);
+}
+
+export async function svg2png(svg, width = 300, height = 300) {
+    const img = new Image();
+
+    await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+    });
+
+    const canvas = document.createElement("canvas");
+    [canvas.width, canvas.height] = [width, height];
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, width, height);
+
+    return canvas.toDataURL("image/png");
 }
 
 // tests only

@@ -17,7 +17,7 @@
             <i class="icon material-icons if-md">send</i>
           </a>
           <!-- Share QR -->
-          <a href="#" class="link icon-only popup-open" @click="${share}">
+          <a href="#" class="link icon-only popover-open" data-popover=".popover-menu-share">
             <i class="icon f7-icons if-not-md">square_arrow_up</i>
             <i class="icon material-icons if-md">share</i>
           </a>
@@ -29,6 +29,42 @@
 
 
 
+      </div>
+    </div>
+
+    <!-- Popover for share -->
+    <div class="popover popover-menu-share">
+      <div class="popover-inner">
+        <div class="list simple-list media-list no-hairlines">
+          <ul>
+            <li>
+              <a href="#" class="item-link item-content popover-close" @click=${()=>shareToImage()}>
+
+                <div class="item-media">
+                  <i class="icon f7-icons if-not-md">photo</i>
+                  <i class="icon material-icons if-md">image</i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title">${i18next.t('IMAGEN')}</div>
+                </div>
+
+              </a>
+            </li>
+            <li>
+              <a href="#" class="item-link item-content popover-close" @click=${()=>share()}>
+
+                <div class="item-media">
+                  <i class="icon f7-icons if-not-md">link</i>
+                  <i class="icon material-icons if-md">link</i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title">${i18next.t('LINK')}</div>
+                </div>
+
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -76,7 +112,7 @@
 <script>
 
   import QRCodeStyling from 'qr-code-styling';
-  import shareLink, { createURL } from 'share';
+  import shareLink, { createURL, shareImage, svg2png } from 'share';
   import { getPhone, getOption, Keys, db } from 'db';
   import { formatDate } from 'i18n';
   import generateSINPESMS, { validateSMS, SMS_START } from 'sms';
@@ -168,6 +204,39 @@
       await $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
       window.location.href = generateSINPESMS(bank.phone, price, phone, name, detail);
     }
+
+    const shareToImage = async () => {
+      const { phone, name, price, detail } = currentHistoryItem;
+      let finalPhone = phone;
+      if (!phone) {
+        const phoneDB = await getPhone();
+        finalPhone = phoneDB.number;
+      }
+
+      const svg = $el.value.find('#qr-code-container')[0].firstElementChild;
+
+      const serializer = new XMLSerializer();
+      let svgString = serializer.serializeToString(svg);
+
+      const dataUrl = await svg2png(svgString);
+      const response = await fetch(dataUrl);
+      const blob = await response.blob();
+
+      const generatedWith = i18next.t('share:generatedWith', { site: 'app.sinpefacil.com' });
+
+      shareImage($f7, `
+      ${name}
+      ${finalPhone}
+      ${price}
+      ${detail}
+
+      ${generatedWith}      
+      `.trim().replace(/^ +/gm, ''),
+        blob
+      )
+    }
+
+
 
     return $render;
   };
