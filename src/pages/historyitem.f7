@@ -37,7 +37,7 @@
       <div class="popover-inner">
         <div class="list">
           <ul>
-            <li><a href="#" class="list-button popover-close" @click=${()=>share()}>${i18next.t('IMAGEN')}</a>
+            <li><a href="#" class="list-button popover-close" @click=${()=>shareToImage()}>${i18next.t('IMAGEN')}</a>
             </li>
             <li><a href="#" class="list-button popover-close" @click=${()=>share()}>${i18next.t('LINK')}</a>
             </li>
@@ -90,7 +90,7 @@
 <script>
 
   import QRCodeStyling from 'qr-code-styling';
-  import shareLink, { createURL } from 'share';
+  import shareLink, { createURL, shareImage, svg2png } from 'share';
   import { getPhone, getOption, Keys, db } from 'db';
   import { formatDate } from 'i18n';
   import generateSINPESMS, { validateSMS, SMS_START } from 'sms';
@@ -182,6 +182,39 @@
       await $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
       window.location.href = generateSINPESMS(bank.phone, price, phone, name, detail);
     }
+
+    const shareToImage = async () => {
+      const { phone, name, price, detail } = currentHistoryItem;
+      let finalPhone = phone;
+      if (!phone) {
+        const phoneDB = await getPhone();
+        finalPhone = phoneDB.number;
+      }
+
+      const svg = $el.value.find('#qr-code-container')[0].firstElementChild;
+
+      const serializer = new XMLSerializer();
+      let svgString = serializer.serializeToString(svg);
+
+      const dataUrl = await svg2png(svgString);
+      const response = await fetch(dataUrl);
+      const blob = await response.blob();
+
+      const generatedWith = i18next.t('share:generatedWith', { site: 'app.sinpefacil.com' });
+
+      shareImage($f7, `
+      ${name}
+      ${finalPhone}
+      ${price}
+      ${detail}
+
+      ${generatedWith}      
+      `.trim().replace(/^ +/gm, ''),
+        blob
+      )
+    }
+
+
 
     return $render;
   };
