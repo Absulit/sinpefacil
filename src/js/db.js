@@ -8,14 +8,14 @@ if (import.meta.env.DEV) {
 
     window.db = db;
 
-    const { importDB } = await import('dexie-export-import');
-
+    
     // import
-    await Dexie.delete('sf');
-    const response = await fetch('/sf-export.json');
-    const blob = await response.blob();
+    // const { importDB } = await import('dexie-export-import');
+    // await Dexie.delete('sf');
+    // const response = await fetch('/sf-export.json');
+    // const blob = await response.blob();
 
-    await importDB(blob, { overwriteValues: true });
+    // await importDB(blob, { overwriteValues: true });
     // console.log('Current DB Version:', db.verno);
 }
 
@@ -127,10 +127,10 @@ export async function getPhone() {
 
 // tests only
 if (import.meta.env.DEV) {
+    // // export
     // const { exportDB } = await import('dexie-export-import');
     // const download = (await import('downloadjs')).default;
 
-    // // export
     // const blob = await db.export();
     // download(blob, `sf-export.json`, "application/json");
 }
