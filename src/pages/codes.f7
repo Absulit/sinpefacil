@@ -11,12 +11,12 @@
     <div class="navbar">
       <div class="navbar-bg"></div>
       <div class="navbar-inner">
-        <div class="left">
-          <!-- <a href="#" class="link icon-only panel-open" data-panel="left">
+        <!-- <div class="left">
+          <a href="#" class="link icon-only panel-open" data-panel="left">
             <i class="icon f7-icons if-not-md">menu</i>
             <i class="icon material-icons if-md">menu</i>
-          </a> -->
-        </div>
+          </a> 
+        </div> -->
         <div class="title sliding display-flex align-items-center">
           <div class="title">${i18next.t('codes')}</div>
         </div>
