@@ -20,6 +20,8 @@ const resources = {
             updateDownloadedTitle: `App Updated!`,
             updateDownloaded: `A new version of SINPE Fácil has been installed and is ready to use.`,
             version: `version`,
+            image: `Image`,
+            link: `Link`,
         },
         home: {
             aboutContent: `This app generates QR codes (?) that allow other people pay you with SINPE MÓVIL. (?)
@@ -113,6 +115,8 @@ const resources = {
             updateDownloadedTitle: `¡Aplicación Actualizada!`,
             updateDownloaded: `Una nueva versión de SINPE Fácil se ha instalado y está lista para usarse.`,
             version: `version`,
+            image: `Imagen`,
+            link: `Enlace`,
         },
         home: {
             aboutContent: `Esta aplicación genera Códigos QR (?) para permitir a otras personas pagarte con SINPE MÓVIL. (?)
@@ -167,7 +171,7 @@ const resources = {
             noHistoryExplainer: `Lea algún código QR o acepte un link de pago y le aparecerá luego aquí.`,
 
             CTADelete: `¿Desea borrar '{{name}}'?`,
-            deleteConfirmation: `Recibo borrado`,            
+            deleteConfirmation: `Recibo borrado`,
         },
         settings: {
             phone: `Teléfono`,
