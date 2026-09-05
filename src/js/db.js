@@ -8,21 +8,14 @@ if (import.meta.env.DEV) {
 
     window.db = db;
 
-    // import { exportDB, importDB } from 'dexie-export-import';
-    // import download from 'downloadjs';
-    const { exportDB, importDB } = await import('dexie-export-import');
-    const download = (await import('downloadjs')).default;
-
-    // export
-    // const blob = await db.export();
-    // download(blob, `sf-export.json`, "application/json");
+    const { importDB } = await import('dexie-export-import');
 
     // import
-    // await Dexie.delete('sf');
-    // const response = await fetch('/sf-export.json');
-    // const blob = await response.blob();
+    await Dexie.delete('sf');
+    const response = await fetch('/sf-export.json');
+    const blob = await response.blob();
 
-    // await importDB(blob, { overwriteValues: true });
+    await importDB(blob, { overwriteValues: true });
     // console.log('Current DB Version:', db.verno);
 }
 
@@ -52,8 +45,18 @@ db.version(3).upgrade(async tx => {
     let productsList = await products.toArray();
     productsList = await Promise.all(
         productsList.map(async product => {
+            if (!product.phone) return
             product.phone = await encryptData(product.phone.toString());
             await products.put(product)
+        })
+    )
+
+    const history = tx.table('history');
+    let historyList = await history.toArray();
+    historyList = await Promise.all(
+        historyList.map(async historyItem => {
+            historyItem.phone = await encryptData(historyItem.phone.toString());
+            await history.put(historyItem);
         })
     )
 });
@@ -110,5 +113,15 @@ export async function getPhone() {
     }
     phone.number = await decryptData(ciphertext, iv);
     return phone;
+}
+
+// tests only
+if (import.meta.env.DEV) {
+    // const { exportDB } = await import('dexie-export-import');
+    // const download = (await import('downloadjs')).default;
+
+    // // export
+    // const blob = await db.export();
+    // download(blob, `sf-export.json`, "application/json");
 }
 
