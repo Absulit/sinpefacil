@@ -10,7 +10,7 @@ if (import.meta.env.DEV) {
 
     // import { exportDB, importDB } from 'dexie-export-import';
     // import download from 'downloadjs';
-    const { exportDB } = await import('dexie-export-import');
+    const { exportDB, importDB } = await import('dexie-export-import');
     const download = (await import('downloadjs')).default;
 
     // export
@@ -18,12 +18,12 @@ if (import.meta.env.DEV) {
     // download(blob, `sf-export.json`, "application/json");
 
     // import
-    // const response = await fetch('http://localhost:8080/my-data.json');
+    // await Dexie.delete('sf');
+    // const response = await fetch('/sf-export.json');
     // const blob = await response.blob();
 
-    // await DexieExportImport.importDB(blob);
-    // console.log('Database successfully imported!');
-
+    // await importDB(blob, { overwriteValues: true });
+    // console.log('Current DB Version:', db.verno);
 }
 
 // Define database schema
@@ -47,13 +47,17 @@ db.version(2).stores({
     }
 });
 
+db.version(3).upgrade(async tx => {
+    const products = tx.table('products');
+    let productsList = await products.toArray();
+    productsList = await Promise.all(
+        productsList.map(async product => {
+            product.phone = await encryptData(product.phone);
+            await products.put(product)
+        })
+    )
+});
 
-
-
-
-// db.version(3).upgrade(tx => {
-
-// });
 
 /**
  * Constant keys for values available to store.
