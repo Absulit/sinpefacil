@@ -37,7 +37,6 @@ const initialBankData = [
 
     { name: 'Grupo Mutual Alajuela', shortname: 'Mutual Alajuela', phone: 60575079 },
     { name: 'Coopecaja', shortname: 'Coopecaja', phone: 62229526 },
-    { name: 'Banco Lafise', shortname: 'Lafise', phone: 9091 },
     { name: 'Caja de Ande', shortname: 'Caja de Ande', phone: 62229532 },
     { name: 'Coopealianza', shortname: 'Coopealianza', phone: 62229523 },
     { name: 'Coocique', shortname: 'Coocique', phone: 46002905 },

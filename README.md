@@ -33,7 +33,6 @@ You do not need this app to first read the QR codes, you can use your regular QR
 | Grupo Mutual Alajuela           | 6057-5079 |
 | Banco Nacional de Costa Rica    | 2627      |
 | Coopecaja                       | 6222-9526 |
-| Banco Lafise                    | 9091      |
 | Caja de Ande                    | 6222-9532 |
 | Coopealianza                    | 6222-9523 |
 | Coocique                        | 4600-2905 |
