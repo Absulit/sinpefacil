@@ -69,6 +69,22 @@ db.version(3).upgrade(async tx => {
         })
     )
 
+    const banks = tx.table('banks');
+    await banks.bulkUpdate([
+        { key: 3, changes: { phone: 4066 } }, // BCR
+    ]);
+
+    await banks.bulkAdd([
+        { name: 'Grupo Mutual Alajuela', shortname: 'Mutual Alajuela', phone: 60575079 },
+        { name: 'Coopecaja', shortname: 'Coopecaja', phone: 62229526 },
+        { name: 'Banco Lafise', shortname: 'Lafise', phone: 9091 },
+        { name: 'Caja de Ande', shortname: 'Caja de Ande', phone: 62229532 },
+        { name: 'Coopealianza', shortname: 'Coopealianza', phone: 62229523 },
+        { name: 'Coocique', shortname: 'Coocique', phone: 46002905 },
+        { name: 'Banco Promérica', shortname: 'Promérica', phone: 62232450 },
+        { name: 'Credecoop', shortname: 'Credecoop', phone: 71984256 },
+    ])
+
 });
 
 const activeVersion = db.verno;
