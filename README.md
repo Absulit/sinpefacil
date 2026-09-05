@@ -26,3 +26,28 @@ Reading the QR code creates a SMS to send to the client respective bank with you
 
 You do not need this app to first read the QR codes, you can use your regular QR scanner, and then click the link read from the QR code that will redirect to the webapp to generate the SMS to pay.
 
+### Available Banks that offer the SINPE Móvil SMS service *
+
+
+
+| Bank                            | SMS phone | 
+|---------------------------------|----------:|
+| Grupo Mutual Alajuela           | 6057-5079 |
+| Banco Nacional de Costa Rica    | 2627      |
+| Coopecaja                       | 6222-9526 |
+| Banco Lafise                    | 9091      |
+| Caja de Ande                    | 6222-9532 |
+| Coopealianza                    | 6222-9523 |
+| Coocique                        | 4600-2905 |
+| Banco BCT                       | 6040-0300 |
+| Banco de Costa Rica             | 4066      |
+| Banco Promérica                 | 6223-2450 |
+| Credecoop                       | 7198-4256 |
+| BAC Credomatic                  | 7070-1222 |
+| Banco Davivienda                | 7070-7474 |
+
+[* ref: participating institutions and details](https://app.powerbi.com/view?r=eyJrIjoiZmVkOGM0M2MtODc1Mi00ZjZkLWE0MGYtYjZmMmJlMGY5NjA2IiwidCI6IjYxOGQwYTQ1LTI1YTYtNDYxOC05ZjgwLThmNzBhNDM1ZWU1MiJ9&pageName=0e70f300db35b554b200)
+
+
+
+
