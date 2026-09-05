@@ -96,7 +96,7 @@ store.dispatch('initApp').then(() => {
                     const bank = await db.banks.get(bankId);
                     clearParams();
                     await store.dispatch('addHistoryItem', { price, phone: atob(phone), name, detail, createdAt: new Date() })
-                    window.location.href = generateSINPESMS(bank.phone, price, phone, name, detail);
+                    window.location.href = generateSINPESMS(bank.phone, price, atob(phone), name, detail);
                 }
 
             },
@@ -199,7 +199,7 @@ async function handleSelect(bankId, { price, phone, name, detail },) {
     saveOption(Keys.SELECTED_BANK, bankId); // save bank for future links
     clearParams();
     await store.dispatch('addHistoryItem', { price, phone: atob(phone), name, detail, createdAt: new Date() })
-    window.location.href = generateSINPESMS(bank.phone, price, phone, name, detail);
+    window.location.href = generateSINPESMS(bank.phone, price, atob(phone), name, detail);
 }
 
 /**
