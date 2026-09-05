@@ -59,6 +59,16 @@ db.version(3).upgrade(async tx => {
             await history.put(historyItem);
         })
     )
+
+    const phones = tx.table('phones');
+    let phonesList = await phones.toArray();
+    phonesList = await Promise.all(
+        phonesList.map(async phone => {
+            phone.number = await encryptData(phone.number.toString());
+            await phones.put(phone);
+        })
+    )
+
 });
 
 
