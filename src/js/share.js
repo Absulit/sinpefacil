@@ -41,7 +41,6 @@ export default function shareLink(app, text, url) {
 
 async function downloadImage(blob) {
     try {
-
         const blobUrl = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = blobUrl;
@@ -67,6 +66,10 @@ export function shareImage(app, text, blob) {
         ],
     };
 
+    /**
+     * Navigator exists on Firefox mobile
+     * but file share is not supported
+     */
     const isFirefox = /Firefox|FxiOS/i.test(navigator.userAgent);
 
     if (navigator.share && !isFirefox) {
@@ -81,7 +84,7 @@ export function shareImage(app, text, blob) {
             buttons: [
                 [
                     {
-                        text: i18next.t('share:copyLink'),
+                        text: i18next.t('share:saveImage'),
                         icon: '<i class="icon f7-icons if-not-md">square_on_square</i><i class="icon material-icons if-md">content_copy</i>',
                         onClick: () => downloadImage(blob)
                     },

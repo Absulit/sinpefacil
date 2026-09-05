@@ -84,6 +84,7 @@ const resources = {
         },
         share: {
             copyLink: `Copy Link`,
+            saveImage: `Save Image`,
             copyConfirmation: `Link copied to clipboard`
         },
         code404: {
@@ -177,6 +178,7 @@ const resources = {
         },
         share: {
             copyLink: `Copiar Link`,
+            saveImage: `Guardar Imagen`,
             copyConfirmation: `Link copiado al portapapeles`
         },
         code404: {
