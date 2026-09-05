@@ -8,7 +8,7 @@ if (import.meta.env.DEV) {
 
     window.db = db;
 
-    
+
     // import
     // const { importDB } = await import('dexie-export-import');
     // await Dexie.delete('sf');
@@ -69,6 +69,13 @@ db.version(3).upgrade(async tx => {
         })
     )
 
+});
+
+const activeVersion = db.verno;
+
+window.gtag?.('event', 'db_version_check', {
+    db_version: activeVersion,
+    is_outdated: activeVersion < 3
 });
 
 
