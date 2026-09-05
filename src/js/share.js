@@ -38,28 +38,62 @@ export default function shareLink(app, text, url) {
     }
 }
 
+
+async function downloadImage(blob) {
+    try {
+
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = 'qr.png';
+        link.setAttribute('prevent-router', true)
+        link.classList.add('external');
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(blobUrl);
+    } catch (err) {
+        console.error('Error al descargar imagen:', err);
+    }
+}
+
 export function shareImage(app, text, blob) {
     const shareData = {
         title: 'SINPE Fácil',
         text,
         files: [
-            new File([blob], 'file.svg', {type: blob.type}),
+            new File([blob], 'qr.png', { type: blob.type }),
         ],
     };
 
-    if (navigator.share) {
+    const isFirefox = /Firefox|FxiOS/i.test(navigator.userAgent);
+
+    if (navigator.share && !isFirefox) {
         navigator.share(shareData)
             .catch((err) => {
                 // suppress errors caused by the user closing the share dialog
                 if (err.name !== 'AbortError') console.error('Error al compartir:', err);
             });
     } else {
-        console.log('---- FALTA LOCAL SHARE');
+
+        app.actions.create({
+            buttons: [
+                [
+                    {
+                        text: i18next.t('share:copyLink'),
+                        icon: '<i class="icon f7-icons if-not-md">square_on_square</i><i class="icon material-icons if-md">content_copy</i>',
+                        onClick: () => downloadImage(blob)
+                    },
+                    {
+                        text: i18next.t('cancel'),
+                        color: 'red',
+                    }
+                ]
+            ]
+        }).open();
 
     }
-
-    // Clean up when image finishes loading or downloading
-    // URL.revokeObjectURL(blobUrl);
 
 }
 
