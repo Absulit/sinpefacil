@@ -37,7 +37,7 @@
       <div class="popover-inner">
         <div class="list">
           <ul>
-            <li><a href="#" class="list-button popover-close" @click=${()=>share()}>${i18next.t('IMAGEN')}</a>
+            <li><a href="#" class="list-button popover-close" @click=${()=>shareToImage()}>${i18next.t('IMAGEN')}</a>
             </li>
             <li><a href="#" class="list-button popover-close" @click=${()=>share()}>${i18next.t('LINK')}</a>
             </li>
@@ -51,8 +51,10 @@
       <div class="popover-inner">
         <div class="list">
           <ul>
-            <li><a href="#" class="list-button popover-close" @click=${()=>deleteProduct()}>${i18next.t('delete')}</a></li>
-            <li><a href="#" class="list-button popover-close" @click=${()=>printProduct()}>${i18next.t('print')}</a></li>
+            <li><a href="#" class="list-button popover-close" @click=${()=>deleteProduct()}>${i18next.t('delete')}</a>
+            </li>
+            <li><a href="#" class="list-button popover-close" @click=${()=>printProduct()}>${i18next.t('print')}</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -88,7 +90,7 @@
 <script>
 
   import QRCodeStyling from 'qr-code-styling';
-  import shareLink, {createURL} from 'share';
+  import shareLink, { createURL, shareImage } from 'share';
   import { getPhone } from 'db';
   import { formatDate } from 'i18n';
   import i18next from 'i18next';
@@ -183,7 +185,56 @@
       ${finalPhone}
       ${price}
       ${detail}
-      `.trim().replace(/^ +/gm, ''), url)
+      `.trim().replace(/^ +/gm, ''),
+        url)
+    }
+
+    async function svg2png(svg, width = 300, height = 300) {
+      const img = new Image();
+
+      await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      });
+
+      const canvas = document.createElement("canvas");
+      [canvas.width, canvas.height] = [width, height];
+
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, width, height);
+
+      return canvas.toDataURL("image/png");
+    }
+
+    const shareToImage = async () => {
+      const { phone, name, price, detail } = currentProduct;
+      let finalPhone = phone;
+      if (!phone) {
+        const phoneDB = await getPhone();
+        finalPhone = phoneDB.number;
+      }
+
+      const svg = $el.value.find('#qr-code-container')[0].firstElementChild;
+
+      const serializer = new XMLSerializer();
+      let svgString = serializer.serializeToString(svg);
+
+      const dataUrl = await svg2png(svgString);
+      const response = await fetch(dataUrl);
+      const blob = await response.blob();
+
+
+      shareImage($f7, `
+      ${name}
+      ${finalPhone}
+      ${price}
+      ${detail}
+
+      Generado con app.sinpefacil.com
+      `.trim().replace(/^ +/gm, ''),
+        blob
+      )
     }
 
     return $render;

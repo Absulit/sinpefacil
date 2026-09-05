@@ -38,6 +38,31 @@ export default function shareLink(app, text, url) {
     }
 }
 
+export function shareImage(app, text, blob) {
+    const shareData = {
+        title: 'SINPE Fácil',
+        text,
+        files: [
+            new File([blob], 'file.svg', {type: blob.type}),
+        ],
+    };
+
+    if (navigator.share) {
+        navigator.share(shareData)
+            .catch((err) => {
+                // suppress errors caused by the user closing the share dialog
+                if (err.name !== 'AbortError') console.error('Error al compartir:', err);
+            });
+    } else {
+        console.log('---- FALTA LOCAL SHARE');
+
+    }
+
+    // Clean up when image finishes loading or downloading
+    // URL.revokeObjectURL(blobUrl);
+
+}
+
 /**
  * Encode url to hide phone
  * @param {Number} phone 
