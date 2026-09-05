@@ -26,21 +26,45 @@ db.version(2).stores({
     banks: '++id, name, shortname, &phone',
     phones: '++id, name, &number',
     history: '++id, price, phone, name, detail, createdAt'
-}).upgrade(async tx => {
+})
+
+const initialBankData = [
+    { name: 'BAC Credomatic', shortname: 'BAC', phone: 70701222 },
+    { name: 'Banco Nacional de Costa Rica', shortname: 'BNCR', phone: 2627 },
+    { name: 'Banco de Costa Rica', shortname: 'BCR', phone: 2272 },
+    { name: 'Banco Davivienda', shortname: 'Davivienda', phone: 70707474 },
+    { name: 'Banco BCT', shortname: 'BCT', phone: 60400300 },
+
+    { name: 'Grupo Mutual Alajuela', shortname: 'Mutual Alajuela', phone: 60575079 },
+    { name: 'Coopecaja', shortname: 'Coopecaja', phone: 62229526 },
+    { name: 'Banco Lafise', shortname: 'Lafise', phone: 9091 },
+    { name: 'Caja de Ande', shortname: 'Caja de Ande', phone: 62229532 },
+    { name: 'Coopealianza', shortname: 'Coopealianza', phone: 62229523 },
+    { name: 'Coocique', shortname: 'Coocique', phone: 46002905 },
+    { name: 'Banco Promérica', shortname: 'Promérica', phone: 62232450 },
+    { name: 'Credecoop', shortname: 'Credecoop', phone: 71984256 },
+];
+
+db.on('populate', async tx => {
     const banks = tx.table('banks');
-    const bankCount = await banks.count();
+    await banks.bulkAdd(initialBankData);
+});
+
+db.on('ready', async () => {
+    const banks = db.banks;
+    const bankCount = await db.banks.count();
     if (bankCount === 0) {
-        await banks.bulkAdd([
-            { name: 'BAC Credomatic', shortname: 'BAC', phone: 70701222 },
-            { name: 'Banco Nacional de Costa Rica', shortname: 'BNCR', phone: 2627 },
-            { name: 'Banco de Costa Rica', shortname: 'BCR', phone: 2272 },
-            { name: 'Banco Davivienda', shortname: 'Davivienda', phone: 70707474 },
-            { name: 'Banco BCT', shortname: 'BCT', phone: 60400300 },
-        ])
+        await banks.bulkAdd(initialBankData)
     }
 });
 
-db.version(3).upgrade(async tx => {
+db.version(3).stores({
+    products: '++id, phone, name, price',
+    options: 'key, value',
+    banks: '++id, name, shortname, &phone',
+    phones: '++id, name, &number',
+    history: '++id, price, phone, name, detail, createdAt'
+}).upgrade(async tx => {
     const products = tx.table('products');
     let productsList = await products.toArray();
     productsList = await Promise.all(
@@ -74,16 +98,7 @@ db.version(3).upgrade(async tx => {
         { key: 3, changes: { phone: 4066 } }, // BCR
     ]);
 
-    await banks.bulkAdd([
-        { name: 'Grupo Mutual Alajuela', shortname: 'Mutual Alajuela', phone: 60575079 },
-        { name: 'Coopecaja', shortname: 'Coopecaja', phone: 62229526 },
-        { name: 'Banco Lafise', shortname: 'Lafise', phone: 9091 },
-        { name: 'Caja de Ande', shortname: 'Caja de Ande', phone: 62229532 },
-        { name: 'Coopealianza', shortname: 'Coopealianza', phone: 62229523 },
-        { name: 'Coocique', shortname: 'Coocique', phone: 46002905 },
-        { name: 'Banco Promérica', shortname: 'Promérica', phone: 62232450 },
-        { name: 'Credecoop', shortname: 'Credecoop', phone: 71984256 },
-    ])
+    await banks.bulkAdd(initialBankData.slice(5));
 
 });
 

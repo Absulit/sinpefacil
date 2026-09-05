@@ -28,8 +28,6 @@ You do not need this app to first read the QR codes, you can use your regular QR
 
 ### Available Banks that offer the SINPE Móvil SMS service *
 
-
-
 | Bank                            | SMS phone | 
 |---------------------------------|----------:|
 | Grupo Mutual Alajuela           | 6057-5079 |
@@ -49,5 +47,12 @@ You do not need this app to first read the QR codes, you can use your regular QR
 [* ref: participating institutions and details](https://app.powerbi.com/view?r=eyJrIjoiZmVkOGM0M2MtODc1Mi00ZjZkLWE0MGYtYjZmMmJlMGY5NjA2IiwidCI6IjYxOGQwYTQ1LTI1YTYtNDYxOC05ZjgwLThmNzBhNDM1ZWU1MiJ9&pageName=0e70f300db35b554b200)
 
 
+### Perform migrations
 
+db.js has a `tests only` section at the top and at the bottom.
+- Top to import.
+- Bottom to export.
 
+Export data from branch master to have a way to test future migrations.
+Import the data and run the new migrations.
+If required perform a `indexedDB.deleteDatabase('sf');` in the JS console to start with an empty DB.
