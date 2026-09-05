@@ -5,7 +5,25 @@ export const db = new Dexie('sf');
 
 // tests only
 if (import.meta.env.DEV) {
+
     window.db = db;
+
+    // import { exportDB, importDB } from 'dexie-export-import';
+    // import download from 'downloadjs';
+    const { exportDB } = await import('dexie-export-import');
+    const download = (await import('downloadjs')).default;
+
+    // export
+    // const blob = await db.export();
+    // download(blob, `sf-export.json`, "application/json");
+
+    // import
+    // const response = await fetch('http://localhost:8080/my-data.json');
+    // const blob = await response.blob();
+
+    // await DexieExportImport.importDB(blob);
+    // console.log('Database successfully imported!');
+
 }
 
 // Define database schema
@@ -15,18 +33,27 @@ db.version(2).stores({
     banks: '++id, name, shortname, &phone',
     phones: '++id, name, &number',
     history: '++id, price, phone, name, detail, createdAt'
+}).upgrade(async tx => {
+    const banks = tx.table('banks');
+    const bankCount = await banks.count();
+    if (bankCount === 0) {
+        await banks.bulkAdd([
+            { name: 'BAC Credomatic', shortname: 'BAC', phone: 70701222 },
+            { name: 'Banco Nacional de Costa Rica', shortname: 'BNCR', phone: 2627 },
+            { name: 'Banco de Costa Rica', shortname: 'BCR', phone: 2272 },
+            { name: 'Banco Davivienda', shortname: 'Davivienda', phone: 70707474 },
+            { name: 'Banco BCT', shortname: 'BCT', phone: 60400300 },
+        ])
+    }
 });
 
-const bankCount = await db.banks.count();
-if (bankCount === 0) {
-    db.banks.bulkAdd([
-        { name: 'BAC Credomatic', shortname: 'BAC', phone: 70701222 },
-        { name: 'Banco Nacional de Costa Rica', shortname: 'BNCR', phone: 2627 },
-        { name: 'Banco de Costa Rica', shortname: 'BCR', phone: 2272 },
-        { name: 'Banco Davivienda', shortname: 'Davivienda', phone: 70707474 },
-        { name: 'Banco BCT', shortname: 'BCT', phone: 60400300 },
-    ])
-}
+
+
+
+
+// db.version(3).upgrade(tx => {
+
+// });
 
 /**
  * Constant keys for values available to store.
@@ -70,7 +97,7 @@ export async function savePhone(number) {
 
 export async function getPhone() {
     const phone = (await db.phones.limit(1).toArray())[0];
-    if(!phone){
+    if (!phone) {
         return null;
     }
     const { ciphertext, iv } = phone.number;
