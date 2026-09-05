@@ -52,7 +52,7 @@ db.version(3).upgrade(async tx => {
     let productsList = await products.toArray();
     productsList = await Promise.all(
         productsList.map(async product => {
-            product.phone = await encryptData(product.phone);
+            product.phone = await encryptData(product.phone.toString());
             await products.put(product)
         })
     )
