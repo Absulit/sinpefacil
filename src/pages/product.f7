@@ -35,11 +35,33 @@
     <!-- Popover for share -->
     <div class="popover popover-menu-share">
       <div class="popover-inner">
-        <div class="list">
+        <div class="list simple-list media-list no-hairlines">
           <ul>
-            <li><a href="#" class="list-button popover-close" @click=${()=>shareToImage()}>${i18next.t('IMAGEN')}</a>
+            <li>
+              <a href="#" class="item-link item-content popover-close" @click=${()=>shareToImage()}>
+
+                <div class="item-media">
+                  <i class="icon f7-icons if-not-md">photo</i>
+                  <i class="icon material-icons if-md">image</i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title">${i18next.t('IMAGEN')}</div>
+                </div>
+
+              </a>
             </li>
-            <li><a href="#" class="list-button popover-close" @click=${()=>share()}>${i18next.t('LINK')}</a>
+            <li>
+              <a href="#" class="item-link item-content popover-close" @click=${()=>share()}>
+
+                <div class="item-media">
+                  <i class="icon f7-icons if-not-md">link</i>
+                  <i class="icon material-icons if-md">link</i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title">${i18next.t('LINK')}</div>
+                </div>
+
+              </a>
             </li>
           </ul>
         </div>

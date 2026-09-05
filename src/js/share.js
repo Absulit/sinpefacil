@@ -85,7 +85,10 @@ export function shareImage(app, text, blob) {
                 [
                     {
                         text: i18next.t('share:saveImage'),
-                        icon: '<i class="icon f7-icons if-not-md">square_on_square</i><i class="icon material-icons if-md">content_copy</i>',
+                        icon: `
+                                <i class="icon f7-icons if-not-md">photo</i>
+                                <i class="icon material-icons if-md">image</i>
+                            `,
                         onClick: () => downloadImage(blob)
                     },
                     {
