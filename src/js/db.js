@@ -57,13 +57,7 @@ db.on('ready', async () => {
     }
 });
 
-db.version(3).stores({
-    products: '++id, phone, name, price',
-    options: 'key, value',
-    banks: '++id, name, shortname, &phone',
-    phones: '++id, name, &number',
-    history: '++id, price, phone, name, detail, createdAt'
-}).upgrade(async tx => {
+db.version(3).upgrade(async tx => {
     const products = tx.table('products');
     let productsList = await products.toArray();
     productsList = await Promise.all(
