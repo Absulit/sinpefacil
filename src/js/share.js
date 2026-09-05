@@ -112,6 +112,24 @@ export function createURL(phone, name, price, detail) {
     return encodeURI(`${location.origin + location.pathname}?phone=${btoa(phone)}&name=${name}&price=${price}&detail=${detail}`);
 }
 
+export async function svg2png(svg, width = 300, height = 300) {
+    const img = new Image();
+
+    await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+    });
+
+    const canvas = document.createElement("canvas");
+    [canvas.width, canvas.height] = [width, height];
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, width, height);
+
+    return canvas.toDataURL("image/png");
+}
+
 // tests only
 if (import.meta.env.DEV) {
     window.createURL = createURL;

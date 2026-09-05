@@ -90,7 +90,7 @@
 <script>
 
   import QRCodeStyling from 'qr-code-styling';
-  import shareLink, { createURL, shareImage } from 'share';
+  import shareLink, { createURL, shareImage, svg2png } from 'share';
   import { getPhone } from 'db';
   import { formatDate } from 'i18n';
   import i18next from 'i18next';
@@ -189,23 +189,7 @@
         url)
     }
 
-    async function svg2png(svg, width = 300, height = 300) {
-      const img = new Image();
 
-      await new Promise((resolve, reject) => {
-        img.onload = resolve;
-        img.onerror = reject;
-        img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
-      });
-
-      const canvas = document.createElement("canvas");
-      [canvas.width, canvas.height] = [width, height];
-
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0, width, height);
-
-      return canvas.toDataURL("image/png");
-    }
 
     const shareToImage = async () => {
       const { phone, name, price, detail } = currentProduct;
@@ -224,6 +208,7 @@
       const response = await fetch(dataUrl);
       const blob = await response.blob();
 
+      const generatedWith = i18next.t('share:generatedWith', { site: 'app.sinpefacil.com' });
 
       shareImage($f7, `
       ${name}
@@ -231,7 +216,7 @@
       ${price}
       ${detail}
 
-      Generado con app.sinpefacil.com
+      ${generatedWith}      
       `.trim().replace(/^ +/gm, ''),
         blob
       )

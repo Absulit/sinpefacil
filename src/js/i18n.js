@@ -85,7 +85,8 @@ const resources = {
         share: {
             copyLink: `Copy Link`,
             saveImage: `Save Image`,
-            copyConfirmation: `Link copied to clipboard`
+            copyConfirmation: `Link copied to clipboard`,
+            generatedWith: `Generated with {{site}}`,
         },
         code404: {
             title: `Not Found`,
@@ -179,7 +180,8 @@ const resources = {
         share: {
             copyLink: `Copiar Link`,
             saveImage: `Guardar Imagen`,
-            copyConfirmation: `Link copiado al portapapeles`
+            copyConfirmation: `Link copiado al portapapeles`,
+            generatedWith: `Generated with {{site}}`,
         },
         code404: {
             title: `No encontrado`,
