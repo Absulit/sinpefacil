@@ -2,5 +2,6 @@
   "files.associations": {
     "*.f7": "html"
   },
-  "liveServer.settings.root": "/www"
+  "liveServer.settings.root": "/www",
+  "files.trimTrailingWhitespace": true
 }

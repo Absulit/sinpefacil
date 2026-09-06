@@ -110,8 +110,9 @@
                 <div class="item-inner">
                   <div class="item-title item-label">${i18next.t('codes:price')}</div>
                   <div class="item-input-wrap">
-                    <input id="price" type="tel" data-index="0" name="price"
-                      placeholder="${i18next.t('codes:pricePlaceholder')}" inputmode="decimal" required validate />
+                    <input id="price" data-index="0" name="price" maxlength="6" type="text" inputmode="numeric"
+                      pattern="[0-9]{1,6}" placeholder="${i18next.t('codes:pricePlaceholder')}" inputmode="decimal"
+                      required validate />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -298,6 +299,7 @@
 
       const formName = form.elements['name'];
       const formDetail = form.elements['detail'];
+      const formPrice = form.elements['price'];
       const formPhone = form.elements['phone'];
 
       let phone = formPhone.value.length ? '' : phoneDB?.number ?? '';
@@ -310,14 +312,15 @@
       $update();
       $f7.popup.open('.qr-data-popup');
 
-      const phoneValidationRegex = /[^0-9]/g
+      const numericValidationRegex = /[^0-9]/g
       form.addEventListener('input', e => {
 
         formPhone.setCustomValidity('')
-        if (phoneValidationRegex.test(formPhone.value)) {
+        if (numericValidationRegex.test(formPhone.value)) {
           formPhone.setCustomValidity(i18next.t('codes:onlyNumbersPhone'))
         }
-        formPhone.value = formPhone.value.replace(phoneValidationRegex, '')
+        formPhone.value = formPhone.value.replace(numericValidationRegex, '')
+        formPrice.value = formPrice.value.replace(numericValidationRegex, '')
 
         let phone = formPhone.value.length ? '' : phoneDB?.number ?? '';
         const inputValues = inputs.sort((a, b) => a.dataset.index - b.dataset.index).map(i => i.value);
