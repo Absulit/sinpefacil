@@ -111,8 +111,7 @@
                   <div class="item-title item-label">${i18next.t('codes:price')}</div>
                   <div class="item-input-wrap">
                     <input id="price" data-index="0" name="price" maxlength="6" type="text" inputmode="numeric"
-                      pattern="[0-9]{1,6}" placeholder="${i18next.t('codes:pricePlaceholder')}" inputmode="decimal"
-                      required validate />
+                      pattern="[0-9]{1,6}" placeholder="${i18next.t('codes:pricePlaceholder')}" required validate />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>

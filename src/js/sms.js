@@ -6,11 +6,11 @@ export const SMS_START = 'PASE ';
  * Generates the SINPE message
  * to be used with window.location.assign or window.location.href
  * PASE price phone name detail
- * @param {Number} bankPhone 
- * @param {Number} price 
- * @param {Number} phone 
- * @param {String} name 
- * @param {String} detail 
+ * @param {Number} bankPhone
+ * @param {Number} price
+ * @param {Number} phone
+ * @param {String} name
+ * @param {String} detail
  */
 
 export default function generateSINPESMS(bankPhone, price, phone, name, detail) {
@@ -38,14 +38,14 @@ export function isUnicode(text) {
 }
 
 /**
- * 
- * @param {String} smsStartText 
- * @param {Array} values 
- * @returns 
+ *
+ * @param {String} smsStartText
+ * @param {Array} values
+ * @returns
  */
 export function cleanTextAndLength(smsStartText, values) {
     let smsText = smsStartText;
-    values.forEach(v => smsText += v + ' ');
+    values.forEach(v => smsText += ' ' + v);
     smsText = smsText.trim().replace(/\s+/g, ' ');
     const numChars = strLen(smsText);
     return { smsText, numChars }
