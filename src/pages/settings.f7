@@ -20,8 +20,8 @@
               <div class="item-inner">
                 <div class="item-title item-label">${i18next.t('settings:phone')}</div>
                 <div class="item-input-wrap">
-                  <input id="phoneInputSettings" inputmode="tel" maxlength="8" minlength="8" type="tel" validate
-                    placeholder="${i18next.t('settings:phonePlaceholder')}" required />
+                  <input id="phoneInputSettings" maxlength="8" minlength="8" type="text" inputmode="numeric"
+                    pattern="[0-9]{8}" validate placeholder="${i18next.t('settings:phonePlaceholder')}" required />
                 </div>
               </div>
             </div>
@@ -80,6 +80,7 @@
   import i18next from 'i18next';
   export default async (props, { $f7, $on, $f7route }) => {
 
+    let phoneInput;
     $on('pageInit', async () => {
       const banks = await db.banks.toArray();
       const { phone, name, price, detail } = $f7route.query;
@@ -91,39 +92,55 @@
         banksSelect.append(option);
       })
       banksSelect.value = bankId;
-      banksSelect.addEventListener('change', async e => {       
+      banksSelect.addEventListener('change', async e => {
         await saveBankId(+e.target.value);
       })
       banksSelect.dispatchEvent(new Event('change', { bubbles: true }));
 
-      const phoneInput = document.getElementById('phoneInputSettings');
+      phoneInput = document.getElementById('phoneInputSettings');
 
       const dbPhone = await getPhone();
 
       if (dbPhone) {
         phoneInput.value = dbPhone.number;
       }
+
+      const numericValidationRegex = /[^0-9]/g
       phoneInput.addEventListener('input', async e => {
-        const input = e.target;
-        input.setCustomValidity('');
-
-        const number = +input.value
-        if (Number.isNaN(number)) {
-          input.setCustomValidity(i18next.t('settings:phoneValidity'));
-          return
+        phoneInput.setCustomValidity('')
+        if (numericValidationRegex.test(phoneInput.value)) {
+          phoneInput.setCustomValidity(i18next.t('settings:phoneValidity'))
         }
-
-        if (!input.checkValidity()) {
-          return;
-        }
-
-        savePhone(number);
-
+        phoneInput.value = phoneInput.value.replace(numericValidationRegex, '')
       })
 
     })
 
     const handleBack = async () => {
+
+      // if phone is valid and is not the same as what it already exists
+      // we save it and show toast
+      // This is mostly to not show the SAVED toast
+      if (phoneInput.checkValidity()) {
+        const dbPhone = await getPhone();
+        const newNumber = +phoneInput.value;
+
+        if(+dbPhone?.number !== newNumber){
+          savePhone(newNumber);
+          $f7.toast.create({
+            text: i18next.t('settings:phoneSaved'),
+            closeTimeout: 2000,
+          }).open();
+        }
+      } else {
+
+        $f7.toast.create({
+          text: i18next.t('settings:phoneNotSaved'),
+          closeTimeout: 2000,
+        }).open();
+
+      }
+
       const bankId = await getBankId();
       if (!bankId) {
         $f7.dialog.confirm(
