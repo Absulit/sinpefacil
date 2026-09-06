@@ -40,3 +40,10 @@ Thumbs.db
 
 # Production build
 www/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/

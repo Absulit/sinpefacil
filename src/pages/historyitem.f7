@@ -17,7 +17,7 @@
             <i class="icon material-icons if-md">send</i>
           </a>
           <!-- Share QR -->
-          <a href="#" class="link icon-only popup-open" @click="${share}">
+          <a href="#" class="link icon-only popover-open" data-popover=".popover-menu-share">
             <i class="icon f7-icons if-not-md">square_arrow_up</i>
             <i class="icon material-icons if-md">share</i>
           </a>
@@ -29,6 +29,42 @@
 
 
 
+      </div>
+    </div>
+
+    <!-- Popover for share -->
+    <div class="popover popover-menu-share">
+      <div class="popover-inner">
+        <div class="list media-list no-hairlines">
+          <ul>
+            <li>
+              <a href="#" class="item-link item-content popover-close" @click=${()=>shareToImage()}>
+
+                <div class="item-media">
+                  <i class="icon f7-icons if-not-md">photo</i>
+                  <i class="icon material-icons if-md">image</i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title">${i18next.t('image')}</div>
+                </div>
+
+              </a>
+            </li>
+            <li>
+              <a href="#" class="item-link item-content popover-close" @click=${()=>share()}>
+
+                <div class="item-media">
+                  <i class="icon f7-icons if-not-md">link</i>
+                  <i class="icon material-icons if-md">link</i>
+                </div>
+                <div class="item-inner">
+                  <div class="item-title">${i18next.t('link')}</div>
+                </div>
+
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -76,8 +112,8 @@
 <script>
 
   import QRCodeStyling from 'qr-code-styling';
-  import shareLink from 'share';
-  import { getPhone, getOption, Keys, db } from 'db';
+  import shareLink, { createURL, shareImage, svg2png } from 'share';
+  import { getPhone, db, getBankId } from 'db';
   import { formatDate } from 'i18n';
   import generateSINPESMS, { validateSMS, SMS_START } from 'sms';
   import i18next from 'i18next';
@@ -95,13 +131,7 @@
     $on('pageInit', async () => {
       const { phone, name, price, detail } = currentHistoryItem;
 
-      let finalPhone = phone;
-      if (!phone) {
-        const phoneDB = await getPhone();
-        finalPhone = phoneDB.number;
-      }
-
-      const url = encodeURI(`${location.origin + location.pathname}?phone=${finalPhone}&name=${name}&price=${price}&detail=${detail}`);
+      const url = createURL(phone, name, price, detail);
 
       const qrCode = new QRCodeStyling({
         width: 300,
@@ -128,16 +158,17 @@
     })
 
     const deleteProduct = () => {
-      $f7.dialog.confirm(`Desea borrar '${currentHistoryItem.name}'?`, () => {
+      const { id, name } = currentHistoryItem;
+      $f7.dialog.confirm(i18next.t('history:CTADelete', { name }), async () => {
         $f7.preloader.show();
         // TODO: verify if delete was successful
-        $store.dispatch('deleteHistoryItem', currentHistoryItem.id);
-        $store.dispatch('initApp');
+        await $store.dispatch('deleteHistoryItem', id);
+        await $store.dispatch('initApp');
         $f7.preloader.hide();
         $f7.views.current.router.back('/history/', { force: true });
 
         $f7.toast.create({
-          text: 'Recibo borrado',
+          text: i18next.t('history:deleteConfirmation'),
           closeTimeout: 2000,
         }).open();
       });
@@ -149,22 +180,18 @@
 
     const share = async () => {
       const { phone, name, price, detail } = currentHistoryItem;
-      let finalPhone = phone;
-      if (!phone) {
-        const phoneDB = await getPhone();
-        finalPhone = phoneDB.number;
-      }
-      const url = encodeURI(`${location.origin + location.pathname}?phone=${finalPhone}&name=${name}&price=${price}&detail=${detail}`);
+      const url = createURL(phone, name, price, detail);
+
       shareLink($f7, `
       ${name}
-      ${finalPhone}
+      ${phone}
       ${price}
       ${detail}
       `.trim().replace(/^ +/gm, ''), url)
     }
 
     const resend = async () => {
-      const bankId = await getOption(Keys.SELECTED_BANK);
+      const bankId = await getBankId();
       const bank = await db.banks.get(bankId);
       const { price, phone, name, detail } = currentHistoryItem;
 
@@ -174,9 +201,42 @@
         return;
       }
 
-      $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
-      generateSINPESMS(bank.phone, price, phone, name, detail);
+      await $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
+      window.location.href = generateSINPESMS(bank.phone, price, phone, name, detail);
     }
+
+    const shareToImage = async () => {
+      const { phone, name, price, detail } = currentHistoryItem;
+      let finalPhone = phone;
+      if (!phone) {
+        const phoneDB = await getPhone();
+        finalPhone = phoneDB.number;
+      }
+
+      const svg = $el.value.find('#qr-code-container')[0].firstElementChild;
+
+      const serializer = new XMLSerializer();
+      let svgString = serializer.serializeToString(svg);
+
+      const dataUrl = await svg2png(svgString);
+      const response = await fetch(dataUrl);
+      const blob = await response.blob();
+
+      const generatedWith = i18next.t('share:generatedWith', { site: 'app.sinpefacil.com' });
+
+      shareImage($f7, `
+      ${name}
+      ${finalPhone}
+      ${price}
+      ${detail}
+
+      ${generatedWith}      
+      `.trim().replace(/^ +/gm, ''),
+        blob
+      )
+    }
+
+
 
     return $render;
   };

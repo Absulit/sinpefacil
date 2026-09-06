@@ -20,6 +20,8 @@ const resources = {
             updateDownloadedTitle: `App Updated!`,
             updateDownloaded: `A new version of SINPE Fácil has been installed and is ready to use.`,
             version: `version`,
+            image: `Image`,
+            link: `Link`,
         },
         home: {
             aboutContent: `This app generates QR codes (?) that allow other people pay you with SINPE MÓVIL. (?)
@@ -70,6 +72,9 @@ const resources = {
             explainer: `Select an item to see the detail.`,
             noHistory: `No history`,
             noHistoryExplainer: `Read a QR code or accept a payment link and it will show up here.`,
+
+            CTADelete: `Do you want to delete '{{name}}'?`,
+            deleteConfirmation: `Receipt deleted`,
         },
         settings: {
             phone: `Phone number`,
@@ -81,7 +86,9 @@ const resources = {
         },
         share: {
             copyLink: `Copy Link`,
-            copyConfirmation: `Link copied to clipboard`
+            saveImage: `Save Image`,
+            copyConfirmation: `Link copied to clipboard`,
+            generatedWith: `Generated with {{site}}`,
         },
         code404: {
             title: `Not Found`,
@@ -108,6 +115,8 @@ const resources = {
             updateDownloadedTitle: `¡Aplicación Actualizada!`,
             updateDownloaded: `Una nueva versión de SINPE Fácil se ha instalado y está lista para usarse.`,
             version: `version`,
+            image: `Imagen`,
+            link: `Enlace`,
         },
         home: {
             aboutContent: `Esta aplicación genera Códigos QR (?) para permitir a otras personas pagarte con SINPE MÓVIL. (?)
@@ -127,7 +136,7 @@ const resources = {
             CTASendSMSTitle: `Código QR leído`,
         },
         codes: {
-            explainer: `Seleccione un item de la lista para ver el código QR.`,
+            explainer: `Seleccione un ítem de la lista para ver el código QR.`,
             noCodes: `No hay productos`,
             noCodesExplainer: `Agregue aquí un código QR por cada producto que quiera vender, por ejemplo:
             Palomitas a mil colones.`,
@@ -157,9 +166,12 @@ const resources = {
             productCreatedConfirmation: `Producto creado`,
         },
         history: {
-            explainer: `Seleccione un item para ver el detalle.`,
+            explainer: `Seleccione un ítem para ver el detalle.`,
             noHistory: `No hay historial`,
             noHistoryExplainer: `Lea algún código QR o acepte un link de pago y le aparecerá luego aquí.`,
+
+            CTADelete: `¿Desea borrar '{{name}}'?`,
+            deleteConfirmation: `Recibo borrado`,
         },
         settings: {
             phone: `Teléfono`,
@@ -171,7 +183,9 @@ const resources = {
         },
         share: {
             copyLink: `Copiar Link`,
-            copyConfirmation: `Link copiado al portapapeles`
+            saveImage: `Guardar Imagen`,
+            copyConfirmation: `Link copiado al portapapeles`,
+            generatedWith: `Generated with {{site}}`,
         },
         code404: {
             title: `No encontrado`,

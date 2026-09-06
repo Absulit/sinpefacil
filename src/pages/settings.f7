@@ -76,14 +76,14 @@
   </div>
 </template>
 <script>
-  import { db, getOption, saveOption, Keys, savePhone, getPhone } from 'db';
+  import { db, savePhone, getPhone, getBankId, saveBankId } from 'db';
   import i18next from 'i18next';
   export default async (props, { $f7, $on, $f7route }) => {
 
     $on('pageInit', async () => {
       const banks = await db.banks.toArray();
       const { phone, name, price, detail } = $f7route.query;
-      let bankId = await getOption(Keys.SELECTED_BANK);
+      let bankId = await getBankId();
       const banksSelect = document.getElementById('banksSelect');
 
       banks.forEach(bank => {
@@ -91,8 +91,8 @@
         banksSelect.append(option);
       })
       banksSelect.value = bankId;
-      banksSelect.addEventListener('change', e => {
-        saveOption(Keys.SELECTED_BANK, +e.target.value);
+      banksSelect.addEventListener('change', async e => {       
+        await saveBankId(+e.target.value);
       })
       banksSelect.dispatchEvent(new Event('change', { bubbles: true }));
 
@@ -124,7 +124,7 @@
     })
 
     const handleBack = async () => {
-      const bankId = await getOption(Keys.SELECTED_BANK)
+      const bankId = await getBankId();
       if (!bankId) {
         $f7.dialog.confirm(
           i18next.t('settings:CTAselectBank'),
@@ -141,7 +141,9 @@
       }
     };
 
-
+    $on('pageAfterOut', (e, page) => {
+      $f7.emit('RESTART_CAM')
+    });
 
     return $render;
   };

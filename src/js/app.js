@@ -16,7 +16,7 @@ import store from './store.js';
 import App from '../app.f7';
 import { initI18n } from 'i18n';
 import generateSINPESMS, { SMS_START, validateSMS } from 'sms';
-import { db, getOption, saveOption, Keys } from 'db';
+import { db, getBankId, saveBankId } from 'db';
 import { clearParams } from 'url';
 import i18next from 'i18next';
 import {
@@ -51,7 +51,7 @@ store.dispatch('initApp').then(() => {
                 const data = Object.fromEntries(urlParams.entries());
                 const { phone, name, price, detail } = data;
                 const linkShared = phone && name && price;
-                const bankId = await getOption(Keys.SELECTED_BANK);
+                const bankId = await getBankId();
 
                 const isValid = validateSMS(SMS_START, price, phone, name, detail);
                 if (!isValid) {
@@ -95,8 +95,8 @@ store.dispatch('initApp').then(() => {
                 if (linkShared) {
                     const bank = await db.banks.get(bankId);
                     clearParams();
-                    store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
-                    generateSINPESMS(bank.phone, price, phone, name, detail);
+                    await store.dispatch('addHistoryItem', { price, phone: atob(phone), name, detail, createdAt: new Date() })
+                    window.location.href = generateSINPESMS(bank.phone, price, atob(phone), name, detail);
                 }
 
             },
@@ -196,11 +196,11 @@ store.dispatch('initApp').then(() => {
  */
 async function handleSelect(bankId, { price, phone, name, detail },) {
     const bank = await db.banks.get(bankId);
-    saveOption(Keys.SELECTED_BANK, bankId); // save bank for future links
+    await saveBankId(bankId); // save bank for future links
     clearParams();
-    generateSINPESMS(bank.phone, price, phone, name, detail);
+    await store.dispatch('addHistoryItem', { price, phone: atob(phone), name, detail, createdAt: new Date() })
+    window.location.href = generateSINPESMS(bank.phone, price, atob(phone), name, detail);
 }
-
 
 /**
  * to avoid a warning on the console
