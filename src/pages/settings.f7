@@ -128,14 +128,14 @@
         if(+dbPhone?.number !== newNumber){
           savePhone(newNumber);
           $f7.toast.create({
-            text: i18next.t('Telefono guardado'),
+            text: i18next.t('settings:phoneSaved'),
             closeTimeout: 2000,
           }).open();
         }
       } else {
 
         $f7.toast.create({
-          text: i18next.t('No se guadó el teléfono'),
+          text: i18next.t('settings:phoneNotSaved'),
           closeTimeout: 2000,
         }).open();
 

@@ -91,6 +91,8 @@ const resources = {
             lang: `Force Language`,
             CTAselectBank: `You haven't selected your bank. Exit?`,
             phoneValidity: `Wrong phone number`,
+            phoneSaved: `Phone saved`,
+            phoneNotSaved: `Phone not saved`,
         },
         share: {
             copyLink: `Copy Link`,
@@ -196,6 +198,8 @@ const resources = {
             lang: `Forzar Idioma`,
             CTAselectBank: `No ha seleccionado su banco. ¿Salir?`,
             phoneValidity: `Número de teléfono incorrecto`,
+            phoneSaved: `Teléfono guardado`,
+            phoneNotSaved: `No se guardó el teléfono`,
         },
         share: {
             copyLink: `Copiar Link`,
