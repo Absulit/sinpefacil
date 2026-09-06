@@ -23,7 +23,7 @@ const resources = {
             image: `Image`,
             link: `Link`,
         },
-        home: {
+        about: {
             aboutContent: `This app generates QR codes (?) that allow other people pay you with SINPE MÓVIL. (?)
 
                     It also allows you to read QR codes from other people and send a SMS to pay them via SINPE MÓVIL.
@@ -120,7 +120,7 @@ const resources = {
             image: `Imagen`,
             link: `Enlace`,
         },
-        home: {
+        about: {
             aboutContent: `Esta aplicación genera Códigos QR (?) para permitir a otras personas pagarte con SINPE MÓVIL. (?)
 
                     También te permite leer códigos QR de otras personas y enviar un SMS para pagarles via SINPE MÓVIL.
@@ -222,9 +222,9 @@ export function formatDate(date) {
 
 /**
  * Checks for a string that could have emojis, so then provide
- * the length of 1 emoji as 1 char instead of 
+ * the length of 1 emoji as 1 char instead of
  * it's inner representation
- * @param {String} val 
+ * @param {String} val
  * @return {Number}
  */
 export function strLen(val) {
