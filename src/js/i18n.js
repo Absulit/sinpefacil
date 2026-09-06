@@ -24,9 +24,9 @@ const resources = {
             link: `Link`,
         },
         about: {
-            aboutContent: `This app generates QR codes (?) that allow other people pay you with SINPE MÓVIL. (?)
+            aboutContent: `This app generates QR codes {{qrcode}} that allow other people pay you with SINPE MÓVIL {{sinpemovil}}.
 
-                    It also allows you to read QR codes from other people and send a SMS to pay them via SINPE MÓVIL.
+                    <br><br>It also allows you to read QR codes from other people and send a SMS to pay them via SINPE MÓVIL.
             `,
             selectScreen: `Select what screen to load on start`,
             selectScreenContent: `Do you prefer to load the camera or your QR code list?
@@ -36,6 +36,9 @@ const resources = {
 
             sfOS: `SINPE Fácil is FOSS`,
             githubRepo: `Github repo`,
+
+            qrcode: `Short for Quick-Response code`,
+            sinpemovil: `National Electronic Payment System (Sistema Nacional de Pagos Electrónicos)`,
         },
         read: {
             CTASelectBank: `Before reading a QR code, you must select your bank.`,
@@ -124,7 +127,7 @@ const resources = {
             link: `Enlace`,
         },
         about: {
-            aboutContent: `Esta aplicación genera Códigos QR (?) para permitir a otras personas pagarte con SINPE MÓVIL. (?)
+            aboutContent: `Esta aplicación genera Códigos QR {{- qrcode}} para permitir a otras personas pagarte con SINPE MÓVIL. {{- sinpemovil}}
 
                     También te permite leer códigos QR de otras personas y enviar un SMS para pagarles via SINPE MÓVIL.
             `,
@@ -137,6 +140,9 @@ const resources = {
 
             sfOS: `SINPE Fácil es un proyecto de Código Abierto`,
             githubRepo: `Repositorio en Github`,
+
+            qrcode: `Abreviación de Código de Respuesta Rápida (Quick-Response code)`,
+            sinpemovil: `Sistema Nacional de Pagos Electrónicos`,
         },
         read: {
             CTASelectBank: `Antes de leer un código QR, debe seleccionar su banco.`,

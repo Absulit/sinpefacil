@@ -17,8 +17,7 @@
           <img src="../icons/128x128.png" width="28" height="28" style="margin-right: 8px;" alt="Logo" />
           <span>SINPE Fácil</span>
         </div>
-        <p>
-          ${i18next.t('about:aboutContent')}
+        <p id="aboutContent">
         </p>
 
       </div>
@@ -76,7 +75,11 @@
 <script>
   import i18next from 'i18next';
   import { getOption, saveOption, Keys } from 'db';
-  export default async (props, { $f7, $update, $on }) => {
+  import { createTooltip, onUnmountDestroyTooltips, tooltipIcon } from 'tooltips';
+
+  const aboutContentParams = { qrcode: tooltipIcon('qrcode'), sinpemovil: tooltipIcon('sinpemovil'), interpolation: { escapeValue: false } }
+
+  export default async (props, { $f7, $update, $on, $h, $theme, $onMounted, $onBeforeUnmount }) => {
 
     $on('pageInit', async () => {
 
@@ -117,6 +120,20 @@
     })
 
     const pageIndexToLoad = await getOption(Keys.PAGE_TO_LOAD, 0);
+
+    /////////////
+
+    $onMounted(() => {
+      document.querySelector('#aboutContent').innerHTML = i18next.t('about:aboutContent', aboutContentParams);
+
+      createTooltip($f7, '.qrcode', i18next.t('about:qrcode'))
+      createTooltip($f7, '.sinpemovil', i18next.t('about:sinpemovil'))
+    })
+
+    $onBeforeUnmount(() => {
+      onUnmountDestroyTooltips();
+    })
+    /////////////
 
     return $render;
   }
