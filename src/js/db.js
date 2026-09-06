@@ -152,6 +152,7 @@ export async function savePhone(number) {
     }
 }
 
+// TODO: make it get and set the phone number only
 export async function getPhone() {
     const phone = (await db.phones.limit(1).toArray())[0];
     if (!phone) {

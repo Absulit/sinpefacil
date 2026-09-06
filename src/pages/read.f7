@@ -37,7 +37,7 @@
 <script>
   import i18next from 'i18next';
   import QrScanner from 'qr-scanner';
-  import { getOption, Keys, db } from 'db';
+  import { db, getBankId } from 'db';
   import generateSINPESMS, { validateSMS, SMS_START } from 'sms';
 
   let qrScanner = null;
@@ -63,7 +63,7 @@
       //   // rawData = rawData.replace('?body=', '&body=');
       // }
 
-      const bankId = await getOption(Keys.SELECTED_BANK);
+      const bankId = await getBankId();
       const bank = await db.banks.get(bankId);
       $f7.dialog.confirm(
         i18next.t('read:CTASendSMS', { bank: bank.shortname }),
@@ -91,7 +91,7 @@
         const id = e.target.getAttribute('data-name');
         if ('read' !== id) return;
 
-        const bankId = await getOption(Keys.SELECTED_BANK);
+        const bankId = await getBankId();
 
         if (!bankId) {
           $f7.dialog.confirm(
