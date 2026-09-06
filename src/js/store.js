@@ -25,6 +25,7 @@ const store = createStore({
             products = await Promise.all(
                 products.map(async product => {
                     const { ciphertext, iv } = product.phone;
+                    if(!ciphertext) return product;
                     const phone = await decryptData(ciphertext, iv);
                     return { ...product, phone };
                 })

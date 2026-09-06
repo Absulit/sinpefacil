@@ -54,9 +54,11 @@ test.describe('Clipboard Operations', () => {
 
         if (await listItem.isVisible()) {
             await listItem.click();
-            const shareButton = page.locator('.right .link.icon-only.popup-open').nth(1)
+            const shareButton = page.locator('.right .link.icon-only.popover-open').nth(0)
             await shareButton.click();
 
+            const shareLinkButton = page.locator('.item-link.item-content.popover-close').nth(1)
+            await shareLinkButton.click();
 
             const copyLink = page.locator('.actions-button .actions-button-text').first()
             await copyLink.click();

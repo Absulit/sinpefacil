@@ -113,7 +113,7 @@
 
   import QRCodeStyling from 'qr-code-styling';
   import shareLink, { createURL, shareImage, svg2png } from 'share';
-  import { getPhone, getOption, Keys, db } from 'db';
+  import { getPhone, db, getBankId } from 'db';
   import { formatDate } from 'i18n';
   import generateSINPESMS, { validateSMS, SMS_START } from 'sms';
   import i18next from 'i18next';
@@ -191,7 +191,7 @@
     }
 
     const resend = async () => {
-      const bankId = await getOption(Keys.SELECTED_BANK);
+      const bankId = await getBankId();
       const bank = await db.banks.get(bankId);
       const { price, phone, name, detail } = currentHistoryItem;
 
