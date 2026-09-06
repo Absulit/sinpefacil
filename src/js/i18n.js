@@ -23,16 +23,22 @@ const resources = {
             image: `Image`,
             link: `Link`,
         },
-        home: {
-            aboutContent: `This app generates QR codes (?) that allow other people pay you with SINPE MÓVIL. (?)
+        about: {
+            aboutContent: `This app generates QR codes {{qrcode}} that allow other people pay you with SINPE MÓVIL {{sinpemovil}}.
 
-                    It also allows you to read QR codes from other people and send a SMS to pay them via SINPE MÓVIL.
+                    <br><br>It also allows you to read QR codes from other people and send a SMS to pay them via SINPE MÓVIL.
             `,
             selectScreen: `Select what screen to load on start`,
             selectScreenContent: `Do you prefer to load the camera or your QR code list?
                     If you are a seller you will prefer My QRs, if you are a client you will prefer Read to Pay.
             `,
             mainScreen: `Main Screen`,
+
+            sfOS: `SINPE Fácil is FOSS`,
+            githubRepo: `Github repo`,
+
+            qrcode: `Short for Quick-Response code`,
+            sinpemovil: `National Electronic Payment System (Sistema Nacional de Pagos Electrónicos)`,
         },
         read: {
             CTASelectBank: `Before reading a QR code, you must select your bank.`,
@@ -52,7 +58,7 @@ const resources = {
             name: `Name`,
             namePlaceholder: `Product to sell`,
             price: `Price`,
-            pricePlaceholder: `₡0.00`,
+            pricePlaceholder: `₡000000`,
             detail: `Detail`,
             detailPlaceholder: `Description`,
             submitButtonEdit: `Update`,
@@ -67,6 +73,8 @@ const resources = {
             smsInfo: `160 characters max, 70 if there are special ones. Used: {{numChars}}.`,
 
             productCreatedConfirmation: `Product created`,
+
+            onlyNumbersPhone: `Only numbers in the phone`,
         },
         history: {
             explainer: `Select an item to see the detail.`,
@@ -83,6 +91,8 @@ const resources = {
             lang: `Force Language`,
             CTAselectBank: `You haven't selected your bank. Exit?`,
             phoneValidity: `Wrong phone number`,
+            phoneSaved: `Phone saved`,
+            phoneNotSaved: `Phone not saved`,
         },
         share: {
             copyLink: `Copy Link`,
@@ -118,8 +128,8 @@ const resources = {
             image: `Imagen`,
             link: `Enlace`,
         },
-        home: {
-            aboutContent: `Esta aplicación genera Códigos QR (?) para permitir a otras personas pagarte con SINPE MÓVIL. (?)
+        about: {
+            aboutContent: `Esta aplicación genera Códigos QR {{- qrcode}} para permitir a otras personas pagarte con SINPE MÓVIL. {{- sinpemovil}}
 
                     También te permite leer códigos QR de otras personas y enviar un SMS para pagarles via SINPE MÓVIL.
             `,
@@ -129,6 +139,12 @@ const resources = {
                     Si ud es vendedor, preferirá Mis QRs, si es comprador preferirá Leer y Pagar.
             `,
             mainScreen: `Pantalla Principal`,
+
+            sfOS: `SINPE Fácil es un proyecto de Código Abierto`,
+            githubRepo: `Repositorio en Github`,
+
+            qrcode: `Abreviación de Código de Respuesta Rápida (Quick-Response code)`,
+            sinpemovil: `Sistema Nacional de Pagos Electrónicos`,
         },
         read: {
             CTASelectBank: `Antes de leer un código QR, debe seleccionar su banco.`,
@@ -149,7 +165,7 @@ const resources = {
             name: `Nombre`,
             namePlaceholder: `Producto a vender`,
             price: `Precio`,
-            pricePlaceholder: `₡0.00`,
+            pricePlaceholder: `₡000000`,
             detail: `Detalle`,
             detailPlaceholder: `Una descripción`,
             submitButtonEdit: `Actualizar`,
@@ -164,6 +180,8 @@ const resources = {
             smsInfo: `160 caracteres máximo, 70 si hay especiales. Usados: {{numChars}}.`,
 
             productCreatedConfirmation: `Producto creado`,
+
+            onlyNumbersPhone: `Solo números en el teléfono`,
         },
         history: {
             explainer: `Seleccione un ítem para ver el detalle.`,
@@ -180,6 +198,8 @@ const resources = {
             lang: `Forzar Idioma`,
             CTAselectBank: `No ha seleccionado su banco. ¿Salir?`,
             phoneValidity: `Número de teléfono incorrecto`,
+            phoneSaved: `Teléfono guardado`,
+            phoneNotSaved: `No se guardó el teléfono`,
         },
         share: {
             copyLink: `Copiar Link`,
@@ -218,9 +238,9 @@ export function formatDate(date) {
 
 /**
  * Checks for a string that could have emojis, so then provide
- * the length of 1 emoji as 1 char instead of 
+ * the length of 1 emoji as 1 char instead of
  * it's inner representation
- * @param {String} val 
+ * @param {String} val
  * @return {Number}
  */
 export function strLen(val) {

@@ -33,17 +33,21 @@
             <div class="list links-list">
               <ul>
                 <li>
-                  <a href="/about/" class="panel-close" data-view="current">
-                    <i class="icon if-not-md f7-icons">info_circle</i>
-                    <i class="icon if-md material-icons">info</i>
-                    <span>${i18next.t('about')}</span>
+                  <a href="/settings/" class="panel-close settings" data-view="current">
+                    <div class="item-media">
+                      <i class="icon if-not-md f7-icons">gear_alt</i>
+                      <i class="icon if-md material-icons">settings</i>
+                    </div>
+                    <div class="item-inner">${i18next.t('settings')}</div>
                   </a>
                 </li>
                 <li>
-                  <a href="/settings/" class="panel-close settings" data-view="current">
-                    <i class="icon if-not-md f7-icons">gear_alt</i>
-                    <i class="icon if-md material-icons">settings</i>
-                    <span>${i18next.t('settings')}</span>
+                  <a href="/about/" class="panel-close" data-view="current">
+                    <div class="item-media">
+                      <i class="icon if-not-md f7-icons">info_circle</i>
+                      <i class="icon if-md material-icons">info</i>
+                    </div>
+                    <div class="item-inner">${i18next.t('about')}</div>
                   </a>
                 </li>
               </ul>
@@ -87,8 +91,9 @@
                 <div class="item-inner">
                   <div class="item-title item-label">${i18next.t('codes:phone')}</div>
                   <div class="item-input-wrap">
-                    <input id="phone" data-index="1" name="phone" autocomplete="tel" inputmode="tel" maxlength="8"
-                      minlength="8" type="tel" validate placeholder="${i18next.t('codes:phonePlaceholder')}" required />
+                    <input id="phone" data-index="1" name="phone" maxlength="8" minlength="8" type="text"
+                      inputmode="numeric" pattern="[0-9]{8}" validate
+                      placeholder="${i18next.t('codes:phonePlaceholder')}" required />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -109,8 +114,8 @@
                 <div class="item-inner">
                   <div class="item-title item-label">${i18next.t('codes:price')}</div>
                   <div class="item-input-wrap">
-                    <input id="price" type="tel" data-index="0" name="price" placeholder="${i18next.t('codes:pricePlaceholder')}"
-                      inputmode="decimal" required validate />
+                    <input id="price" data-index="0" name="price" maxlength="6" type="text" inputmode="numeric"
+                      pattern="[0-9]{1,6}" placeholder="${i18next.t('codes:pricePlaceholder')}" required validate />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -297,10 +302,11 @@
 
       const formName = form.elements['name'];
       const formDetail = form.elements['detail'];
+      const formPrice = form.elements['price'];
       const formPhone = form.elements['phone'];
 
       let phone = formPhone.value.length ? '' : phoneDB?.number ?? '';
-      const inputValues = inputs.sort((a,b) => a.dataset.index - b.dataset.index).map(i => i.value);
+      const inputValues = inputs.sort((a, b) => a.dataset.index - b.dataset.index).map(i => i.value);
       const { smsText, numChars: nc } = cleanTextAndLength(SMS_START + phone, inputValues);
       numChars = nc;// upper scope
       smsexample.innerText = smsText;
@@ -309,10 +315,18 @@
       $update();
       $f7.popup.open('.qr-data-popup');
 
+      const numericValidationRegex = /[^0-9]/g
       form.addEventListener('input', e => {
 
+        formPhone.setCustomValidity('')
+        if (numericValidationRegex.test(formPhone.value)) {
+          formPhone.setCustomValidity(i18next.t('codes:onlyNumbersPhone'))
+        }
+        formPhone.value = formPhone.value.replace(numericValidationRegex, '')
+        formPrice.value = formPrice.value.replace(numericValidationRegex, '')
+
         let phone = formPhone.value.length ? '' : phoneDB?.number ?? '';
-        const inputValues = inputs.sort((a,b) => a.dataset.index - b.dataset.index).map(i => i.value);
+        const inputValues = inputs.sort((a, b) => a.dataset.index - b.dataset.index).map(i => i.value);
         const { smsText, numChars: nc } = cleanTextAndLength(SMS_START + phone, inputValues);
         numChars = nc; // upper scope
 

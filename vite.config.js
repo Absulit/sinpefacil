@@ -44,6 +44,7 @@ export default async () => {
         'i18n': SRC_DIR + '/js/i18n.js',
         'systemnotifications': SRC_DIR + '/js/systemnotifications.js',
         'crypto': SRC_DIR + '/js/crypto.js',
+        'tooltips': SRC_DIR + '/js/tooltips.js',
       },
     },
     server: {

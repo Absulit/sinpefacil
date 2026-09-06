@@ -46,34 +46,18 @@ test.describe('Automated Input XSS Suite', () => {
 
 
             const viewCodesButton = page.locator('#view-codes');
+            await viewCodesButton.waitFor({ state: 'visible' });
             await viewCodesButton.click();
 
             const addNewCode = page.locator('.onClickAdd');
             await addNewCode.click();
 
-            // Target input by ID, class, or attribute (e.g., input[name="username"])
-            const phoneField = page.locator('#phone');
-            const nameField = page.locator('#name');
-            const priceField = page.locator('#price');
-            const detailField = page.locator('#detail');
+            await page.locator('#phone').fill('88888888');
+            await page.locator('#name').fill(payload);
+            await page.locator('#price').fill('123456');
+            await page.locator('#detail').fill(payload);
 
-            const submitButton = page.locator('#submitCodeForm');
-
-            // Clear field, fill with payload, and submit
-            await phoneField.fill('');
-            await phoneField.fill(payload);
-
-            await nameField.fill('');
-            await nameField.fill(payload);
-
-            await priceField.fill('');
-            await priceField.fill(payload);
-
-            await detailField.fill('');
-            await detailField.fill(payload);
-
-
-            await submitButton.click();
+            await page.locator('#submitCodeForm').click();
 
             // Wait briefly to allow the DOM to render the update
             await page.waitForTimeout(300);
@@ -354,9 +338,9 @@ test.describe('Automated Input XSS Suite', () => {
             // Fill form and trigger potential attribute hover/focus events
 
             await page.locator('.onClickAdd').click();
-            await page.locator('#phone').fill(payload);
+            await page.locator('#phone').fill('88888888');
             await page.locator('#name').fill(payload);
-            await page.locator('#price').fill(payload);
+            await page.locator('#price').fill('10000');
             await page.locator('#detail').fill(payload);
             await page.locator('#submitCodeForm').click();
 
