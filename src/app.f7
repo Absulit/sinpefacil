@@ -33,17 +33,21 @@
             <div class="list links-list">
               <ul>
                 <li>
-                  <a href="/about/" class="panel-close" data-view="current">
-                    <i class="icon if-not-md f7-icons">info_circle</i>
-                    <i class="icon if-md material-icons">info</i>
-                    <span>${i18next.t('about')}</span>
+                  <a href="/settings/" class="panel-close settings" data-view="current">
+                    <div class="item-media">
+                      <i class="icon if-not-md f7-icons">gear_alt</i>
+                      <i class="icon if-md material-icons">settings</i>
+                    </div>
+                    <div class="item-inner">${i18next.t('settings')}</div>
                   </a>
                 </li>
                 <li>
-                  <a href="/settings/" class="panel-close settings" data-view="current">
-                    <i class="icon if-not-md f7-icons">gear_alt</i>
-                    <i class="icon if-md material-icons">settings</i>
-                    <span>${i18next.t('settings')}</span>
+                  <a href="/about/" class="panel-close" data-view="current">
+                    <div class="item-media">
+                      <i class="icon if-not-md f7-icons">info_circle</i>
+                      <i class="icon if-md material-icons">info</i>
+                    </div>
+                    <div class="item-inner">${i18next.t('about')}</div>
                   </a>
                 </li>
               </ul>
