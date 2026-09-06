@@ -168,11 +168,10 @@ export async function getPhone() {
 
 export async function getBankId() {
     const selectedBank = await getOption(Keys.SELECTED_BANK)
-    if(!selectedBank) return null;
+    if (!selectedBank) return null;
 
     const { ciphertext, iv } = selectedBank;
-    const id = await decryptData(ciphertext, iv);
-    return +id;
+    return +(await decryptData(ciphertext, iv));
 }
 
 /**
