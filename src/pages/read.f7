@@ -134,7 +134,8 @@
       $f7.on('RESTART_CAM', async () => {
         isNavigating = false;
         const cam = document.getElementById('cam');
-        if (!cam) return;
+        
+        if (cam?.paused) return;
         qrScanner = new QrScanner(
           cam,
           onDecode,
