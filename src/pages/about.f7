@@ -75,26 +75,7 @@
 <script>
   import i18next from 'i18next';
   import { getOption, saveOption, Keys } from 'db';
-
-  const tooltips = []
-  function createTooltip($f7, targetEl, text) {
-    const tooltip = $f7.tooltip.create({
-      targetEl,
-      text,
-      trigger: 'click',
-    });
-    tooltips.push(tooltip);
-  }
-
-  function destroyTooltips() {
-    tooltips.forEach(t => t.destroy());
-  }
-
-
-  function tooltipIcon(cssclass) {
-    return `<i style='font-size: 20px' class='${cssclass} icon f7-icons if-not-md'>info_circle_fill</i>
-     <i style='font-size: 20px' class='${cssclass} icon material-icons if-md'>info</i>`;
-  }
+  import { createTooltip, onUnmountDestroyTooltips, tooltipIcon } from 'tooltips';
 
   const aboutContentParams = { qrcode: tooltipIcon('qrcode'), sinpemovil: tooltipIcon('sinpemovil'), interpolation: { escapeValue: false } }
 
@@ -147,11 +128,10 @@
 
       createTooltip($f7, '.qrcode', i18next.t('about:qrcode'))
       createTooltip($f7, '.sinpemovil', i18next.t('about:sinpemovil'))
-
     })
 
     $onBeforeUnmount(() => {
-      destroyTooltips();
+      onUnmountDestroyTooltips();
     })
     /////////////
 
