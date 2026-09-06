@@ -18,14 +18,14 @@
           <span>SINPE Fácil</span>
         </div>
         <p>
-          ${i18next.t('home:aboutContent')}
+          ${i18next.t('about:aboutContent')}
         </p>
 
       </div>
       <div class="block">
-        <div class="block-title">${i18next.t('home:selectScreen')}:</div>
+        <div class="block-title">${i18next.t('about:selectScreen')}:</div>
         <p>
-          ${i18next.t('home:selectScreenContent')}
+          ${i18next.t('about:selectScreenContent')}
         </p>
 
         <div class="list list-strong-ios list-dividers-ios list-outline-ios">
@@ -38,7 +38,7 @@
                 </select>
                 <div class="item-content">
                   <div class="item-inner">
-                    <div class="item-title">${i18next.t('home:mainScreen')}</div>
+                    <div class="item-title">${i18next.t('about:mainScreen')}</div>
                   </div>
                 </div>
               </a>
@@ -52,7 +52,18 @@
       </div>
 
       <div class="block">
-        ${i18next.t('credits')} <a class="external" target="_blank" href="https://mastodon.social/@absulit">@absulit</a>
+        <div>${i18next.t('about:sfOS')}</div>
+
+        <a class="external" target="_blank" rel="noopener noreferrer" href="https://github.com/Absulit/sinpefacil">
+          <i class="icon f7-icons if-not-md ">link</i>
+          <i class="icon material-icons if-md">link</i>
+          ${i18next.t('about:githubRepo')}
+        </a>
+      </div>
+
+      <div class="block">
+        ${i18next.t('credits')} <a class="external" target="_blank" rel="noopener noreferrer"
+          href="https://mastodon.social/@absulit">@absulit</a>
       </div>
 
       <div class="block">
