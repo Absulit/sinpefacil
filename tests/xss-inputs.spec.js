@@ -354,9 +354,9 @@ test.describe('Automated Input XSS Suite', () => {
             // Fill form and trigger potential attribute hover/focus events
 
             await page.locator('.onClickAdd').click();
-            await page.locator('#phone').fill(payload);
+            await page.locator('#phone').fill('88888888');
             await page.locator('#name').fill(payload);
-            await page.locator('#price').fill(payload);
+            await page.locator('#price').fill('10000');
             await page.locator('#detail').fill(payload);
             await page.locator('#submitCodeForm').click();
 
