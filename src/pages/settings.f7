@@ -76,14 +76,14 @@
   </div>
 </template>
 <script>
-  import { db, savePhone, getPhone, getBank, saveBank } from 'db';
+  import { db, savePhone, getPhone, getBankId, saveBankId } from 'db';
   import i18next from 'i18next';
   export default async (props, { $f7, $on, $f7route }) => {
 
     $on('pageInit', async () => {
       const banks = await db.banks.toArray();
       const { phone, name, price, detail } = $f7route.query;
-      let bankId = await getBank();
+      let bankId = await getBankId();
       const banksSelect = document.getElementById('banksSelect');
 
       banks.forEach(bank => {
@@ -92,7 +92,7 @@
       })
       banksSelect.value = bankId;
       banksSelect.addEventListener('change', async e => {
-        await saveBank(+e.target.value)
+        await saveBankId(+e.target.value)
       })
       banksSelect.dispatchEvent(new Event('change', { bubbles: true }));
 
@@ -124,7 +124,7 @@
     })
 
     const handleBack = async () => {
-      const bankId = await getBank();
+      const bankId = await getBankId();
       if (!bankId) {
         $f7.dialog.confirm(
           i18next.t('settings:CTAselectBank'),

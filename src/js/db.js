@@ -165,7 +165,7 @@ export async function getPhone() {
     return phone;
 }
 
-export async function getBank() {
+export async function getBankId() {
     return await getOption(Keys.SELECTED_BANK);
 }
 
@@ -173,7 +173,7 @@ export async function getBank() {
  * 
  * @param {Number} value 
  */
-export async function saveBank(value) {
+export async function saveBankId(value) {
     await saveOption(Keys.SELECTED_BANK, value.toString());
 }
 
