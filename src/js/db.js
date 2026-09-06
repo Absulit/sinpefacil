@@ -167,7 +167,12 @@ export async function getPhone() {
 }
 
 export async function getBankId() {
-    return await getOption(Keys.SELECTED_BANK);
+    const selectedBank = await getOption(Keys.SELECTED_BANK)
+    if(!selectedBank) return null;
+
+    const { ciphertext, iv } = selectedBank;
+    const id = await decryptData(ciphertext, iv);
+    return +id;
 }
 
 /**
@@ -175,7 +180,8 @@ export async function getBankId() {
  * @param {Number} value 
  */
 export async function saveBankId(value) {
-    await saveOption(Keys.SELECTED_BANK, value.toString());
+    const id = await encryptData(value.toString());
+    await saveOption(Keys.SELECTED_BANK, id);
 }
 
 // tests only
