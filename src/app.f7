@@ -87,8 +87,9 @@
                 <div class="item-inner">
                   <div class="item-title item-label">${i18next.t('codes:phone')}</div>
                   <div class="item-input-wrap">
-                    <input id="phone" data-index="1" name="phone" autocomplete="tel" inputmode="tel" maxlength="8"
-                      minlength="8" type="tel" validate placeholder="${i18next.t('codes:phonePlaceholder')}" required />
+                    <input id="phone" data-index="1" name="phone" maxlength="8" minlength="8" type="text"
+                      inputmode="numeric" pattern="[0-9]{8}" validate
+                      placeholder="${i18next.t('codes:phonePlaceholder')}" required />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -109,8 +110,8 @@
                 <div class="item-inner">
                   <div class="item-title item-label">${i18next.t('codes:price')}</div>
                   <div class="item-input-wrap">
-                    <input id="price" type="tel" data-index="0" name="price" placeholder="${i18next.t('codes:pricePlaceholder')}"
-                      inputmode="decimal" required validate />
+                    <input id="price" type="tel" data-index="0" name="price"
+                      placeholder="${i18next.t('codes:pricePlaceholder')}" inputmode="decimal" required validate />
                     <span class="input-clear-button"></span>
                   </div>
                 </div>
@@ -300,7 +301,7 @@
       const formPhone = form.elements['phone'];
 
       let phone = formPhone.value.length ? '' : phoneDB?.number ?? '';
-      const inputValues = inputs.sort((a,b) => a.dataset.index - b.dataset.index).map(i => i.value);
+      const inputValues = inputs.sort((a, b) => a.dataset.index - b.dataset.index).map(i => i.value);
       const { smsText, numChars: nc } = cleanTextAndLength(SMS_START + phone, inputValues);
       numChars = nc;// upper scope
       smsexample.innerText = smsText;
@@ -309,10 +310,17 @@
       $update();
       $f7.popup.open('.qr-data-popup');
 
+      const phoneValidationRegex = /[^0-9]/g
       form.addEventListener('input', e => {
 
+        formPhone.setCustomValidity('')
+        if (phoneValidationRegex.test(formPhone.value)) {
+          formPhone.setCustomValidity(i18next.t('codes:onlyNumbersPhone'))
+        }
+        formPhone.value = formPhone.value.replace(phoneValidationRegex, '')
+
         let phone = formPhone.value.length ? '' : phoneDB?.number ?? '';
-        const inputValues = inputs.sort((a,b) => a.dataset.index - b.dataset.index).map(i => i.value);
+        const inputValues = inputs.sort((a, b) => a.dataset.index - b.dataset.index).map(i => i.value);
         const { smsText, numChars: nc } = cleanTextAndLength(SMS_START + phone, inputValues);
         numChars = nc; // upper scope
 
