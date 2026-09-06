@@ -118,12 +118,14 @@
 
     const handleBack = async () => {
 
+      // if phone is valid and is not the same as what it already exists
+      // we save it and show toast
+      // This is mostly to not show the SAVED toast
       if (phoneInput.checkValidity()) {
         const dbPhone = await getPhone();
         const newNumber = +phoneInput.value;
-        console.log(+dbPhone.number, newNumber);
 
-        if(+dbPhone.number !== newNumber){
+        if(+dbPhone?.number !== newNumber){
           savePhone(newNumber);
           $f7.toast.create({
             text: i18next.t('Telefono guardado'),
