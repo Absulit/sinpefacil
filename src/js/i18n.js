@@ -52,7 +52,7 @@ const resources = {
             name: `Name`,
             namePlaceholder: `Product to sell`,
             price: `Price`,
-            pricePlaceholder: `₡0.00`,
+            pricePlaceholder: `₡000000`,
             detail: `Detail`,
             detailPlaceholder: `Description`,
             submitButtonEdit: `Update`,
@@ -67,6 +67,8 @@ const resources = {
             smsInfo: `160 characters max, 70 if there are special ones. Used: {{numChars}}.`,
 
             productCreatedConfirmation: `Product created`,
+
+            onlyNumbersPhone: `Only numbers in the phone`,
         },
         history: {
             explainer: `Select an item to see the detail.`,
@@ -149,7 +151,7 @@ const resources = {
             name: `Nombre`,
             namePlaceholder: `Producto a vender`,
             price: `Precio`,
-            pricePlaceholder: `₡0.00`,
+            pricePlaceholder: `₡000000`,
             detail: `Detalle`,
             detailPlaceholder: `Una descripción`,
             submitButtonEdit: `Actualizar`,
@@ -164,6 +166,8 @@ const resources = {
             smsInfo: `160 caracteres máximo, 70 si hay especiales. Usados: {{numChars}}.`,
 
             productCreatedConfirmation: `Producto creado`,
+
+            onlyNumbersPhone: `Solo números en el teléfono`,
         },
         history: {
             explainer: `Seleccione un ítem para ver el detalle.`,
