@@ -35,7 +35,7 @@
     <!-- Popover for share -->
     <div class="popover popover-menu-share">
       <div class="popover-inner">
-        <div class="list simple-list media-list no-hairlines">
+        <div class="list media-list no-hairlines">
           <ul>
             <li>
               <a href="#" class="item-link item-content popover-close" @click=${()=>shareToImage()}>
