@@ -33,6 +33,9 @@ const resources = {
                     If you are a seller you will prefer My QRs, if you are a client you will prefer Read to Pay.
             `,
             mainScreen: `Main Screen`,
+
+            sfOS: `SINPE Fácil is FOSS`,
+            githubRepo: `Github repo`,
         },
         read: {
             CTASelectBank: `Before reading a QR code, you must select your bank.`,
@@ -131,6 +134,9 @@ const resources = {
                     Si ud es vendedor, preferirá Mis QRs, si es comprador preferirá Leer y Pagar.
             `,
             mainScreen: `Pantalla Principal`,
+
+            sfOS: `SINPE Fácil es un proyecto de Código Abierto`,
+            githubRepo: `Repositorio en Github`,
         },
         read: {
             CTASelectBank: `Antes de leer un código QR, debe seleccionar su banco.`,

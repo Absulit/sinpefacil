@@ -52,12 +52,12 @@
       </div>
 
       <div class="block">
-        <div>SINPE Fácil es un proyecto de Código Abierto</div>
+        <div>${i18next.t('about:sfOS')}</div>
 
         <a class="external" target="_blank" rel="noopener noreferrer" href="https://github.com/Absulit/sinpefacil">
           <i class="icon f7-icons if-not-md ">link</i>
           <i class="icon material-icons if-md">link</i>
-          Repositorio en Github
+          ${i18next.t('about:githubRepo')}
         </a>
       </div>
 
