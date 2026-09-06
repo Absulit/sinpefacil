@@ -185,7 +185,7 @@ export async function saveBankId(value) {
 
 // tests only
 if (import.meta.env.DEV) {
-    // // export
+    // // export: place file in /public
     // const { exportDB } = await import('dexie-export-import');
     // const download = (await import('downloadjs')).default;
 
