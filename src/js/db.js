@@ -44,6 +44,7 @@ const initialBankData = [
     { name: 'Credecoop', shortname: 'Credecoop', phone: 71984256 },
 ];
 
+// first time
 db.on('populate', async tx => {
     const banks = tx.table('banks');
     await banks.bulkAdd(initialBankData);
@@ -57,6 +58,7 @@ db.on('ready', async () => {
     }
 });
 
+// for users with the old data
 db.version(3).upgrade(async tx => {
     const products = tx.table('products');
     let productsList = await products.toArray();
@@ -92,6 +94,13 @@ db.version(3).upgrade(async tx => {
     ]);
 
     await banks.bulkAdd(initialBankData.slice(5));
+
+    const options = tx.table('options');
+    const selectedBank = await options.get(Keys.SELECTED_BANK);
+    if (selectedBank?.value) {
+        const value = await encryptData(selectedBank.value.toString());
+        await options.update(Keys.SELECTED_BANK, { value });
+    }
 
 });
 
@@ -154,6 +163,18 @@ export async function getPhone() {
     }
     phone.number = await decryptData(ciphertext, iv);
     return phone;
+}
+
+export async function getBank() {
+    return await getOption(Keys.SELECTED_BANK);
+}
+
+/**
+ * 
+ * @param {Number} value 
+ */
+export async function saveBank(value) {
+    await saveOption(Keys.SELECTED_BANK, value.toString());
 }
 
 // tests only
