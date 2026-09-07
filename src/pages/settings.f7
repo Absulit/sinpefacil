@@ -74,6 +74,7 @@
   import { db, savePhone, getPhone, getBankId, saveBankId, getOption, saveOption, Keys } from 'db';
   import i18next from 'i18next';
   import { LangEvent } from 'events';
+  import { navigatorLanguage } from 'i18n';
   export default async (props, { $f7, $on, $f7route, $update }) => {
 
     let phoneInput;
@@ -119,25 +120,25 @@
       const getLanguageName = code => {
         return new Intl.DisplayNames([i18next.language], { type: 'language' }).of(code);
       };
+      const lang = await getOption(Keys.LANG, 'es');
+      langInput.checked = await getOption(Keys.FORCE_LANG, false);
       loadedLanguages.forEach(code => {
-        const option = new Option(getLanguageName(code), code, code === i18next.language)
+        const option = new Option(getLanguageName(code), code, code === lang)
         langSelect.append(option);
       })
-      langSelect.value = i18next.language;
+      langSelect.value = lang;
       langSelect.dispatchEvent(new Event('change', { bubbles: true }));
 
-      langInput.checked = await getOption(Keys.FORCE_LANG, false);
+
       langSelect.disabled = !langInput.checked;
-      // langInput.dispatchEvent(new Event('change', { bubbles: true }));
 
       langInput.addEventListener('change', async e => {
         const disabled = !e.target.checked;
         langSelect.disabled = disabled;
         await saveOption(Keys.FORCE_LANG, !disabled);
 
-        console.log(!disabled);
         if (disabled) {
-          const code = navigator.language;
+          const code = navigatorLanguage();
           await saveOption(Keys.LANG, code);
           await i18next.changeLanguage(code);
           $update();
@@ -146,13 +147,14 @@
       })
 
       langSelect.addEventListener('change', async e => {
+        // if (!langInput.checked) {
+        //   return; // do not update unless checked true
+        // }
         const code = e.target.value;
-        console.log(code);
         saveOption(Keys.LANG, code);
         await i18next.changeLanguage(code);
         $update();
         $f7.emit(LangEvent.LANG_UPDATED);
-
       })
       ////////////////////
 

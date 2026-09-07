@@ -237,13 +237,17 @@ const resources = {
     }
 };
 
+export function navigatorLanguage() {
+    return new Intl.Locale(navigator.language).language;
+}
+
 export async function initI18n() {
     // TODO: save lang to enforce it via an option
-    const lng = await getOption(Keys.LANG, navigator.language);
+    const lng = await getOption(Keys.LANG, navigatorLanguage());
 
     await i18next.init({
         lng,
-        fallbackLng: 'es-CR',
+        fallbackLng: 'es',
         resources
     });
 }
