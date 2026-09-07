@@ -120,17 +120,22 @@
 <script>
   import i18next from 'i18next';
   import { getPhone } from 'db';
-  import { LangEvent, ProductEvent } from 'events';
+  import { LangEvent, ProductEvent, SettingsEvent } from 'events';
   export default async (props, { $f7, $store, $on, $el, $update }) => {
 
     // phone from settings if defined
-    const phone = await getPhone();
+    let phone = await getPhone();
 
     const products = $store.getters.products;
 
     const onClickAdd = () => {
       $f7.emit(ProductEvent.ADD, null);
     }
+
+    $f7.on(SettingsEvent.PHONE_UPDATED, async _ => {
+      phone = await getPhone();
+      $update();
+    })
 
     $on('pageInit', () => {
       $f7.on(LangEvent.UPDATED, () => $update());
