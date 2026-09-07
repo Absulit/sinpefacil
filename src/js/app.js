@@ -69,7 +69,7 @@ store.dispatch('initApp').then(() => {
                         async () => { // ok
                             const banks = await db.banks.toArray();
                             const options = banks.map(bank => {
-                                return { text: bank.name, onClick: () => handleSelect(bank.id, data) }
+                                return { text: bank.name, onClick: () => handleSelect(app, bank.id, data, true) }
                             })
 
                             // list of banks dropdown
@@ -93,10 +93,7 @@ store.dispatch('initApp').then(() => {
                 }
 
                 if (linkShared) {
-                    const bank = await db.banks.get(bankId);
-                    clearParams();
-                    await store.dispatch('addHistoryItem', { price, phone: atob(phone), name, detail, createdAt: new Date() })
-                    window.location.href = generateSINPESMS(bank.phone, price, atob(phone), name, detail);
+                    handleSelect(app, bankId, { price, phone, name, detail })
                 }
 
             },
@@ -141,6 +138,25 @@ store.dispatch('initApp').then(() => {
 
 
     });
+
+
+    /**
+     * Dialog to make sure the user sees the QR or Link data
+     * @param {{bank:String, phone:Number, name:String, detail:String}} param0
+     * @param {Function} callbackOk
+     * @param {Function} callbackCancel
+     * @returns
+     */
+    app.dialogSMSConfirm = ({ bank, phone, price, name, detail }, callbackOk, callbackCancel) => {
+        return app.dialog.confirm(`
+        ${i18next.t('read:CTASendSMS', { bank })}<br><br>
+            ${i18next.t('read:CTABody', { price, phone, name, detail })}
+        `,
+            i18next.t('read:CTASendSMSTitle'),
+            callbackOk,
+            callbackCancel
+        );
+    }
 
     // BACK BUTTON: change in history
     window.addEventListener('popstate', function (e) {
@@ -190,16 +206,28 @@ store.dispatch('initApp').then(() => {
 });
 
 /**
- * 
- * @param {Number} bankId 
- * @param {{price, phone, name, detail}} payload 
+ *
+ * @param {Number} bankId
+ * @param {{price, phone, name, detail}} payload
  */
-async function handleSelect(bankId, { price, phone, name, detail },) {
+async function handleSelect(app, bankId, { price, phone, name, detail }, saveBank = false) {
     const bank = await db.banks.get(bankId);
-    await saveBankId(bankId); // save bank for future links
+    const finalPhone = atob(phone);
     clearParams();
-    await store.dispatch('addHistoryItem', { price, phone: atob(phone), name, detail, createdAt: new Date() })
-    window.location.href = generateSINPESMS(bank.phone, price, atob(phone), name, detail);
+    app.dialogSMSConfirm({ bank: bank.shortname, price, phone: finalPhone, name, detail },
+        async () => {
+            saveBank && await saveBankId(bankId); // save bank for future links
+            await store.dispatch('addHistoryItem', { price, phone: finalPhone, name, detail, createdAt: new Date() })
+            window.location.href = generateSINPESMS(bank.phone, price, finalPhone, name, detail);
+        },
+        () => {
+            app.toast.create({
+                text: i18next.t('read:notSendToast'),
+                closeTimeout: 2000,
+            }).open();
+        }
+    )
+
 }
 
 /**
