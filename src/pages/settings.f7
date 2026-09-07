@@ -120,15 +120,15 @@
         return new Intl.DisplayNames([i18next.language], { type: 'language' }).of(code);
       };
       loadedLanguages.forEach(code => {
-        console.log(code);
         const option = new Option(getLanguageName(code), code, code === i18next.language)
         langSelect.append(option);
       })
+      langSelect.value = i18next.language;
+      langSelect.dispatchEvent(new Event('change', { bubbles: true }));
 
       langInput.checked = await getOption(Keys.FORCE_LANG, false);
       langSelect.disabled = !langInput.checked;
       // langInput.dispatchEvent(new Event('change', { bubbles: true }));
-      console.log(langInput);
 
       langInput.addEventListener('change', async e => {
         const disabled = !e.target.checked;
@@ -137,7 +137,6 @@
 
         console.log(!disabled);
         if (disabled) {
-          console.log('---- restore default lang');
           const code = navigator.language;
           await saveOption(Keys.LANG, code);
           await i18next.changeLanguage(code);
