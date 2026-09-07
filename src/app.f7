@@ -359,11 +359,13 @@
         return;
       }
 
+      let toastMessage = 'codes:productCreatedConfirmation';
       if (currentProduct) {
         const { id } = currentProduct;
         const productUpdated = { ...formData, id };
         await $store.dispatch('updateProduct', productUpdated);
         $f7.emit(ProductEvent.UPDATED, productUpdated);
+        toastMessage = 'codes:productUpdatedConfirmation';
       } else {
         await $store.dispatch('addProduct', formData);
       }
@@ -375,7 +377,7 @@
 
       // Show confirmation
       $f7.toast.create({
-        text: i18next.t('codes:productCreatedConfirmation'),
+        text: i18next.t(toastMessage),
         closeTimeout: 2000,
       }).open();
     };

@@ -83,6 +83,7 @@ const resources = {
             smsInfo: `160 characters max, 70 if there are special ones. Used: {{numChars}}.`,
 
             productCreatedConfirmation: `Product created`,
+            productUpdatedConfirmation: `Product updated`,
 
             onlyNumbersPhone: `Only numbers in the phone`,
         },
@@ -199,6 +200,7 @@ const resources = {
             smsInfo: `160 caracteres máximo, 70 si hay especiales. Usados: {{numChars}}.`,
 
             productCreatedConfirmation: `Producto creado`,
+            productUpdatedConfirmation: `Producto actualizado`,
 
             onlyNumbersPhone: `Solo números en el teléfono`,
         },
