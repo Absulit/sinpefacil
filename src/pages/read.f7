@@ -65,24 +65,22 @@
 
       const bankId = await getBankId();
       const bank = await db.banks.get(bankId);
-      $f7.dialog.confirm(`
-      ${i18next.t('read:CTASendSMS', { bank: bank.shortname })}<br><br>
-        <strong>Amount:</strong> ₡${price}<br>
-        <strong>Recipient's phone:</strong> ${finalPhone}<br>
-        <strong>Product:</strong> : ${name}<br>
-        <strong>Detail:</strong> : ${detail}<br>
 
-        `,
-        i18next.t('read:CTASendSMSTitle'),
-        () => {
+      $f7.dialogSMSConfirm({ bank: bank.shortname, price, phone: finalPhone, name, detail },
+        async () => {
           window.location.href = generateSINPESMS(bank.phone, price, finalPhone, name, detail)
           isNavigating = false;
         },
         () => {
           // Reset flag if user cancels
           isNavigating = false;
+          $f7.toast.create({
+            text: i18next.t('NO SE ENVIARÁ EL SMS'),
+            closeTimeout: 2000,
+          }).open();
         }
-      );
+      )
+
 
       // const link = document.createElement('a');
       // link.href = `sms:${888}?body=PASE ${price} ${phone} ${detail}`;
