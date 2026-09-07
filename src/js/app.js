@@ -69,7 +69,7 @@ store.dispatch('initApp').then(() => {
                         async () => { // ok
                             const banks = await db.banks.toArray();
                             const options = banks.map(bank => {
-                                return { text: bank.name, onClick: () => handleSelect(bank.id, data, true) }
+                                return { text: bank.name, onClick: () => handleSelect(app, bank.id, data, true) }
                             })
 
                             // list of banks dropdown
@@ -93,7 +93,7 @@ store.dispatch('initApp').then(() => {
                 }
 
                 if (linkShared) {
-                    handleSelect(bankId, { price, phone, name, detail })
+                    handleSelect(app, bankId, { price, phone, name, detail })
                 }
 
             },
@@ -147,7 +147,7 @@ store.dispatch('initApp').then(() => {
      * @param {Function} callbackCancel
      * @returns
      */
-    app.dialogSMSConfirm = ({ bank, phone, name, detail }, callbackOk, callbackCancel) => {
+    app.dialogSMSConfirm = ({ bank, phone, price, name, detail }, callbackOk, callbackCancel) => {
         return app.dialog.confirm(`
         ${i18next.t('read:CTASendSMS', { bank })}<br><br>
             <strong>Amount:</strong> ₡${price}<br>
@@ -213,12 +213,24 @@ store.dispatch('initApp').then(() => {
  * @param {Number} bankId
  * @param {{price, phone, name, detail}} payload
  */
-async function handleSelect(bankId, { price, phone, name, detail }, saveBank = false) {
+async function handleSelect(app, bankId, { price, phone, name, detail }, saveBank = false) {
     const bank = await db.banks.get(bankId);
-    saveBank && await saveBankId(bankId); // save bank for future links
+    const finalPhone = atob(phone);
     clearParams();
-    await store.dispatch('addHistoryItem', { price, phone: atob(phone), name, detail, createdAt: new Date() })
-    window.location.href = generateSINPESMS(bank.phone, price, atob(phone), name, detail);
+    app.dialogSMSConfirm({ bank: bank.shortname, price, phone: finalPhone, name, detail },
+        async () => {
+            saveBank && await saveBankId(bankId); // save bank for future links
+            await store.dispatch('addHistoryItem', { price, phone: finalPhone, name, detail, createdAt: new Date() })
+            window.location.href = generateSINPESMS(bank.phone, price, finalPhone, name, detail);
+        },
+        () => {
+            app.toast.create({
+                text: i18next.t('NO SE ENVIARÁ EL SMS'),
+                closeTimeout: 2000,
+            }).open();
+        }
+    )
+
 }
 
 /**
