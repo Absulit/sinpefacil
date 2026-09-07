@@ -74,7 +74,7 @@
   import { db, savePhone, getPhone, getBankId, saveBankId, getOption, saveOption, Keys } from 'db';
   import i18next from 'i18next';
   import { LangEvent } from 'events';
-  import { navigatorLanguage } from 'i18n';
+  import { navigatorLanguage, getLanguageName } from 'i18n';
   export default async (props, { $f7, $on, $f7route, $update }) => {
 
     let phoneInput;
@@ -117,9 +117,7 @@
       const langSelect = document.getElementById('langSelect');
 
       const loadedLanguages = Object.keys(i18next.services.resourceStore.data)
-      const getLanguageName = code => {
-        return new Intl.DisplayNames([i18next.language], { type: 'language' }).of(code);
-      };
+
       const lang = await getOption(Keys.LANG, 'es');
       langInput.checked = await getOption(Keys.FORCE_LANG, false);
       loadedLanguages.forEach(code => {
@@ -128,8 +126,6 @@
       })
       langSelect.value = lang;
       langSelect.dispatchEvent(new Event('change', { bubbles: true }));
-
-
       langSelect.disabled = !langInput.checked;
 
       langInput.addEventListener('change', async e => {
@@ -148,11 +144,8 @@
       })
 
       langSelect.addEventListener('change', async e => {
-        // if (!langInput.checked) {
-        //   return; // do not update unless checked true
-        // }
         const code = e.target.value;
-        saveOption(Keys.LANG, code);
+        await saveOption(Keys.LANG, code);
         await i18next.changeLanguage(code);
         $update();
         $f7.emit(LangEvent.LANG_UPDATED);

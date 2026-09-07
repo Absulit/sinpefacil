@@ -237,12 +237,26 @@ const resources = {
     }
 };
 
+/**
+ * To get a simplified version of the language in more complex provided.
+ * @example
+ * // if `en-US` is provided, the result is just `en`
+ * @returns
+ */
 export function navigatorLanguage() {
     return new Intl.Locale(navigator.language).language;
 }
 
+/**
+ * To get the name of a language in another language
+ * @param {String} code e.g. `es`, `en`
+ * @returns {String} Name of the language in code provided
+ */
+export function getLanguageName(code) {
+    return new Intl.DisplayNames([i18next.language], { type: 'language' }).of(code);
+};
+
 export async function initI18n() {
-    // TODO: save lang to enforce it via an option
     const lng = await getOption(Keys.LANG, navigatorLanguage());
 
     await i18next.init({
