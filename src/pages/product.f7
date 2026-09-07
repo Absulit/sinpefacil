@@ -12,7 +12,7 @@
 
         <div class="right">
           <!-- Edit QR -->
-          <a href="#" class="link icon-only popup-open" @click="${() => $f7.emit('openQRDataPopup', currentProduct.id)}"
+          <a href="#" class="link icon-only popup-open" @click="${() => $f7.emit(ProductEvent.ADD, currentProduct.id)}"
             id="btn-pin">
             <i class="f7-icons">pencil</i>
           </a>
@@ -116,6 +116,7 @@
   import { getPhone } from 'db';
   import { formatDate } from 'i18n';
   import i18next from 'i18next';
+  import { ProductEvent } from 'events'
   export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
     const products = $store.getters.products;
     const productId = +$f7route.params.id;
@@ -161,13 +162,13 @@
       qrCode.append(container);
       // qrCode.download({ name: "qr", extension: "svg" });
     })
-    $f7.on('PRODUCT_UPDATED', productUpdated => {
+    $f7.on(ProductEvent.UPDATED, productUpdated => {
       currentProduct = productUpdated;
       $update();
     })
 
     $on('pageBeforeRemove', () => {
-      $f7.off('PRODUCT_UPDATED');
+      $f7.off(ProductEvent.UPDATED);
     });
 
     const deleteProduct = () => {
