@@ -44,6 +44,12 @@ const resources = {
             CTASelectBank: `Before reading a QR code, you must select your bank.`,
             CTASendSMS: `Send SMS to {{bank}}?`,
             CTASendSMSTitle: `QR Code read`,
+            notSendToast: `SMS will not be sent`,
+
+            CTAAmount: `Amount`,
+            CTARecipient: `Recipient's phone`,
+            CTAProduct: `Product`,
+            CTADetail: `Detail`,
         },
         codes: {
             explainer: `Select an item from the list to see the QR code.`,
@@ -150,6 +156,12 @@ const resources = {
             CTASelectBank: `Antes de leer un código QR, debe seleccionar su banco.`,
             CTASendSMS: `¿Enviar SMS a {{bank}}?`,
             CTASendSMSTitle: `Código QR leído`,
+            notSendToast: `No se enviará el SMS`,
+
+            CTAAmount: `Monto`,
+            CTARecipient: `Recipiente`,
+            CTAProduct: `Producto`,
+            CTADetail: `Detalle`,
         },
         codes: {
             explainer: `Seleccione un ítem de la lista para ver el código QR.`,

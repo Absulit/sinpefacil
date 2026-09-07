@@ -75,7 +75,7 @@
           // Reset flag if user cancels
           isNavigating = false;
           $f7.toast.create({
-            text: i18next.t('NO SE ENVIARÁ EL SMS'),
+            text: i18next.t('read:notSendToast'),
             closeTimeout: 2000,
           }).open();
         }
