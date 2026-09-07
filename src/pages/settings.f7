@@ -73,7 +73,7 @@
 <script>
   import { db, savePhone, getPhone, getBankId, saveBankId, getOption, saveOption, Keys } from 'db';
   import i18next from 'i18next';
-  import { LangEvent, CamEvent } from 'events';
+  import { LangEvent, CamEvent, SettingsEvent } from 'events';
   import { navigatorLanguage, getLanguageName } from 'i18n';
   export default async (props, { $f7, $on, $f7route, $update }) => {
 
@@ -164,7 +164,8 @@
         const newNumber = +phoneInput.value;
 
         if (+dbPhone?.number !== newNumber) {
-          savePhone(newNumber);
+          await savePhone(newNumber);
+          $f7.emit(SettingsEvent.PHONE_UPDATED);
           $f7.toast.create({
             text: i18next.t('settings:phoneSaved'),
             closeTimeout: 2000,

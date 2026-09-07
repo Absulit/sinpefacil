@@ -8,8 +8,13 @@ export const CamEvent = {
 }
 Object.seal(CamEvent);
 
-export const ProductEvent ={
+export const ProductEvent = {
     UPDATED: 'product_updated',
     ADD: 'product_add'
 }
 Object.seal(ProductEvent);
+
+export const SettingsEvent = {
+    PHONE_UPDATED: 'phone_updated',
+}
+Object.seal(SettingsEvent);
