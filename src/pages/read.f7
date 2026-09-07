@@ -65,8 +65,14 @@
 
       const bankId = await getBankId();
       const bank = await db.banks.get(bankId);
-      $f7.dialog.confirm(
-        i18next.t('read:CTASendSMS', { bank: bank.shortname }),
+      $f7.dialog.confirm(`
+      ${i18next.t('read:CTASendSMS', { bank: bank.shortname })}<br><br>
+        <strong>Amount:</strong> ₡${price}<br>
+        <strong>Recipient's phone:</strong> ${finalPhone}<br>
+        <strong>Product:</strong> : ${name}<br>
+        <strong>Detail:</strong> : ${detail}<br>
+
+        `,
         i18next.t('read:CTASendSMSTitle'),
         () => {
           window.location.href = generateSINPESMS(bank.phone, price, finalPhone, name, detail)
@@ -134,7 +140,7 @@
       $f7.on('RESTART_CAM', async () => {
         isNavigating = false;
         const cam = document.getElementById('cam');
-        
+
         if (cam?.paused) return;
         qrScanner = new QrScanner(
           cam,
