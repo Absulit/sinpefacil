@@ -135,15 +135,16 @@
       langInput.addEventListener('change', async e => {
         const disabled = !e.target.checked;
         langSelect.disabled = disabled;
+        let code = langSelect.value;
         await saveOption(Keys.FORCE_LANG, !disabled);
 
         if (disabled) {
-          const code = navigatorLanguage();
-          await saveOption(Keys.LANG, code);
-          await i18next.changeLanguage(code);
-          $update();
-          $f7.emit(LangEvent.LANG_UPDATED);
+          code = navigatorLanguage();
         }
+        await saveOption(Keys.LANG, code);
+        await i18next.changeLanguage(code);
+        $update();
+        $f7.emit(LangEvent.LANG_UPDATED);
       })
 
       langSelect.addEventListener('change', async e => {
