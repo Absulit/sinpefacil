@@ -39,7 +39,7 @@
   import QrScanner from 'qr-scanner';
   import { db, getBankId } from 'db';
   import generateSINPESMS, { validateSMS, SMS_START } from 'sms';
-  import { LangEvent } from 'events';
+  import { LangEvent, CamEvent } from 'events';
 
   let qrScanner = null;
   export default (props, { $f7, $on, $el, $store, $update }) => {
@@ -136,7 +136,7 @@
       })
 
 
-      $f7.on('RESTART_CAM', async () => {
+      $f7.on(CamEvent.RESTART, async () => {
         isNavigating = false;
         const cam = document.getElementById('cam');
 
@@ -152,7 +152,7 @@
         qrScanner.start();
       })
 
-      $f7.on(LangEvent.LANG_UPDATED, () => $update());
+      $f7.on(LangEvent.UPDATED, () => $update());
     })
 
     return $render;

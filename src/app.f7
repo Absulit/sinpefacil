@@ -254,7 +254,7 @@
   import { isUnicode, SMS_START, cleanTextAndLength } from 'sms'
   import { getOption, Keys, getPhone, saveOption } from 'db';
   import { strLen } from 'i18n';
-  import { LangEvent } from 'events';
+  import { LangEvent, ProductEvent } from 'events';
   let numChars = 5;
 
   export default (props, { $f7, $update, $on, $el, $store }) => {
@@ -273,7 +273,7 @@
       }
     });
 
-    $f7.on('openQRDataPopup', async (id = null) => {
+    $f7.on(ProductEvent.ADD, async (id = null) => {
       const form = $f7.$('#qr-data-form')[0];
       const inputs = Array.from(form.querySelectorAll('input'));
       const smsexample = document.getElementById('smsexample');
@@ -363,7 +363,7 @@
         const { id } = currentProduct;
         const productUpdated = { ...formData, id };
         await $store.dispatch('updateProduct', productUpdated);
-        $f7.emit('PRODUCT_UPDATED', productUpdated);
+        $f7.emit(ProductEvent.UPDATED, productUpdated);
       } else {
         await $store.dispatch('addProduct', formData);
       }
@@ -380,7 +380,7 @@
       }).open();
     };
 
-    $f7.on(LangEvent.LANG_UPDATED, () => $update());
+    $f7.on(LangEvent.UPDATED, () => $update());
 
     return $render;
   }

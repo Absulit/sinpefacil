@@ -98,7 +98,7 @@
     const history = $store.getters.history;
 
     $on('pageInit', () => {
-      $f7.on(LangEvent.LANG_UPDATED, () => $update());
+      $f7.on(LangEvent.UPDATED, () => $update());
     });
 
 
