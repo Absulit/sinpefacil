@@ -140,7 +140,7 @@
         await saveOption(Keys.LANG, code);
         await i18next.changeLanguage(code);
         $update();
-        $f7.emit(LangEvent.LANG_UPDATED);
+        $f7.emit(LangEvent.UPDATED);
       })
 
       langSelect.addEventListener('change', async e => {
@@ -148,7 +148,7 @@
         await saveOption(Keys.LANG, code);
         await i18next.changeLanguage(code);
         $update();
-        $f7.emit(LangEvent.LANG_UPDATED);
+        $f7.emit(LangEvent.UPDATED);
       })
       ////////////////////
 
