@@ -45,6 +45,7 @@ export default async () => {
         'systemnotifications': SRC_DIR + '/js/systemnotifications.js',
         'crypto': SRC_DIR + '/js/crypto.js',
         'tooltips': SRC_DIR + '/js/tooltips.js',
+        'events': SRC_DIR + '/js/events.js',
       },
     },
     server: {

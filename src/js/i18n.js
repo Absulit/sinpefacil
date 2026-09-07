@@ -83,6 +83,7 @@ const resources = {
             smsInfo: `160 characters max, 70 if there are special ones. Used: {{numChars}}.`,
 
             productCreatedConfirmation: `Product created`,
+            productUpdatedConfirmation: `Product updated`,
 
             onlyNumbersPhone: `Only numbers in the phone`,
         },
@@ -199,6 +200,7 @@ const resources = {
             smsInfo: `160 caracteres máximo, 70 si hay especiales. Usados: {{numChars}}.`,
 
             productCreatedConfirmation: `Producto creado`,
+            productUpdatedConfirmation: `Producto actualizado`,
 
             onlyNumbersPhone: `Solo números en el teléfono`,
         },
@@ -237,13 +239,31 @@ const resources = {
     }
 };
 
+/**
+ * To get a simplified version of the language in more complex provided.
+ * @example
+ * // if `en-US` is provided, the result is just `en`
+ * @returns
+ */
+export function navigatorLanguage() {
+    return new Intl.Locale(navigator.language).language;
+}
+
+/**
+ * To get the name of a language in another language
+ * @param {String} code e.g. `es`, `en`
+ * @returns {String} Name of the language in code provided
+ */
+export function getLanguageName(code) {
+    return new Intl.DisplayNames([i18next.language], { type: 'language' }).of(code);
+};
+
 export async function initI18n() {
-    // TODO: save lang to enforce it via an option
-    const lng = await getOption(Keys.LANG, navigator.language);
+    const lng = await getOption(Keys.LANG, navigatorLanguage());
 
     await i18next.init({
         lng,
-        fallbackLng: 'es-CR',
+        fallbackLng: 'es',
         resources
     });
 }
