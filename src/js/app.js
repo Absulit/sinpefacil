@@ -69,7 +69,7 @@ store.dispatch('initApp').then(() => {
                         async () => { // ok
                             const banks = await db.banks.toArray();
                             const options = banks.map(bank => {
-                                return { text: bank.name, onClick: () => handleSelect(bank.id, data) }
+                                return { text: bank.name, onClick: () => handleSelect(bank.id, data, true) }
                             })
 
                             // list of banks dropdown
@@ -93,10 +93,7 @@ store.dispatch('initApp').then(() => {
                 }
 
                 if (linkShared) {
-                    const bank = await db.banks.get(bankId);
-                    clearParams();
-                    await store.dispatch('addHistoryItem', { price, phone: atob(phone), name, detail, createdAt: new Date() })
-                    window.location.href = generateSINPESMS(bank.phone, price, atob(phone), name, detail);
+                    handleSelect(bankId, { price, phone, name, detail })
                 }
 
             },
@@ -190,13 +187,13 @@ store.dispatch('initApp').then(() => {
 });
 
 /**
- * 
- * @param {Number} bankId 
- * @param {{price, phone, name, detail}} payload 
+ *
+ * @param {Number} bankId
+ * @param {{price, phone, name, detail}} payload
  */
-async function handleSelect(bankId, { price, phone, name, detail },) {
+async function handleSelect(bankId, { price, phone, name, detail }, saveBank = false) {
     const bank = await db.banks.get(bankId);
-    await saveBankId(bankId); // save bank for future links
+    saveBank && await saveBankId(bankId); // save bank for future links
     clearParams();
     await store.dispatch('addHistoryItem', { price, phone: atob(phone), name, detail, createdAt: new Date() })
     window.location.href = generateSINPESMS(bank.phone, price, atob(phone), name, detail);
