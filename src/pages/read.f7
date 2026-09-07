@@ -39,6 +39,7 @@
   import QrScanner from 'qr-scanner';
   import { db, getBankId } from 'db';
   import generateSINPESMS, { validateSMS, SMS_START } from 'sms';
+  import { LangEvent } from 'events';
 
   let qrScanner = null;
   export default (props, { $f7, $on, $el, $store, $update }) => {
@@ -151,6 +152,7 @@
         qrScanner.start();
       })
 
+      $f7.on(LangEvent.LANG_UPDATED, () => $update());
     })
 
     return $render;

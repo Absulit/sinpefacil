@@ -92,9 +92,16 @@
 <script>
   import { formatDate } from 'i18n';
   import i18next from 'i18next';
-  export default (props, { $f7, $store, $on, $el }) => {
+  import { LangEvent } from 'events';
+  export default (props, { $f7, $store, $on, $el, $update }) => {
 
     const history = $store.getters.history;
+
+    $on('pageInit', () => {
+      $f7.on(LangEvent.LANG_UPDATED, () => $update());
+    });
+
+
     return $render;
   }
 

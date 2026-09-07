@@ -254,6 +254,7 @@
   import { isUnicode, SMS_START, cleanTextAndLength } from 'sms'
   import { getOption, Keys, getPhone, saveOption } from 'db';
   import { strLen } from 'i18n';
+  import { LangEvent } from 'events';
   let numChars = 5;
 
   export default (props, { $f7, $update, $on, $el, $store }) => {
@@ -378,6 +379,8 @@
         closeTimeout: 2000,
       }).open();
     };
+
+    $f7.on(LangEvent.LANG_UPDATED, () => $update());
 
     return $render;
   }
