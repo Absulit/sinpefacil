@@ -47,7 +47,7 @@
                 <div class="item-title">${i18next.t('settings:lang')}</div>
                 <div class="item-after">
                   <label class="toggle toggle-init">
-                    <input type="checkbox" />
+                    <input id="langInput" type="checkbox" />
                     <span class="toggle-icon"></span>
                   </label>
                 </div>
@@ -57,16 +57,11 @@
             <div class="item-content item-input">
               <div class="item-inner">
                 <div class="item-input-wrap">
-                  <select disabled>
-                    <option>Inglés</option>
-                    <option>Español</option>
-                  </select>
+                  <select id="langSelect" disabled></select>
                 </div>
               </div>
             </div>
           </li>
-
-
 
         </ul>
       </div>
@@ -76,9 +71,10 @@
   </div>
 </template>
 <script>
-  import { db, savePhone, getPhone, getBankId, saveBankId } from 'db';
+  import { db, savePhone, getPhone, getBankId, saveBankId, getOption, saveOption, Keys } from 'db';
   import i18next from 'i18next';
-  export default async (props, { $f7, $on, $f7route }) => {
+  import { LangEvent } from 'events';
+  export default async (props, { $f7, $on, $f7route, $update }) => {
 
     let phoneInput;
     $on('pageInit', async () => {
@@ -114,6 +110,53 @@
         phoneInput.value = phoneInput.value.replace(numericValidationRegex, '')
       })
 
+
+      ////////////////////
+      const langInput = document.getElementById('langInput');
+      const langSelect = document.getElementById('langSelect');
+
+      const loadedLanguages = Object.keys(i18next.services.resourceStore.data)
+      const getLanguageName = code => {
+        return new Intl.DisplayNames([i18next.language], { type: 'language' }).of(code);
+      };
+      loadedLanguages.forEach(code => {
+        console.log(code);
+        const option = new Option(getLanguageName(code), code, code === i18next.language)
+        langSelect.append(option);
+      })
+
+      langInput.checked = await getOption(Keys.FORCE_LANG, false);
+      langSelect.disabled = !langInput.checked;
+      // langInput.dispatchEvent(new Event('change', { bubbles: true }));
+      console.log(langInput);
+
+      langInput.addEventListener('change', async e => {
+        const disabled = !e.target.checked;
+        langSelect.disabled = disabled;
+        await saveOption(Keys.FORCE_LANG, !disabled);
+
+        console.log(!disabled);
+        if (disabled) {
+          console.log('---- restore default lang');
+          const code = navigator.language;
+          await saveOption(Keys.LANG, code);
+          await i18next.changeLanguage(code);
+          $update();
+          $f7.emit(LangEvent.LANG_UPDATED);
+        }
+      })
+
+      langSelect.addEventListener('change', async e => {
+        const code = e.target.value;
+        console.log(code);
+        saveOption(Keys.LANG, code);
+        await i18next.changeLanguage(code);
+        $update();
+        $f7.emit(LangEvent.LANG_UPDATED);
+
+      })
+      ////////////////////
+
     })
 
     const handleBack = async () => {
@@ -125,7 +168,7 @@
         const dbPhone = await getPhone();
         const newNumber = +phoneInput.value;
 
-        if(+dbPhone?.number !== newNumber){
+        if (+dbPhone?.number !== newNumber) {
           savePhone(newNumber);
           $f7.toast.create({
             text: i18next.t('settings:phoneSaved'),

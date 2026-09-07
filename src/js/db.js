@@ -119,6 +119,7 @@ window.gtag?.('event', 'db_version_check', {
 export const Keys = {
     PAGE_TO_LOAD: 'PAGE_TO_LOAD',
     LANG: 'LANG',
+    FORCE_LANG: 'FORCE_LANG',
     SELECTED_BANK: 'selectedBank',
     FIRST_TIME: 'FIRST_TIME',
     HMAC_SECRET: 'HMAC_SECRET',
@@ -137,7 +138,7 @@ export async function getOption(key, defaultValue) {
 
 /**
  * We save currently only one
- * @param {{stage}} param0 
+ * @param {{stage}} param0
  * @param {Number} number phone number
  */
 export async function savePhone(number) {
@@ -175,8 +176,8 @@ export async function getBankId() {
 }
 
 /**
- * 
- * @param {Number} value 
+ *
+ * @param {Number} value
  */
 export async function saveBankId(value) {
     const id = await encryptData(value.toString());

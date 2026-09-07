@@ -15,7 +15,7 @@
           <a href="#" class="link icon-only panel-open" data-panel="left">
             <i class="icon f7-icons if-not-md">menu</i>
             <i class="icon material-icons if-md">menu</i>
-          </a> 
+          </a>
         </div> -->
         <div class="title sliding display-flex align-items-center">
           <div class="title">${i18next.t('codes')}</div>
@@ -46,7 +46,7 @@
       </a>
 
       <!-- buttons for later -->
-      <!-- 
+      <!--
       <div class="fab-buttons fab-buttons-top">
         <a href="" class="fab-label-button">
           <span>1</span>
@@ -60,7 +60,7 @@
           <span>3</span>
           <span class="fab-label">Borrar</span>
         </a>
-      </div> 
+      </div>
       -->
     </div>
     `: ''}
@@ -120,7 +120,8 @@
 <script>
   import i18next from 'i18next';
   import { getPhone } from 'db';
-  export default async (props, { $f7, $store, $on, $el }) => {
+  import { LangEvent } from 'events';
+  export default async (props, { $f7, $store, $on, $el, $update }) => {
 
     // phone from settings if defined
     const phone = await getPhone();
@@ -130,6 +131,10 @@
     const onClickAdd = () => {
       $f7.emit('openQRDataPopup', null);
     }
+
+    $on('pageInit', () => {
+      $f7.on(LangEvent.LANG_UPDATED, () => $update());
+    });
 
     return $render;
   }
