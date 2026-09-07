@@ -46,10 +46,14 @@ const resources = {
             CTASendSMSTitle: `QR Code read`,
             notSendToast: `SMS will not be sent`,
 
-            CTAAmount: `Amount`,
-            CTARecipient: `Recipient's phone`,
-            CTAProduct: `Product`,
-            CTADetail: `Detail`,
+            CTABody: `
+            <strong>Amount:</strong> ₡{{price}}<br>
+            <strong>Recipient's phone:</strong> {{phone}}<br>
+            <strong>Product</strong>: {{name}}<br>
+            <strong>Detail:</strong> {{detail}}<br>
+            `,
+
+
         },
         codes: {
             explainer: `Select an item from the list to see the QR code.`,
@@ -158,10 +162,13 @@ const resources = {
             CTASendSMSTitle: `Código QR leído`,
             notSendToast: `No se enviará el SMS`,
 
-            CTAAmount: `Monto`,
-            CTARecipient: `Recipiente`,
-            CTAProduct: `Producto`,
-            CTADetail: `Detalle`,
+            CTABody: `
+            <strong>Monto:</strong> ₡{{price}}<br>
+            <strong>Recipiente:</strong> {{phone}}<br>
+            <strong>Producto</strong>: {{name}}<br>
+            <strong>Detalle:</strong> {{detail}}<br>
+            `,
+
         },
         codes: {
             explainer: `Seleccione un ítem de la lista para ver el código QR.`,

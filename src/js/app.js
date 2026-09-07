@@ -150,10 +150,7 @@ store.dispatch('initApp').then(() => {
     app.dialogSMSConfirm = ({ bank, phone, price, name, detail }, callbackOk, callbackCancel) => {
         return app.dialog.confirm(`
         ${i18next.t('read:CTASendSMS', { bank })}<br><br>
-            <strong>${i18next.t('read:CTAAmount')}:</strong> ₡${price}<br>
-            <strong>${i18next.t('read:CTARecipient')}:</strong> ${phone}<br>
-            <strong>${i18next.t('read:CTAProduct')}:</strong> ${name}<br>
-            <strong>${i18next.t('read:CTADetail')}:</strong> ${detail}<br>
+            ${i18next.t('read:CTABody', { price, phone, name, detail })}
         `,
             i18next.t('read:CTASendSMSTitle'),
             callbackOk,
