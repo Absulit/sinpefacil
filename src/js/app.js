@@ -139,6 +139,28 @@ store.dispatch('initApp').then(() => {
 
     });
 
+
+    /**
+     * Dialog to make sure the user sees the QR or Link data
+     * @param {{bank:String, phone:Number, name:String, detail:String}} param0
+     * @param {Function} callbackOk
+     * @param {Function} callbackCancel
+     * @returns
+     */
+    app.dialogSMSConfirm = ({ bank, phone, name, detail }, callbackOk, callbackCancel) => {
+        return app.dialog.confirm(`
+        ${i18next.t('read:CTASendSMS', { bank })}<br><br>
+            <strong>Amount:</strong> ₡${price}<br>
+            <strong>Recipient's phone:</strong> ${phone}<br>
+            <strong>Product:</strong> : ${name}<br>
+            <strong>Detail:</strong> : ${detail}<br>
+        `,
+            i18next.t('read:CTASendSMSTitle'),
+            callbackOk,
+            callbackCancel
+        );
+    }
+
     // BACK BUTTON: change in history
     window.addEventListener('popstate', function (e) {
         if (isExiting) return;
