@@ -162,8 +162,48 @@
       qrCode.append(container);
       // qrCode.download({ name: "qr", extension: "svg" });
     })
-    $f7.on(ProductEvent.UPDATED, productUpdated => {
+    $f7.on(ProductEvent.UPDATED, async productUpdated => {
       currentProduct = productUpdated;
+
+
+
+
+      // TODO: merge init and updated code
+      // to not repeat the QRCodeStyling call
+      const { phone, name, price, detail } = currentProduct;
+
+      let finalPhone = phone;
+      if (!phone) {
+        const phoneDB = await getPhone();
+        finalPhone = phoneDB.number;
+      }
+
+      const url = createURL(finalPhone, name, price, detail);
+
+      const qrCode = new QRCodeStyling({
+        width: 300,
+        height: 300,
+        type: 'svg',
+        data: url,
+        image: '', // link to image
+        dotsOptions: {
+          color: '#000000',
+          type: 'square'
+        },
+        backgroundOptions: {
+          color: '#e9ebee',
+        },
+        imageOptions: {
+          crossOrigin: 'anonymous',
+          margin: 20
+        }
+      });
+
+      const container = $el.value.find('#qr-code-container')[0];
+      container.innerText = '';
+      qrCode.append(container);
+
+
       $update();
     })
 
