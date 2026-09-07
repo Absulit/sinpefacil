@@ -230,7 +230,7 @@
       ${price}
       ${detail}
 
-      ${generatedWith}      
+      ${generatedWith}
       `.trim().replace(/^ +/gm, ''),
         blob
       )
