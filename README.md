@@ -28,7 +28,7 @@ You do not need this app to first read the QR codes, you can use your regular QR
 
 ### Available Banks that offer the SINPE Móvil SMS service *
 
-| Bank                            | SMS phone | 
+| Bank                            | SMS phone |
 |---------------------------------|----------:|
 | Grupo Mutual Alajuela           | 6057-5079 |
 | Banco Nacional de Costa Rica    | 2627      |
@@ -55,3 +55,10 @@ db.js has a `tests only` section at the top and at the bottom.
 Export data from branch master to have a way to test future migrations.
 Import the data and run the new migrations.
 If required perform a `indexedDB.deleteDatabase('sf');` in the JS console to start with an empty DB.
+
+
+### License
+
+SINPE Fácil is open-source software released under the [MIT License](LICENSE).
+<br>Copyright (c) 2026 Sebastián Sanabria Díaz.
+<br>The app name, logo, and brand assets are reserved and not covered by the MIT License.

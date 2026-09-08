@@ -22,6 +22,11 @@ const resources = {
             version: `version`,
             image: `Image`,
             link: `Link`,
+            license: `SINPE Fácil is open-source software released under the MIT License.
+            <br>Copyright (c) 2026 Sebastián Sanabria Díaz.
+            <br>The app name, logo, and brand assets are reserved and not covered by the MIT License.`,
+            licenseLink: `Read the MIT license on Github`,
+            CTALicense: `License`,
         },
         about: {
             aboutContent: `This app generates QR codes {{qrcode}} that allow other people pay you with SINPE MÓVIL {{sinpemovil}}.
@@ -138,6 +143,11 @@ const resources = {
             version: `version`,
             image: `Imagen`,
             link: `Enlace`,
+            license: `SINPE Fácil es software de Código Abierto (Open Source) bajo licencia MIT.
+            <br>Copyright (c) 2026 Sebastián Sanabria Díaz.
+            <br>El nombre de la aplicación, logo, e imágenes están reservados y no están cubiertos por la Licencia MIT.`,
+            licenseLink: `Leer la licencia MIT en Github (Inglés)`,
+            CTALicense: `Licencia`,
         },
         about: {
             aboutContent: `Esta aplicación genera Códigos QR {{- qrcode}} para permitir a otras personas pagarte con SINPE MÓVIL. {{- sinpemovil}}
