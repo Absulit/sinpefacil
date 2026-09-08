@@ -66,6 +66,11 @@
       </div>
 
       <div class="block">
+        <a class="external" target="_blank" rel="noopener noreferrer"
+          @click="${showLicense}">${i18next.t('CTALicense')}</a>
+      </div>
+
+      <div class="block">
         ${i18next.t('version')} ${VERSION}
       </div>
 
@@ -134,6 +139,23 @@
       onUnmountDestroyTooltips();
     })
     /////////////
+
+
+    function showLicense() {
+      $f7.dialog.alert(`
+        ${i18next.t('license')}
+        <br>
+        <br>
+        <a class="external" target="_blank" rel="noopener noreferrer"
+          href="https://github.com/Absulit/sinpefacil/blob/master/LICENSE">
+          <i class="icon f7-icons if-not-md ">link</i>
+          <i class="icon material-icons if-md">link</i>
+
+          ${i18next.t('licenseLink')}
+        </a>
+      `,
+      `SINPE Fácil ${i18next.t('CTALicense')}`);
+    }
 
     return $render;
   }
