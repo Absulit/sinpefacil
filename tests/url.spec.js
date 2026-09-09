@@ -4,16 +4,34 @@ import { validateEntryData } from 'urldata';
 
 
 test('data is valid', async ({ page }) => {
-    await page.goto('http://localhost:5173/sinpefacil/');
-
     const price = 45;
-    const phone = 8;
+    const phone = 88888888;
     const name = 'test'
     const detail = 'detail'
 
     const result = validateEntryData({ price, phone, name, detail })
 
-    // Expect a title "to contain" a substring.
-    await expect(result).not.toBe(null);
+    expect(result).not.toBe(null);
+});
+
+
+test('data phone is invalid', async ({ page }) => {
+    const price = 45;
+    let phone = 8;
+    const name = 'test'
+    const detail = 'detail'
+
+    let result = validateEntryData({ price, phone, name, detail })
+    expect(result).toBe(null);
+
+    // @ts-ignore
+    phone = '8888-8888'
+    result = validateEntryData({ price, phone, name, detail })
+    expect(result).toBe(null);
+
+    // @ts-ignore
+    phone = '8888&888'
+    result = validateEntryData({ price, phone, name, detail })
+    expect(result).toBe(null);
 });
 

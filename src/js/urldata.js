@@ -29,10 +29,10 @@ export function validateEntryData({ price, phone, name, detail }) {
     const finalPhone = +atobValid(phone);
     const phoneIsNumber = !Number.isNaN(finalPhone);
     const phoneLengthIsCorrect = phone.toString().length === 8
-    if (!phoneIsNumber && !phoneLengthIsCorrect) {
+
+    if (!phoneIsNumber || !phoneLengthIsCorrect) {
         valid = false;
     }
-    console.log(4);
 
     const finalPrice = +price;
     const priceIsNumber = !Number.isNaN(finalPrice);
