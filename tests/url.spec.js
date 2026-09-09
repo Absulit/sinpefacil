@@ -12,7 +12,7 @@ test('atobValid', async ({ page }) => {
     expect(result).not.toBe(null);
 
     // phone = 'not-valid-base64!!!';
-    phoneA ='not-valid-base64!!!';
+    phoneA = 'not-valid-base64!!!';
     result = atobValid(phoneA);
     expect(result).not.toBe(phone);
     expect(result).toBe(null);
@@ -26,9 +26,9 @@ test('data is valid', async ({ page }) => {
     const name = 'test'
     const detail = 'detail'
 
-    const result = validateEntryData({ price, phone:phoneA, name, detail })
+    const result = validateEntryData({ price, phone: phoneA, name, detail })
 
-    expect(result).not.toBe(null);
+    expect(result).toEqual({ price, phone: +phone, name, detail });
 });
 
 
@@ -65,5 +65,56 @@ test('data phone is invalid', async ({ page }) => {
     phone = '888888A' // should be a number
     result = validateEntryData({ price, phone, name, detail })
     expect(result).toBe(null);
+});
+
+test('data can have an empty detail', async ({ page }) => {
+    const phone = '88888888';
+    const price = 45;
+    const phoneA = btoa(phone);
+    const name = 'test'
+    const detail = ''
+
+    const result = validateEntryData({ price, phone:phoneA, name, detail })
+
+    expect(result).not.toBe(null);
+});
+
+test('data must fail if it has no name', async ({ page }) => {
+    const phone = '88888888';
+    const price = 45;
+    const phoneA = btoa(phone);
+    const name = ''
+    const detail = ''
+
+    const result = validateEntryData({ price, phone:phoneA, name, detail })
+
+    expect(result).toBe(null);
+});
+
+test('price is valid', async ({ page }) => {
+    const phone = '88888888';
+    let price = 45;
+    const phoneA = btoa(phone);
+    const name = 'test'
+    const detail = 'detail'
+
+    let result = validateEntryData({ price, phone: phoneA, name, detail })
+    expect(result).toEqual({ price, phone: +phone, name, detail });
+
+    price = -45;// no negatives
+    result = validateEntryData({ price, phone: phoneA, name, detail })
+    expect(result).toEqual(null);
+
+    price = 0;// no zero
+    result = validateEntryData({ price, phone: phoneA, name, detail })
+    expect(result).toEqual(null);
+
+    // @ts-ignore
+    price = '45a'; // is number
+    result = validateEntryData({ price, phone: phoneA, name, detail })
+    expect(result).toEqual(null);
+
+
+
 });
 

@@ -36,8 +36,9 @@ export function validateEntryData({ price, phone, name, detail }) {
 
     const finalPrice = +price;
     const priceIsNumber = !Number.isNaN(finalPrice);
+    const finalPriceIsPositve = finalPrice > 0;
 
-    if (!priceIsNumber) {
+    if (!priceIsNumber || !finalPriceIsPositve) {
         valid = false;
     }
 
