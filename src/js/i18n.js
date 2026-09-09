@@ -122,7 +122,7 @@ const resources = {
         },
         validation: {
             linkLength: `The link shared exceeds the number of characters allowed.\nAsk the sender to fix the link.`,
-            linkLength: `The QR code exceeds the number of characters allowed.\nAsk the sender to fix the code.`,
+            QRLength: `The QR code exceeds the number of characters allowed.\nAsk the sender to fix the code.`,
         },
     },
     es: {

@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@js/*": ["src/js/*"],
+      "db": ["src/js/db.js"],
+      "share": ["src/js/share.js"],
+      "sms": ["src/js/sms.js"],
+      "urldata": ["src/js/urldata.js"],
+      "i18n": ["src/js/i18n.js"],
+      "systemnotifications": ["src/js/systemnotifications.js"],
+      "crypto": ["src/js/crypto.js"],
+      "tooltips": ["src/js/tooltips.js"],
+      "events": ["src/js/events.js"]
+    }
+  }
+}
