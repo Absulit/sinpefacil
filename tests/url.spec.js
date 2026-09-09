@@ -1,7 +1,23 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import { validateEntryData } from 'urldata';
+import { validateEntryData, atobValid } from 'urldata';
 
+
+test('atobValid', async ({ page }) => {
+    let phone = '88888888';
+    let phoneA = btoa(phone);
+    let result = atobValid(phoneA);
+
+    expect(result).toBe(phone);
+    expect(result).not.toBe(null);
+
+    // phone = 'not-valid-base64!!!';
+    phoneA ='not-valid-base64!!!';
+    result = atobValid(phoneA);
+    expect(result).not.toBe(phone);
+    expect(result).toBe(null);
+
+})
 
 test('data is valid', async ({ page }) => {
     const price = 45;
