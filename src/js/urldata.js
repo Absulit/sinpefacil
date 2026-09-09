@@ -28,7 +28,7 @@ export function validateEntryData({ price, phone, name, detail }) {
     let valid = true;
     const finalPhone = +atobValid(phone);
     const phoneIsNumber = !Number.isNaN(finalPhone);
-    const phoneLengthIsCorrect = phone.toString().length === 8
+    const phoneLengthIsCorrect = finalPhone.toString().length === 8
 
     if (!phoneIsNumber || !phoneLengthIsCorrect) {
         valid = false;
