@@ -204,3 +204,9 @@ test('no empty spaces on name', async ({ page }) => {
     expect(result).toEqual(false);
 });
 
+test('param can be empty object', async ({ page }) => {
+    const data = {};
+    const result = validateEntryData(data)
+    expect(result).toEqual(data);
+});
+
