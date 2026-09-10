@@ -445,7 +445,7 @@ test.describe('URL Parameter XSS & SMS Redirect Handling', () => {
 
             // 3. Build target URL
             const targetUrl = new URL('http://localhost:5173/sinpefacil/');
-            targetUrl.searchParams.set('phone', '44445555');
+            targetUrl.searchParams.set('phone', btoa('44444444'));
             targetUrl.searchParams.set('name', payload);
             targetUrl.searchParams.set('price', '1000');
             targetUrl.searchParams.set('detail', payload);
