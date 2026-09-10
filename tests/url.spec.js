@@ -122,6 +122,42 @@ test('price is valid', async ({ page }) => {
     price = '08888888'; // is number
     result = validateEntryData({ price, phone: phoneA, name, detail })
     expect(result).toEqual(null);
+});
+
+
+test('name, price, phone cant be null or undefined or non strings', async ({ page }) => {
+    let phone = null;
+    let price = 45;
+    // @ts-ignore
+    let phoneA = btoa(phone);
+    let name = 'test'
+    const detail = ''
+
+    let result = validateEntryData({ price, phone: phoneA, name, detail })
+    expect(result).toEqual(null);
+
+    phone = undefined;
+    result = validateEntryData({ price, phone: phoneA, name, detail })
+    expect(result).toEqual(null);
+
+    phone = '        ';
+    result = validateEntryData({ price, phone: phoneA, name, detail })
+    expect(result).toEqual(null);
+
+    // @ts-ignore
+    price = null;
+    result = validateEntryData({ price, phone: phoneA, name, detail })
+    expect(result).toEqual(null);
+
+    // @ts-ignore
+    price = undefined;
+    result = validateEntryData({ price, phone: phoneA, name, detail })
+    expect(result).toEqual(null);
+
+    // @ts-ignore
+    price = '        ';
+    result = validateEntryData({ price, phone: phoneA, name, detail })
+    expect(result).toEqual(null);
 
 
 

@@ -29,13 +29,13 @@ export function validateEntryData({ price, phone, name, detail }) {
     const decodedPhone = atobValid(phone);
     const finalPhone = +decodedPhone;
     const phoneIsNumber = !Number.isNaN(finalPhone);
-    const phoneLengthIsCorrect = decodedPhone.toString().length === 8;
+    const phoneLengthIsCorrect = String(decodedPhone).length === 8;
 
     if (!phoneIsNumber || !phoneLengthIsCorrect) {
         valid = false;
     }
 
-    const priceLengthIsCorrect = price.toString().length < 6;
+    const priceLengthIsCorrect = String(price).length < 6;
     const finalPrice = +price;
     const priceIsNumber = !Number.isNaN(finalPrice);
     const finalPriceIsPositve = finalPrice > 0;
