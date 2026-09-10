@@ -40,26 +40,69 @@
   import { db, getBankId } from 'db';
   import generateSINPESMS, { validateSMS, SMS_START } from 'sms';
   import { LangEvent, CamEvent } from 'events';
+  import { clearParams, validateEntryData } from 'urldata';
 
   let qrScanner = null;
   export default (props, { $f7, $on, $el, $store, $update }) => {
 
     let isNavigating = false;
+    let isInvalid = false;
+    let showInvalidNotification = true;
     const onDecode = async result => {
       if (isNavigating) return;
       isNavigating = true;
 
-      const data = Object.fromEntries(new URL(result.data).searchParams);
-      const { phone, name, price, detail } = data;
-      const finalPhone = atob(phone);
+      if (!result.data.includes(window.location.origin)) {
+        showInvalidNotification && $f7.toast.create({
+          text: i18next.t('validation:QRInvalid'),
+          closeTimeout: 2000,
+          position: 'center',
+          on: {
+            open: () => {
+              showInvalidNotification = false;
+            },
+            close: _ => {
+              showInvalidNotification = true;
+            }
+          }
+        }).open();
 
-      const isValid = validateSMS(SMS_START, price, finalPhone, name, detail);
+        isNavigating = false;
+        return
+      }
+
+      const data = Object.fromEntries(new URL(result.data).searchParams);
+
+      const validData = validateEntryData(data);
+      if (!validData) {
+        clearParams();
+        showInvalidNotification && $f7.dialog.create({
+          title: 'SINPE Fácil',
+          text: i18next.t('validation:QRInvalid'),
+          buttons: [{ text: 'OK' }],
+          on: {
+            open: () => {
+              showInvalidNotification = false;
+            },
+            close: _ => {
+              showInvalidNotification = true;
+            }
+          }
+        }).open();
+
+        isNavigating = false;
+        return
+      }
+
+      const { phone, name, price, detail } = validData;
+
+      const isValid = validateSMS(SMS_START, price, phone, name, detail);
       if (!isValid) {
         $f7.dialog.confirm(i18next.t('validation:linkLength'), 'SINPE Fácil')
         return;
       }
 
-      $store.dispatch('addHistoryItem', { price, phone: finalPhone, name, detail, createdAt: new Date() })
+      $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
       // if ($f7.device.ios) {
       //   // rawData = rawData.replace('?body=', '&body=');
       // }
@@ -67,9 +110,9 @@
       const bankId = await getBankId();
       const bank = await db.banks.get(bankId);
 
-      $f7.dialogSMSConfirm({ bank: bank.shortname, price, phone: finalPhone, name, detail },
+      $f7.dialogSMSConfirm({ bank: bank.shortname, price, phone, name, detail },
         async () => {
-          window.location.href = generateSINPESMS(bank.phone, price, finalPhone, name, detail)
+          window.location.href = generateSINPESMS(bank.phone, price, phone, name, detail)
           isNavigating = false;
         },
         () => {
