@@ -68,6 +68,6 @@ export function validateEntryData({ price, phone, name, detail }) {
  *
  * @param {Object} value
  */
-export function isEmtpy(value){
-    Object.keys(value).length === 0;
+export function isEmpty(value){
+    return Object.keys(value).length === 0;
 }
