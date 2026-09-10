@@ -17,7 +17,7 @@ import App from '../app.f7';
 import { initI18n } from 'i18n';
 import generateSINPESMS, { SMS_START, validateSMS } from 'sms';
 import { db, getBankId, saveBankId } from 'db';
-import { clearParams } from 'urldata';
+import { clearParams, validateEntryData, isEmpty } from 'urldata';
 import i18next from 'i18next';
 import {
     requestNotificationPermission,
@@ -49,7 +49,13 @@ store.dispatch('initApp').then(() => {
             init: async () => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const data = Object.fromEntries(urlParams.entries());
-                const { phone, name, price, detail } = data;
+                const validData = validateEntryData(data);
+                if (!validData) {
+                    clearParams();
+                    app.dialog.alert(i18next.t('validation:linkInvalid'), 'SINPE Fácil')
+                }
+
+                const { phone, name, price, detail } = validData;
                 const linkShared = phone && name && price;
                 const bankId = await getBankId();
 

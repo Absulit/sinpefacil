@@ -123,6 +123,8 @@ const resources = {
         validation: {
             linkLength: `The link shared exceeds the number of characters allowed.\nAsk the sender to fix the link.`,
             QRLength: `The QR code exceeds the number of characters allowed.\nAsk the sender to fix the code.`,
+            linkInvalid: `The link has invalid data.`,
+            QRInvalid: `El código QR tiene datos inválidos.`,
         },
     },
     es: {
@@ -245,6 +247,8 @@ const resources = {
         validation: {
             linkLength: `El enlance compartido excede el número de caracteres permitidos.\n Solicite al emisor que corrija el enlace.`,
             QRLength: `El código QR leído excede el número de caracteres permitidos.\n Solicite al emisor que corrija el código.`,
+            linkInvalid: `El link tiene datos inválidos.`,
+            QRInvalid: `El código QR tiene datos inválidos.`,
         },
     }
 };
