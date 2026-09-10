@@ -23,9 +23,20 @@ export function atobValid(str, defaultValue = null) {
     }
 }
 
-
-export function validateEntryData({ price, phone, name, detail }) {
+/**
+ *
+ * @param { price:String, phone:String, name:String, detail:String }} data
+ * @returns
+ */
+export function validateEntryData(data) {
     let valid = true;
+
+    if(isEmpty(data)){
+        return data;
+    }
+
+    const { price, phone, name, detail } = data;
+
     const decodedPhone = atobValid(phone);
     const phoneStr = typeof decodedPhone === 'string' ? decodedPhone.trim() : '';
     const finalPhone = +phoneStr;
