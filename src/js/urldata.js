@@ -53,7 +53,7 @@ export function validateEntryData({ price, phone, name, detail }) {
     }
 
     if (!valid) {
-        return null;
+        return false;
     }
 
     return {
@@ -62,4 +62,12 @@ export function validateEntryData({ price, phone, name, detail }) {
         name: name.trim(),
         detail,
     };
+}
+
+/**
+ *
+ * @param {Object} value
+ */
+export function isEmtpy(value){
+    Object.keys(value).length === 0;
 }

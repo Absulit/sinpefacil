@@ -38,22 +38,22 @@ test('data phone is invalid', async ({ page }) => {
     const detail = 'detail'
 
     let result = validateEntryData({ price, phone, name, detail })
-    expect(result).toBe(null);
+    expect(result).toBe(false);
 
     // @ts-ignore
     phone = btoa('8888-8888') // is 9 chars
     result = validateEntryData({ price, phone, name, detail })
-    expect(result).toBe(null);
+    expect(result).toBe(false);
 
     // @ts-ignore
     phone = btoa('8888888') // is 7 chars
     result = validateEntryData({ price, phone, name, detail })
-    expect(result).toBe(null);
+    expect(result).toBe(false);
 
     // @ts-ignore
     phone = btoa('888888A') // should be a number
     result = validateEntryData({ price, phone, name, detail })
-    expect(result).toBe(null);
+    expect(result).toBe(false);
 
     // @ts-ignore
     phone = btoa('12345678') // is a valid number
@@ -63,12 +63,12 @@ test('data phone is invalid', async ({ page }) => {
     // @ts-ignore
     phone = '888888A' // should be a number
     result = validateEntryData({ price, phone, name, detail })
-    expect(result).toBe(null);
+    expect(result).toBe(false);
 
     // @ts-ignore
     phone = '0888888' // this is 7 chars because the 0 is ignored
     result = validateEntryData({ price, phone, name, detail })
-    expect(result).toBe(null);
+    expect(result).toBe(false);
 });
 
 test('data can have an empty detail', async ({ page }) => {
@@ -80,7 +80,7 @@ test('data can have an empty detail', async ({ page }) => {
 
     const result = validateEntryData({ price, phone: phoneA, name, detail })
 
-    expect(result).not.toBe(null);
+    expect(result).not.toBe(false);
 });
 
 test('data must fail if it has no name', async ({ page }) => {
@@ -92,7 +92,7 @@ test('data must fail if it has no name', async ({ page }) => {
 
     const result = validateEntryData({ price, phone: phoneA, name, detail })
 
-    expect(result).toBe(null);
+    expect(result).toBe(false);
 });
 
 test('price is valid', async ({ page }) => {
@@ -107,21 +107,21 @@ test('price is valid', async ({ page }) => {
 
     price = -45;// no negatives
     result = validateEntryData({ price, phone: phoneA, name, detail })
-    expect(result).toEqual(null);
+    expect(result).toEqual(false);
 
     price = 0;// no zero
     result = validateEntryData({ price, phone: phoneA, name, detail })
-    expect(result).toEqual(null);
+    expect(result).toEqual(false);
 
     // @ts-ignore
     price = '45a'; // is number
     result = validateEntryData({ price, phone: phoneA, name, detail })
-    expect(result).toEqual(null);
+    expect(result).toEqual(false);
 
     // @ts-ignore
     price = '08888888'; // is number
     result = validateEntryData({ price, phone: phoneA, name, detail })
-    expect(result).toEqual(null);
+    expect(result).toEqual(false);
 });
 
 test('name cant be null or undefined or non strings', async ({ page }) => {
@@ -132,19 +132,19 @@ test('name cant be null or undefined or non strings', async ({ page }) => {
     const detail = ''
 
     let result = validateEntryData({ price, phone: phoneA, name, detail })
-    expect(result).toEqual(null);
+    expect(result).toEqual(false);
 
     name = undefined
     result = validateEntryData({ price, phone: phoneA, name, detail })
-    expect(result).toEqual(null);
+    expect(result).toEqual(false);
 
     name = '        '
     result = validateEntryData({ price, phone: phoneA, name, detail })
-    expect(result).toEqual(null);
+    expect(result).toEqual(false);
 
     name = ''
     result = validateEntryData({ price, phone: phoneA, name, detail })
-    expect(result).toEqual(null);
+    expect(result).toEqual(false);
 });
 
 test('price cant be null or undefined or non strings', async ({ page }) => {
@@ -155,19 +155,19 @@ test('price cant be null or undefined or non strings', async ({ page }) => {
     const detail = ''
 
     let result = validateEntryData({ price, phone: phoneA, name, detail })
-    expect(result).toEqual(null);
+    expect(result).toEqual(false);
 
     price = undefined
     result = validateEntryData({ price, phone: phoneA, name, detail })
-    expect(result).toEqual(null);
+    expect(result).toEqual(false);
 
     price = '        '
     result = validateEntryData({ price, phone: phoneA, name, detail })
-    expect(result).toEqual(null);
+    expect(result).toEqual(false);
 
     price = ''
     result = validateEntryData({ price, phone: phoneA, name, detail })
-    expect(result).toEqual(null);
+    expect(result).toEqual(false);
 });
 
 test('phone cant be null or undefined or non strings', async ({ page }) => {
@@ -178,19 +178,19 @@ test('phone cant be null or undefined or non strings', async ({ page }) => {
     const detail = ''
 
     let result = validateEntryData({ price, phone: phoneA, name, detail })
-    expect(result).toEqual(null);
+    expect(result).toEqual(false);
 
     phone = undefined
     result = validateEntryData({ price, phone: phoneA, name, detail })
-    expect(result).toEqual(null);
+    expect(result).toEqual(false);
 
     phone = '        '
     result = validateEntryData({ price, phone: phoneA, name, detail })
-    expect(result).toEqual(null);
+    expect(result).toEqual(false);
 
     phone = ''
     result = validateEntryData({ price, phone: phoneA, name, detail })
-    expect(result).toEqual(null);
+    expect(result).toEqual(false);
 });
 
 test('no empty spaces on name', async ({ page }) => {
@@ -201,6 +201,6 @@ test('no empty spaces on name', async ({ page }) => {
     const detail = ''
 
     const result = validateEntryData({ price, phone: phoneA, name, detail })
-    expect(result).toEqual(null);
+    expect(result).toEqual(false);
 });
 
