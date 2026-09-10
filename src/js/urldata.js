@@ -27,24 +27,27 @@ export function atobValid(str, defaultValue = null) {
 export function validateEntryData({ price, phone, name, detail }) {
     let valid = true;
     const decodedPhone = atobValid(phone);
-    const finalPhone = +decodedPhone;
-    const phoneIsNumber = !Number.isNaN(finalPhone);
-    const phoneLengthIsCorrect = String(decodedPhone).length === 8;
+    const phoneStr = typeof decodedPhone === 'string' ? decodedPhone.trim() : '';
+    const finalPhone = +phoneStr;
+
+    const phoneIsNumber = phoneStr.length > 0 && !Number.isNaN(finalPhone) && Number.isInteger(finalPhone);
+    const phoneLengthIsCorrect = phoneStr.length === 8;
 
     if (!phoneIsNumber || !phoneLengthIsCorrect) {
         valid = false;
     }
 
-    const priceLengthIsCorrect = String(price).length < 6;
-    const finalPrice = +price;
-    const priceIsNumber = !Number.isNaN(finalPrice);
-    const finalPriceIsPositve = finalPrice > 0;
+    const priceStr = String(price ?? '').trim();
+    const finalPrice = +priceStr;
+    const priceIsNumber = priceStr.length > 0 && !Number.isNaN(finalPrice);
+    const finalPriceIsPositive = finalPrice > 0;
+    const priceLengthIsCorrect = priceStr.length <= 6;
 
-    if (!priceIsNumber || !finalPriceIsPositve || !priceLengthIsCorrect) {
+    if (!priceIsNumber || !finalPriceIsPositive || !priceLengthIsCorrect) {
         valid = false;
     }
 
-    const nameHasData = name.length > 0;
+    const nameHasData = typeof name === 'string' && name.trim().length > 0;
     if (!nameHasData) {
         valid = false;
     }
@@ -56,7 +59,7 @@ export function validateEntryData({ price, phone, name, detail }) {
     return {
         price: finalPrice,
         phone: finalPhone,
-        name,
+        name: name.trim(),
         detail,
-    }
+    };
 }
