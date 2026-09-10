@@ -26,19 +26,21 @@ export function atobValid(str, defaultValue = null) {
 
 export function validateEntryData({ price, phone, name, detail }) {
     let valid = true;
-    const finalPhone = +atobValid(phone);
+    const decodedPhone = atobValid(phone);
+    const finalPhone = +decodedPhone;
     const phoneIsNumber = !Number.isNaN(finalPhone);
-    const phoneLengthIsCorrect = finalPhone.toString().length === 8
+    const phoneLengthIsCorrect = decodedPhone.toString().length === 8;
 
     if (!phoneIsNumber || !phoneLengthIsCorrect) {
         valid = false;
     }
 
+    const priceLengthIsCorrect = price.toString().length < 6;
     const finalPrice = +price;
     const priceIsNumber = !Number.isNaN(finalPrice);
     const finalPriceIsPositve = finalPrice > 0;
 
-    if (!priceIsNumber || !finalPriceIsPositve) {
+    if (!priceIsNumber || !finalPriceIsPositve || !priceLengthIsCorrect) {
         valid = false;
     }
 

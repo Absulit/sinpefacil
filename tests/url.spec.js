@@ -31,7 +31,6 @@ test('data is valid', async ({ page }) => {
     expect(result).toEqual({ price, phone: +phone, name, detail });
 });
 
-
 test('data phone is invalid', async ({ page }) => {
     const price = 45;
     let phone = btoa('8'); // should be 8 chars
@@ -63,6 +62,11 @@ test('data phone is invalid', async ({ page }) => {
 
     // @ts-ignore
     phone = '888888A' // should be a number
+    result = validateEntryData({ price, phone, name, detail })
+    expect(result).toBe(null);
+
+    // @ts-ignore
+    phone = '0888888' // this is 7 chars because the 0 is ignored
     result = validateEntryData({ price, phone, name, detail })
     expect(result).toBe(null);
 });
@@ -111,6 +115,11 @@ test('price is valid', async ({ page }) => {
 
     // @ts-ignore
     price = '45a'; // is number
+    result = validateEntryData({ price, phone: phoneA, name, detail })
+    expect(result).toEqual(null);
+
+    // @ts-ignore
+    price = '08888888'; // is number
     result = validateEntryData({ price, phone: phoneA, name, detail })
     expect(result).toEqual(null);
 
