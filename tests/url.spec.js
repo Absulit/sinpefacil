@@ -124,7 +124,6 @@ test('price is valid', async ({ page }) => {
     expect(result).toEqual(null);
 });
 
-
 test('name, price, phone cant be null or undefined or non strings', async ({ page }) => {
     let phone = null;
     let price = 45;
@@ -158,8 +157,16 @@ test('name, price, phone cant be null or undefined or non strings', async ({ pag
     price = '        ';
     result = validateEntryData({ price, phone: phoneA, name, detail })
     expect(result).toEqual(null);
+});
 
+test('no empty spaces on name', async ({ page }) => {
+    const phone = '12345678';
+    const price = 45;
+    const phoneA = btoa(phone);
+    const name = ''
+    const detail = ''
 
-
+    const result = validateEntryData({ price, phone: phoneA, name, detail })
+    expect(result).toEqual(null);
 });
 
