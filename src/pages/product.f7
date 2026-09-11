@@ -116,7 +116,8 @@
   import { getPhone } from 'db';
   import { formatDate } from 'i18n';
   import i18next from 'i18next';
-  import { ProductEvent } from 'events'
+  import { ProductEvent } from 'events';
+  import { styleOptions } from 'qrcode';
   export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
     const products = $store.getters.products;
     const productId = +$f7route.params.id;
@@ -139,24 +140,8 @@
 
       const url = createURL(finalPhone, name, price, detail);
 
-      const qrCode = new QRCodeStyling({
-        width: 300,
-        height: 300,
-        type: 'svg',
-        data: url,
-        image: '', // link to image
-        dotsOptions: {
-          color: '#000000',
-          type: 'square'
-        },
-        backgroundOptions: {
-          color: '#e9ebee',
-        },
-        imageOptions: {
-          crossOrigin: 'anonymous',
-          margin: 20
-        }
-      });
+      styleOptions.data = url;
+      const qrCode = new QRCodeStyling(styleOptions);
 
       const container = $el.value.find('#qr-code-container')[0];
       qrCode.append(container);
@@ -164,8 +149,6 @@
     })
     $f7.on(ProductEvent.UPDATED, async productUpdated => {
       currentProduct = productUpdated;
-
-
 
 
       // TODO: merge init and updated code
@@ -180,24 +163,8 @@
 
       const url = createURL(finalPhone, name, price, detail);
 
-      const qrCode = new QRCodeStyling({
-        width: 300,
-        height: 300,
-        type: 'svg',
-        data: url,
-        image: '', // link to image
-        dotsOptions: {
-          color: '#000000',
-          type: 'square'
-        },
-        backgroundOptions: {
-          color: '#e9ebee',
-        },
-        imageOptions: {
-          crossOrigin: 'anonymous',
-          margin: 20
-        }
-      });
+      styleOptions.data = url;
+      const qrCode = new QRCodeStyling(styleOptions);
 
       const container = $el.value.find('#qr-code-container')[0];
       container.innerText = '';

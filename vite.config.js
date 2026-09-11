@@ -46,6 +46,7 @@ export default async () => {
         'crypto': SRC_DIR + '/js/crypto.js',
         'tooltips': SRC_DIR + '/js/tooltips.js',
         'events': SRC_DIR + '/js/events.js',
+        'qrcode': SRC_DIR + '/js/qrcode.js',
       },
     },
     server: {

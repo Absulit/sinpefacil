@@ -117,6 +117,7 @@
   import { formatDate } from 'i18n';
   import generateSINPESMS, { validateSMS, SMS_START } from 'sms';
   import i18next from 'i18next';
+  import { styleOptionsHistory } from 'qrcode';
   export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
     const history = $store.getters.history;
     const historyItemId = +$f7route.params.id;
@@ -133,24 +134,9 @@
 
       const url = createURL(phone, name, price, detail);
 
-      const qrCode = new QRCodeStyling({
-        width: 300,
-        height: 300,
-        type: 'svg',
-        data: url,
-        image: '', // link to image
-        dotsOptions: {
-          color: '#ff5500',
-          type: 'square'
-        },
-        backgroundOptions: {
-          color: '#e9ebee',
-        },
-        imageOptions: {
-          crossOrigin: 'anonymous',
-          margin: 20
-        }
-      });
+      styleOptionsHistory.data = url;
+
+      const qrCode = new QRCodeStyling(styleOptionsHistory);
 
       const container = $el.value.find('#qr-code-container')[0];
       qrCode.append(container);
