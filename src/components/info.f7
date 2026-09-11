@@ -1,0 +1,18 @@
+<template>
+    <div class="toolbar toolbar-bottom messagebar-area no-shadow">
+        <div class="toolbar-inner display-flex justify-content-center align-items-center padding-horizontal">
+            <span class="text-color-gray size-12 padding-half">
+                <i class="icon f7-icons if-not-md">info_circle</i>
+                <i class="icon material-icons if-md">info</i>
+            </span>
+            ${text}
+        </div>
+    </div>
+</template>
+
+<script>
+    export default (props, { $f7, $emit, $el }) => {
+        const text = props.text || '';
+        return $render;
+    }
+</script>

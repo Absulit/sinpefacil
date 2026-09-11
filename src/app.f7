@@ -75,15 +75,8 @@
         </div>
 
         <div class="page-content">
-          <div class="toolbar toolbar-bottom messagebar-area no-shadow">
-            <div class="toolbar-inner display-flex justify-content-center align-items-center padding-horizontal">
-              <span class="text-color-gray size-12 padding-half">
-                <i class="icon f7-icons if-not-md">info_circle</i>
-                <i class="icon material-icons if-md">info</i>
-              </span>
-              ${i18next.t('codes:smsInfo', {numChars})}
-            </div>
-          </div>
+
+          <app-info text="${i18next.t('codes:smsInfo', {numChars})}"></app-info>
 
           <form class="list" id="qr-data-form">
             <ul>
