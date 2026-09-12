@@ -14,20 +14,8 @@
     <div class="page-content">
       <div class="list list-strong-ios list-dividers-ios list-outline-ios">
         <ul>
-
           <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-title item-label">${i18next.t('settings:phone')}</div>
-                <div class="item-input-wrap">
-                  <input id="phoneInputSettings" maxlength="8" minlength="8" type="text" inputmode="numeric"
-                    pattern="[0-9]{8}" validate placeholder="${i18next.t('settings:phonePlaceholder')}" required />
-                </div>
-              </div>
-            </div>
-          </li>
-
-          <li>
+            <div class="block-title">BANCO PARA ENVIAR SMS</div>
             <a class="item-link smart-select smart-select-init" data-browser-history="true" data-open-in="page"
               data-name="select-bank">
               <select id="banksSelect" name="banksSelect">
@@ -39,6 +27,53 @@
                 </div>
               </div>
             </a>
+          </li>
+
+          <li>
+            <div class="block-title">TELEFONO PARA SUS QR</div>
+
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">${i18next.t('settings:phone')}</div>
+                <div class="item-input-wrap">
+                  <input id="phoneInputSettings" maxlength="8" minlength="8" type="text" inputmode="numeric"
+                    pattern="[0-9]{8}" validate placeholder="${i18next.t('settings:phonePlaceholder')}" required />
+                </div>
+              </div>
+            </div>
+          </li>
+
+
+
+          <li>
+
+            <div class="block-title">LOGO PARA EL CÓDIGO QR</div>
+            <div class="card card-raised">
+              <div class="card-content card-content-padding">
+                <input type="file" id="image-input" accept="image/*" style="display: none;" />
+
+                <button class="button button-fill" @click="${selectImage}">BUSCAR LOGO</button>
+
+                <div class="margin-top text-center">
+                  <img id="image-preview" src=""
+                    style="max-width: 100%; display: none; margin: 10px auto; border-radius: 8px;" />
+                </div>
+
+                <button class="button button-fill color-green margin-top" id="upload-btn" @click="${uploadImage}"
+                  style="display: none;">
+                  Guardar
+                </button>
+
+
+              </div>
+
+              <div class="card-footer">
+              </div>
+            </div>
+
+
+
+
           </li>
 
           <li>
@@ -75,7 +110,7 @@
   import i18next from 'i18next';
   import { LangEvent, CamEvent, SettingsEvent } from 'events';
   import { navigatorLanguage, getLanguageName } from 'i18n';
-  export default async (props, { $f7, $on, $f7route, $update }) => {
+  export default async (props, { $f7, $on, $f7route, $update, $el }) => {
 
     let phoneInput;
     $on('pageInit', async () => {
@@ -152,6 +187,8 @@
       })
       ////////////////////
 
+      $el.value.find('#image-input').on('change', handleFileChange);
+
     })
 
     const handleBack = async () => {
@@ -200,6 +237,33 @@
     $on('pageAfterOut', (e, page) => {
       $f7.emit(CamEvent.RESTART)
     });
+
+    let selectedFile = null;
+    const selectImage = e => {
+      $el.value.find('#image-input').click();
+
+    }
+    const uploadImage = () => {
+      if (!selectedFile) return;
+      console.log('---- upload');
+      const blobUrl = URL.createObjectURL(selectedFile);
+      console.log('Blob URL:', blobUrl);
+    }
+
+    const handleFileChange = e => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      selectedFile = file;
+
+      // Show local preview using FileReader
+      const reader = new FileReader();
+      reader.onload = e => {
+        $el.value.find('#image-preview').attr('src', e.target.result).show();
+        $el.value.find('#upload-btn').show();
+      };
+      reader.readAsDataURL(file);
+    };
 
     return $render;
   };
