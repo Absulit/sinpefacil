@@ -191,6 +191,22 @@ if (import.meta.env.DEV) {
     // const download = (await import('downloadjs')).default;
 
     // const blob = await db.export();
-    // download(blob, `sf-export.json`, "application/json");
+    // // download(blob, `sf-export.json`, "application/json");
+
+    // const reader = new FileReader();
+    // reader.readAsDataURL(blob);
+
+    // reader.onloadend = () => {
+    //     const dataUrl = reader.result;
+
+    //     const a = document.createElement('a');
+    //     a.href = dataUrl;
+    //     a.download = 'sf-export.json';
+    //     a.classList.add('external');
+
+    //     document.body.appendChild(a);
+    //     a.click();
+    //     document.body.removeChild(a);
+    // };
 }
 
