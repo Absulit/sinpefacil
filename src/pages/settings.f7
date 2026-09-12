@@ -30,7 +30,7 @@
           </li>
 
           <li>
-            <div class="block-title">TELEFONO PARA SUS QR</div>
+            <div class="block-title">${i18next.t('settings:phoneLabel')}</div>
 
             <div class="item-content item-input">
               <div class="item-inner">

@@ -101,6 +101,7 @@ const resources = {
             deleteConfirmation: `Receipt deleted`,
         },
         settings: {
+            phoneLabel: `Phone for your QR codes`,
             phone: `Phone number`,
             phonePlaceholder: `Phone associated with SINPE Móvil`,
             bankLabel: `Bank to send SMS to`,
@@ -226,6 +227,7 @@ const resources = {
             deleteConfirmation: `Recibo borrado`,
         },
         settings: {
+            phoneLabel: `Teléfono para sus QR`,
             phone: `Teléfono`,
             phonePlaceholder: `Teléfono asociado a SINPE Móvil`,
             bankLabel: `Banco para enviar SMS`,
