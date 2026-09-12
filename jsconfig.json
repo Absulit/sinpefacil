@@ -14,6 +14,7 @@
       "tooltips": ["src/js/tooltips.js"],
       "events": ["src/js/events.js"],
       "qrcode": ["src/js/qrcode.js"],
+      "file": ["src/js/file.js"],
     }
   }
 }
