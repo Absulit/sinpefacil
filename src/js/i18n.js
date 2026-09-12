@@ -103,6 +103,7 @@ const resources = {
         settings: {
             phone: `Phone number`,
             phonePlaceholder: `Phone associated with SINPE Móvil`,
+            bankLabel: `Bank to send SMS to`,
             bank: `Bank`,
             lang: `Force Language`,
             CTAselectBank: `You haven't selected your bank. Exit?`,
@@ -227,6 +228,7 @@ const resources = {
         settings: {
             phone: `Teléfono`,
             phonePlaceholder: `Teléfono asociado a SINPE Móvil`,
+            bankLabel: `Banco para enviar SMS`,
             bank: `Banco`,
             lang: `Forzar Idioma`,
             CTAselectBank: `No ha seleccionado su banco. ¿Salir?`,

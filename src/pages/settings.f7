@@ -15,7 +15,7 @@
       <div class="list list-strong-ios list-dividers-ios list-outline-ios">
         <ul>
           <li>
-            <div class="block-title">BANCO PARA ENVIAR SMS</div>
+            <div class="block-title">${i18next.t('settings:bankLabel')}</div>
             <a class="item-link smart-select smart-select-init" data-browser-history="true" data-open-in="page"
               data-name="select-bank">
               <select id="banksSelect" name="banksSelect">
