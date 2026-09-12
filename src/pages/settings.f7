@@ -185,6 +185,16 @@
 
       $el.value.find('#image-input').on('change', handleFileChange);
 
+      // check if logo exists and display it if so
+      const logoFile = await getOption(Keys.USER_LOGO, null);
+      if (logoFile) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          $el.value.find('#image-preview').attr('src', e.target.result).show();
+        };
+        reader.readAsDataURL(logoFile);
+      }
+
     })
 
     const handleBack = async () => {
@@ -239,11 +249,9 @@
       $el.value.find('#image-input').click();
 
     }
-    const uploadImage = () => {
+    const uploadImage = async () => {
       if (!selectedFile) return;
-      console.log('---- upload');
-      const blobUrl = URL.createObjectURL(selectedFile);
-      console.log('Blob URL:', blobUrl);
+      await saveOption(Keys.USER_LOGO, selectedFile);
     }
 
     const handleFileChange = e => {
@@ -252,7 +260,6 @@
 
       selectedFile = file;
 
-      // Show local preview using FileReader
       const reader = new FileReader();
       reader.onload = e => {
         $el.value.find('#image-preview').attr('src', e.target.result).show();

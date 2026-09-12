@@ -123,6 +123,7 @@ export const Keys = {
     SELECTED_BANK: 'selectedBank',
     FIRST_TIME: 'FIRST_TIME',
     HMAC_SECRET: 'HMAC_SECRET',
+    USER_LOGO: 'USER_LOGO',
 }
 
 Object.freeze(Keys);
