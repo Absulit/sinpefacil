@@ -47,6 +47,7 @@ export default async () => {
         'tooltips': SRC_DIR + '/js/tooltips.js',
         'events': SRC_DIR + '/js/events.js',
         'qrcode': SRC_DIR + '/js/qrcode.js',
+        'file': SRC_DIR + '/js/file.js',
       },
     },
     server: {
