@@ -54,7 +54,7 @@
 
                 <button class="button button-fill" @click="${selectImage}">${i18next.t('settings:logoButton')}</button>
 
-                <div class="margin-top text-center">
+                <div class="margin-top text-align-center">
                   <img id="image-preview" src=""
                     style="max-width: 100%; display: none; margin: 10px auto; border-radius: 8px;" />
                 </div>
@@ -67,11 +67,7 @@
 
               </div>
 
-              <div class="card-footer">
-              </div>
             </div>
-
-
 
 
           </li>
