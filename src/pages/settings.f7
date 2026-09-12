@@ -106,10 +106,16 @@
   import i18next from 'i18next';
   import { LangEvent, CamEvent, SettingsEvent } from 'events';
   import { navigatorLanguage, getLanguageName } from 'i18n';
+  import { readAsDataURL } from 'file';
   export default async (props, { $f7, $on, $f7route, $update, $el }) => {
 
     let phoneInput;
+    let imagePreviewEl;
+    let imageInputEl;
     $on('pageInit', async () => {
+      imagePreviewEl = $el.value.find('#image-preview');
+      imageInputEl = $el.value.find('#image-input');
+
       const banks = await db.banks.toArray();
       const { phone, name, price, detail } = $f7route.query;
       let bankId = await getBankId();
@@ -183,16 +189,13 @@
       })
       ////////////////////
 
-      $el.value.find('#image-input').on('change', handleFileChange);
+      imageInputEl.on('change', handleFileChange);
 
       // check if logo exists and display it if so
       const logoFile = await getOption(Keys.USER_LOGO, null);
       if (logoFile) {
-        const reader = new FileReader();
-        reader.onload = e => {
-          $el.value.find('#image-preview').attr('src', e.target.result).show();
-        };
-        reader.readAsDataURL(logoFile);
+        const logoImage = await readAsDataURL(logoFile);
+        imagePreviewEl.attr('src', logoImage).show();
       }
 
     })
@@ -246,26 +249,23 @@
 
     let selectedFile = null;
     const selectImage = e => {
-      $el.value.find('#image-input').click();
-
+      imageInputEl.click();
     }
+
     const uploadImage = async () => {
       if (!selectedFile) return;
       await saveOption(Keys.USER_LOGO, selectedFile);
     }
 
-    const handleFileChange = e => {
+    const handleFileChange = async e => {
       const file = e.target.files[0];
       if (!file) return;
 
       selectedFile = file;
 
-      const reader = new FileReader();
-      reader.onload = e => {
-        $el.value.find('#image-preview').attr('src', e.target.result).show();
-        $el.value.find('#upload-btn').show();
-      };
-      reader.readAsDataURL(file);
+      const logoImage = await readAsDataURL(selectedFile);
+      imagePreviewEl.attr('src', logoImage).show();
+      $el.value.find('#upload-btn').show();
     };
 
     return $render;
