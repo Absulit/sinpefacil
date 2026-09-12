@@ -47,12 +47,12 @@
 
           <li>
 
-            <div class="block-title">LOGO PARA EL CÓDIGO QR</div>
+            <div class="block-title">${i18next.t('settings:logoLabel')}</div>
             <div class="card card-raised">
               <div class="card-content card-content-padding">
                 <input type="file" id="image-input" accept="image/*" style="display: none;" />
 
-                <button class="button button-fill" @click="${selectImage}">BUSCAR LOGO</button>
+                <button class="button button-fill" @click="${selectImage}">${i18next.t('settings:logoButton')}</button>
 
                 <div class="margin-top text-center">
                   <img id="image-preview" src=""
@@ -61,7 +61,7 @@
 
                 <button class="button button-fill color-green margin-top" id="upload-btn" @click="${uploadImage}"
                   style="display: none;">
-                  Guardar
+                  ${i18next.t('save')}
                 </button>
 
 

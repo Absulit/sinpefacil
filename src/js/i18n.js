@@ -27,6 +27,7 @@ const resources = {
             <br>The app name, logo, and brand assets are reserved and not covered by the MIT License.`,
             licenseLink: `Read the MIT license on Github`,
             CTALicense: `License`,
+            save: `Save`,
         },
         about: {
             aboutContent: `This app generates QR codes {{qrcode}} that allow other people pay you with SINPE MÓVIL {{sinpemovil}}.
@@ -111,6 +112,8 @@ const resources = {
             phoneValidity: `Wrong phone number`,
             phoneSaved: `Phone saved`,
             phoneNotSaved: `Phone not saved`,
+            logoLabel: `Logo for your QR codes`,
+            logoButton: `Find Logo`,
         },
         share: {
             copyLink: `Copy Link`,
@@ -152,6 +155,7 @@ const resources = {
             <br>El nombre de la aplicación, logo, e imágenes están reservados y no están cubiertos por la Licencia MIT.`,
             licenseLink: `Leer la licencia MIT en Github (Inglés)`,
             CTALicense: `Licencia`,
+            save: `Guardar`,
         },
         about: {
             aboutContent: `Esta aplicación genera Códigos QR {{- qrcode}} para permitir a otras personas pagarte con SINPE MÓVIL. {{- sinpemovil}}
@@ -237,6 +241,8 @@ const resources = {
             phoneValidity: `Número de teléfono incorrecto`,
             phoneSaved: `Teléfono guardado`,
             phoneNotSaved: `No se guardó el teléfono`,
+            logoLabel: `Logo para sus códigos QR`,
+            logoButton: `Buscar Logo`,
         },
         share: {
             copyLink: `Copiar Link`,
