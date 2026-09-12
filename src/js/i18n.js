@@ -114,6 +114,7 @@ const resources = {
             phoneNotSaved: `Phone not saved`,
             logoLabel: `Logo for your QR codes`,
             logoButton: `Find Logo`,
+            logoSaved: `Logo saved`,
         },
         share: {
             copyLink: `Copy Link`,
@@ -243,6 +244,7 @@ const resources = {
             phoneNotSaved: `No se guardó el teléfono`,
             logoLabel: `Logo para sus códigos QR`,
             logoButton: `Buscar Logo`,
+            logoSaved: `Logo guardado`,
         },
         share: {
             copyLink: `Copiar Link`,

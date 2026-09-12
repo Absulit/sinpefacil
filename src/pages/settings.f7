@@ -54,15 +54,16 @@
 
                 <button class="button button-fill" @click="${selectImage}">${i18next.t('settings:logoButton')}</button>
 
+                <button class="button button-fill color-green margin-top" id="upload-btn" @click="${uploadImage}"
+                  style="display: none;">
+                  ${i18next.t('save')}
+                </button>
+
                 <div class="margin-top text-align-center">
                   <img id="image-preview" src=""
                     style="max-width: 100%; display: none; margin: 10px auto; border-radius: 8px;" />
                 </div>
 
-                <button class="button button-fill color-green margin-top" id="upload-btn" @click="${uploadImage}"
-                  style="display: none;">
-                  ${i18next.t('save')}
-                </button>
 
 
               </div>
@@ -112,9 +113,11 @@
     let phoneInput;
     let imagePreviewEl;
     let imageInputEl;
+    let uploadBtn;
     $on('pageInit', async () => {
       imagePreviewEl = $el.value.find('#image-preview');
       imageInputEl = $el.value.find('#image-input');
+      uploadBtn = $el.value.find('#upload-btn');
 
       const banks = await db.banks.toArray();
       const { phone, name, price, detail } = $f7route.query;
@@ -254,7 +257,14 @@
 
     const uploadImage = async () => {
       if (!selectedFile) return;
+      uploadBtn.hide();
       await saveOption(Keys.USER_LOGO, selectedFile);
+
+      $f7.toast.create({
+        text: i18next.t('settings:logoSaved'),
+        closeTimeout: 2000,
+      }).open();
+
     }
 
     const handleFileChange = async e => {
@@ -265,7 +275,7 @@
 
       const logoImage = await readAsDataURL(selectedFile);
       imagePreviewEl.attr('src', logoImage).show();
-      $el.value.find('#upload-btn').show();
+      uploadBtn.show();
     };
 
     return $render;
