@@ -56,7 +56,7 @@
 
                 <button class="button button-fill color-red margin-top" id="delete-btn" @click="${deleteImage}"
                   style="display: none;">
-                  ${i18next.t('BORRAR')}
+                  ${i18next.t('delete')}
                 </button>
 
                 <div class="margin-top text-align-center">
@@ -274,6 +274,12 @@
       await saveOption(Keys.USER_LOGO, null);
       imagePreviewEl.hide();
       deleteBtn.hide();
+
+      $f7.toast.create({
+        text: i18next.t('settings:logoDeleted'),
+        closeTimeout: 2000,
+      }).open();
+
     }
 
     return $render;

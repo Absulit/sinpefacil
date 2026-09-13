@@ -115,6 +115,7 @@ const resources = {
             logoLabel: `Logo for your QR codes`,
             logoButton: `Find Logo`,
             logoSaved: `Logo saved`,
+            logoDeleted: `Logo deleted`,
         },
         share: {
             copyLink: `Copy Link`,
@@ -245,6 +246,7 @@ const resources = {
             logoLabel: `Logo para sus códigos QR`,
             logoButton: `Buscar Logo`,
             logoSaved: `Logo guardado`,
+            logoDeleted: `Logo borrado`,
         },
         share: {
             copyLink: `Copiar Link`,
