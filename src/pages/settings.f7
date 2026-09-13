@@ -54,17 +54,15 @@
 
                 <button class="button button-fill" @click="${selectImage}">${i18next.t('settings:logoButton')}</button>
 
-                <button class="button button-fill color-green margin-top" id="upload-btn" @click="${uploadImage}"
+                <button class="button button-fill color-red margin-top" id="delete-btn" @click="${deleteImage}"
                   style="display: none;">
-                  ${i18next.t('save')}
+                  ${i18next.t('BORRAR')}
                 </button>
 
                 <div class="margin-top text-align-center">
                   <img id="image-preview" src=""
                     style="max-width: 100%; display: none; margin: 10px auto; border-radius: 8px;" />
                 </div>
-
-
 
               </div>
 
@@ -113,11 +111,11 @@
     let phoneInput;
     let imagePreviewEl;
     let imageInputEl;
-    let uploadBtn;
+    let deleteBtn;
     $on('pageInit', async () => {
       imagePreviewEl = $el.value.find('#image-preview');
       imageInputEl = $el.value.find('#image-input');
-      uploadBtn = $el.value.find('#upload-btn');
+      deleteBtn = $el.value.find('#delete-btn');
 
       const banks = await db.banks.toArray();
       const { phone, name, price, detail } = $f7route.query;
@@ -199,6 +197,7 @@
       if (logoFile) {
         const logoImage = await readAsDataURL(logoFile);
         imagePreviewEl.attr('src', logoImage).show();
+        deleteBtn.show();
       }
 
     })
@@ -250,33 +249,31 @@
       $f7.emit(CamEvent.RESTART)
     });
 
-    let selectedFile = null;
     const selectImage = e => {
       imageInputEl.click();
-    }
-
-    const uploadImage = async () => {
-      if (!selectedFile) return;
-      uploadBtn.hide();
-      await saveOption(Keys.USER_LOGO, selectedFile);
-
-      $f7.toast.create({
-        text: i18next.t('settings:logoSaved'),
-        closeTimeout: 2000,
-      }).open();
-
     }
 
     const handleFileChange = async e => {
       const file = e.target.files[0];
       if (!file) return;
 
-      selectedFile = file;
-
-      const logoImage = await readAsDataURL(selectedFile);
+      const logoImage = await readAsDataURL(file);
       imagePreviewEl.attr('src', logoImage).show();
-      uploadBtn.show();
+
+      await saveOption(Keys.USER_LOGO, file);
+
+      $f7.toast.create({
+        text: i18next.t('settings:logoSaved'),
+        closeTimeout: 2000,
+      }).open();
+
+      deleteBtn.show();
     };
+
+    const deleteImage = async e => {
+      await saveOption(Keys.USER_LOGO, null);
+      imagePreviewEl.hide();
+    }
 
     return $render;
   };
