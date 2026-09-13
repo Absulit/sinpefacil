@@ -185,6 +185,32 @@ export async function saveBankId(value) {
     await saveOption(Keys.SELECTED_BANK, id);
 }
 
+/**
+ *
+ * @returns {String}
+ */
+export async function getLogo() {
+    const logoFile = await getOption(Keys.USER_LOGO, null);
+    if (!logoFile) return null;
+    const { ciphertext, iv } = logoFile;
+    const decryptedFile = await decryptData(ciphertext, iv);
+    if (decryptedFile === 'null') return null;
+    return decryptedFile;
+}
+
+/**
+ *
+ * @param {String} logoImage
+ */
+export async function saveLogo(logoImage) {
+    if (!logoImage) {
+        await saveOption(Keys.USER_LOGO, null);
+        return null;
+    }
+    const fileEncrypted = await encryptData(logoImage);
+    await saveOption(Keys.USER_LOGO, fileEncrypted);
+}
+
 // tests only
 if (import.meta.env.DEV) {
     // // export: place file in /public

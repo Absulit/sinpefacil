@@ -113,7 +113,7 @@
 
   import QRCodeStyling from 'qr-code-styling';
   import shareLink, { createURL, shareImage, svg2png } from 'share';
-  import { getPhone, getOption, Keys } from 'db';
+  import { getPhone, getLogo } from 'db';
   import { formatDate } from 'i18n';
   import i18next from 'i18next';
   import { ProductEvent } from 'events';
@@ -144,10 +144,10 @@
 
       styleOptions.data = url;
 
-      const logoFile = await getOption(Keys.USER_LOGO, null);
+      const logoImage = await getLogo();
       styleOptions.image = defaultImage;
-      if (logoFile) {
-        styleOptions.image = await readAsDataURL(logoFile);
+      if (logoImage) {
+        styleOptions.image = logoImage;
       }
       const qrCode = new QRCodeStyling(styleOptions);
 
@@ -172,10 +172,10 @@
       const url = createURL(finalPhone, name, price, detail);
 
       styleOptions.data = url;
-      const logoFile = await getOption(Keys.USER_LOGO, null);
+      const logoImage = await getLogo();
       styleOptions.image = defaultImage;
-      if (logoFile) {
-        styleOptions.image = await readAsDataURL(logoFile);
+      if (logoImage) {
+        styleOptions.image = logoImage;
       }
       const qrCode = new QRCodeStyling(styleOptions);
 
