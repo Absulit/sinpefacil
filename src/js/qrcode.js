@@ -1,9 +1,11 @@
+export const defaultImage = '/icons/512x512.png';
+
 export const styleOptions = {
     width: 300,
     height: 300,
     type: 'svg',
     data: null,
-    image: '/icons/512x512.png', // link to image
+    image: defaultImage, // link to image
     dotsOptions: {
         color: '#156683',
         type: 'rounded',
@@ -33,7 +35,7 @@ export const styleOptionsHistory = {
     height: 300,
     type: 'svg',
     data: null,
-    image: '/icons/512x512.png', // link to image
+    image: defaultImage, // link to image
     dotsOptions: {
         color: '#ff5500',
         type: 'rounded',

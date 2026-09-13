@@ -117,7 +117,7 @@
   import { formatDate } from 'i18n';
   import i18next from 'i18next';
   import { ProductEvent } from 'events';
-  import { styleOptions } from 'qrcode';
+  import { styleOptions, defaultImage } from 'qrcode';
   import { readAsDataURL } from 'file';
 
   export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
@@ -145,6 +145,7 @@
       styleOptions.data = url;
 
       const logoFile = await getOption(Keys.USER_LOGO, null);
+      styleOptions.image = defaultImage;
       if (logoFile) {
         styleOptions.image = await readAsDataURL(logoFile);
       }
@@ -172,6 +173,7 @@
 
       styleOptions.data = url;
       const logoFile = await getOption(Keys.USER_LOGO, null);
+      styleOptions.image = defaultImage;
       if (logoFile) {
         styleOptions.image = await readAsDataURL(logoFile);
       }

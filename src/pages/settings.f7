@@ -273,6 +273,7 @@
     const deleteImage = async e => {
       await saveOption(Keys.USER_LOGO, null);
       imagePreviewEl.hide();
+      deleteBtn.hide();
     }
 
     return $render;
