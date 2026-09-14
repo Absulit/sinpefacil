@@ -270,14 +270,25 @@
     };
 
     const deleteImage = async e => {
-      await saveLogo(null);
-      imagePreviewEl.hide();
-      deleteBtn.hide();
 
-      $f7.toast.create({
-        text: i18next.t('settings:logoDeleted'),
-        closeTimeout: 2000,
-      }).open();
+      $f7.dialog.confirm(
+        i18next.t('settings:logoDeleteRequest'),
+        'SINPE Fácil',
+        async () => { // ok
+          await saveLogo(null);
+          imagePreviewEl.hide();
+          deleteBtn.hide();
+
+          $f7.toast.create({
+            text: i18next.t('settings:logoDeleted'),
+            closeTimeout: 2000,
+          }).open();
+
+        },
+        () => { // cancel
+
+        }
+      );
 
     }
 

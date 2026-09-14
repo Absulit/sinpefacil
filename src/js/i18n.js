@@ -116,6 +116,7 @@ const resources = {
             logoButton: `Find Logo`,
             logoSaved: `Logo saved`,
             logoDeleted: `Logo deleted`,
+            logoDeleteRequest: `Delete Logo?`,
         },
         share: {
             copyLink: `Copy Link`,
@@ -247,6 +248,7 @@ const resources = {
             logoButton: `Buscar Logo`,
             logoSaved: `Logo guardado`,
             logoDeleted: `Logo borrado`,
+            logoDeleteRequest: `¿Borrar Logo?`,
         },
         share: {
             copyLink: `Copiar Link`,
