@@ -26,6 +26,11 @@ import {
 
 await initI18n();
 
+import Info from '../components/info.f7';
+
+Framework7.registerComponent('app-info', Info);
+
+
 store.dispatch('initApp').then(() => {
 
     const app = new Framework7({

@@ -27,6 +27,7 @@ const resources = {
             <br>The app name, logo, and brand assets are reserved and not covered by the MIT License.`,
             licenseLink: `Read the MIT license on Github`,
             CTALicense: `License`,
+            save: `Save`,
         },
         about: {
             aboutContent: `This app generates QR codes {{qrcode}} that allow other people pay you with SINPE MÓVIL {{sinpemovil}}.
@@ -101,14 +102,21 @@ const resources = {
             deleteConfirmation: `Receipt deleted`,
         },
         settings: {
+            phoneLabel: `Phone for your QR codes`,
             phone: `Phone number`,
             phonePlaceholder: `Phone associated with SINPE Móvil`,
+            bankLabel: `Bank to send SMS to`,
             bank: `Bank`,
             lang: `Force Language`,
             CTAselectBank: `You haven't selected your bank. Exit?`,
             phoneValidity: `Wrong phone number`,
             phoneSaved: `Phone saved`,
             phoneNotSaved: `Phone not saved`,
+            logoLabel: `Logo for your QR codes`,
+            logoButton: `Find Logo`,
+            logoSaved: `Logo saved`,
+            logoDeleted: `Logo deleted`,
+            logoDeleteRequest: `Delete Logo?`,
         },
         share: {
             copyLink: `Copy Link`,
@@ -150,6 +158,7 @@ const resources = {
             <br>El nombre de la aplicación, logo, e imágenes están reservados y no están cubiertos por la Licencia MIT.`,
             licenseLink: `Leer la licencia MIT en Github (Inglés)`,
             CTALicense: `Licencia`,
+            save: `Guardar`,
         },
         about: {
             aboutContent: `Esta aplicación genera Códigos QR {{- qrcode}} para permitir a otras personas pagarte con SINPE MÓVIL. {{- sinpemovil}}
@@ -225,14 +234,21 @@ const resources = {
             deleteConfirmation: `Recibo borrado`,
         },
         settings: {
+            phoneLabel: `Teléfono para sus QR`,
             phone: `Teléfono`,
             phonePlaceholder: `Teléfono asociado a SINPE Móvil`,
+            bankLabel: `Banco para enviar SMS`,
             bank: `Banco`,
             lang: `Forzar Idioma`,
             CTAselectBank: `No ha seleccionado su banco. ¿Salir?`,
             phoneValidity: `Número de teléfono incorrecto`,
             phoneSaved: `Teléfono guardado`,
             phoneNotSaved: `No se guardó el teléfono`,
+            logoLabel: `Logo para sus códigos QR`,
+            logoButton: `Buscar Logo`,
+            logoSaved: `Logo guardado`,
+            logoDeleted: `Logo borrado`,
+            logoDeleteRequest: `¿Borrar Logo?`,
         },
         share: {
             copyLink: `Copiar Link`,

@@ -508,3 +508,69 @@ test.describe('URL Parameter XSS & SMS Redirect Handling', () => {
         });
     }
 });
+
+test.describe('SVG XSS', () => {
+
+    test('verify SVG payload executes XSS', async ({ page }) => {
+        const maliciousSvg = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+            <script type="text/javascript">
+                alert('XSS_TRIGGERED');
+            </script>
+            <circle cx="50" cy="50" r="40" fill="red" />
+            </svg>
+        `;
+
+        let xssTriggered = false;
+        page.on('dialog', async (dialog) => {
+            if (dialog.message() === 'XSS_TRIGGERED') {
+                xssTriggered = true;
+            }
+            await dialog.dismiss();
+        });
+
+        const svgDataUri = `data:image/svg+xml;utf8,${encodeURIComponent(maliciousSvg)}`;
+
+        await page.goto(svgDataUri);
+
+        expect(xssTriggered).toBe(true);
+    });
+
+    test('application blocks SVG XSS payloads', async ({ page }) => {
+        let xssTriggered = false;
+        page.on('dialog', async (dialog) => {
+            xssTriggered = true;
+            await dialog.dismiss();
+        });
+
+        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        const backButton = page.locator('.link.back');
+        await backButton.waitFor({ state: 'visible' });
+        await backButton.click();
+
+        const rightMenu = page.locator('.right-menu');
+        await rightMenu.waitFor({ state: 'visible' });
+        await rightMenu.click();
+
+        const settingsMenu = page.locator('.panel-close.settings');
+        await settingsMenu.waitFor({ state: 'visible' });
+        await settingsMenu.click();
+
+        const maliciousSvg = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" onload="alert('XSS')">
+            <circle cx="50" cy="50" r="40" fill="red" />
+            </svg>
+        `;
+
+        await page.evaluate((svgContent) => {
+            const c = document.getElementById('image-preview');
+            c.style.display = 'block';
+            c.src = `data:image/svg+xml;utf8,${encodeURIComponent(svgContent)}`;
+        }, maliciousSvg);
+
+        await page.waitForTimeout(3000);
+
+        expect(xssTriggered).toBe(false);
+    })
+
+})
