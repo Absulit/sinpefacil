@@ -6,7 +6,6 @@ import { getOption, Keys } from 'db';
 const resources = {
     en: {
         translation: {
-            home: "Home",
             codes: "My QRs",
             read: "Read to Pay",
             history: "History",
@@ -137,7 +136,6 @@ const resources = {
     },
     es: {
         translation: {
-            home: "Inicio",
             codes: "Mis QRs",
             read: "Leer y Pagar",
             history: "Historial",
