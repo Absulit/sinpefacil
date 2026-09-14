@@ -1,5 +1,4 @@
 
-import HomePage from '../pages/home.f7';
 import ReadPage from '../pages/read.f7';
 import HistoryPage from '../pages/history.f7';
 import HistoryItemPage from '../pages/historyitem.f7';
@@ -11,10 +10,6 @@ import SettingsPage from '../pages/settings.f7';
 import NotFoundPage from '../pages/404.f7';
 
 var routes = [
-  {
-    path: '/',
-    component: HomePage,
-  },
   {
     path: '/read/',
     component: ReadPage,
