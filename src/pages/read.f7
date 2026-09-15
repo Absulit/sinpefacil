@@ -103,8 +103,6 @@
         return;
       }
 
-      $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() });
-      $f7.emit(HistoryEvent.ADDED);
       // if ($f7.device.ios) {
       //   // rawData = rawData.replace('?body=', '&body=');
       // }
@@ -114,6 +112,8 @@
 
       $f7.dialogSMSConfirm({ bank: bank.shortname, price, phone, name, detail },
         async () => {
+          $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() });
+          $f7.emit(HistoryEvent.ADDED);
           window.location.href = generateSINPESMS(bank.phone, price, phone, name, detail)
           isNavigating = false;
         },
