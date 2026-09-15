@@ -14,20 +14,8 @@
     <div class="page-content">
       <div class="list list-strong-ios list-dividers-ios list-outline-ios">
         <ul>
-
           <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-title item-label">${i18next.t('settings:phone')}</div>
-                <div class="item-input-wrap">
-                  <input id="phoneInputSettings" maxlength="8" minlength="8" type="text" inputmode="numeric"
-                    pattern="[0-9]{8}" validate placeholder="${i18next.t('settings:phonePlaceholder')}" required />
-                </div>
-              </div>
-            </div>
-          </li>
-
-          <li>
+            <div class="block-title">${i18next.t('settings:bankLabel')}</div>
             <a class="item-link smart-select smart-select-init" data-browser-history="true" data-open-in="page"
               data-name="select-bank">
               <select id="banksSelect" name="banksSelect">
@@ -39,6 +27,48 @@
                 </div>
               </div>
             </a>
+          </li>
+
+          <li>
+            <div class="block-title">${i18next.t('settings:phoneLabel')}</div>
+
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">${i18next.t('settings:phone')}</div>
+                <div class="item-input-wrap">
+                  <input id="phoneInputSettings" maxlength="8" minlength="8" type="text" inputmode="numeric"
+                    pattern="[0-9]{8}" validate placeholder="${i18next.t('settings:phonePlaceholder')}" required />
+                </div>
+              </div>
+            </div>
+          </li>
+
+
+
+          <li>
+
+            <div class="block-title">${i18next.t('settings:logoLabel')}</div>
+            <div class="card card-raised">
+              <div class="card-content card-content-padding">
+                <input type="file" id="image-input" accept="image/*" style="display: none;" />
+
+                <button class="button button-fill" @click="${selectImage}">${i18next.t('settings:logoButton')}</button>
+
+                <button class="button button-fill color-red margin-top" id="delete-btn" @click="${deleteImage}"
+                  style="display: none;">
+                  ${i18next.t('delete')}
+                </button>
+
+                <div class="margin-top text-align-center">
+                  <img id="image-preview" src=""
+                    style="max-width: 100%; display: none; margin: 10px auto; border-radius: 8px;" />
+                </div>
+
+              </div>
+
+            </div>
+
+
           </li>
 
           <li>
@@ -71,14 +101,22 @@
   </div>
 </template>
 <script>
-  import { db, savePhone, getPhone, getBankId, saveBankId, getOption, saveOption, Keys } from 'db';
+  import { db, savePhone, getPhone, getBankId, saveBankId, getOption, saveOption, Keys, saveLogo, getLogo } from 'db';
   import i18next from 'i18next';
   import { LangEvent, CamEvent, SettingsEvent } from 'events';
   import { navigatorLanguage, getLanguageName } from 'i18n';
-  export default async (props, { $f7, $on, $f7route, $update }) => {
+  import { readAsDataURL } from 'file';
+  export default async (props, { $f7, $on, $f7route, $update, $el }) => {
 
     let phoneInput;
+    let imagePreviewEl;
+    let imageInputEl;
+    let deleteBtn;
     $on('pageInit', async () => {
+      imagePreviewEl = $el.value.find('#image-preview');
+      imageInputEl = $el.value.find('#image-input');
+      deleteBtn = $el.value.find('#delete-btn');
+
       const banks = await db.banks.toArray();
       const { phone, name, price, detail } = $f7route.query;
       let bankId = await getBankId();
@@ -152,6 +190,15 @@
       })
       ////////////////////
 
+      imageInputEl.on('change', handleFileChange);
+
+      // check if logo exists and display it if so
+      const logoImage = await getLogo();
+      if (logoImage) {
+        imagePreviewEl.attr('src', logoImage).show();
+        deleteBtn.show();
+      }
+
     })
 
     const handleBack = async () => {
@@ -200,6 +247,50 @@
     $on('pageAfterOut', (e, page) => {
       $f7.emit(CamEvent.RESTART)
     });
+
+    const selectImage = e => {
+      imageInputEl.click();
+    }
+
+    const handleFileChange = async e => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const logoImage = await readAsDataURL(file);
+      imagePreviewEl.attr('src', logoImage).show();
+
+      await saveLogo(logoImage);
+
+      $f7.toast.create({
+        text: i18next.t('settings:logoSaved'),
+        closeTimeout: 2000,
+      }).open();
+
+      deleteBtn.show();
+    };
+
+    const deleteImage = async e => {
+
+      $f7.dialog.confirm(
+        i18next.t('settings:logoDeleteRequest'),
+        'SINPE Fácil',
+        async () => { // ok
+          await saveLogo(null);
+          imagePreviewEl.hide();
+          deleteBtn.hide();
+
+          $f7.toast.create({
+            text: i18next.t('settings:logoDeleted'),
+            closeTimeout: 2000,
+          }).open();
+
+        },
+        () => { // cancel
+
+        }
+      );
+
+    }
 
     return $render;
   };

@@ -123,6 +123,7 @@ export const Keys = {
     SELECTED_BANK: 'selectedBank',
     FIRST_TIME: 'FIRST_TIME',
     HMAC_SECRET: 'HMAC_SECRET',
+    USER_LOGO: 'USER_LOGO',
 }
 
 Object.freeze(Keys);
@@ -184,6 +185,32 @@ export async function saveBankId(value) {
     await saveOption(Keys.SELECTED_BANK, id);
 }
 
+/**
+ *
+ * @returns {String}
+ */
+export async function getLogo() {
+    const logoFile = await getOption(Keys.USER_LOGO, null);
+    if (!logoFile) return null;
+    const { ciphertext, iv } = logoFile;
+    const decryptedFile = await decryptData(ciphertext, iv);
+    if (decryptedFile === 'null') return null;
+    return decryptedFile;
+}
+
+/**
+ *
+ * @param {String} logoImage
+ */
+export async function saveLogo(logoImage) {
+    if (!logoImage) {
+        await saveOption(Keys.USER_LOGO, null);
+        return null;
+    }
+    const fileEncrypted = await encryptData(logoImage);
+    await saveOption(Keys.USER_LOGO, fileEncrypted);
+}
+
 // tests only
 if (import.meta.env.DEV) {
     // // export: place file in /public
@@ -191,6 +218,22 @@ if (import.meta.env.DEV) {
     // const download = (await import('downloadjs')).default;
 
     // const blob = await db.export();
-    // download(blob, `sf-export.json`, "application/json");
+    // // download(blob, `sf-export.json`, "application/json");
+
+    // const reader = new FileReader();
+    // reader.readAsDataURL(blob);
+
+    // reader.onloadend = () => {
+    //     const dataUrl = reader.result;
+
+    //     const a = document.createElement('a');
+    //     a.href = dataUrl;
+    //     a.download = 'sf-export.json';
+    //     a.classList.add('external');
+
+    //     document.body.appendChild(a);
+    //     a.click();
+    //     document.body.removeChild(a);
+    // };
 }
 

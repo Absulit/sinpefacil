@@ -47,3 +47,4 @@ www/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+public/*-export.json
