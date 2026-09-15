@@ -92,13 +92,24 @@
 <script>
   import { formatDate } from 'i18n';
   import i18next from 'i18next';
-  import { LangEvent } from 'events';
+  import { LangEvent, HistoryEvent } from 'events';
   export default (props, { $f7, $store, $on, $el, $update }) => {
 
     const history = $store.getters.history;
 
     $on('pageInit', () => {
       $f7.on(LangEvent.UPDATED, () => $update());
+
+
+      $f7.$(document).on('tab:show', async (e, page) => {
+        const id = e.target.getAttribute('data-name');
+        if ('history' !== id) return;
+
+        // reset badge count
+        $f7.emit(HistoryEvent.CLEAR);
+
+      })
+
     });
 
 

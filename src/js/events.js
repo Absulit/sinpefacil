@@ -20,6 +20,7 @@ export const SettingsEvent = {
 Object.seal(SettingsEvent);
 
 export const HistoryEvent = {
-    ADDED: 'history_added'
+    ADDED: 'history_added',
+    CLEAR: 'history_clear'
 }
 Object.seal(HistoryEvent);
