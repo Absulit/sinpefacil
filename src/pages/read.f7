@@ -41,6 +41,7 @@
   import generateSINPESMS, { validateSMS, SMS_START } from 'sms';
   import { LangEvent, CamEvent } from 'events';
   import { clearParams, validateEntryData } from 'urldata';
+  import { HistoryEvent } from 'events';
 
   let qrScanner = null;
   export default (props, { $f7, $on, $el, $store, $update }) => {
@@ -102,7 +103,6 @@
         return;
       }
 
-      $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
       // if ($f7.device.ios) {
       //   // rawData = rawData.replace('?body=', '&body=');
       // }
@@ -112,6 +112,8 @@
 
       $f7.dialogSMSConfirm({ bank: bank.shortname, price, phone, name, detail },
         async () => {
+          $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() });
+          $f7.emit(HistoryEvent.ADDED);
           window.location.href = generateSINPESMS(bank.phone, price, phone, name, detail)
           isNavigating = false;
         },

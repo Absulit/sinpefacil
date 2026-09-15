@@ -27,6 +27,7 @@ import {
 await initI18n();
 
 import Info from '../components/info.f7';
+import { HistoryEvent } from 'events';
 
 Framework7.registerComponent('app-info', Info);
 
@@ -228,7 +229,8 @@ async function handleSelect(app, bankId, { price, phone, name, detail }, saveBan
     app.dialogSMSConfirm({ bank: bank.shortname, price, phone: finalPhone, name, detail },
         async () => {
             saveBank && await saveBankId(bankId); // save bank for future links
-            await store.dispatch('addHistoryItem', { price, phone: finalPhone, name, detail, createdAt: new Date() })
+            await store.dispatch('addHistoryItem', { price, phone: finalPhone, name, detail, createdAt: new Date() });
+            app.emit(HistoryEvent.ADDED);
             window.location.href = generateSINPESMS(bank.phone, price, finalPhone, name, detail);
         },
         () => {
