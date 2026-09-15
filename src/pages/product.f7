@@ -90,6 +90,7 @@
 
           <div id="qr-code-container" class="block text-align-center print-area"></div>
         </div>
+
         <div class="card-content card-content-padding">
           <div class="card-content-padding">
             <p>
@@ -98,6 +99,7 @@
             <p>
               ${currentProduct.detail ? $h`${currentProduct.detail}` : '<Sin descripción>'}
             </p>
+            <span data-progress="${pinProgressValue}" class="progressbar" id="pin-progress"></span>
           </div>
         </div>
         <div class="card-footer">
@@ -119,11 +121,18 @@
   import { ProductEvent } from 'events';
   import { styleOptions, defaultImage } from 'qrcode';
   import { readAsDataURL } from 'file';
+  import { timerStart, DURATION_MILLISECONDS, generatePIN } from 'timer';
+
+  function onVisibilityChange(e) {
+    if (!document.hidden) {
+    }
+  }
 
   export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
     const products = $store.getters.products;
     const productId = +$f7route.params.id;
     let currentProduct;
+    let pinProgressValue = 0;
     products.value.forEach(product => {
       if (product.id !== productId) {
         return;
@@ -153,8 +162,24 @@
 
       const container = $el.value.find('#qr-code-container')[0];
       qrCode.append(container);
-      // qrCode.download({ name: "qr", extension: "svg" });
+
+
+
+      timerStart((remainingMilliseconds, secondsLeft) => {
+        // console.log(remainingMilliseconds, secondsLeft);
+        pinProgressValue = (1 - remainingMilliseconds / DURATION_MILLISECONDS) * 100;
+        $update();
+      }, () => {
+        const pin = generatePIN()
+        console.log(pin);
+
+      });
+
+      document.addEventListener('visibilitychange', onVisibilityChange);
+
     })
+
+
     $f7.on(ProductEvent.UPDATED, async productUpdated => {
       currentProduct = productUpdated;
 
@@ -188,6 +213,7 @@
     })
 
     $on('pageBeforeRemove', () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       $f7.off(ProductEvent.UPDATED);
     });
 

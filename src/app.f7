@@ -271,7 +271,6 @@
 
 
       unreadAmount = await getOption(Keys.HISTORY_UNREAD, 0);
-      console.log(unreadAmount);
 
       if (unreadAmount) {
         historyUnreadEls.forEach(hu => {
