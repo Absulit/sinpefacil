@@ -118,6 +118,7 @@
   import generateSINPESMS, { validateSMS, SMS_START } from 'sms';
   import i18next from 'i18next';
   import { styleOptionsHistory } from 'qrcode';
+  import { HistoryEvent } from 'events';
   export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
     const history = $store.getters.history;
     const historyItemId = +$f7route.params.id;
