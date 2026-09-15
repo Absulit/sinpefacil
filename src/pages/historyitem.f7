@@ -187,7 +187,8 @@
         return;
       }
 
-      await $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() })
+      await $store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() });
+      $f7.emit(HistoryEvent.ADDED);
       window.location.href = generateSINPESMS(bank.phone, price, phone, name, detail);
     }
 

@@ -18,3 +18,8 @@ export const SettingsEvent = {
     PHONE_UPDATED: 'phone_updated',
 }
 Object.seal(SettingsEvent);
+
+export const HistoryEvent = {
+    ADDED: 'history_added'
+}
+Object.seal(HistoryEvent);
