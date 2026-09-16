@@ -152,7 +152,7 @@
   import { ProductEvent } from 'events';
   import { styleOptions, defaultImage } from 'qrcode';
   import { readAsDataURL } from 'file';
-  import { timerStart, DURATION_MILLISECONDS, generatePIN } from 'timer';
+  import { timerStart, timerStop, DURATION_MILLISECONDS, generatePIN } from 'timer';
 
   function onVisibilityChange(e) {
     if (!document.hidden) {
@@ -249,6 +249,7 @@
     $on('pageBeforeRemove', () => {
       document.removeEventListener('visibilitychange', onVisibilityChange);
       $f7.off(ProductEvent.UPDATED);
+      timerStop();
     });
 
     const deleteProduct = () => {
