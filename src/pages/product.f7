@@ -88,22 +88,53 @@
         <div class="card-header">${currentProduct.name}</div>
         <div class="card-content card-content-padding">
 
-          <div id="qr-code-container" class="block text-align-center print-area"></div>
+          <div id="qr-code-container" class="block text-align-center print-area margin-top-half"></div>
         </div>
 
         <div class="card-content card-content-padding">
+
           <div class="card-content-padding">
-            <p>
-              ${currentProduct.phone}
-            </p>
-            <p>
-              ${currentProduct.detail ? $h`${currentProduct.detail}` : '<Sin descripción>'}
-            </p>
-            <span data-progress="${pinProgressValue}" class="progressbar" id="pin-progress"></span>
+            <div class="grid grid-cols-2 grid-gap">
+              <div>
+                <div class="text-color-gray text-transform-uppercase margin-bottom-half">
+                  <i class="icon f7-icons if-not-md">phone_fill</i>
+                  <i class="icon material-icons if-md">phone</i>
+                  <span>
+                    ${finalPhone}
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                <div class="text-color-gray text-transform-uppercase margin-bottom">
+                  <i class="icon f7-icons if-not-md">doc_text_fill</i>
+                  <i class="icon material-icons if-md">description</i>
+                  <span>
+                    ${currentProduct.detail ? $h`${currentProduct.detail}` : '<Sin descripción>'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+
+
+
+            <div class="display-1 text-color-primary weight-bold margin-bottom">
+              <i class="icon f7-icons if-not-md">tag_fill</i>
+              <i class="icon material-icons if-md">local_offer</i>
+              <span class="date"></span><span>₡${currentProduct.price}</span>
+            </div>
+
+
+
+            <div class="block block-strong text-align-center">
+              <div class="gauge gauge-init" data-type="semicircle" data-value="0" data-value-text=""
+                data-value-text-color="#007aff" data-value-font-size="32" data-value-font-weight="bold"
+                data-border-color="#007aff" data-border-width="10" data-label-text="OTP">
+              </div>
+            </div>
+
           </div>
-        </div>
-        <div class="card-footer">
-          <span class="date"></span><span>₡${currentProduct.price}</span>
         </div>
       </div>
 
@@ -133,6 +164,8 @@
     const productId = +$f7route.params.id;
     let currentProduct;
     let pinProgressValue = 0;
+    let gauge = null;
+    let finalPhone = null;
     products.value.forEach(product => {
       if (product.id !== productId) {
         return;
@@ -140,10 +173,11 @@
       currentProduct = product;
     });
 
+
     $on('pageInit', async () => {
       const { phone, name, price, detail } = currentProduct;
 
-      let finalPhone = phone;
+      finalPhone = phone;
       if (!phone) {
         const phoneDB = await getPhone();
         finalPhone = phoneDB.number;
@@ -165,18 +199,18 @@
 
 
 
+      gauge = $f7.gauge.get('.gauge');
       timerStart((remainingMilliseconds, secondsLeft) => {
         // console.log(remainingMilliseconds, secondsLeft);
-        pinProgressValue = (1 - remainingMilliseconds / DURATION_MILLISECONDS) * 100;
-        $update();
+        pinProgressValue = (remainingMilliseconds / DURATION_MILLISECONDS) * 100;
+        gauge.update({ value: pinProgressValue / 100 });
       }, () => {
         const pin = generatePIN()
-        console.log(pin);
-
+        gauge.update({ valueText: pin });
       });
 
       document.addEventListener('visibilitychange', onVisibilityChange);
-
+      $update();
     })
 
 
