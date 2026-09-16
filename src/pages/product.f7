@@ -153,73 +153,14 @@
   import { styleOptions, defaultImage } from 'qrcode';
   import { readAsDataURL } from 'file';
   import { timerStart, timerStop, DURATION_MILLISECONDS, generatePIN } from 'timer';
+  import { generateSalt, deriveKey, encrypt, decrypt } from 'crypto';
 
   function onVisibilityChange(e) {
     if (!document.hidden) {
     }
   }
 
-  export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
-    const products = $store.getters.products;
-    const productId = +$f7route.params.id;
-    let currentProduct;
-    let pinProgressValue = 0;
-    let gauge = null;
-    let finalPhone = null;
-    products.value.forEach(product => {
-      if (product.id !== productId) {
-        return;
-      }
-      currentProduct = product;
-    });
-
-
-    $on('pageInit', async () => {
-      const { phone, name, price, detail } = currentProduct;
-
-      finalPhone = phone;
-      if (!phone) {
-        const phoneDB = await getPhone();
-        finalPhone = phoneDB.number;
-      }
-
-      const url = createURL(finalPhone, name, price, detail);
-
-      styleOptions.data = url;
-
-      const logoImage = await getLogo();
-      styleOptions.image = defaultImage;
-      if (logoImage) {
-        styleOptions.image = logoImage;
-      }
-      const qrCode = new QRCodeStyling(styleOptions);
-
-      const container = $el.value.find('#qr-code-container')[0];
-      qrCode.append(container);
-
-
-
-      gauge = $f7.gauge.get('.gauge');
-      timerStart((remainingMilliseconds, secondsLeft) => {
-        // console.log(remainingMilliseconds, secondsLeft);
-        pinProgressValue = (remainingMilliseconds / DURATION_MILLISECONDS) * 100;
-        gauge.update({ value: pinProgressValue / 100 });
-      }, () => {
-        const pin = generatePIN()
-        gauge.update({ valueText: pin });
-      });
-
-      document.addEventListener('visibilitychange', onVisibilityChange);
-      $update();
-    })
-
-
-    $f7.on(ProductEvent.UPDATED, async productUpdated => {
-      currentProduct = productUpdated;
-
-
-      // TODO: merge init and updated code
-      // to not repeat the QRCodeStyling call
+  async function createQRCode(currentProduct, container){
       const { phone, name, price, detail } = currentProduct;
 
       let finalPhone = phone;
@@ -238,11 +179,55 @@
       }
       const qrCode = new QRCodeStyling(styleOptions);
 
-      const container = $el.value.find('#qr-code-container')[0];
       container.innerText = '';
       qrCode.append(container);
 
+      return finalPhone;
+  }
 
+  export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
+    const products = $store.getters.products;
+    const productId = +$f7route.params.id;
+    let currentProduct;
+    let pinProgressValue = 0;
+    let gauge = null;
+    let finalPhone = null;
+    let qrContainer = null;
+    products.value.forEach(product => {
+      if (product.id !== productId) {
+        return;
+      }
+      currentProduct = product;
+    });
+
+
+
+    $on('pageInit', async () => {
+      qrContainer = $el.value.find('#qr-code-container')[0];
+      finalPhone = await createQRCode(currentProduct, qrContainer);
+
+
+
+      gauge = $f7.gauge.get('.gauge');
+      timerStart((remainingMilliseconds, secondsLeft) => {
+        // console.log(remainingMilliseconds, secondsLeft);
+        pinProgressValue = (remainingMilliseconds / DURATION_MILLISECONDS) * 100;
+        gauge.update({ value: pinProgressValue / 100 });
+      }, async () => {
+        const pin = generatePIN()
+        gauge.update({ valueText: pin });
+
+
+      });
+
+      document.addEventListener('visibilitychange', onVisibilityChange);
+      $update();
+    })
+
+
+    $f7.on(ProductEvent.UPDATED, async productUpdated => {
+      currentProduct = productUpdated;
+      finalPhone = await createQRCode(currentProduct, qrContainer);
       $update();
     })
 
