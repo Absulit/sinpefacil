@@ -160,7 +160,7 @@
     }
   }
 
-  async function createQRCode(currentProduct, container) {
+  async function createQRCode(currentProduct, container, pin) {
     const { phone, name, price, detail } = currentProduct;
 
     let finalPhone = phone;
@@ -171,7 +171,19 @@
 
     const url = createURL(finalPhone, name, price, detail);
 
-    styleOptions.data = url;
+    const salt = generateSalt();
+    const key = await deriveKey(pin, salt);
+    const encryptedResult = await encrypt(url, key);
+
+    const { iv, ciphertext } = encryptedResult;
+
+    const data = {
+      salt,
+      iv,
+      ciphertext
+    }
+
+    styleOptions.data = JSON.stringify(data);
     const logoImage = await getLogo();
     styleOptions.image = defaultImage;
     if (logoImage) {
@@ -202,23 +214,35 @@
 
 
 
-    $on('pageInit', async () => {
+    $on('pageInit', async page => {
       qrContainer = $el.value.find('#qr-code-container')[0];
-      finalPhone = await createQRCode(currentProduct, qrContainer);
 
+      gauge = $f7.gauge.create({
+        el: '.gauge',
+        type: 'semicircle',
+        value: 1,
+        borderColor: '#007aff',
+        borderWidth: 10,
+        valueText: '',
+        valueFontSize: 32,
+        valueTextColor: '#007aff',
+        labelText: 'PIN',
+      });
 
+      await timerStart(async () => { // start
+        const pin = generatePIN()
 
-      gauge = $f7.gauge.get('.gauge');
-      timerStart((remainingMilliseconds, secondsLeft) => {
+        gauge.update({ valueText: pin });
+        finalPhone = await createQRCode(currentProduct, qrContainer, pin);
+
+      }, async (remainingMilliseconds, secondsLeft) => { // update
         // console.log(remainingMilliseconds, secondsLeft);
         pinProgressValue = (remainingMilliseconds / DURATION_MILLISECONDS) * 100;
         gauge.update({ value: pinProgressValue / 100 });
-      }, async () => {
-        const pin = generatePIN()
-        gauge.update({ valueText: pin });
 
 
       });
+
 
       document.addEventListener('visibilitychange', onVisibilityChange);
       $update();

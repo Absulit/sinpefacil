@@ -6,22 +6,22 @@ let intervalId = null;
 let onUpdateCB = null;
 let onStartCB = null;
 
-export function timerStart(onUpdate, onStart) {
+export async function timerStart(onStart, onUpdate) {
     endTime = Date.now() + DURATION_MILLISECONDS;
 
     onUpdateCB = onUpdate;
     onStartCB = onStart;
-    onStartCB?.();
-    intervalId = setInterval(() => timerUpdate(), 100);
+    await onStartCB?.();
+    intervalId = setInterval(async () => await timerUpdate(), 100);
 }
 
-function timerUpdate() {
+async function timerUpdate() {
     const remainingMilliseconds = Math.max(0, endTime - Date.now());
     const secondsLeft = Math.ceil(remainingMilliseconds / 1000);
     onUpdateCB?.(remainingMilliseconds, secondsLeft);
     if (remainingMilliseconds <= 0) {
         endTime = Date.now() + DURATION_MILLISECONDS;
-        onStartCB?.();
+        await onStartCB?.();
     }
 }
 
