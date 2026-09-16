@@ -135,23 +135,7 @@ async function getCryptoKey() {
 
 export async function encryptData(plainText) {
     const key = await getCryptoKey();
-    const encoder = new TextEncoder();
-
-    // Always generate a unique 12-byte IV for every encryption operation
-    // Initialization Vector (IV)
-    const iv = window.crypto.getRandomValues(new Uint8Array(12));
-
-    const cipherBuffer = await window.crypto.subtle.encrypt(
-        { name: 'AES-GCM', iv }, //
-        key,
-        encoder.encode(plainText)
-    );
-
-    // Return both ciphertext and IV as hex strings to save in Dexie
-    return {
-        ciphertext: Array.from(new Uint8Array(cipherBuffer)).map(b => b.toString(16).padStart(2, '0')).join(''),
-        iv: Array.from(iv).map(b => b.toString(16).padStart(2, '0')).join('')
-    };
+    return await encrypt(plainText, key);
 }
 
 export async function decryptData(ciphertextHex, ivHex) {
