@@ -160,29 +160,29 @@
     }
   }
 
-  async function createQRCode(currentProduct, container){
-      const { phone, name, price, detail } = currentProduct;
+  async function createQRCode(currentProduct, container) {
+    const { phone, name, price, detail } = currentProduct;
 
-      let finalPhone = phone;
-      if (!phone) {
-        const phoneDB = await getPhone();
-        finalPhone = phoneDB.number;
-      }
+    let finalPhone = phone;
+    if (!phone) {
+      const phoneDB = await getPhone();
+      finalPhone = phoneDB.number;
+    }
 
-      const url = createURL(finalPhone, name, price, detail);
+    const url = createURL(finalPhone, name, price, detail);
 
-      styleOptions.data = url;
-      const logoImage = await getLogo();
-      styleOptions.image = defaultImage;
-      if (logoImage) {
-        styleOptions.image = logoImage;
-      }
-      const qrCode = new QRCodeStyling(styleOptions);
+    styleOptions.data = url;
+    const logoImage = await getLogo();
+    styleOptions.image = defaultImage;
+    if (logoImage) {
+      styleOptions.image = logoImage;
+    }
+    const qrCode = new QRCodeStyling(styleOptions);
 
-      container.innerText = '';
-      qrCode.append(container);
+    container.innerText = '';
+    qrCode.append(container);
 
-      return finalPhone;
+    return finalPhone;
   }
 
   export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
