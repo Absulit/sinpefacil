@@ -58,6 +58,7 @@ const resources = {
             <strong>Detail:</strong> {{detail}}<br>
             `,
 
+            wrongPIN: `PIN is wrong. Scan again.`,
 
         },
         codes: {
@@ -189,6 +190,7 @@ const resources = {
             <strong>Detalle:</strong> {{detail}}<br>
             `,
 
+            wrongPIN: `PIN equivocado. Lea el QR de nuevo.`,
         },
         codes: {
             explainer: `Seleccione un ítem de la lista para ver el código QR.`,

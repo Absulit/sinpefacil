@@ -140,12 +140,23 @@
       }
 
       const decryptionKey = await deriveKey(pin, salt);
+      let decryptedData = null;
+      try {
+        decryptedData = await decrypt(
+          ciphertext,
+          iv,
+          decryptionKey
+        );
 
-      const decryptedData = await decrypt(
-        ciphertext,
-        iv,
-        decryptionKey
-      );
+      } catch (error) {
+        $f7.toast.create({
+          text: i18next.t('read:wrongPIN'),
+          position: 'center',
+          closeTimeout: 2000,
+        }).open();
+        return
+      }
+
 
       const searchParams = new URLSearchParams(decryptedData);
       const data = Object.fromEntries(searchParams);
