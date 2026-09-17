@@ -52,7 +52,7 @@
       let pin = '';
 
       const dialog = $f7.dialog.create({
-        title: 'Digitar PIN',
+        title: i18next.t('read:enterPIN'),
         content: `
         <div class="pin-display" style="font-size: 28px; letter-spacing: 8px; margin: 15px 0; font-weight: bold; font-family: monospace;">____</div>
         <div class="pin-numpad" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px;">
@@ -63,7 +63,7 @@
       `,
         buttons: [
           {
-            text: 'Cancelar',
+            text: i18next.t('cancel'),
             role: 'cancel',
             onClick: () => resolve(null)
           }
@@ -82,7 +82,7 @@
             resolve(pin);
             return;
           } else {
-            $f7.toast.show({ text: `PIN debe ser de ${maxChars} digitos`, closeTimeout: 1500 });
+            $f7.toast.show({ text: i18next.t('read:pinLengthError', { maxChars }), closeTimeout: 1500 });
           }
         } else if (pin.length < maxChars) {
           pin += val;
@@ -137,6 +137,9 @@
           text: i18next.t('read:notSendToast'),
           closeTimeout: 2000,
         }).open();
+
+        isNavigating = false;
+        return
       }
 
       const decryptionKey = await deriveKey(pin, salt);
@@ -154,6 +157,7 @@
           position: 'center',
           closeTimeout: 2000,
         }).open();
+        isNavigating = false;
         return
       }
 
@@ -267,11 +271,11 @@
           cam,
           onDecode,
           {
-            calculateScanRegion: (video) => ({
+            calculateScanRegion: video => ({
               x: 0,
               y: 0,
-              width: cam.videoWidth,
-              height: cam.videoHeight,
+              width: video.videoWidth,
+              height: video.videoHeight,
             }),
             disallowCanvasResizing: true,
             highlightScanRegion: true,

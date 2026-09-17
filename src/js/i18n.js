@@ -58,7 +58,9 @@ const resources = {
             <strong>Detail:</strong> {{detail}}<br>
             `,
 
+            enterPIN: `Enter PIN`,
             wrongPIN: `PIN is wrong. Scan again.`,
+            pinLengthError: `PIN must be {{maxChars}} digits`,
 
         },
         codes: {
@@ -190,7 +192,9 @@ const resources = {
             <strong>Detalle:</strong> {{detail}}<br>
             `,
 
+            enterPIN: `Digitar PIN`,
             wrongPIN: `PIN equivocado. Lea el QR de nuevo.`,
+            pinLengthError: `PIN debe ser de {{maxChars}} digitos`,
         },
         codes: {
             explainer: `Seleccione un ítem de la lista para ver el código QR.`,
