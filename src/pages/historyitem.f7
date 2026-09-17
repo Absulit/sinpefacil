@@ -11,16 +11,12 @@
         <div class="title">${currentHistoryItem.name}</div>
 
         <div class="right">
-          <!-- Share QR -->
+          <!-- resend -->
           <a href="#" class="link icon-only popup-open" @click="${resend}">
             <i class="icon f7-icons if-not-md">paperplane_fill</i>
             <i class="icon material-icons if-md">send</i>
           </a>
-          <!-- Share QR -->
-          <a href="#" class="link icon-only popover-open" data-popover=".popover-menu-share">
-            <i class="icon f7-icons if-not-md">square_arrow_up</i>
-            <i class="icon material-icons if-md">share</i>
-          </a>
+
           <!-- Overflow / More Menu -->
           <a href="#" class="link icon-only popover-open" data-popover=".popover-menu">
             <i class="f7-icons">ellipsis_vertical</i>
@@ -131,17 +127,7 @@
     });
 
     $on('pageInit', async () => {
-      const { phone, name, price, detail } = currentHistoryItem;
 
-      const url = createURL(phone, name, price, detail);
-
-      styleOptionsHistory.data = url;
-
-      const qrCode = new QRCodeStyling(styleOptionsHistory);
-
-      const container = $el.value.find('#qr-code-container')[0];
-      qrCode.append(container);
-      // qrCode.download({ name: "qr", extension: "svg" });
     })
 
     const deleteProduct = () => {
@@ -165,18 +151,6 @@
       window.print();
     }
 
-    const share = async () => {
-      const { phone, name, price, detail } = currentHistoryItem;
-      const url = createURL(phone, name, price, detail);
-
-      shareLink($f7, `
-      ${name}
-      ${phone}
-      ${price}
-      ${detail}
-      `.trim().replace(/^ +/gm, ''), url)
-    }
-
     const resend = async () => {
       const bankId = await getBankId();
       const bank = await db.banks.get(bankId);
@@ -192,38 +166,6 @@
       $f7.emit(HistoryEvent.ADDED);
       window.location.href = generateSINPESMS(bank.phone, price, phone, name, detail);
     }
-
-    const shareToImage = async () => {
-      const { phone, name, price, detail } = currentHistoryItem;
-      let finalPhone = phone;
-      if (!phone) {
-        const phoneDB = await getPhone();
-        finalPhone = phoneDB.number;
-      }
-
-      const svg = $el.value.find('#qr-code-container')[0].firstElementChild;
-
-      const serializer = new XMLSerializer();
-      let svgString = serializer.serializeToString(svg);
-
-      const dataUrl = await svg2png(svgString);
-      const response = await fetch(dataUrl);
-      const blob = await response.blob();
-
-      const generatedWith = i18next.t('share:generatedWith', { site: 'app.sinpefacil.com' });
-
-      shareImage($f7, `
-      ${name}
-      ${finalPhone}
-      ${price}
-      ${detail}
-
-      ${generatedWith}
-      `.trim().replace(/^ +/gm, ''),
-        blob
-      )
-    }
-
 
 
     return $render;

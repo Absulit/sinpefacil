@@ -114,7 +114,7 @@ export function shareImage(app, text, blob) {
  * @returns
  */
 export async function createURL(phone, name, price, detail, pin) {
-    if(!pin) new Error('missing pin');
+    if(!pin) throw new Error('missing pin');
 
     const data = `phone=${btoa(phone)}&name=${name}&price=${price}&detail=${detail}`;
 
