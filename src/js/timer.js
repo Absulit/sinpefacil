@@ -11,8 +11,8 @@ export async function timerStart(onStart, onUpdate) {
 
     onUpdateCB = onUpdate;
     onStartCB = onStart;
-    await onStartCB?.();
-    intervalId = setInterval(async () => await timerUpdate(), 100);
+    await onStartCB();
+    intervalId = setInterval(timerUpdate, 1000);
 }
 
 async function timerUpdate() {
@@ -21,7 +21,7 @@ async function timerUpdate() {
     onUpdateCB?.(remainingMilliseconds, secondsLeft);
     if (remainingMilliseconds <= 0) {
         endTime = Date.now() + DURATION_MILLISECONDS;
-        await onStartCB?.();
+        await onStartCB();
     }
 }
 
