@@ -54,9 +54,9 @@
       const dialog = $f7.dialog.create({
         title: i18next.t('read:enterPIN'),
         content: `
-        <div class="pin-display">____</div>
+        <div class="pin-display text-align-center">____</div>
         <div class="pin-numpad">
-          ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 'C', 0, 'OK'].map(val =>
+          ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 'C', 0, 'Del'].map(val =>
           `<button type="button" class="button button-fill pin-btn" data-val="${val}">${val}</button>`
         ).join('')}
         </div>
@@ -66,6 +66,20 @@
             text: i18next.t('cancel'),
             role: 'cancel',
             onClick: () => resolve(null)
+          },
+          {
+            text: i18next.t('OK'),
+            role: 'confirm',
+            close: false,
+            onClick: () => {
+              if (pin.length === maxChars) {
+                dialog.close();
+                resolve(pin);
+                return;
+              } else {
+                $f7.toast.show({ text: i18next.t('read:pinLengthError', { maxChars }), closeTimeout: 1500 });
+              }
+            }
           }
         ]
       }).open();
@@ -76,20 +90,15 @@
 
         if (val === 'C') {
           pin = '';
-        } else if (val === 'OK') {
-          if (pin.length === maxChars) {
-            dialog.close();
-            resolve(pin);
-            return;
-          } else {
-            $f7.toast.show({ text: i18next.t('read:pinLengthError', { maxChars }), closeTimeout: 1500 });
-          }
+        } else if (val === 'Del') {
+          pin = pin.slice(0, -1);
         } else if (pin.length < maxChars) {
           pin += val;
         }
 
         // Update mask display (e.g., '•••___')
-        const masked = '•'.repeat(pin.length) + '_'.repeat(maxChars - pin.length);
+        // '•'.repeat(pin.length)
+        const masked = pin + '_'.repeat(maxChars - pin.length);
         dialog.$el.find('.pin-display').text(masked);
       });
     });
