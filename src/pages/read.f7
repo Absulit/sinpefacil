@@ -42,6 +42,58 @@
   import { LangEvent, CamEvent } from 'events';
   import { clearParams, validateEntryData } from 'urldata';
   import { HistoryEvent } from 'events';
+  import { deriveKey, decrypt } from 'crypto';
+  import $$ from 'dom7';
+
+  function getPIN($f7) {
+    return new Promise((resolve, reject) => {
+      const maxChars = 4;
+
+      let pin = '';
+
+      const dialog = $f7.dialog.create({
+        title: 'Digitar PIN',
+        content: `
+        <div class="pin-display" style="font-size: 28px; letter-spacing: 8px; margin: 15px 0; font-weight: bold; font-family: monospace;">____</div>
+        <div class="pin-numpad" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px;">
+          ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 'C', 0, 'OK'].map(val =>
+          `<button type="button" class="button button-fill pin-btn" data-val="${val}" style="height: 48px; font-size: 18px;">${val}</button>`
+        ).join('')}
+        </div>
+      `,
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            onClick: () => resolve(null)
+          }
+        ]
+      }).open();
+
+      // keypad buttons
+      dialog.$el.find('.pin-btn').on('click', function () {
+        const val = $$(this).dataset().val;
+
+        if (val === 'C') {
+          pin = '';
+        } else if (val === 'OK') {
+          if (pin.length === maxChars) {
+            dialog.close();
+            resolve(pin);
+            return;
+          } else {
+            $f7.toast.show({ text: `PIN debe ser de ${maxChars} digitos`, closeTimeout: 1500 });
+          }
+        } else if (pin.length < maxChars) {
+          pin += val;
+        }
+
+        // Update mask display (e.g., '•••___')
+        const masked = '•'.repeat(pin.length) + '_'.repeat(maxChars - pin.length);
+        dialog.$el.find('.pin-display').text(masked);
+      });
+    });
+  }
 
   let qrScanner = null;
   export default (props, { $f7, $on, $el, $store, $update }) => {
@@ -50,10 +102,39 @@
     let isInvalid = false;
     let showInvalidNotification = true;
     const onDecode = async result => {
+
       if (isNavigating) return;
       isNavigating = true;
 
-      if (!result.data.includes(window.location.origin)) {
+      const encryptedData = JSON.parse(result.data);
+      console.log(encryptedData);
+      const { iv, salt, ciphertext } = encryptedData;
+
+      const pin = await getPIN($f7)
+      const decryptionKey = await deriveKey(pin, salt);
+
+      const decryptedData = await decrypt(
+        ciphertext,
+        iv,
+        decryptionKey
+      );
+      console.log(decryptedData);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      if (!decryptedData.includes(window.location.origin)) {
         showInvalidNotification && $f7.toast.create({
           text: i18next.t('validation:QRInvalid'),
           closeTimeout: 2000,
@@ -72,7 +153,7 @@
         return
       }
 
-      const data = Object.fromEntries(new URL(result.data).searchParams);
+      const data = Object.fromEntries(new URL(decryptedData).searchParams);
 
       const validData = validateEntryData(data);
       if (!validData) {
