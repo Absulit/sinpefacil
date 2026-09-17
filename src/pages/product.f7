@@ -193,6 +193,7 @@
     let gauge = null;
     let finalPhone = null;
     let qrContainer = null;
+    let pin = null;
     products.value.forEach(product => {
       if (product.id !== productId) {
         return;
@@ -218,7 +219,7 @@
       });
 
       await timerStart(async () => { // start
-        const pin = generatePIN()
+        pin = generatePIN()
 
         gauge.update({ valueText: pin });
         finalPhone = await createQRCode(currentProduct, qrContainer, pin);
@@ -279,7 +280,7 @@
         finalPhone = phoneDB.number;
       }
 
-      const url = createURL(finalPhone, name, price, detail);
+      const url = await createURL(finalPhone, name, price, detail, pin);
 
       shareLink($f7, `
       ${name}
@@ -289,8 +290,6 @@
       `.trim().replace(/^ +/gm, ''),
         url)
     }
-
-
 
     const shareToImage = async () => {
       const { phone, name, price, detail } = currentProduct;
