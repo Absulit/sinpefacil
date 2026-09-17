@@ -169,21 +169,9 @@
       finalPhone = phoneDB.number;
     }
 
-    const url = createURL(finalPhone, name, price, detail);
+    const url = await createURL(finalPhone, name, price, detail);
 
-    const salt = generateSalt();
-    const key = await deriveKey(pin, salt);
-    const encryptedResult = await encrypt(url, key);
-
-    const { iv, ciphertext } = encryptedResult;
-
-    const data = {
-      salt,
-      iv,
-      ciphertext
-    }
-
-    styleOptions.data = JSON.stringify(data);
+    styleOptions.data = url;
     const logoImage = await getLogo();
     styleOptions.image = defaultImage;
     if (logoImage) {

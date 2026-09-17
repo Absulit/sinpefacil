@@ -1,5 +1,7 @@
 import i18next from 'i18next';
 
+import { generateSalt, deriveKey, encrypt, decrypt } from 'crypto';
+
 export default function shareLink(app, text, url) {
     const shareData = {
         title: 'SINPE Fácil',
@@ -104,15 +106,24 @@ export function shareImage(app, text, blob) {
 }
 
 /**
- * Encode url to hide phone
- * @param {Number} phone 
- * @param {String} name 
- * @param {Number} price 
- * @param {String} detail 
- * @returns 
+ * Encrypt and create the final URL
+ * @param {Number} phone
+ * @param {String} name
+ * @param {Number} price
+ * @param {String} detail
+ * @returns
  */
-export function createURL(phone, name, price, detail) {
-    return encodeURI(`${location.origin + location.pathname}?phone=${btoa(phone)}&name=${name}&price=${price}&detail=${detail}`);
+export async function createURL(phone, name, price, detail, pin) {
+    const data = `phone=${btoa(phone)}&name=${name}&price=${price}&detail=${detail}`;
+
+    const salt = generateSalt();
+    const key = await deriveKey(pin, salt);
+    const encryptedResult = await encrypt(data, key);
+
+    const { iv, ciphertext } = encryptedResult;
+
+
+    return encodeURI(`${location.origin + location.pathname}?salt=${salt}&iv=${iv}&ciphertext=${ciphertext}`);
 }
 
 export async function svg2png(svg, width = 300, height = 300) {
