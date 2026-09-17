@@ -97,7 +97,6 @@
 
   let qrScanner = null;
   export default (props, { $f7, $on, $el, $store, $update }) => {
-
     let isNavigating = false;
     let isInvalid = false;
     let showInvalidNotification = true;
@@ -106,35 +105,7 @@
       if (isNavigating) return;
       isNavigating = true;
 
-      const encryptedData = JSON.parse(result.data);
-      console.log(encryptedData);
-      const { iv, salt, ciphertext } = encryptedData;
-
-      const pin = await getPIN($f7)
-      const decryptionKey = await deriveKey(pin, salt);
-
-      const decryptedData = await decrypt(
-        ciphertext,
-        iv,
-        decryptionKey
-      );
-      console.log(decryptedData);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      if (!decryptedData.includes(window.location.origin)) {
+      if (!result.data.includes(window.location.origin)) {
         showInvalidNotification && $f7.toast.create({
           text: i18next.t('validation:QRInvalid'),
           closeTimeout: 2000,
@@ -153,7 +124,25 @@
         return
       }
 
-      const data = Object.fromEntries(new URL(decryptedData).searchParams);
+      const hash = new URL(result.data).hash.slice(1);
+
+      const encryptedParams = new URLSearchencryptedParams(hash);
+      const salt = encryptedParams.get('s');
+      const iv = encryptedParams.get('i');
+      const ciphertext = encryptedParams.get('c');
+
+      const pin = await getPIN($f7)
+
+      const decryptionKey = await deriveKey(pin, salt);
+
+      const decryptedData = await decrypt(
+        ciphertext,
+        iv,
+        decryptionKey
+      );
+
+      const searchParams = new URLSearchParams(decryptedData);
+      const data = Object.fromEntries(searchParams);
 
       const validData = validateEntryData(data);
       if (!validData) {
@@ -184,10 +173,6 @@
         return;
       }
 
-      // if ($f7.device.ios) {
-      //   // rawData = rawData.replace('?body=', '&body=');
-      // }
-
       const bankId = await getBankId();
       const bank = await db.banks.get(bankId);
 
@@ -208,12 +193,6 @@
         }
       )
 
-
-      // const link = document.createElement('a');
-      // link.href = `sms:${888}?body=PASE ${price} ${phone} ${detail}`;
-      // document.body.appendChild(link);
-      // link.click();
-      // document.body.removeChild(link);
     }
 
     $on('pageInit', async (e, page) => {
@@ -271,7 +250,15 @@
           cam,
           onDecode,
           {
+            calculateScanRegion: (video) => ({
+              x: 0,
+              y: 0,
+              width: cam.videoWidth,
+              height: cam.videoHeight,
+            }),
+            disallowCanvasResizing: true,
             highlightScanRegion: true,
+            maxScansPerSecond: 10,
             returnDetailedScanResult: true
           }
         );

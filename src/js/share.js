@@ -114,6 +114,8 @@ export function shareImage(app, text, blob) {
  * @returns
  */
 export async function createURL(phone, name, price, detail, pin) {
+    if(!pin) new Error('missing pin');
+
     const data = `phone=${btoa(phone)}&name=${name}&price=${price}&detail=${detail}`;
 
     const salt = generateSalt();
@@ -123,7 +125,7 @@ export async function createURL(phone, name, price, detail, pin) {
     const { iv, ciphertext } = encryptedResult;
 
 
-    return encodeURI(`${location.origin + location.pathname}?salt=${salt}&iv=${iv}&ciphertext=${ciphertext}`);
+    return encodeURI(`${location.origin + location.pathname}#s=${salt}&i=${iv}&c=${ciphertext}`);
 }
 
 export async function svg2png(svg, width = 300, height = 300) {

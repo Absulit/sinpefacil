@@ -169,7 +169,7 @@
       finalPhone = phoneDB.number;
     }
 
-    const url = await createURL(finalPhone, name, price, detail);
+    const url = await createURL(finalPhone, name, price, detail, pin);
 
     styleOptions.data = url;
     const logoImage = await getLogo();
