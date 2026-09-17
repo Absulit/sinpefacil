@@ -103,6 +103,14 @@
                     ${finalPhone}
                   </span>
                 </div>
+
+                <div class="display-1 text-color-primary weight-bold margin-bottom">
+                  <i class="icon f7-icons if-not-md">tag_fill</i>
+                  <i class="icon material-icons if-md">local_offer</i>
+                  <span class="date"></span><span>₡${currentProduct.price}</span>
+                </div>
+
+
               </div>
 
               <div>
@@ -119,11 +127,7 @@
 
 
 
-            <div class="display-1 text-color-primary weight-bold margin-bottom">
-              <i class="icon f7-icons if-not-md">tag_fill</i>
-              <i class="icon material-icons if-md">local_offer</i>
-              <span class="date"></span><span>₡${currentProduct.price}</span>
-            </div>
+
 
 
 

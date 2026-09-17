@@ -126,12 +126,18 @@
 
       const hash = new URL(result.data).hash.slice(1);
 
-      const encryptedParams = new URLSearchencryptedParams(hash);
+      const encryptedParams = new URLSearchParams(hash);
       const salt = encryptedParams.get('s');
       const iv = encryptedParams.get('i');
       const ciphertext = encryptedParams.get('c');
 
       const pin = await getPIN($f7)
+      if (!pin) {
+        $f7.toast.create({
+          text: i18next.t('read:notSendToast'),
+          closeTimeout: 2000,
+        }).open();
+      }
 
       const decryptionKey = await deriveKey(pin, salt);
 

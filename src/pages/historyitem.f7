@@ -87,17 +87,40 @@
           <div id="qr-code-container" class="block text-align-center"></div>
         </div>
         <div class="card-content card-content-padding">
-          <div class="card-content-padding">
-            <p>
-              ${currentHistoryItem.phone}
-            </p>
-            <p>
-              ${currentHistoryItem.detail ? $h`${currentHistoryItem.detail}` : '<Sin descripción>'}
-            </p>
+
+          <div class="grid grid-cols-2 grid-gap">
+            <div>
+              <div class="text-color-gray text-transform-uppercase margin-bottom-half">
+                <i class="icon f7-icons if-not-md">phone_fill</i>
+                <i class="icon material-icons if-md">phone</i>
+                <span>
+                  ${currentHistoryItem.phone}
+                </span>
+              </div>
+
+              <div class="display-1 text-color-primary weight-bold margin-bottom">
+                <i class="icon f7-icons if-not-md">tag_fill</i>
+                <i class="icon material-icons if-md">local_offer</i>
+                <span class="date"></span><span>₡${currentHistoryItem.price}</span>
+              </div>
+
+
+            </div>
+
+            <div>
+              <div class="text-color-gray text-transform-uppercase margin-bottom">
+                <i class="icon f7-icons if-not-md">doc_text_fill</i>
+                <i class="icon material-icons if-md">description</i>
+                <span>
+                  ${currentHistoryItem.detail ? $h`${currentHistoryItem.detail}` : '<Sin descripción>'}
+                </span>
+              </div>
+            </div>
           </div>
+
         </div>
         <div class="card-footer">
-          <span class="date">${formatDate(currentHistoryItem.createdAt)}</span><span>₡${currentHistoryItem.price}</span>
+          <span class="date">${formatDate(currentHistoryItem.createdAt)}</span>
         </div>
       </div>
 
