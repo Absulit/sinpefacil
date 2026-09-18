@@ -15,6 +15,7 @@
       "qrcode": ["./src/js/qrcode.js"],
       "file": ["./src/js/file.js"],
       "timer": ["./src/js/timer.js"],
+      "pinui": ["./src/js/pinui.js"],
     }
   }
 }
