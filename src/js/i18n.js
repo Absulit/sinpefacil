@@ -28,6 +28,9 @@ const resources = {
             CTALicense: `License`,
             save: `Save`,
         },
+        app: {
+            wrongPIN: `PIN is wrong. Open link again.`,
+        },
         about: {
             aboutContent: `This app generates QR codes {{qrcode}} that allow other people pay you with SINPE MÓVIL {{sinpemovil}}.
 
@@ -160,6 +163,9 @@ const resources = {
             licenseLink: `Leer la licencia MIT en Github (Inglés)`,
             CTALicense: `Licencia`,
             save: `Guardar`,
+        },
+        app: {
+            wrongPIN: `PIN equivocado. Abra el link de nuevo.`,
         },
         about: {
             aboutContent: `Esta aplicación genera Códigos QR {{- qrcode}} para permitir a otras personas pagarte con SINPE MÓVIL. {{- sinpemovil}}

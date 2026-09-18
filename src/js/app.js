@@ -28,6 +28,8 @@ await initI18n();
 
 import Info from '../components/info.f7';
 import { HistoryEvent } from 'events';
+import { getPIN } from 'pinui';
+import { deriveKey, decrypt } from 'crypto';
 
 Framework7.registerComponent('app-info', Info);
 
@@ -53,8 +55,45 @@ store.dispatch('initApp').then(() => {
 
         on: {
             init: async () => {
-                const urlParams = new URLSearchParams(window.location.search);
-                const data = Object.fromEntries(urlParams.entries());
+                const hash = new URL(window.location.href).hash.slice(1);
+
+                const encryptedParams = new URLSearchParams(hash);
+                const salt = encryptedParams.get('s');
+                const iv = encryptedParams.get('i');
+                const ciphertext = encryptedParams.get('c');
+
+                const pin = await getPIN(app)
+                if (!pin) {
+                    app.toast.create({
+                        text: i18next.t('read:notSendToast'),
+                        closeTimeout: 2000,
+                    }).open();
+
+                    return
+                }
+
+                const decryptionKey = await deriveKey(pin, salt);
+                let decryptedData = null;
+                try {
+                    decryptedData = await decrypt(
+                        ciphertext,
+                        iv,
+                        decryptionKey
+                    );
+
+                } catch (error) {
+                    app.toast.create({
+                        text: i18next.t('app:wrongPIN'),
+                        position: 'center',
+                        closeTimeout: 2000,
+                    }).open();
+                    return
+                }
+
+
+
+                const searchParams = new URLSearchParams(decryptedData);
+                const data = Object.fromEntries(searchParams);
                 const validData = validateEntryData(data);
                 if (!validData) {
                     clearParams();
@@ -81,7 +120,7 @@ store.dispatch('initApp').then(() => {
                         async () => { // ok
                             const banks = await db.banks.toArray();
                             const options = banks.map(bank => {
-                                return { text: bank.name, onClick: () => handleSelect(app, bank.id, data, true) }
+                                return { text: bank.name, onClick: () => handleSelect(app, bank.id, validData, true) }
                             })
 
                             // list of banks dropdown
@@ -224,14 +263,13 @@ store.dispatch('initApp').then(() => {
  */
 async function handleSelect(app, bankId, { price, phone, name, detail }, saveBank = false) {
     const bank = await db.banks.get(bankId);
-    const finalPhone = atob(phone);
     clearParams();
-    app.dialogSMSConfirm({ bank: bank.shortname, price, phone: finalPhone, name, detail },
+    app.dialogSMSConfirm({ bank: bank.shortname, price, phone, name, detail },
         async () => {
             saveBank && await saveBankId(bankId); // save bank for future links
-            await store.dispatch('addHistoryItem', { price, phone: finalPhone, name, detail, createdAt: new Date() });
+            await store.dispatch('addHistoryItem', { price, phone, name, detail, createdAt: new Date() });
             app.emit(HistoryEvent.ADDED);
-            window.location.href = generateSINPESMS(bank.phone, price, finalPhone, name, detail);
+            window.location.href = generateSINPESMS(bank.phone, price, phone, name, detail);
         },
         () => {
             app.toast.create({
