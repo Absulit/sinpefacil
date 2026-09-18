@@ -103,6 +103,8 @@
       dialog.$el.find('.pin-btn').on('click', function () {
         const val = $$(this).dataset().val;
 
+        navigator.vibrate?.(100)
+
         if (val === 'C') {
           pin = '';
         } else if (val === 'Del') {
