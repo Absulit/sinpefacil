@@ -58,12 +58,18 @@ store.dispatch('initApp').then(() => {
                 const hash = new URL(window.location.href).hash.slice(1);
 
                 const encryptedParams = new URLSearchParams(hash);
+                if (!encryptedParams.size) {
+                    // no params, we exit
+                    return;
+                }
+
                 const salt = encryptedParams.get('s');
                 const iv = encryptedParams.get('i');
                 const ciphertext = encryptedParams.get('c');
 
                 const pin = await getPIN(app)
                 if (!pin) {
+                    clearParams();
                     app.toast.create({
                         text: i18next.t('read:notSendToast'),
                         closeTimeout: 2000,
@@ -82,6 +88,7 @@ store.dispatch('initApp').then(() => {
                     );
 
                 } catch (error) {
+                    clearParams();
                     app.toast.create({
                         text: i18next.t('app:wrongPIN'),
                         position: 'center',
@@ -89,8 +96,6 @@ store.dispatch('initApp').then(() => {
                     }).open();
                     return
                 }
-
-
 
                 const searchParams = new URLSearchParams(decryptedData);
                 const data = Object.fromEntries(searchParams);
@@ -112,7 +117,6 @@ store.dispatch('initApp').then(() => {
                 }
 
                 if (!bankId && linkShared) { // new user, no bank, we ask for it
-
 
                     app.dialog.confirm(
                         i18next.t('read:CTASelectBank'),
