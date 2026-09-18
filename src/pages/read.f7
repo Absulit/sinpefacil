@@ -45,6 +45,21 @@
   import { deriveKey, decrypt } from 'crypto';
   import $$ from 'dom7';
 
+  const buttonsData = [
+    { label: 1, value: 1 },
+    { label: 2, value: 2 },
+    { label: 3, value: 3 },
+    { label: 4, value: 4 },
+    { label: 5, value: 5 },
+    { label: 6, value: 6 },
+    { label: 7, value: 7 },
+    { label: 8, value: 8 },
+    { label: 9, value: 9 },
+    { label: `<i class="icon if-not-md f7-icons">xmark_circle</i><i class="icon if-md material-icons">clear</i>`, value: 'C' },
+    { label: 0, value: 0 },
+    { label: `<i class="icon if-not-md f7-icons">delete_left</i><i class="icon if-md material-icons">backspace</i>`, value: 'Del' }
+  ];
+
   function getPIN($f7) {
     return new Promise((resolve, reject) => {
       const maxChars = 4;
@@ -56,8 +71,8 @@
         content: `
         <div class="pin-display text-align-center">____</div>
         <div class="pin-numpad">
-          ${[1, 2, 3, 4, 5, 6, 7, 8, 9, 'C', 0, 'Del'].map(val =>
-          `<button type="button" class="button button-fill pin-btn" data-val="${val}">${val}</button>`
+          ${buttonsData.map(b =>
+          `<button type="button" class="button button-fill pin-btn" data-val="${b.value}">${b.label}</button>`
         ).join('')}
         </div>
       `,
