@@ -113,6 +113,7 @@
       }
 
       if (!decryptedData) {
+        clearParams();
         $f7.toast.create({
           text: i18next.t('read:wrongPIN'),
           position: 'center',
