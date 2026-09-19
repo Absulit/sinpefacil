@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 
 import { generateSalt, deriveKey, encrypt, decrypt } from 'crypto';
+import { DURATION_SECONDS } from 'timer';
 
 export default function shareLink(app, text, url) {
     const shareData = {
@@ -114,12 +115,18 @@ export function shareImage(app, text, blob) {
  * @returns
  */
 export async function createURL(phone, name, price, detail, pin) {
-    if(!pin) throw new Error('missing pin');
+    if (!pin) throw new Error('missing pin');
 
     const data = `phone=${btoa(phone)}&name=${name}&price=${price}&detail=${detail}`;
 
+    const TIME_WINDOW = DURATION_SECONDS;
+    const epochSeconds = Math.floor(Date.now() / 1000);
+    const currentBlock = Math.floor(epochSeconds / TIME_WINDOW);
+
+    const passphrase = `${pin}_${currentBlock}`;
+
     const salt = generateSalt();
-    const key = await deriveKey(pin, salt);
+    const key = await deriveKey(passphrase, salt);
     const encryptedResult = await encrypt(data, key);
 
     const { iv, ciphertext } = encryptedResult;

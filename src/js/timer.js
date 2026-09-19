@@ -1,4 +1,4 @@
-const DURATION_SECONDS = 30;
+export const DURATION_SECONDS = 60;
 export const DURATION_MILLISECONDS = DURATION_SECONDS * 1000;
 
 let endTime = null;

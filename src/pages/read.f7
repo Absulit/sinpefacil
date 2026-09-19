@@ -44,6 +44,7 @@
   import { HistoryEvent } from 'events';
   import { deriveKey, decrypt } from 'crypto';
   import { getPIN } from 'pinui';
+  import { DURATION_SECONDS } from 'timer';
 
   let qrScanner = null;
   export default (props, { $f7, $on, $el, $store, $update }) => {
@@ -92,16 +93,26 @@
         return
       }
 
-      const decryptionKey = await deriveKey(pin, salt);
-      let decryptedData = null;
-      try {
-        decryptedData = await decrypt(
-          ciphertext,
-          iv,
-          decryptionKey
-        );
+      const TIME_WINDOW = DURATION_SECONDS;
+      const epochSeconds = Math.floor(Date.now() / 1000);
+      const currentBlock = Math.floor(epochSeconds / TIME_WINDOW);
 
-      } catch (error) {
+      const candidateBlocks = [currentBlock - 1, currentBlock, currentBlock + 1];
+
+      let decryptedData = null;
+
+      for (const block of candidateBlocks) {
+        try {
+          const passphrase = `${pin}_${block}`;
+          const decryptionKey = await deriveKey(passphrase, salt);
+          decryptedData = await decrypt(ciphertext, iv, decryptionKey);
+          if (decryptedData) break;
+        } catch (e) {
+          // try nex block
+        }
+      }
+
+      if (!decryptedData) {
         $f7.toast.create({
           text: i18next.t('read:wrongPIN'),
           position: 'center',
