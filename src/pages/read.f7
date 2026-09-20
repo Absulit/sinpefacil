@@ -42,9 +42,8 @@
   import { LangEvent, CamEvent } from 'events';
   import { clearParams, validateEntryData } from 'urldata';
   import { HistoryEvent } from 'events';
-  import { deriveKey, decrypt } from 'crypto';
   import { getPIN } from 'pinui';
-  import { DURATION_SECONDS } from 'timer';
+  import { getDecryptedData } from 'totp';
 
   let qrScanner = null;
   export default (props, { $f7, $on, $el, $store, $update }) => {
@@ -93,24 +92,7 @@
         return
       }
 
-      const TIME_WINDOW = DURATION_SECONDS;
-      const epochSeconds = Math.floor(Date.now() / 1000);
-      const currentBlock = Math.floor(epochSeconds / TIME_WINDOW);
-
-      const candidateBlocks = [currentBlock - 1, currentBlock, currentBlock + 1];
-
-      let decryptedData = null;
-
-      for (const block of candidateBlocks) {
-        try {
-          const passphrase = `${pin}_${block}`;
-          const decryptionKey = await deriveKey(passphrase, salt);
-          decryptedData = await decrypt(ciphertext, iv, decryptionKey);
-          if (decryptedData) break;
-        } catch (e) {
-          // try nex block
-        }
-      }
+      const decryptedData = await getDecryptedData(salt, iv, ciphertext, pin);
 
       if (!decryptedData) {
         clearParams();

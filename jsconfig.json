@@ -16,6 +16,7 @@
       "file": ["./src/js/file.js"],
       "timer": ["./src/js/timer.js"],
       "pinui": ["./src/js/pinui.js"],
+      "totp": ["./src/js/totp.js"],
     }
   }
 }
