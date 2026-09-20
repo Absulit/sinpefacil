@@ -1,6 +1,18 @@
 import { DURATION_SECONDS } from 'timer';
 import { deriveKey, decrypt } from 'crypto';
 
+/**
+ * Tries to decrypt the encrypted data from a url (qrcode) using the current
+ * date. If tries fail, there's no result.
+ * This means the user needs to read the QR code near the time it was created
+ * or they won't be able to get the data. Also means that reading an old code
+ * wont work.
+ * @param {*} salt
+ * @param {*} iv
+ * @param {*} ciphertext
+ * @param {*} pin
+ * @returns decrypted data or null
+ */
 export async function getDecryptedData(salt, iv, ciphertext, pin) {
     const TIME_WINDOW = DURATION_SECONDS;
     const epochSeconds = Math.floor(Date.now() / 1000);
