@@ -50,6 +50,7 @@ export default async () => {
         'file': SRC_DIR + '/js/file.js',
         'timer': SRC_DIR + '/js/timer.js',
         'pinui': SRC_DIR + '/js/pinui.js',
+        'totp': SRC_DIR + '/js/totp.js',
       },
     },
     server: {
