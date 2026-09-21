@@ -438,24 +438,59 @@ test.describe('URL Parameter XSS & SMS Redirect Handling', () => {
                 await d.dismiss();
             });
 
+            await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+
             // 2. Validate SMS payload character limits (GSM 7-bit vs UCS-2)
             const hasSpecialChars = /[^\x00-\x7F]/.test(payload);
             const maxAllowed = hasSpecialChars ? 70 : 160;
             expect(payload.length, `Payload exceeds limit`).toBeLessThanOrEqual(maxAllowed);
 
-            // 3. Build target URL
-            const targetUrl = new URL('http://localhost:5173/sinpefacil/');
-            targetUrl.searchParams.set('phone', btoa('44444444'));
-            targetUrl.searchParams.set('name', payload);
-            targetUrl.searchParams.set('price', '1000');
-            targetUrl.searchParams.set('detail', payload);
 
-            await page.goto(targetUrl.toString(), { waitUntil: 'domcontentloaded' });
+            const pin = 4400;
+            const data = {
+                phone: '44444444',
+                name: payload,
+                price: '1000',
+                detail: payload,
+                pin
+            }
+
+            const targetUrl = await page.evaluate(async ({ phone, name, price, detail, pin }) => {
+                // @ts-ignore
+                const { createURL } = window;
+                return createURL(phone, name, price, detail, pin);
+            }, data);
+
+
+            // page.goto doesn't work here, so assign and then reload
+            await page.evaluate(targetUrl => {
+                window.location.assign(targetUrl);
+            }, targetUrl);
+
+            await page.reload({ waitUntil: 'commit' })
 
             // 4. Wait for Framework7 initialization safely
-            await page.waitForFunction(() => !!document.querySelector('#app')?.f7);
+            // await page.waitForFunction(() => !!document.querySelector('#app')?.f7);
 
-            // 5. Handle initial F7 Dialog Modal if rendered
+            const pinInput = page.locator('.dialog-inner');
+            await pinInput.waitFor({ state: 'attached' });
+            await pinInput.waitFor({ state: 'visible' });
+            // Pin modal
+
+            const numbers = Array.from(pin.toString());
+            for (const i in numbers) {
+                const n = numbers[i];
+                await page.locator(`button[data-val="${n}"]`).click();
+            }
+
+            const okButtonPin = page.locator('.button.button-round.dialog-button').getByText('OK');
+            await okButtonPin.waitFor({ state: 'visible' });
+            await okButtonPin.click();
+            // await okButtonPin.waitFor({ state: 'detached' }); // Wait for dialog fade out
+
+
+
+            // Handle initial F7 Dialog Modal if rendered
             const okButton = page.locator('.dialog-buttons .button-fill');
             await okButton.waitFor({ state: 'visible' });
             await okButton.click();
@@ -490,7 +525,6 @@ test.describe('URL Parameter XSS & SMS Redirect Handling', () => {
             const injectedScriptCount = await page.locator('script:has-text("XSS"), svg[onload]').count();
             expect(injectedScriptCount, 'Payload was rendered as unescaped raw HTML').toBe(0);
 
-            // C. Verify SMS URI encoding safety
             // C. Verify SMS URI scheme and parameter safety
             if (capturedSmsUri) {
                 // 1. Ensure the protocol scheme was not hijacked (must strictly begin with 'sms:')
