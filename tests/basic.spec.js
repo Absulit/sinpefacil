@@ -49,11 +49,13 @@ test.describe('Clipboard Operations', () => {
         await page.locator('#detail').fill(detail);
 
         await page.locator('#submitCodeForm').click();
-        await page.waitForTimeout(3000)
         const listItem = page.locator('.list .item-link.item-content').first();
 
         if (await listItem.isVisible()) {
             await listItem.click();
+
+            const pin = +(await page.locator('.gauge-value-text').first().innerHTML());
+
             const shareButton = page.locator('.right .link.icon-only.popover-open').nth(0)
             await shareButton.click();
 
@@ -65,11 +67,11 @@ test.describe('Clipboard Operations', () => {
 
             const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
 
-            const generatedLink = await page.evaluate(async ({ phone, name, price, detail }) => {
+            const generatedLink = await page.evaluate(async ({ phone, name, price, detail, pin }) => {
                 // @ts-ignore
                 const { createURL } = window;
-                return createURL(phone, name, price, detail);
-            }, { phone, name, price, detail });
+                return createURL(phone, name, price, detail, pin);
+            }, { phone, name, price, detail, pin });
 
             expect(clipboardText).toBe(generatedLink);
 

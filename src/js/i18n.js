@@ -28,6 +28,9 @@ const resources = {
             CTALicense: `License`,
             save: `Save`,
         },
+        app: {
+            wrongPIN: `PIN is wrong. Open link again.`,
+        },
         about: {
             aboutContent: `This app generates QR codes {{qrcode}} that allow other people pay you with SINPE MÓVIL {{sinpemovil}}.
 
@@ -58,6 +61,9 @@ const resources = {
             <strong>Detail:</strong> {{detail}}<br>
             `,
 
+            enterPIN: `Enter PIN`,
+            wrongPIN: `PIN is wrong. Scan again.`,
+            pinLengthError: `PIN must be {{maxChars}} digits`,
 
         },
         codes: {
@@ -158,6 +164,9 @@ const resources = {
             CTALicense: `Licencia`,
             save: `Guardar`,
         },
+        app: {
+            wrongPIN: `PIN equivocado. Abra el link de nuevo.`,
+        },
         about: {
             aboutContent: `Esta aplicación genera Códigos QR {{- qrcode}} para permitir a otras personas pagarte con SINPE MÓVIL. {{- sinpemovil}}
 
@@ -189,6 +198,9 @@ const resources = {
             <strong>Detalle:</strong> {{detail}}<br>
             `,
 
+            enterPIN: `Digitar PIN`,
+            wrongPIN: `PIN equivocado. Lea el QR de nuevo.`,
+            pinLengthError: `PIN debe ser de {{maxChars}} digitos`,
         },
         codes: {
             explainer: `Seleccione un ítem de la lista para ver el código QR.`,

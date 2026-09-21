@@ -48,6 +48,9 @@ export default async () => {
         'events': SRC_DIR + '/js/events.js',
         'qrcode': SRC_DIR + '/js/qrcode.js',
         'file': SRC_DIR + '/js/file.js',
+        'timer': SRC_DIR + '/js/timer.js',
+        'pinui': SRC_DIR + '/js/pinui.js',
+        'totp': SRC_DIR + '/js/totp.js',
       },
     },
     server: {

@@ -6,6 +6,10 @@ export const styleOptions = {
     type: 'svg',
     data: null,
     image: defaultImage, // link to image
+    qrOptions: {
+        errorCorrectionLevel: 'L',
+        typeNumber: 0
+    },
     dotsOptions: {
         color: '#156683',
         type: 'rounded',
