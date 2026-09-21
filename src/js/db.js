@@ -124,6 +124,7 @@ export const Keys = {
     FIRST_TIME: 'FIRST_TIME',
     HMAC_SECRET: 'HMAC_SECRET',
     USER_LOGO: 'USER_LOGO',
+    HISTORY_UNREAD: 'HISTORY_UNREAD',
 }
 
 Object.freeze(Keys);

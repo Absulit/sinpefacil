@@ -88,20 +88,57 @@
         <div class="card-header">${currentProduct.name}</div>
         <div class="card-content card-content-padding">
 
-          <div id="qr-code-container" class="block text-align-center print-area"></div>
+          <div id="qr-code-container" class="block text-align-center print-area margin-top-half"></div>
         </div>
+
         <div class="card-content card-content-padding">
+
           <div class="card-content-padding">
-            <p>
-              ${currentProduct.phone}
-            </p>
-            <p>
-              ${currentProduct.detail ? $h`${currentProduct.detail}` : '<Sin descripción>'}
-            </p>
+            <div class="grid grid-cols-2 grid-gap">
+              <div>
+                <div class="text-color-gray text-transform-uppercase margin-bottom-half">
+                  <i class="icon f7-icons if-not-md">phone_fill</i>
+                  <i class="icon material-icons if-md">phone</i>
+                  <span>
+                    ${finalPhone}
+                  </span>
+                </div>
+
+                <div class="display-1 text-color-primary weight-bold margin-bottom">
+                  <i class="icon f7-icons if-not-md">tag_fill</i>
+                  <i class="icon material-icons if-md">local_offer</i>
+                  <span class="date"></span><span>₡${currentProduct.price}</span>
+                </div>
+
+
+              </div>
+
+              <div>
+                <div class="text-color-gray text-transform-uppercase margin-bottom">
+                  <i class="icon f7-icons if-not-md">doc_text_fill</i>
+                  <i class="icon material-icons if-md">description</i>
+                  <span>
+                    ${currentProduct.detail ? $h`${currentProduct.detail}` : '<Sin descripción>'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+            <div class="block block-strong text-align-center">
+              <div class="gauge gauge-init" data-type="semicircle" data-value="0" data-value-text=""
+                data-value-text-color="#007aff" data-value-font-size="32" data-value-font-weight="bold"
+                data-border-color="#007aff" data-border-width="10" data-label-text="OTP">
+              </div>
+            </div>
+
           </div>
-        </div>
-        <div class="card-footer">
-          <span class="date"></span><span>₡${currentProduct.price}</span>
         </div>
       </div>
 
@@ -119,11 +156,48 @@
   import { ProductEvent } from 'events';
   import { styleOptions, defaultImage } from 'qrcode';
   import { readAsDataURL } from 'file';
+  import { timerStart, timerStop, DURATION_MILLISECONDS, generatePIN } from 'timer';
+  import { generateSalt, deriveKey, encrypt, decrypt } from 'crypto';
+
+  function onVisibilityChange(e) {
+    if (!document.hidden) {
+    }
+  }
+
+  async function createQRCode(currentProduct, container, pin) {
+    const { phone, name, price, detail } = currentProduct;
+
+    let finalPhone = phone;
+    if (!phone) {
+      const phoneDB = await getPhone();
+      finalPhone = phoneDB.number;
+    }
+
+    const url = await createURL(finalPhone, name, price, detail, pin);
+
+    styleOptions.data = url;
+    const logoImage = await getLogo();
+    styleOptions.image = defaultImage;
+    if (logoImage) {
+      styleOptions.image = logoImage;
+    }
+    const qrCode = new QRCodeStyling(styleOptions);
+
+    container.innerText = '';
+    qrCode.append(container);
+
+    return finalPhone;
+  }
 
   export default (props, { $f7, $f7route, $store, $on, $el, $update }) => {
     const products = $store.getters.products;
     const productId = +$f7route.params.id;
     let currentProduct;
+    let pinProgressValue = 0;
+    let gauge = null;
+    let finalPhone = null;
+    let qrContainer = null;
+    let pin = null;
     products.value.forEach(product => {
       if (product.id !== productId) {
         return;
@@ -131,64 +205,53 @@
       currentProduct = product;
     });
 
-    $on('pageInit', async () => {
-      const { phone, name, price, detail } = currentProduct;
 
-      let finalPhone = phone;
-      if (!phone) {
-        const phoneDB = await getPhone();
-        finalPhone = phoneDB.number;
-      }
 
-      const url = createURL(finalPhone, name, price, detail);
+    $on('pageInit', async page => {
+      qrContainer = $el.value.find('#qr-code-container')[0];
 
-      styleOptions.data = url;
+      gauge = $f7.gauge.create({
+        el: '.gauge',
+        type: 'semicircle',
+        value: 1,
+        borderColor: '#007aff',
+        borderWidth: 10,
+        valueText: '',
+        valueFontSize: 32,
+        valueTextColor: '#007aff',
+        labelText: 'PIN',
+      });
 
-      const logoImage = await getLogo();
-      styleOptions.image = defaultImage;
-      if (logoImage) {
-        styleOptions.image = logoImage;
-      }
-      const qrCode = new QRCodeStyling(styleOptions);
+      await timerStart(async () => { // start
+        pin = generatePIN()
 
-      const container = $el.value.find('#qr-code-container')[0];
-      qrCode.append(container);
-      // qrCode.download({ name: "qr", extension: "svg" });
+        gauge.update({ valueText: pin });
+        finalPhone = await createQRCode(currentProduct, qrContainer, pin);
+
+      }, async (remainingMilliseconds, secondsLeft) => { // update
+        // console.log(remainingMilliseconds, secondsLeft);
+        pinProgressValue = (remainingMilliseconds / DURATION_MILLISECONDS) * 100;
+        gauge.update({ value: pinProgressValue / 100 });
+
+
+      });
+
+
+      document.addEventListener('visibilitychange', onVisibilityChange);
+      $update();
     })
+
+
     $f7.on(ProductEvent.UPDATED, async productUpdated => {
       currentProduct = productUpdated;
-
-
-      // TODO: merge init and updated code
-      // to not repeat the QRCodeStyling call
-      const { phone, name, price, detail } = currentProduct;
-
-      let finalPhone = phone;
-      if (!phone) {
-        const phoneDB = await getPhone();
-        finalPhone = phoneDB.number;
-      }
-
-      const url = createURL(finalPhone, name, price, detail);
-
-      styleOptions.data = url;
-      const logoImage = await getLogo();
-      styleOptions.image = defaultImage;
-      if (logoImage) {
-        styleOptions.image = logoImage;
-      }
-      const qrCode = new QRCodeStyling(styleOptions);
-
-      const container = $el.value.find('#qr-code-container')[0];
-      container.innerText = '';
-      qrCode.append(container);
-
-
+      finalPhone = await createQRCode(currentProduct, qrContainer);
       $update();
     })
 
     $on('pageBeforeRemove', () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       $f7.off(ProductEvent.UPDATED);
+      timerStop();
     });
 
     const deleteProduct = () => {
@@ -221,7 +284,7 @@
         finalPhone = phoneDB.number;
       }
 
-      const url = createURL(finalPhone, name, price, detail);
+      const url = await createURL(finalPhone, name, price, detail, pin);
 
       shareLink($f7, `
       ${name}
@@ -231,8 +294,6 @@
       `.trim().replace(/^ +/gm, ''),
         url)
     }
-
-
 
     const shareToImage = async () => {
       const { phone, name, price, detail } = currentProduct;

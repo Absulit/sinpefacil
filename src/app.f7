@@ -174,8 +174,8 @@
 
 
             <a href="#view-history" class="tab-link">
-              <i class="icon f7-icons if-not-md">clock</i>
-              <i class="icon material-icons if-md">history</i>
+              <i class="icon f7-icons if-not-md">clock<span class="history-unread">${unreadAmount}</span></i>
+              <i class="icon material-icons if-md">history<span class="history-unread">${unreadAmount}</span></i>
               <span class="tabbar-label">${i18next.t('history')}</span>
             </a>
 
@@ -247,23 +247,37 @@
   import { isUnicode, SMS_START, cleanTextAndLength } from 'sms'
   import { getOption, Keys, getPhone, saveOption } from 'db';
   import { strLen } from 'i18n';
-  import { LangEvent, ProductEvent } from 'events';
+  import { LangEvent, ProductEvent, HistoryEvent } from 'events';
   let numChars = 5;
 
   export default (props, { $f7, $update, $on, $el, $store }) => {
     let productId = null;
     let currentProduct = null;
+    let unreadAmount = 0;
+    let historyUnreadEls;
     $f7.on('init', async _ => {
       const pageIndexToLoad = await getOption(Keys.PAGE_TO_LOAD, 0);
       const tab = document.querySelectorAll('div.view-init')[pageIndexToLoad];
       const tabLink = document.querySelectorAll('.tab-link')[pageIndexToLoad];
       $f7.tab.show(`#${tab.id}`, tabLink, true);
 
-      const firtTime = await getOption(Keys.FIRST_TIME, true);
-      if (firtTime) {
+      const firstTime = await getOption(Keys.FIRST_TIME, true);
+      if (firstTime) {
         $f7.views.current.router.navigate('/about/')
         await saveOption(Keys.FIRST_TIME, false);
       }
+
+      historyUnreadEls = $el.value.find('.history-unread');
+
+
+      unreadAmount = await getOption(Keys.HISTORY_UNREAD, 0);
+
+      if (unreadAmount) {
+        historyUnreadEls.forEach(hu => {
+          hu.classList.add('badge', 'color-red');
+        })
+      }
+      $update();
     });
 
     $f7.on(ProductEvent.ADD, async (id = null) => {
@@ -376,6 +390,28 @@
     };
 
     $f7.on(LangEvent.UPDATED, () => $update());
+
+    $f7.on(HistoryEvent.ADDED, async () => {
+      unreadAmount = await getOption(Keys.HISTORY_UNREAD, 0) + 1;
+      await saveOption(Keys.HISTORY_UNREAD, unreadAmount);
+
+      if (unreadAmount === 1) {
+        historyUnreadEls.forEach(hu => {
+          hu.classList.add('badge', 'color-red');
+        })
+      }
+
+      $update();
+    })
+
+    $f7.on(HistoryEvent.CLEAR, async () => {
+      unreadAmount = 0;
+      await saveOption(Keys.HISTORY_UNREAD, unreadAmount);
+      historyUnreadEls.forEach(hu => {
+        hu.classList.remove('badge', 'color-red');
+      })
+      $update();
+    })
 
     return $render;
   }

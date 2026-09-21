@@ -2,7 +2,7 @@
  * Clears parameters from the url to avoid trigger a new sms
  */
 export function clearParams() {
-    if (window.location.search) {
+    if (window.location.search || window.location.hash) {
         window.history.replaceState(
             {}, // State object (can store data, optional)
             document.title, // Page title (optional, ignored by most browsers)
@@ -31,7 +31,7 @@ export function atobValid(str, defaultValue = null) {
 export function validateEntryData(data) {
     let valid = true;
 
-    if(isEmpty(data)){
+    if (isEmpty(data)) {
         return data;
     }
 
@@ -79,6 +79,6 @@ export function validateEntryData(data) {
  *
  * @param {Object} value
  */
-export function isEmpty(value){
+export function isEmpty(value) {
     return Object.keys(value).length === 0;
 }
