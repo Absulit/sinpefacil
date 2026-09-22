@@ -13,7 +13,7 @@
         <div class="right">
           <!-- Edit QR -->
           <a href="#" class="link icon-only popup-open" @click="${() => $f7.emit(ProductEvent.ADD, currentProduct.id)}"
-            id="btn-pin">
+            id="btn-edit">
             <i class="f7-icons">pencil</i>
           </a>
           <!-- Share QR -->
@@ -85,7 +85,7 @@
     <div class="page-content">
 
       <div class="card card-raised">
-        <div class="card-header">${currentProduct.name}</div>
+        <div class="card-header name">${currentProduct.name}</div>
         <div class="card-content card-content-padding">
 
           <div id="qr-code-container" class="block text-align-center print-area margin-top-half"></div>
@@ -99,7 +99,7 @@
                 <div class="text-color-gray text-transform-uppercase margin-bottom-half">
                   <i class="icon f7-icons if-not-md">phone_fill</i>
                   <i class="icon material-icons if-md">phone</i>
-                  <span>
+                  <span class="phone">
                     ${finalPhone}
                   </span>
                 </div>
@@ -107,7 +107,7 @@
                 <div class="display-1 text-color-primary weight-bold margin-bottom">
                   <i class="icon f7-icons if-not-md">tag_fill</i>
                   <i class="icon material-icons if-md">local_offer</i>
-                  <span class="date"></span><span>₡${currentProduct.price}</span>
+                  <span class="date"></span><span class="price">₡${currentProduct.price}</span>
                 </div>
 
 
@@ -117,7 +117,7 @@
                 <div class="text-color-gray text-transform-uppercase margin-bottom">
                   <i class="icon f7-icons if-not-md">doc_text_fill</i>
                   <i class="icon material-icons if-md">description</i>
-                  <span>
+                  <span class="detail">
                     ${currentProduct.detail ? $h`${currentProduct.detail}` : '<Sin descripción>'}
                   </span>
                 </div>
@@ -244,7 +244,7 @@
 
     $f7.on(ProductEvent.UPDATED, async productUpdated => {
       currentProduct = productUpdated;
-      finalPhone = await createQRCode(currentProduct, qrContainer);
+      finalPhone = await createQRCode(currentProduct, qrContainer, pin);
       $update();
     })
 
