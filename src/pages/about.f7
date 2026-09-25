@@ -53,10 +53,7 @@
       <div class="block">
         <div class="block-title">${i18next.t('privacy:title')}:</div>
         <p>
-
-          Esta app no utiliza un servidor con base de datos ni recopila tus datos. Toda la información se guarda cifrada
-          de forma 100% local
-          en tu dispositivo.
+          ${i18next.t('privacy:short')}
         </p>
 
         <a href="/privacy/" data-view="current">
