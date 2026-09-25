@@ -139,6 +139,10 @@ const resources = {
             linkInvalid: `The link has invalid data.`,
             QRInvalid: `El código QR tiene datos inválidos.`,
         },
+        privacy: {
+            title: `Privacy Notice`,
+            seePrivacyPolicy: `See full privacy notice`,
+        }
     },
     es: {
         translation: {
@@ -276,6 +280,10 @@ const resources = {
             linkInvalid: `El link tiene datos inválidos.`,
             QRInvalid: `El código QR tiene datos inválidos.`,
         },
+        privacy: {
+            title: `Principio de consentimiento informado`,
+            seePrivacyPolicy: `Ver todo el Aviso de consentimiento informado`,
+        }
     }
 };
 

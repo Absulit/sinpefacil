@@ -51,6 +51,25 @@
       </div>
 
       <div class="block">
+        <div class="block-title">${i18next.t('privacy:title')}:</div>
+        <p>
+
+          Esta app no utiliza un servidor con base de datos ni recopila tus datos. Toda la información se guarda cifrada
+          de forma 100% local
+          en tu dispositivo.
+        </p>
+
+        <a href="/privacy/" data-view="current">
+          ${i18next.t('privacy:seePrivacyPolicy')}</a>
+
+      </div>
+
+      <div class="block">
+        <a class="external" target="_blank" rel="noopener noreferrer"
+          @click="${showLicense}">${i18next.t('CTALicense')}</a>
+      </div>
+
+      <div class="block">
         <div>${i18next.t('about:sfOS')}</div>
 
         <a class="external" target="_blank" rel="noopener noreferrer" href="https://github.com/Absulit/sinpefacil">
@@ -65,10 +84,7 @@
           href="https://mastodon.social/@absulit">@absulit</a>
       </div>
 
-      <div class="block">
-        <a class="external" target="_blank" rel="noopener noreferrer"
-          @click="${showLicense}">${i18next.t('CTALicense')}</a>
-      </div>
+
 
       <div class="block">
         ${i18next.t('version')} ${VERSION}
@@ -140,7 +156,6 @@
     })
     /////////////
 
-
     function showLicense() {
       $f7.dialog.alert(`
         ${i18next.t('license')}
@@ -154,7 +169,7 @@
           ${i18next.t('licenseLink')}
         </a>
       `,
-      `SINPE Fácil ${i18next.t('CTALicense')}`);
+        `SINPE Fácil ${i18next.t('CTALicense')}`);
     }
 
     return $render;
