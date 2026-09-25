@@ -50,6 +50,15 @@
                     <div class="item-inner">${i18next.t('about')}</div>
                   </a>
                 </li>
+                <li>
+                  <a href="/privacy/" class="panel-close" data-view="current">
+                    <div class="item-media">
+                      <i class="icon if-not-md f7-icons">lock</i>
+                      <i class="icon if-md material-icons">lock</i>
+                    </div>
+                    <div class="item-inner">${i18next.t('privacy:shortTitle')}</div>
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
