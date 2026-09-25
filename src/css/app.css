@@ -45,3 +45,8 @@
     height: 48px;
     font-size: 18px;
 }
+
+.block-title.block-title-large {
+    white-space: normal;
+    word-break: break-word;
+}
