@@ -141,6 +141,7 @@ const resources = {
         },
         privacy: {
             title: `Privacy Notice`,
+            shortTitle: `Privacy Notice`,
             seePrivacyPolicy: `See full privacy notice`,
             short: `This app does not use a database server, nor does it collect your data. All information is encrypted and stored 100% locally on your device.`,
 
@@ -284,6 +285,7 @@ const resources = {
         },
         privacy: {
             title: `Principio de consentimiento informado`,
+            shortTitle: `Política de Privacidad`,
             seePrivacyPolicy: `Ver todo el Aviso de consentimiento informado`,
             short: `Esta app no utiliza un servidor con base de datos ni recopila tus datos. Toda la información se guarda cifrada
           de forma 100% local en tu dispositivo.`,
