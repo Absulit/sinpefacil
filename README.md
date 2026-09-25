@@ -99,6 +99,12 @@ All the data (phone numbers, selected bank and history) are encrypted and they r
 
 The developer and application do not collect, transmit or store your data on remote servers.
 
+
+#### Analytics
+
+The app uses Cloudflare to secure traffic and at the same time offers analytics without cookies.
+
+
 ### License
 
 SINPE Fácil is open-source software released under the [MIT License](LICENSE).
