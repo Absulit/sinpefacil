@@ -25,7 +25,7 @@
   export default async (props, { $f7, $el, $on }) => {
 
     const lang = i18next.language;
-    const response = await fetch(`./assets/docs/privacy.${lang}.html`);
+    const response = await fetch(`docs/privacy.${lang}.html`);
     const privacyContent = await response.text();
 
     $on('pageInit', async page => {
