@@ -106,12 +106,6 @@ db.version(3).upgrade(async tx => {
 
 const activeVersion = db.verno;
 
-window.gtag?.('event', 'db_version_check', {
-    db_version: activeVersion,
-    is_outdated: activeVersion < 3
-});
-
-
 /**
  * Constant keys for values available to store.
  * Do not use single strings.
