@@ -93,6 +93,20 @@
             </div>
           </li>
 
+          <li>
+            <a class="item-link smart-select smart-select-init" data-browser-history="true" data-open-in="page">
+              <select id="mainScreenSelect" name="mainScreenSelect">
+                <option value="0">${i18next.t('codes')}</option>
+                <option value="1">${i18next.t('read')}</option>
+              </select>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-title">${i18next.t('about:mainScreen')}</div>
+                </div>
+              </div>
+            </a>
+          </li>
+
         </ul>
       </div>
 
@@ -198,6 +212,15 @@
         imagePreviewEl.attr('src', logoImage).show();
         deleteBtn.show();
       }
+
+      const mainScreenSelect = document.getElementById('mainScreenSelect');
+      mainScreenSelect.value = await getOption(Keys.PAGE_TO_LOAD, 0);
+      mainScreenSelect.addEventListener('change', e => {
+        const index = +e.target.value;
+        saveOption(Keys.PAGE_TO_LOAD, index);
+      })
+      mainScreenSelect.dispatchEvent(new Event('change', { bubbles: true }));
+
 
     })
 

@@ -146,13 +146,7 @@ store.dispatch('initApp').then(() => {
 
             },
             pageAfterIn: page => {
-                if (typeof gtag === 'function') {
-                    gtag('event', 'page_view', {
-                        page_title: page.name,
-                        page_location: window.location.href,
-                        page_path: page.router.currentRoute.url
-                    });
-                }
+
             }
         },
 
@@ -174,19 +168,37 @@ store.dispatch('initApp').then(() => {
         if (!window.history.state || window.history.state.tabId !== tabEl.id) {
             safePushState({ tabId: tabEl.id }, '');
         }
-        if (typeof gtag === 'function') {
-            const tabId = tabEl.getAttribute('id') || tabEl.dataset.name || 'unknown-tab';
-            gtag('event', 'page_view', {
-                page_title: `Tab: ${tabId}`,
-                page_location: `${window.location.origin}/#${tabId}`,
-                page_path: `/#${tabId}`
-            });
-        }
-
-
-
     });
 
+
+    /**
+     * The only reason for these lines is to force load a tab no matter where you are,
+     * meaning even if a page is already open on top.
+     * This because I've noticed myself trying to click a tab to go directly there instead
+     * of clicking back.
+     *
+     * If later this is too much of a hassle then we remove it.
+     */
+    $(document).on('click', '.tab-link', function () {
+        const $linkEl = $(this);
+        const tabSelector = $linkEl.attr('href'); // like "#view-codes"
+        if (tabSelector && tabSelector.startsWith('#')) {
+            const $tabEl = $(tabSelector);
+            if ($tabEl.hasClass('view')) {
+                const view = app.views.get($tabEl[0]);
+
+                if (view && view.router) {
+                    const rootUrl = view.router.history[0] || $tabEl.attr('data-url');
+
+                    view.router.navigate(rootUrl, {
+                        reloadCurrent: true,
+                        //   clearPreviousHistory: true,
+                        ignoreCache: true,
+                    });
+                }
+            }
+        }
+    })
 
     /**
      * Dialog to make sure the user sees the QR or Link data

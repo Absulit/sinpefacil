@@ -129,15 +129,14 @@
       }
 
       const mainScreenSelect = document.getElementById('mainScreenSelect');
-      mainScreenSelect.value = pageIndexToLoad;
+      mainScreenSelect.value = await getOption(Keys.PAGE_TO_LOAD, 0);
       mainScreenSelect.addEventListener('change', e => {
         const index = +e.target.value;
         saveOption(Keys.PAGE_TO_LOAD, index);
       })
+      mainScreenSelect.dispatchEvent(new Event('change', { bubbles: true }));
 
     })
-
-    const pageIndexToLoad = await getOption(Keys.PAGE_TO_LOAD, 0);
 
     /////////////
 

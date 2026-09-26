@@ -1,7 +1,7 @@
 {
   "name": "SINPE Fácil",
   "private": true,
-  "version": "1.10.1",
+  "version": "1.11.0",
   "description": "Application made to simplify the use of SINPE Móvil in Costa Rica.",
   "repository": {
     "type": "git",

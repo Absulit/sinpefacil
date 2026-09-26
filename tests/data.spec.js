@@ -30,8 +30,10 @@ test.describe('Security - Dexie Data Integrity & Rendering', () => {
         await codesFirstItem.click()
 
         // 3. Verify HTML tags are escaped and no unexpected script tags executed
-        const noteTitle = page.locator('.card-header');
-        await expect(noteTitle).toContainText(payload);
+        const content = page.locator('.grid.grid-cols-2.grid-gap');
+        const nameEl = content.locator('.name');
+        await expect(nameEl).toContainText(payload);
+
 
         // Ensure the raw img tag with onerror was NOT parsed as actual HTML
         const injectedImg = page.locator('.card-header img');
