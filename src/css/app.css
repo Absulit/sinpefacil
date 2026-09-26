@@ -50,3 +50,17 @@
     white-space: normal;
     word-break: break-word;
 }
+
+/*
+ data spacing
+*/
+[data-name="product"] .card-content-padding .grid span {
+    margin-left: .5em;
+}
+
+/*
+ round corners in QR code
+*/
+#qr-code-container svg {
+    border-radius: var(--f7-card-border-radius);
+}
