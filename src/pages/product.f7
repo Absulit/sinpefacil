@@ -99,7 +99,7 @@
                 <div class="text-color-gray text-transform-uppercase margin-bottom">
                   <i class="icon f7-icons if-not-md">cube_fill</i>
                   <i class="icon material-icons if-md">inventory_2</i>
-                  <span class="detail">
+                  <span class="name">
                     ${currentProduct.name}
                   </span>
                 </div>
