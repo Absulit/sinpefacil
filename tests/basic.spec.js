@@ -65,6 +65,7 @@ test.describe('Clipboard Operations', () => {
             const copyLink = page.locator('.actions-button .actions-button-text').first()
             await copyLink.click();
 
+            await page.bringToFront();
             const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
 
             const generatedLink = await page.evaluate(async ({ phone, name, price, detail, pin }) => {

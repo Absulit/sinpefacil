@@ -46,8 +46,8 @@ test('editing product updates all the fields in the product page view', async ({
 
         await page.locator('#submitCodeForm').click();
 
-        const nameEl = page.locator('.card-header.name');
         const content = page.locator('.grid.grid-cols-2.grid-gap');
+        const nameEl = content.locator('.name');
         const phoneEl = content.locator('.phone');
         const priceEl = content.locator('.price');
         const detailEl = content.locator('.detail');
