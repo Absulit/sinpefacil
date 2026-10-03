@@ -47,7 +47,15 @@
       </div>
 
       <div class="block">
-        <button id="install" class="button button-raised button-fill display-none">Instalar en teléfono</button>
+        <button id="install" class="button button-raised button-fill display-none">${i18next.t('about:CTAInstall')}</button>
+
+        <div class="block">
+          <label class="checkbox"><input type="checkbox" /><i class="icon-checkbox"></i></label>
+          <span class="padding-horizontal">
+            By installing, you accept the Terms and Conditions.
+          </span>
+        </div>
+
       </div>
 
       <div class="block">

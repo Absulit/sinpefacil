@@ -47,6 +47,8 @@ const resources = {
 
             qrcode: `Short for Quick-Response code`,
             sinpemovil: `National Electronic Payment System (Sistema Nacional de Pagos Electrónicos)`,
+
+            CTAInstall: `Install on your phone`,
         },
         read: {
             CTASelectBank: `Before reading a QR code, you must select your bank.`,
@@ -191,6 +193,8 @@ const resources = {
 
             qrcode: `Abreviación de Código de Respuesta Rápida (Quick-Response code)`,
             sinpemovil: `Sistema Nacional de Pagos Electrónicos`,
+
+            CTAInstall: `Instalar en teléfono`,
         },
         read: {
             CTASelectBank: `Antes de leer un código QR, debe seleccionar su banco.`,
