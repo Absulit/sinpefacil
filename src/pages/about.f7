@@ -100,7 +100,7 @@
 </template>
 <script>
   import i18next from 'i18next';
-  import { getOption, saveOption, Keys } from 'db';
+  import { getOption, saveOption, Keys, getTOS, saveTOS } from 'db';
   import { createTooltip, onUnmountDestroyTooltips, tooltipIcon } from 'tooltips';
 
   const aboutContentParams = { qrcode: tooltipIcon('qrcode'), sinpemovil: tooltipIcon('sinpemovil'), interpolation: { escapeValue: false } }
@@ -114,12 +114,12 @@
       const installCheckContainer = document.querySelector('.install-check');
 
       const installCheck = installCheckContainer.querySelector('[type=checkbox]');
-      const tos_accepted = await getOption(Keys.TOS_ACCEPTED, false);
+      const tos_accepted = await getTOS();
       installCheck.checked = tos_accepted
 
       installCheck.addEventListener('change', async e => {
         const { checked } = e.target;
-        await saveOption(Keys.TOS_ACCEPTED, checked);
+        await saveTOS(checked);
         installButton.classList.toggle('disabled', !checked);
       })
       installCheck.dispatchEvent(new Event('change', { bubbles: true }));

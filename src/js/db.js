@@ -207,6 +207,19 @@ export async function saveLogo(logoImage) {
     await saveOption(Keys.USER_LOGO, fileEncrypted);
 }
 
+export async function getTOS(){
+    const tos_accepted = await getOption(Keys.TOS_ACCEPTED)
+    if (!tos_accepted) return null;
+
+    const { ciphertext, iv } = tos_accepted;
+    return (await decryptData(ciphertext, iv)) === 'true';
+}
+
+export async function saveTOS(value = false){
+    const valueString = await encryptData(value.toString());
+    await saveOption(Keys.TOS_ACCEPTED, valueString);
+}
+
 // tests only
 if (import.meta.env.DEV) {
     // // export: place file in /public
