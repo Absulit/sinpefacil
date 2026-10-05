@@ -114,10 +114,15 @@
       const installCheckContainer = document.querySelector('.install-check');
 
       const installCheck = installCheckContainer.querySelector('[type=checkbox]');
+      const tos_accepted = await getOption(Keys.TOS_ACCEPTED, false);
+      installCheck.checked = tos_accepted
 
-      installCheck.addEventListener('change', e => {
-        installButton.classList.toggle('disabled', !e.target.checked)
+      installCheck.addEventListener('change', async e => {
+        const { checked } = e.target;
+        await saveOption(Keys.TOS_ACCEPTED, checked);
+        installButton.classList.toggle('disabled', !checked);
       })
+      installCheck.dispatchEvent(new Event('change', { bubbles: true }));
 
       window.addEventListener('beforeinstallprompt', e => {
         e.preventDefault(); // to hide default banner
