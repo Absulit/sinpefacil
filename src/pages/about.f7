@@ -47,12 +47,12 @@
       </div>
 
       <div class="block">
-        <button id="install" class="button button-raised button-fill disabled">${i18next.t('about:CTAInstall')}</button>
+        <button id="install" class="button button-raised button-fill disabled display-none">${i18next.t('about:CTAInstall')}</button>
 
-        <div class="block install-check ">
+        <div class="block install-check display-none">
           <label class="checkbox"><input type="checkbox" /><i class="icon-checkbox"></i></label>
           <span class="padding-horizontal">
-            Al instalar, usted acepta los Términos y Condiciones.
+            ${i18next.t('tos:CTACheckbox')} <a href="/tos/" data-view="current">${i18next.t('tos:name')}</a>
           </span>
         </div>
 
