@@ -1,0 +1,39 @@
+<template>
+  <div class="page" data-name="tos">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+          </a>
+        </div>
+        <div class="title">${i18next.t('tos:name')}</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block tos">
+        ${{tosContent}}
+      </div>
+
+
+    </div>
+  </div>
+</template>
+<script>
+  import i18next from 'i18next';
+  export default async (props, { $f7, $el, $on }) => {
+
+    const lang = i18next.language;
+    const response = await fetch(`docs/tos.${lang}.html`);
+    const tosContent = await response.text();
+
+    $on('pageInit', async page => {
+
+      const tosEl = $el.value.find('div.tos');
+      tosEl.html(tosContent)
+    })
+
+    return $render;
+  }
+</script>
