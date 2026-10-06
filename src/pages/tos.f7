@@ -22,6 +22,7 @@
 </template>
 <script>
   import i18next from 'i18next';
+  import { TOSEvent } from 'events';
   export default async (props, { $f7, $el, $on }) => {
 
     const lang = i18next.language;
@@ -33,6 +34,10 @@
       const tosEl = $el.value.find('div.tos');
       tosEl.html(tosContent)
     })
+
+    $on('pageAfterOut', (e, page) => {
+      $f7.emit(TOSEvent.CHECK)
+    });
 
     return $render;
   }

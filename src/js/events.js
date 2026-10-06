@@ -24,3 +24,8 @@ export const HistoryEvent = {
     CLEAR: 'history_clear'
 }
 Object.seal(HistoryEvent);
+
+export const TOSEvent = {
+    CHECK: 'check'
+}
+Object.seal(TOSEvent);

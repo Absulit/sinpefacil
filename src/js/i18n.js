@@ -151,6 +151,7 @@ const resources = {
         tos: {
             name: `Terms and Conditions`,
             CTACheckbox: `By installing, you accept the `,
+            CTADialog: `By using the app, you accept the `,
         }
     },
     es: {
