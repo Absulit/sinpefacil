@@ -35,6 +35,99 @@ import { TOSEvent } from './events';
 Framework7.registerComponent('app-info', Info);
 
 
+async function decodeURL(app) {
+    console.log('---- decodeURL');
+
+    const hash = new URL(window.location.href).hash.slice(1);
+
+    const encryptedParams = new URLSearchParams(hash);
+    if (!encryptedParams.size) {
+        // no params, we exit
+        return;
+    }
+
+    const salt = encryptedParams.get('s');
+    const iv = encryptedParams.get('i');
+    const ciphertext = encryptedParams.get('c');
+
+    const pin = await getPIN(app)
+    if (!pin) {
+        clearParams();
+        app.toast.create({
+            text: i18next.t('read:notSendToast'),
+            closeTimeout: 2000,
+        }).open();
+
+        return
+    }
+
+    const decryptedData = await getDecryptedData(salt, iv, ciphertext, pin);
+
+    if (!decryptedData) {
+        clearParams();
+        app.toast.create({
+            text: i18next.t('app:wrongPIN'),
+            position: 'center',
+            closeTimeout: 2000,
+        }).open();
+        return
+    }
+
+    const searchParams = new URLSearchParams(decryptedData);
+    const data = Object.fromEntries(searchParams);
+    const validData = validateEntryData(data);
+    if (!validData) {
+        clearParams();
+        app.dialog.alert(i18next.t('validation:linkInvalid'), 'SINPE Fácil')
+    }
+
+    const { phone, name, price, detail } = validData;
+    const linkShared = phone && name && price;
+    const bankId = await getBankId();
+
+    const isValid = validateSMS(SMS_START, price, phone, name, detail);
+    if (!isValid) {
+        clearParams();
+        app.dialog.confirm(i18next.t('validation:linkLength'), 'SINPE Fácil')
+        return;
+    }
+
+    if (!bankId && linkShared) { // new user, no bank, we ask for it
+
+        app.dialog.confirm(
+            i18next.t('read:CTASelectBank'),
+            'SINPE Fácil',
+            async () => { // ok
+                const banks = await db.banks.toArray();
+                const options = banks.map(bank => {
+                    return { text: bank.name, onClick: () => handleSelect(app, bank.id, validData, true) }
+                })
+
+                // list of banks dropdown
+                app.actions.create({
+                    buttons: [
+                        options,
+                        [
+                            { text: i18next.t('cancel'), color: 'red' }
+                        ]
+                    ]
+                }).open();
+            },
+            () => { // cancel
+                const tabLink = document.querySelectorAll('.tab-link')[0]
+                app.tab.show(`#view-home`, tabLink, true);
+                clearParams();
+            }
+        );
+
+        return; // exit and SMS will be called after selecting bank
+    }
+
+    if (linkShared) {
+        handleSelect(app, bankId, { price, phone, name, detail })
+    }
+}
+
 store.dispatch('initApp').then(() => {
 
     const app = new Framework7({
@@ -56,94 +149,6 @@ store.dispatch('initApp').then(() => {
 
         on: {
             init: async () => {
-                const hash = new URL(window.location.href).hash.slice(1);
-
-                const encryptedParams = new URLSearchParams(hash);
-                if (!encryptedParams.size) {
-                    // no params, we exit
-                    return;
-                }
-
-                const salt = encryptedParams.get('s');
-                const iv = encryptedParams.get('i');
-                const ciphertext = encryptedParams.get('c');
-
-                const pin = await getPIN(app)
-                if (!pin) {
-                    clearParams();
-                    app.toast.create({
-                        text: i18next.t('read:notSendToast'),
-                        closeTimeout: 2000,
-                    }).open();
-
-                    return
-                }
-
-                const decryptedData = await getDecryptedData(salt, iv, ciphertext, pin);
-
-                if (!decryptedData) {
-                    clearParams();
-                    app.toast.create({
-                        text: i18next.t('app:wrongPIN'),
-                        position: 'center',
-                        closeTimeout: 2000,
-                    }).open();
-                    return
-                }
-
-                const searchParams = new URLSearchParams(decryptedData);
-                const data = Object.fromEntries(searchParams);
-                const validData = validateEntryData(data);
-                if (!validData) {
-                    clearParams();
-                    app.dialog.alert(i18next.t('validation:linkInvalid'), 'SINPE Fácil')
-                }
-
-                const { phone, name, price, detail } = validData;
-                const linkShared = phone && name && price;
-                const bankId = await getBankId();
-
-                const isValid = validateSMS(SMS_START, price, phone, name, detail);
-                if (!isValid) {
-                    clearParams();
-                    app.dialog.confirm(i18next.t('validation:linkLength'), 'SINPE Fácil')
-                    return;
-                }
-
-                if (!bankId && linkShared) { // new user, no bank, we ask for it
-
-                    app.dialog.confirm(
-                        i18next.t('read:CTASelectBank'),
-                        'SINPE Fácil',
-                        async () => { // ok
-                            const banks = await db.banks.toArray();
-                            const options = banks.map(bank => {
-                                return { text: bank.name, onClick: () => handleSelect(app, bank.id, validData, true) }
-                            })
-
-                            // list of banks dropdown
-                            app.actions.create({
-                                buttons: [
-                                    options,
-                                    [
-                                        { text: i18next.t('cancel'), color: 'red' }
-                                    ]
-                                ]
-                            }).open();
-                        },
-                        () => { // cancel
-                            const tabLink = document.querySelectorAll('.tab-link')[0]
-                            app.tab.show(`#view-home`, tabLink, true);
-                            clearParams();
-                        }
-                    );
-
-                    return; // exit and SMS will be called after selecting bank
-                }
-
-                if (linkShared) {
-                    handleSelect(app, bankId, { price, phone, name, detail })
-                }
 
             },
             pageAfterIn: page => {
@@ -175,16 +180,18 @@ store.dispatch('initApp').then(() => {
         app.emit(TOSEvent.CHECK)
     });
 
-    app.on(TOSEvent.CHECK, async () => {
+    async function TOSCheck() {
         // check if TOS is checked, if not we block with modal
         const tos_accepted = await getTOS();
         if (!tos_accepted) {
             app.dialogTOS(async (dialog, e) => {
                 await saveTOS(true);
+                await decodeURL(app);
             });
         }
+    }
 
-    })
+    app.on(TOSEvent.CHECK, TOSCheck);
 
 
     /**
