@@ -34,10 +34,12 @@ import { TOSEvent } from './events';
 
 Framework7.registerComponent('app-info', Info);
 
-
+/**
+ * Decodes the URL data
+ * @param {*} app
+ * @returns
+ */
 async function decodeURL(app) {
-    console.log('---- decodeURL');
-
     const hash = new URL(window.location.href).hash.slice(1);
 
     const encryptedParams = new URLSearchParams(hash);

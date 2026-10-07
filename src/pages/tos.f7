@@ -15,7 +15,16 @@
       <div class="block tos">
         ${{tosContent}}
       </div>
-
+      <div class="block">
+        <div class="block">
+          <div class="install-check">
+            <label class="checkbox"><input type="checkbox" /><i class="icon-checkbox"></i></label>
+            <span class="padding-horizontal">
+              ${i18next.t('tos:CTADialog')} ${i18next.t('tos:name')}
+            </span>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>

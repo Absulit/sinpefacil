@@ -152,6 +152,7 @@ const resources = {
             name: `Terms and Conditions`,
             CTACheckbox: `By installing, you accept the `,
             CTADialog: `By using the app, you accept the `,
+            TOSCheck: `I accept the Terms and Conditions`,
         }
     },
     es: {
@@ -302,6 +303,8 @@ const resources = {
         tos: {
             name: `Términos y Condiciones`,
             CTACheckbox: `Al instalar, usted acepta los `,
+            CTADialog: `Al usar esta aplicación, acepta los `,
+            TOSCheck: `Acepto los Términos y Condiciones`,
         }
     }
 };
