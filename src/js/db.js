@@ -7,6 +7,7 @@ export const db = new Dexie('sf');
 if (import.meta.env.DEV) {
 
     window.db = db;
+    window.saveTOS = saveTOS;
 
 
     // import
