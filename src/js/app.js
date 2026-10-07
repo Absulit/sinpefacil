@@ -177,18 +177,22 @@ store.dispatch('initApp').then(() => {
             safePushState({ tabId: tabEl.id }, '');
         }
 
-        app.emit(TOSEvent.CHECK)
+        app.emit(TOSEvent.CHECK);
     });
 
     async function TOSCheck() {
         // check if TOS is checked, if not we block with modal
         const tos_accepted = await getTOS();
-        if (!tos_accepted) {
-            app.dialogTOS(async (dialog, e) => {
-                await saveTOS(true);
-                await decodeURL(app);
-            });
+        if (tos_accepted) {
+            await decodeURL(app);
+            return
         }
+
+        app.dialogTOS(async (dialog, e) => {
+            await saveTOS(true);
+            await decodeURL(app);
+        });
+
     }
 
     app.on(TOSEvent.CHECK, TOSCheck);
