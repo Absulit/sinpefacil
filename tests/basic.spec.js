@@ -26,7 +26,13 @@ test.describe('Clipboard Operations', () => {
         // page.on('console', (msg) => console.log(`[BROWSER ${msg.type().toUpperCase()}] ${msg.text()}`));
         // page.on('pageerror', (exception) => console.error(`[BROWSER UNCAUGHT EXCEPTION]`, exception));
 
-        await page.goto('http://localhost:5173/sinpefacil/', { waitUntil: 'domcontentloaded' });
+        // save TOS check saved before starting
+        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(async () => {
+            // @ts-ignore
+            const { saveTOS } = window;
+            await saveTOS(true);
+        })
 
         const backButton = page.locator('.link.back');
         await backButton.waitFor({ state: 'visible' });
