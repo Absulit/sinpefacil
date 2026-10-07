@@ -1,7 +1,14 @@
 import { test, expect } from '@playwright/test';
 
 test('editing product updates all the fields in the product page view', async ({ page }) => {
-    await page.goto('http://localhost:5173/sinpefacil/', { waitUntil: 'domcontentloaded' });
+    // save TOS check saved before starting
+    await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+    await page.evaluate(async () => {
+        // @ts-ignore
+        const { saveTOS } = window;
+        await saveTOS(true);
+    })
+
     await expect(page.locator('div[data-name="about"]')).toBeVisible();
     await page.reload();
 
