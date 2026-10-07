@@ -32,6 +32,7 @@
 <script>
   import i18next from 'i18next';
   import { TOSEvent } from 'events';
+  import { saveTOS, getTOS } from 'db';
   export default async (props, { $f7, $el, $on }) => {
 
     const lang = i18next.language;
@@ -42,6 +43,14 @@
 
       const tosEl = $el.value.find('div.tos');
       tosEl.html(tosContent)
+
+      const checkbox = $el.value.find('input')[0];
+      checkbox.checked = await getTOS();
+      checkbox.addEventListener('change', async e => {
+        const { checked } = e.target;
+        await saveTOS(checked);
+      })
+
     })
 
     $on('pageAfterOut', (e, page) => {
