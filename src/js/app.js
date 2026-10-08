@@ -274,7 +274,7 @@ store.dispatch('initApp').then(() => {
                 `,
             buttons: [
                 {
-                    text: 'Accept',
+                    text: i18next.t('accept'),
                     bold: true,
                     onClick: callbackOk
                 }

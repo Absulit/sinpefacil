@@ -27,6 +27,7 @@ const resources = {
             licenseLink: `Read the MIT license on Github`,
             CTALicense: `License`,
             save: `Save`,
+            accept: `Accept`,
         },
         app: {
             wrongPIN: `PIN is wrong. Open link again.`,
@@ -178,6 +179,7 @@ const resources = {
             licenseLink: `Leer la licencia MIT en Github (Inglés)`,
             CTALicense: `Licencia`,
             save: `Guardar`,
+            accept: `Aceptar`,
         },
         app: {
             wrongPIN: `PIN equivocado. Abra el link de nuevo.`,
