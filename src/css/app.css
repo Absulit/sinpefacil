@@ -84,3 +84,7 @@
 .tos-modal .dialog-title{
     font-size: 1.5em;
 }
+
+ol {
+    padding-inline-start: 1em;
+}
