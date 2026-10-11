@@ -20,80 +20,68 @@
                 Nature of the Service and Institutional Disclaimer
             </strong>
             <ol>
-                <li><strong>Herramienta Utilitaria y Alcance Operativo:</strong> SINPE Fácil es una aplicación web
-                    progresiva (PWA)
-                    utilitaria de código abierto (Licencia MIT), diseñada exclusivamente como una interfaz cliente para
-                    facilitar la
-                    maquetación de mensajes de texto (SMS) con el formato requerido por las entidades bancarias de Costa
-                    Rica para el
-                    servicio SINPE Móvil. La aplicación actúa como un generador/lector de datos estructurados local. La
-                    ejecución real
-                    del pago, transferencia o transacción es realizada exclusivamente por la red de telecomunicaciones
-                    de su operador
-                    y por el banco receptor. Es obligación del usuario validar el número y monto en la aplicación nativa
-                    de SMS antes
-                    de confirmar la transacción.
+                <li><strong>Utility Tool and Scope of the Operations:</strong> SINPE Fácil is an open-source (MIT
+                    License) Progressive Web Application (PWA) designed exclusively as a client interface to facilitate
+                    the formatting of text messages (SMS) in the format required by Costa Rican banks for the SINPE
+                    Móvil service. The application acts as a local structured data generator/reader. The actual
+                    execution of the payment, transfer, or transaction is handled exclusively by the user's mobile
+                    network and the receiving bank. It is the user's responsibility to validate the number and amount in
+                    the native SMS application before confirming the transaction.
                 </li>
-                <li><strong>Independencia Institucional y Propiedad Intelectual:</strong> SINPE Fácil no es una
-                    aplicación oficial, no tiene
-                    vinculación comercial, operativa ni jurídica con el Banco Central de Costa Rica (BCCR), el sistema
-                    SINPE, ni con ninguna
-                    entidad bancaria, financiera o cooperativa del sistema financiero costarricense. Los términos
-                    "SINPE", "SINPE Móvil",
-                    así como las marcas, logotipos y nombres de las entidades bancarias pertenecen a sus respectivos
-                    titulares de propiedad
-                    intelectual y se citan en esta aplicación con fines estrictamente descriptivos, informativos e
-                    ilustrativos.</li>
-                <li><strong>Ausencia de Intermediación Financiera:</strong> Esta PWA NO procesa, capta, custodia,
-                    transfiere ni gestiona fondos monetarios de ninguna índole, ni requiere acceso a credenciales o
-                    saldos bancarios. Tampoco ejecuta
-                    transferencias bancarias directamente. La ejecución y autorización de cualquier transacción recae de
-                    manera exclusiva en la
-                    infraestructura SMS oficial del banco del usuario y en el propio usuario. SINPE Fácil es un software
-                    de uso 100% gratuito.
-                    No cobra comisiones por transacción, tarifas de uso, ni suscripciones de ningún tipo.
+                <li><strong>Institutional Independence and Intellectual Property:</strong> SINPE Fácil is not an
+                    official application and has no commercial, operational, or legal ties with the Central Bank of
+                    Costa Rica (Banco Central de Costa Rica - BCCR), the SINPE system, or any banking, financial, or cooperative entity within the
+                    Costa Rican financial system. The terms "SINPE," "SINPE Móvil," as well as the trademarks, logos,
+                    and names of the banking entities belong to their respective
+                    intellectual property owners and are cited in this application for strictly descriptive,
+                    informative, and
+                    illustrative purposes.</li>
+                <li><strong>Absence of Financial Intermediation:</strong> This PWA does NOT process, collect, hold,
+                    transfer, or manage any monetary funds, nor does it require access to bank credentials or balances.
+                    It also does not execute bank transfers directly. The execution and authorization of any transaction
+                    rests exclusively with the user's bank's official SMS infrastructure and the user themselves. SINPE
+                    Fácil is 100% free to use. It does not charge transaction fees, usage fees, or subscriptions of any
+                    kind.
                 </li>
             </ol>
 
         </li>
 
         <li>
-            <strong>
-                Arquitectura de Privacidad y Procesamiento Local (Zero-Server Custody)
+            <strong>Privacy Architecture and Local Processing (Zero-Server Custody)
             </strong>
-            En cumplimiento del principio de transparencia técnica (Transparency by Design):
+            In compliance with the principle of technical transparency (Transparency by Design):
             <ol>
-                <li><strong>Procesamiento Client-Side:</strong>
-                    Toda la lógica de maquetación de texto y los datos ingresados por el
-                    usuario (como números telefónicos, montos o selección de banco) se procesan exclusivamente dentro
-                    del
-                    navegador del dispositivo móvil del usuario.
+                <li><strong>Client-Side Processing:</strong>
+                    All text layout logic and user-entered data (such as phone numbers, amounts, or bank selection) are
+                    processed exclusively within the user's mobile device browser.
                 </li>
 
                 <li>
-                    <strong>Ausencia de Servidores Centrales:</strong>
-                    El proyecto opera bajo una arquitectura de "cero custodia de
-                    datos" (Zero-Server). No existen servidores intermedios, bases de datos remotas, ni APIs de terceros
-                    que
-                    reciban o almacenen la información digitada.
+                    <strong>Absence of Central Servers:</strong>
+                    The project operates under a "zero-server" architecture. There are no intermediate servers, remote
+                    databases, or third-party APIs that receive or store the entered information.
                 </li>
 
                 <li>
-                    <strong>Almacenamiento Local Cifrado:</strong>
-                    En caso de que la aplicación permita guardar preferencias o contactos para agilizar envíos futuros,
-                    dicha
-                    información permanecerá almacenada y cifrada únicamente en el almacenamiento local del navegador
-                    (localStorage / IndexedDB) del propio dispositivo del usuario, bajo su total control.
+                    <strong>Encrypted Local Storage:</strong>
+                    If the application allows saving preferences or contacts to expedite future submissions,
+
+                    this information will remain stored and encrypted only in the browser's local storage
+
+                    (localStorage / IndexedDB) on the user's own device, under their complete control.
                 </li>
 
                 <li>
-                    <strong>Ejecución Offline y Libertad de Uso:</strong>
-                    La PWA está diseñada bajo el estándar Offline-First, funcionando plenamente sin conexión a Internet
-                    una vez descargados
-                    sus archivos estáticos. Al ser un software puramente local, el usuario puede dar por terminado el
-                    uso del servicio
-                    o eliminar la aplicación de su dispositivo en cualquier momento, sin trámite, penalización ni
-                    retención de datos en la nube.
+                    <strong>Offline Execution and Freedom of Use:</strong>
+                    The PWA is designed according to the Offline-First standard, functioning fully without an internet
+                    connection
+
+                    once its static files are downloaded. Being purely local software, the user can terminate
+                    the service
+
+                    or delete the application from their device at any time, without any formalities, penalties, or
+                    cloud data retention.
                 </li>
 
             </ol>
@@ -102,29 +90,27 @@
 
         <li>
             <strong>
-                Responsabilidad y Uso Correcto por el Usuario
+                Responsibility and Proper Use by the User
             </strong>
 
             <ol>
                 <li>
-                    <strong>Verificación de Datos:</strong>
-                    Es responsabilidad exclusiva del usuario revisar y confirmar que el número de
-                    teléfono del destinatario, el monto y la palabra clave/formato del SMS generado coincidan
-                    exactamente con sus intenciones antes de presionar el botón de envío en su aplicación nativa de
-                    mensajes SMS.
+                    <strong>Data Verification:</strong>
+                    It is the user's sole responsibility to review and confirm that the recipient's phone number, the
+                    amount, and the keyword/format of the generated SMS exactly match their intentions before pressing
+                    the send button in their native SMS messaging application.
                 </li>
 
                 <li>
-                    <strong>Tarifas de Operadores:</strong>
-                    El usuario reconoce que el envío de mensajes SMS puede estar sujeto a tarifas
-                    aplicables por su operador de servicios de telecomunicaciones o por la entidad bancaria
-                    correspondiente.
+                    <strong>Operator Rates:</strong>
+                    The user acknowledges that sending SMS messages may be subject to applicable fees
+                    imposed by their telecommunications service provider or the corresponding bank.
                 </li>
 
                 <li>
-                    <strong>Uso de Buena Fe:</strong>
-                    El usuario se compromete a no utilizar esta herramienta para fines ilícitos,
-                    engañosos o contrarios a las leyes de la República de Costa Rica.
+                    <strong>Good Faith Use:</strong>
+                    The user agrees not to use this tool for illicit, deceptive, or illegal purposes, or in any way that
+                    violates the laws of the Republic of Costa Rica.
                 </li>
             </ol>
 
@@ -132,47 +118,47 @@
 
         <li>
             <strong>
-                Limitación de Responsabilidad, Garantía y Actualizaciones
+                Limitation of Liability, Warranty and Updates
             </strong>
 
             <ol>
                 <li>
-                    <strong>Provisión "Tal Cual" (As-Is):</strong>
-                    El software se proporciona de forma totalmente gratuita y "tal cual" (AS-IS), garantizando la
-                    función de
-                    generación de sintaxis SMS según las especificaciones públicas vigentes de SINPE Móvil, pero sin
-                    garantías de
-                    disponibilidad ininterrumpida derivada de fallas en redes celulares o dispositivos.
+                    <strong>"As-Is" Provision:</strong>
+                    The software is provided completely free of charge and "as is" (AS-IS), guaranteeing the
+                    function of
+                    generating SMS syntax according to the current public specifications of SINPE Móvil, but without
+                    guarantees of
+                    uninterrupted availability due to failures in cellular networks or devices.
                 </li>
                 <li>
-                    <strong>Cambios en Formatos Bancarios y Actualizaciones:</strong>
-                    Las entidades financieras pueden modificar unilateralmente sus formatos de SMS para SINPE Móvil. El
-                    equipo desarrollador
-                    mantendrá el código actualizado y podrá publicar parches o actualizaciones técnicas en el
-                    repositorio  de código abierto (Open Source) para
-                    preservar la compatibilidad y seguridad del software, sin asumir responsabilidad por rechazos de
-                    transacciones bancarias
-                    derivados de cambios extemporáneos en dichos formatos.
+                    <strong>Changes in Banking Formats and Updates:</strong>
+                    Financial institutions may unilaterally modify their SMS formats for SINPE Móvil. The
+                    development team
+                    will keep the code updated and may publish patches or technical updates in the
+                    open source repository to
+                    preserve software compatibility and security, without assuming responsibility for rejections of
+                    banking transactions
+                    resulting from untimely changes to these formats.
                 </li>
             </ol>
         </li>
 
         <li>
             <strong>
-                Ley Aplicable y Jurisdicción
+                Applicable Law and Jurisdiction
             </strong>
             <ol>
                 <li>
-                    <strong>Normativa y Fuero:</strong>
-                    Estos Términos se rigen por las leyes de la República de Costa Rica, comprendiendo los derechos del
-                    usuario bajo la Ley de
+                    <strong>Regulations and Jurisdiction:</strong>
+                    These Terms are governed by the laws of the Republic of Costa Rica, including the user's rights
+                    under the Law for the Promotion of Competition and Effective Consumer Protection - Ley de
                     Promoción de la Competencia y Defensa Efectiva del Consumidor (Ley N.° 7472).
                 </li>
                 <li>
-                    <strong>Canal de Notificaciones, Soporte y Transparencia:</strong>
-                    Para cualquier consulta, reporte de fallas de formateo, observación técnica o notificación
-                    administrativa, el punto de contacto oficial es el repositorio público de código abierto o el correo
-                    designado por los mantenedores: <a class="external" target="_blank" rel="noopener noreferrer"
+                    <strong>Notifications, Support and Transparency Channel:</strong>
+                    For any questions, formatting errors, technical observations, or administrative notifications, the
+                    official point of contact is the open-source public repository or the email address designated by
+                    the maintainers: <a class="external" target="_blank" rel="noopener noreferrer"
                         href="mailto:sebastian@absulit.com">sebastian@absulit.com</a>.
                 </li>
             </ol>
