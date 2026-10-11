@@ -59,6 +59,15 @@
                     <div class="item-inner">${i18next.t('privacy:shortTitle')}</div>
                   </a>
                 </li>
+                <li>
+                  <a href="/tos/" class="panel-close" data-view="current">
+                    <div class="item-media">
+                      <i class="icon if-not-md f7-icons">book</i>
+                      <i class="icon if-md material-icons">menu_book</i>
+                    </div>
+                    <div class="item-inner">${i18next.t('tos:name')}</div>
+                  </a>
+                </li>
               </ul>
             </div>
           </div>

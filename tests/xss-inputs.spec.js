@@ -33,8 +33,12 @@ test.describe('Automated Input XSS Suite', () => {
         });
 
         // 1. Navigate to your running local app
-        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' }); // Adjust to your F7 dev server port
-
+        // save TOS check saved before starting
+        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(async () => {
+            const { saveTOS } = window;
+            await saveTOS(true);
+        })
 
         const backButton = page.locator('.link.back');
         await backButton.waitFor({ state: 'visible' });
@@ -79,8 +83,12 @@ test.describe('Automated Input XSS Suite', () => {
         });
 
         // 1. Navigate to your running local app
-        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' }); // Adjust to your F7 dev server port
-
+        // save TOS check saved before starting
+        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(async () => {
+            const { saveTOS } = window;
+            await saveTOS(true);
+        })
 
         const backButton = page.locator('.link.back');
         await backButton.waitFor({ state: 'visible' });
@@ -119,7 +127,12 @@ test.describe('Automated Input XSS Suite', () => {
         let xssTriggered = false;
         page.on('dialog', async (d) => { xssTriggered = true; await d.dismiss(); });
 
+        // save TOS check saved before starting
         await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(async () => {
+            const { saveTOS } = window;
+            await saveTOS(true);
+        })
 
         // Wait until Framework7 attaches its instance to <div id="app">
         await page.waitForFunction(() => {
@@ -150,7 +163,12 @@ test.describe('Automated Input XSS Suite', () => {
         let xssTriggered = false;
         page.on('dialog', async (d) => { xssTriggered = true; await d.dismiss(); });
 
+        // save TOS check saved before starting
         await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(async () => {
+            const { saveTOS } = window;
+            await saveTOS(true);
+        })
 
         // Wait until Framework7 attaches its instance to <div id="app">
         await page.waitForFunction(() => {
@@ -183,8 +201,12 @@ test.describe('Automated Input XSS Suite', () => {
 
 
         // 1. Navigate to your running local app
-        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' }); // Adjust to your F7 dev server port
-
+        // save TOS check saved before starting
+        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(async () => {
+            const { saveTOS } = window;
+            await saveTOS(true);
+        })
 
         const backButton = page.locator('.link.back');
         await backButton.waitFor({ state: 'visible' });
@@ -210,7 +232,12 @@ test.describe('Automated Input XSS Suite', () => {
 
 
         // 1. Navigate to your running local app
-        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' }); // Adjust to your F7 dev server port
+        // save TOS check saved before starting
+        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(async () => {
+            const { saveTOS } = window;
+            await saveTOS(true);
+        })
 
         const payload = '<img src=x onerror=alert("XSS-TRIGGERED")>';
 
@@ -253,8 +280,12 @@ test.describe('Automated Input XSS Suite', () => {
         const payload = 'javascript:alert("XSS-TRIGGERED")';
 
         // 1. Navigate to your running local app
-        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' }); // Adjust to your F7 dev server port
-
+        // save TOS check saved before starting
+        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(async () => {
+            const { saveTOS } = window;
+            await saveTOS(true);
+        })
 
         const backButton = page.locator('.link.back');
         await backButton.waitFor({ state: 'visible' });
@@ -285,8 +316,12 @@ test.describe('Automated Input XSS Suite', () => {
         const payload = 'javascript:alert("XSS-TRIGGERED")';
 
         // 1. Navigate to your running local app
-        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' }); // Adjust to your F7 dev server port
-
+        // save TOS check saved before starting
+        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(async () => {
+            const { saveTOS } = window;
+            await saveTOS(true);
+        })
 
         const backButton = page.locator('.link.back');
         await backButton.waitFor({ state: 'visible' });
@@ -325,8 +360,12 @@ test.describe('Automated Input XSS Suite', () => {
 
 
         // 1. Navigate to your running local app
-        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' }); // Adjust to your F7 dev server port
-
+        // save TOS check saved before starting
+        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(async () => {
+            const { saveTOS } = window;
+            await saveTOS(true);
+        })
 
         const backButton = page.locator('.link.back');
         await backButton.waitFor({ state: 'visible' });
@@ -360,8 +399,12 @@ test.describe('Automated Input XSS Suite', () => {
 
 
         // 1. Navigate to your running local app
-        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' }); // Adjust to your F7 dev server port
-
+        // save TOS check saved before starting
+        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(async () => {
+            const { saveTOS } = window;
+            await saveTOS(true);
+        })
 
         const backButton = page.locator('.link.back');
         await backButton.waitFor({ state: 'visible' });
@@ -438,7 +481,12 @@ test.describe('URL Parameter XSS & SMS Redirect Handling', () => {
                 await d.dismiss();
             });
 
+            // save TOS check saved before starting
             await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+            await page.evaluate(async () => {
+                const { saveTOS } = window;
+                await saveTOS(true);
+            })
 
             // 2. Validate SMS payload character limits (GSM 7-bit vs UCS-2)
             const hasSpecialChars = /[^\x00-\x7F]/.test(payload);
@@ -577,7 +625,13 @@ test.describe('SVG XSS', () => {
             await dialog.dismiss();
         });
 
+        // save TOS check saved before starting
         await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(async () => {
+            const { saveTOS } = window;
+            await saveTOS(true);
+        })
+
         const backButton = page.locator('.link.back');
         await backButton.waitFor({ state: 'visible' });
         await backButton.click();
