@@ -8,7 +8,8 @@ const BUILD_DIR = fileURLToPath(new URL('./www', import.meta.url));
 
 // to print the version number on the app
 import pkg from './package.json' with { type: 'json' };
-
+import { VitePWA } from 'vite-plugin-pwa';
+// const pkg = require('./package.json');
 
 export default async () => {
 
@@ -20,6 +21,20 @@ export default async () => {
     plugins: [
       framework7({ emitCss: false }),
       basicSsl(),
+      VitePWA({
+        strategies: 'generateSW',
+        // Map your workbox-config.cjs options here if you had custom ones
+        workbox: {
+          globDirectory: 'www/',
+          globPatterns: ['**/*.{woff,woff2,js,css,png,jpg,svg,html}'],
+          /* pass array of globs to exclude from caching */
+          globIgnores: [],
+          ignoreURLParametersMatching: [/^utm_/, /^fbclid$/],
+          swDest: 'www/service-worker.js',
+          cacheId: `v${pkg.version}`,
+          importScripts: ['sw-extra.js'],
+        }
+      })
 
     ],
     root: SRC_DIR,
