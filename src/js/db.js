@@ -7,6 +7,7 @@ export const db = new Dexie('sf');
 if (import.meta.env.DEV) {
 
     window.db = db;
+    window.saveTOS = saveTOS;
 
 
     // import
@@ -119,6 +120,7 @@ export const Keys = {
     HMAC_SECRET: 'HMAC_SECRET',
     USER_LOGO: 'USER_LOGO',
     HISTORY_UNREAD: 'HISTORY_UNREAD',
+    TOS_ACCEPTED: 'TOS_ACCEPTED',
 }
 
 Object.freeze(Keys);
@@ -204,6 +206,19 @@ export async function saveLogo(logoImage) {
     }
     const fileEncrypted = await encryptData(logoImage);
     await saveOption(Keys.USER_LOGO, fileEncrypted);
+}
+
+export async function getTOS(){
+    const tos_accepted = await getOption(Keys.TOS_ACCEPTED)
+    if (!tos_accepted) return null;
+
+    const { ciphertext, iv } = tos_accepted;
+    return (await decryptData(ciphertext, iv)) === 'true';
+}
+
+export async function saveTOS(value = false){
+    const valueString = await encryptData(value.toString());
+    await saveOption(Keys.TOS_ACCEPTED, valueString);
 }
 
 // tests only

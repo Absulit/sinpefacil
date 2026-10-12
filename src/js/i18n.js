@@ -27,6 +27,7 @@ const resources = {
             licenseLink: `Read the MIT license on Github`,
             CTALicense: `License`,
             save: `Save`,
+            accept: `Accept`,
         },
         app: {
             wrongPIN: `PIN is wrong. Open link again.`,
@@ -47,6 +48,8 @@ const resources = {
 
             qrcode: `Short for Quick-Response code`,
             sinpemovil: `National Electronic Payment System (Sistema Nacional de Pagos Electrónicos)`,
+
+            CTAInstall: `Install on your phone`,
         },
         read: {
             CTASelectBank: `Before reading a QR code, you must select your bank.`,
@@ -145,6 +148,12 @@ const resources = {
             seePrivacyPolicy: `See full privacy notice`,
             short: `This app does not use a database server, nor does it collect your data. All information is encrypted and stored 100% locally on your device.`,
 
+        },
+        tos: {
+            name: `Terms and Conditions`,
+            CTACheckbox: `By installing, you accept the `,
+            CTADialog: `By using the app, you accept the `,
+            TOSCheck: `I accept the Terms and Conditions`,
         }
     },
     es: {
@@ -170,6 +179,7 @@ const resources = {
             licenseLink: `Leer la licencia MIT en Github (Inglés)`,
             CTALicense: `Licencia`,
             save: `Guardar`,
+            accept: `Aceptar`,
         },
         app: {
             wrongPIN: `PIN equivocado. Abra el link de nuevo.`,
@@ -191,6 +201,8 @@ const resources = {
 
             qrcode: `Abreviación de Código de Respuesta Rápida (Quick-Response code)`,
             sinpemovil: `Sistema Nacional de Pagos Electrónicos`,
+
+            CTAInstall: `Instalar en teléfono`,
         },
         read: {
             CTASelectBank: `Antes de leer un código QR, debe seleccionar su banco.`,
@@ -289,6 +301,12 @@ const resources = {
             seePrivacyPolicy: `Ver todo el Aviso de consentimiento informado`,
             short: `Esta app no utiliza un servidor con base de datos ni recopila tus datos. Toda la información se guarda cifrada
           de forma 100% local en tu dispositivo.`,
+        },
+        tos: {
+            name: `Términos y Condiciones`,
+            CTACheckbox: `Al instalar, usted acepta los `,
+            CTADialog: `Al usar esta aplicación, acepta los `,
+            TOSCheck: `Acepto los Términos y Condiciones`,
         }
     }
 };

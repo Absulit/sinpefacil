@@ -6,8 +6,12 @@ test.describe('Security - Dexie Data Integrity & Rendering', () => {
         // page.on('console', (msg) => console.log(`[BROWSER ${msg.type().toUpperCase()}] ${msg.text()}`));
         // page.on('pageerror', (exception) => console.error(`[BROWSER UNCAUGHT EXCEPTION]`, exception));
 
-
+        // save TOS check saved before starting
         await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(async () => {
+            const { saveTOS } = window;
+            await saveTOS(true);
+        })
 
         const backButton = page.locator('.link.back');
         await backButton.waitFor({ state: 'visible' });
@@ -42,7 +46,12 @@ test.describe('Security - Dexie Data Integrity & Rendering', () => {
 
 
     test('Dexie Security: handles corrupted primary key or indexed types gracefully', async ({ page }) => {
+        // save TOS check saved before starting
         await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(async () => {
+            const { saveTOS } = window;
+            await saveTOS(true);
+        })
 
         await page.evaluate(async () => {
             if (window.db && window.db.history) {
@@ -69,7 +78,12 @@ test.describe('Security - Dexie Data Integrity & Rendering', () => {
 
 
     test('Dexie Security: Codes: ensure sensitive fields are not stored in plain clear-text', async ({ page }) => {
+        // save TOS check saved before starting
         await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(async () => {
+            const { saveTOS } = window;
+            await saveTOS(true);
+        })
 
         const backButton = page.locator('.link.back');
         await backButton.waitFor({ state: 'visible' });
@@ -120,6 +134,13 @@ test.describe('Security - Dexie Data Integrity & Rendering', () => {
     });
 
     test('Dexie Security: History: ensure sensitive fields are not stored in plain clear-text', async ({ page }) => {
+        // save TOS check saved before starting
+        await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(async () => {
+            const { saveTOS } = window;
+            await saveTOS(true);
+        })
+
         await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
 
         const backButton = page.locator('.link.back');
@@ -165,7 +186,12 @@ test.describe('Security - Dexie Data Integrity & Rendering', () => {
     });
 
     test('Dexie Security: Settings: ensure sensitive fields are not stored in plain clear-text', async ({ page }) => {
+        // save TOS check saved before starting
         await page.goto('http://localhost:5173/', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(async () => {
+            const { saveTOS } = window;
+            await saveTOS(true);
+        })
 
         const backButton = page.locator('.link.back');
         await backButton.waitFor({ state: 'visible' });

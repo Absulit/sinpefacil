@@ -1,0 +1,62 @@
+<template>
+  <div class="page" data-name="tos">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+          </a>
+        </div>
+        <div class="title">${i18next.t('tos:name')}</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block tos">
+        ${{tosContent}}
+      </div>
+      <div class="block">
+        <div class="block">
+          <div class="install-check">
+            <label class="checkbox"><input type="checkbox" /><i class="icon-checkbox"></i></label>
+            <span class="padding-horizontal">
+              ${i18next.t('tos:CTADialog')} ${i18next.t('tos:name')}
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</template>
+<script>
+  import i18next from 'i18next';
+  import { TOSEvent } from 'events';
+  import { saveTOS, getTOS } from 'db';
+  export default async (props, { $f7, $el, $on }) => {
+
+    const lang = i18next.language;
+    const response = await fetch(`docs/tos.${lang}.html`);
+    const tosContent = await response.text();
+
+    $on('pageInit', async page => {
+
+      const tosEl = $el.value.find('div.tos');
+      tosEl.html(tosContent)
+
+      const checkbox = $el.value.find('input')[0];
+      checkbox.checked = await getTOS();
+      checkbox.addEventListener('change', async e => {
+        const { checked } = e.target;
+        await saveTOS(checked);
+      })
+
+    })
+
+    $on('pageAfterOut', (e, page) => {
+      $f7.emit(TOSEvent.CHECK)
+    });
+
+    return $render;
+  }
+</script>

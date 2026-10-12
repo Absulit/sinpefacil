@@ -8,6 +8,7 @@ import ProductPage from '../pages/product.f7';
 import SettingsPage from '../pages/settings.f7';
 import NotFoundPage from '../pages/404.f7';
 import PrivacyPage from '../pages/privacy.f7';
+import TOSPage from '../pages/tos.f7';
 
 var routes = [
   {
@@ -41,6 +42,10 @@ var routes = [
   {
     path: '/privacy/',
     component: PrivacyPage,
+  },
+  {
+    path: '/tos/',
+    component: TOSPage,
   },
   {
     path: '(.*)',
