@@ -1,7 +1,7 @@
 {
   "name": "SINPE Fácil",
   "private": true,
-  "version": "1.12.0",
+  "version": "1.12.1",
   "description": "Application made to simplify the use of SINPE Móvil in Costa Rica.",
   "repository": {
     "type": "git",
@@ -12,8 +12,8 @@
   "scripts": {
     "start": "npm run dev; npm audit; npm outdated",
     "dev": "cross-env NODE_ENV=development vite",
-    "build": "cross-env NODE_ENV=production vite build && node -e \"const fs=require('fs'); fs.mkdirSync('www/icons', {recursive: true}); fs.copyFileSync('assets-src/SINPEFACIL_OGTAGS_LOGO.png', 'www/icons/og.png'); fs.copyFileSync('assets-src/SINPEFACIL_BADGE.png', 'www/icons/badge.png'); fs.copyFileSync('src/js/sw-extra.js', 'www/sw-extra.js');\"",
-    "postinstall": "node -e \"const fs=require('fs'),path=require('path');['./node_modules/framework7-icons/fonts','./node_modules/material-icons/iconfont'].forEach(d=>{if(fs.existsSync(d)){fs.mkdirSync('./src/fonts',{recursive:true});fs.readdirSync(d).forEach(f=>{const s=path.join(d,f);if(fs.statSync(s).isFile())fs.copyFileSync(s,path.join('./src/fonts',f));});}});\"",
+    "build": "cross-env NODE_ENV=production vite build && node scripts/build.js",
+    "postinstall": "node scripts/postinstall.js",
     "assets": "npx framework7-cli generate-assets",
     "test": "npx playwright test --headed"
   },
