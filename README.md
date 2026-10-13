@@ -60,19 +60,21 @@ Los usuarios también necesitan el PIN provisto por el vendedor para verificar e
 
 Los datos son almacenados en una base local con IndexedDB. Estos datos son encriptados con una llave diferente por usuario que es creada la primera vez que se ejecuta la aplicación.
 
-#### QR Codes / Links
+#### Códigos QR / Links
 
-Data in QR Codes is encrypted, this encryption is different to the local data. In this case a PIN created every 60 seconds, and used to encrypt the QR code data along with the current time (minute) of its creation. Once read the QR code or Link by the person who wants to pay, they have 60 seconds to enter the PIN to retrieve the data, if they fail they need to scan a new QR code. This is called [TOPT](https://en.wikipedia.org/wiki/Time-based_one-time_password).
+Los datos en los códigos QR están encriptados, esta encriptación es diferente a la data almacenada localmente. En este caso un PIN es creado cada 60 segundos, y usado para encriptar la data dentro del código QR junto con la hora actual (minuto) en que fue creado. Una vez leído el código QR o Link por la persona que quiera pagar, tienen 60 segundos para entrar el PIN para desencriptar los datos, si fallan tendrán que leer un nuevo código QR. Esto es llamado [TOPT](https://es.wikipedia.org/wiki/Algoritmo_de_contrase%C3%B1a_de_un_solo_uso_basada_en_el_tiempo).
 
 This way we restrict the QR codes to a very short time frame, and the possibility to read a QR code on the street for a scam worthless.
 
-The encryption, the PIN and the time based encryption also restrict the possibility of tampering with the data.
+De esta forma restringimos los códigos QR a un corto período de tiempo, e imposibilida leer un código QR en la calle que sea fraudulento.
 
-In the end is the user absolute responsability to verify the data read by the QR code in the app (SINPE Fácil) and right before hitting send in the SMS app.
+La encriptación, el PIN y la encriptación basada en el tiempo también restringen la posibilidad de manipulación de los datos.
 
-QR codes and links are verified to belong to the app domain (sinpefacil.com), this means that if you scan a QR code not created via the app it will show a message saying that the QR has invalid data.
+Al final del día, es del usuario la responsabilidad de verificar los datos que lea del código QR en la aplicación (SINPE Fácil) y justo antes de presionar el botón de enviar en la aplicación de SMS.
 
-After these, there are other validations that ensure the data is what is supposed to be, even before sending the call to create the SMS.
+Los códigos QR y links se verifican que pertenezcan al dominio de la aplicacion (sinpefacil.com), esto significa que si lee un código QR no creado a través de la aplicación, le mostrará un mensaje que dice que el código QR tiene datos inválidos.
+
+Además, hay otras validaciones que aseguran que la data es la que se se supone debe ser, incluso antes de hacer la llamada para crear el SMS.
 
 
 #### TSL, HSTS and Cloudflare
