@@ -1,5 +1,6 @@
 # SINPE Fácil
 
+[README ENGLISH](README.en.md)
 
 ## About
 
