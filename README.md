@@ -77,20 +77,19 @@ Los códigos QR y links se verifican que pertenezcan al dominio de la aplicacion
 Además, hay otras validaciones que aseguran que la data es la que se se supone debe ser, incluso antes de hacer la llamada para crear el SMS.
 
 
-#### TSL, HSTS and Cloudflare
+#### TSL, HSTS y Cloudflare
 
-The website has a TSL certificate. It also uses the [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security#Solutions_with_preload_list) header via Cloudflare to restrict access to the page with the HTTPS protocol. This means that if a user tries to enter the site via HTTP, it will be redirected to the HTTPS and other protections that would block the site if someone has tampered with it.
+El sitio web tiene un certificado TSL. También usa el encabezado [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security#Solutions_with_preload_list) por medio de Cloudflare para restringir el acceso a la página con el protocolo HTTPS. Esto significa que si un usuario intenta entrar al sitio web por medio de de HTTP, será redireccionado a HTTPS y otras protecciones que bloquearían el sitio si alguien lo ha manipulado.
 
-#### Tests
+#### Tests o Pruebas
 
-The project uses Playwright to test the application in general and for things like XSS (cross site scripting)
-
+El projecto usa Playwright para probar la aplicación en general y para cosas como XSS (cross site scripting).
 
 ### Privacy Notice
 
-#### Compliance with Costa Rican Law N.° 8968
+#### Cumplimiento con la Ley N.° 8968.
 
-This app follows the 8968 Costa Rican Law (Ley de Protección de la Persona frente al tratamiento de sus datos personales). Ley N.° 8968.
+Esta aplicación sigue la Ley de Protección de la Persona frente al tratamiento de sus datos personales. Ley N.° 8968.
 
 #### Data Retention & Deletion
 
