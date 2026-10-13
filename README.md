@@ -2,39 +2,41 @@
 
 [README ENGLISH](README.en.md)
 
-## About
+Esta documentación está hecha principalmente para desarrolladores, para una explicación no técnica puede revisar la Política de Privacidad y los Términos del Servicio.
 
-Application made to simplify the use of SINPE Móvil in Costa Rica.
+## Acerca de
 
-Made with Framework7
+Aplicación hecha para simplificar el uso del SINPE Móvil en Costa Rica.
 
-## Install
+Hecha con Framework7
 
-SINPE Fácil is a PWA, so open the link and install.
+## Instalación
+
+SINPE Fácil es Aplicación Web Progresiva a (Progressive Web App - PWA), así que abra el link e instale.
 
 https://app.sinpefacil.com/
 
-## Use
+## Uso
 
-The app allows two main things:
+La aplicación permite principalmente dos cosas:
 
-### Create custom QR codes
+### Crear códigos QR
 
-If you are a seller, create a QR code per product you sell, then show it to the client for them to pay.
+Si es un vendedor, puede crear un código QR por producto a vender, y luego mostrarlo a un cliente para que puedan pagarle.
 
-### Read the QR codes and Pay
+### Leer los códigos QR y Pagar
 
-Reading the QR code creates a SMS to send to the client respective bank with your number and amount to pay.
+Leer un código QR, luego de que el usuario lo confirme, redirecciona a la aplicación nativa de SMS del usuario que le permitirá enviar un mensaje al respectivo banco del cliente con el número de teléfono leído en el QR y un monto a pagar, con una descripción.
 
-You do not need this app to first read the QR codes, you can use your regular QR scanner, and then click the link read from the QR code that will redirect to the webapp or installed app to generate the SMS to pay.
+No necesita esta aplicación para leer los códigos QR, puede usar su aplicación lectora de QR, y luego hacer click en el link leído de este código QR, que lo redireccionará a la aplicación web o la aplicacion ya instalada en su teléfono para generar el SMS para pagar.
 
-It is recommended for users to install the app.
+Es recomendado a los usuarios instalar la aplicación.
 
-Users also need the PIN provided by the seller to verify the QR code.
+Los usuarios también necesitan el PIN provisto por el vendedor para verificar el código QR.
 
 ### Available Banks that offer the SINPE Móvil SMS service *
 
-| Bank                            | SMS phone |
+| Banco                           | Teléfono para enviar SMS |
 |---------------------------------|----------:|
 | Grupo Mutual Alajuela           | 6057-5079 |
 | Banco Nacional de Costa Rica    | 2627      |
@@ -49,14 +51,14 @@ Users also need the PIN provided by the seller to verify the QR code.
 | BAC Credomatic                  | 7070-1222 |
 | Banco Davivienda                | 7070-7474 |
 
-[* ref: participating institutions and details](https://app.powerbi.com/view?r=eyJrIjoiZmVkOGM0M2MtODc1Mi00ZjZkLWE0MGYtYjZmMmJlMGY5NjA2IiwidCI6IjYxOGQwYTQ1LTI1YTYtNDYxOC05ZjgwLThmNzBhNDM1ZWU1MiJ9&pageName=0e70f300db35b554b200)
+[* ref: instituciones participantes y detalles](https://app.powerbi.com/view?r=eyJrIjoiZmVkOGM0M2MtODc1Mi00ZjZkLWE0MGYtYjZmMmJlMGY5NjA2IiwidCI6IjYxOGQwYTQ1LTI1YTYtNDYxOC05ZjgwLThmNzBhNDM1ZWU1MiJ9&pageName=0e70f300db35b554b200)
 
 
-### App Security
+### Segurida de la Aplicación
 
-#### Local data encryption
+#### Encriptación de Datos Locales
 
-Data is stored in an IndexedDB local database. This data is encrypted with a different key per user that is created on the first run.
+Los datos son almacenados en una base local con IndexedDB. Estos datos son encriptados con una llave diferente por usuario que es creada la primera vez que se ejecuta la aplicación.
 
 #### QR Codes / Links
 

@@ -2,6 +2,8 @@
 
 [README ESPAÑOL](README.es.md)
 
+This documentation is mainly made for software developers; to have a non technical explanation you can check the Privacy Policy and the Terms of Service.
+
 ## About
 
 Application made to simplify the use of SINPE Móvil in Costa Rica.
@@ -24,7 +26,7 @@ If you are a seller, create a QR code per product you sell, then show it to the 
 
 ### Read the QR codes and Pay
 
-Reading the QR code creates a SMS to send to the client respective bank with your number and amount to pay.
+Reading a QR code, after the user confirms it, redirects to the native SMS phone app that will allow to send a message to their respective bank with the phone number read in the QR, an amount to pay and a description.
 
 You do not need this app to first read the QR codes, you can use your regular QR scanner, and then click the link read from the QR code that will redirect to the webapp or installed app to generate the SMS to pay.
 
