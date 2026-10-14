@@ -1,39 +1,42 @@
 # SINPE Fácil
 
+[README ENGLISH](README.en.md)
 
-## About
+Esta documentación está hecha principalmente para desarrolladores; para una explicación no técnica puede revisar la Política de Privacidad y los Términos del Servicio.
 
-Application made to simplify the use of SINPE Móvil in Costa Rica.
+## Acerca de
 
-Made with Framework7
+Aplicación hecha para simplificar el uso del SINPE Móvil en Costa Rica.
 
-## Install
+Hecha con Framework7
 
-SINPE Fácil is a PWA, so open the link and install.
+## Instalación
+
+SINPE Fácil es Aplicación Web Progresiva a (Progressive Web App - PWA), así que abra el link e instale.
 
 https://app.sinpefacil.com/
 
-## Use
+## Uso
 
-The app allows two main things:
+La aplicación permite principalmente dos cosas:
 
-### Create custom QR codes
+### Crear códigos QR
 
-If you are a seller, create a QR code per product you sell, then show it to the client for them to pay.
+Si es un vendedor, puede crear un código QR por producto a vender, y luego mostrarlo a un cliente para que puedan pagarle.
 
-### Read the QR codes and Pay
+### Leer los códigos QR y Pagar
 
-Reading the QR code creates a SMS to send to the client respective bank with your number and amount to pay.
+Leer un código QR, luego de que el usuario lo confirme, redirecciona a la aplicación nativa de SMS del usuario que le permitirá enviar un mensaje al respectivo banco del cliente con el número de teléfono leído en el QR y un monto a pagar, con una descripción.
 
-You do not need this app to first read the QR codes, you can use your regular QR scanner, and then click the link read from the QR code that will redirect to the webapp or installed app to generate the SMS to pay.
+No necesita esta aplicación para leer los códigos QR, puede usar su aplicación lectora de QR, y luego hacer click en el link leído de este código QR, que lo redireccionará a la aplicación web o la aplicacion ya instalada en su teléfono para generar el SMS para pagar.
 
-It is recommended for users to install the app.
+Es recomendado a los usuarios instalar la aplicación.
 
-Users also need the PIN provided by the seller to verify the QR code.
+Los usuarios también necesitan el PIN provisto por el vendedor para verificar el código QR.
 
 ### Available Banks that offer the SINPE Móvil SMS service *
 
-| Bank                            | SMS phone |
+| Banco                           | Teléfono para enviar SMS |
 |---------------------------------|----------:|
 | Grupo Mutual Alajuela           | 6057-5079 |
 | Banco Nacional de Costa Rica    | 2627      |
@@ -48,78 +51,54 @@ Users also need the PIN provided by the seller to verify the QR code.
 | BAC Credomatic                  | 7070-1222 |
 | Banco Davivienda                | 7070-7474 |
 
-[* ref: participating institutions and details](https://app.powerbi.com/view?r=eyJrIjoiZmVkOGM0M2MtODc1Mi00ZjZkLWE0MGYtYjZmMmJlMGY5NjA2IiwidCI6IjYxOGQwYTQ1LTI1YTYtNDYxOC05ZjgwLThmNzBhNDM1ZWU1MiJ9&pageName=0e70f300db35b554b200)
+[* ref: instituciones participantes y detalles](https://app.powerbi.com/view?r=eyJrIjoiZmVkOGM0M2MtODc1Mi00ZjZkLWE0MGYtYjZmMmJlMGY5NjA2IiwidCI6IjYxOGQwYTQ1LTI1YTYtNDYxOC05ZjgwLThmNzBhNDM1ZWU1MiJ9&pageName=0e70f300db35b554b200)
 
 
-### App Security
+### Segurida de la Aplicación
 
-#### Local data encryption
+#### Encriptación de Datos Locales
 
-Data is stored in an IndexedDB local database. This data is encrypted with a different key per user that is created on the first run.
+Los datos son almacenados en una base local con IndexedDB. Estos datos son encriptados con una llave diferente por usuario que es creada la primera vez que se ejecuta la aplicación.
 
-#### QR Codes / Links
+#### Códigos QR / Links
 
-Data in QR Codes is encrypted, this encryption is different to the local data. In this case a PIN created every 60 seconds, and used to encrypt the QR code data along with the current time (minute) of its creation. Once read the QR code or Link by the person who wants to pay, they have 60 seconds to enter the PIN to retrieve the data, if they fail they need to scan a new QR code. This is called [TOPT](https://en.wikipedia.org/wiki/Time-based_one-time_password).
+Los datos en los códigos QR están encriptados, esta encriptación es diferente a la data almacenada localmente. En este caso un PIN es creado cada 60 segundos, y usado para encriptar la data dentro del código QR junto con la hora actual (minuto) en que fue creado. Una vez leído el código QR o Link por la persona que quiera pagar, tienen 60 segundos para entrar el PIN para desencriptar los datos, si fallan tendrán que leer un nuevo código QR. Esto es llamado [TOPT](https://es.wikipedia.org/wiki/Algoritmo_de_contrase%C3%B1a_de_un_solo_uso_basada_en_el_tiempo).
 
 This way we restrict the QR codes to a very short time frame, and the possibility to read a QR code on the street for a scam worthless.
 
-The encryption, the PIN and the time based encryption also restrict the possibility of tampering with the data.
+De esta forma restringimos los códigos QR a un corto período de tiempo, e imposibilida leer un código QR en la calle que sea fraudulento.
 
-In the end is the user absolute responsability to verify the data read by the QR code in the app (SINPE Fácil) and right before hitting send in the SMS app.
+La encriptación, el PIN y la encriptación basada en el tiempo también restringen la posibilidad de manipulación de los datos.
 
-QR codes and links are verified to belong to the app domain (sinpefacil.com), this means that if you scan a QR code not created via the app it will show a message saying that the QR has invalid data.
+Al final del día, es del usuario la responsabilidad de verificar los datos que lea del código QR en la aplicación (SINPE Fácil) y justo antes de presionar el botón de enviar en la aplicación de SMS.
 
-After these, there are other validations that ensure the data is what is supposed to be, even before sending the call to create the SMS.
+Los códigos QR y links se verifican que pertenezcan al dominio de la aplicacion (sinpefacil.com), esto significa que si lee un código QR no creado a través de la aplicación, le mostrará un mensaje que dice que el código QR tiene datos inválidos.
 
-
-#### TSL, HSTS and Cloudflare
-
-The website has a TSL certificate. It also uses the [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security#Solutions_with_preload_list) header via Cloudflare to restrict access to the page with the HTTPS protocol. This means that if a user tries to enter the site via HTTP, it will be redirected to the HTTPS and other protections that would block the site if someone has tampered with it.
-
-#### Tests
-
-The project uses Playwright to test the application in general and for things like XSS (cross site scripting)
+Además, hay otras validaciones que aseguran que la data es la que se se supone debe ser, incluso antes de hacer la llamada para crear el SMS.
 
 
-### Privacy Notice
+#### TSL, HSTS y Cloudflare
 
-#### Compliance with Costa Rican Law N.° 8968
+El sitio web tiene un certificado TSL. También usa el encabezado [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security#Solutions_with_preload_list) por medio de Cloudflare para restringir el acceso a la página con el protocolo HTTPS. Esto significa que si un usuario intenta entrar al sitio web por medio de de HTTP, será redireccionado a HTTPS y otras protecciones que bloquearían el sitio si alguien lo ha manipulado.
 
-This app follows the 8968 Costa Rican Law (Ley de Protección de la Persona frente al tratamiento de sus datos personales). Ley N.° 8968.
+#### Tests o Pruebas
 
-#### Data Retention & Deletion
+El projecto usa Playwright para probar la aplicación en general y para cosas como XSS (cross site scripting).
 
-This application processes and stores all data locally on your device using web browser storage (IndexedDB / localStorage). We do not operate a remote database, and your personal information is never transmitted to, stored on, or processed by external servers. You can permanently delete all app data at any time by clearing your browser site data or uninstalling the application.
+### Licencia
 
-Note: After uninstalling this data is permanently lost and unrecoverable.
-
-#### Local Encryption
-
-All the data (phone numbers, selected bank and history) are encrypted and they remain strictly on your device.
-
-The developer and application do not collect, transmit or store your data on remote servers.
-
-
-#### Analytics
-
-The app uses Cloudflare to secure traffic and at the same time offers analytics without cookies.
-
-
-### License
-
-SINPE Fácil is open-source software released under the [MIT License](LICENSE).
+SINPE Fácil es software de código abierto publicado bajo la [Licencia MIT](LICENSE)
 <br>Copyright (c) 2026 Sebastián Sanabria Díaz.
-<br>The app name, logo, and brand assets are reserved and not covered by the MIT License.
+<br>El nombre de la aplicación, logo y activos de marca están reservados y no están cubiertos bajo la Licencia MIT
 
+## Desarrollo
 
-## Development
+### Realizar migraciones
 
-### Perform migrations
+db.js tiene una sección denominada `tests only` al inicio y al final del archivo.
+- Arriba para importar.
+- Abajo para exportar.
 
-db.js has a `tests only` section at the top and at the bottom.
-- Top to import.
-- Bottom to export.
-
-Export data from branch master to have a way to test future migrations.
-Import the data and run the new migrations.
-If required perform a `indexedDB.deleteDatabase('sf');` in the JS console to start with an empty DB.
+Exporte datos del branch master para tener una forma de probar futuras migraciones.
+Importe los datos y ejecute las nuevas migraciones.
+Si se ocupa, llame la instrucción `indexedDB.deleteDatabase('sf');` en la consola de JS para empezar con una base de datos vacía.
