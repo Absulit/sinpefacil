@@ -2,7 +2,7 @@
 
 [README ENGLISH](README.en.md)
 
-Esta documentación está hecha principalmente para desarrolladores, para una explicación no técnica puede revisar la Política de Privacidad y los Términos del Servicio.
+Esta documentación está hecha principalmente para desarrolladores; para una explicación no técnica puede revisar la Política de Privacidad y los Términos del Servicio.
 
 ## Acerca de
 
@@ -85,45 +85,20 @@ El sitio web tiene un certificado TSL. También usa el encabezado [HSTS](https:/
 
 El projecto usa Playwright para probar la aplicación en general y para cosas como XSS (cross site scripting).
 
-### Privacy Notice
+### Licencia
 
-#### Cumplimiento con la Ley N.° 8968.
-
-Esta aplicación sigue la Ley de Protección de la Persona frente al tratamiento de sus datos personales. Ley N.° 8968.
-
-#### Data Retention & Deletion
-
-This application processes and stores all data locally on your device using web browser storage (IndexedDB / localStorage). We do not operate a remote database, and your personal information is never transmitted to, stored on, or processed by external servers. You can permanently delete all app data at any time by clearing your browser site data or uninstalling the application.
-
-Note: After uninstalling this data is permanently lost and unrecoverable.
-
-#### Local Encryption
-
-All the data (phone numbers, selected bank and history) are encrypted and they remain strictly on your device.
-
-The developer and application do not collect, transmit or store your data on remote servers.
-
-
-#### Analytics
-
-The app uses Cloudflare to secure traffic and at the same time offers analytics without cookies.
-
-
-### License
-
-SINPE Fácil is open-source software released under the [MIT License](LICENSE).
+SINPE Fácil es software de código abierto publicado bajo la [Licencia MIT](LICENSE)
 <br>Copyright (c) 2026 Sebastián Sanabria Díaz.
-<br>The app name, logo, and brand assets are reserved and not covered by the MIT License.
+<br>El nombre de la aplicación, logo y activos de marca están reservados y no están cubiertos bajo la Licencia MIT
 
+## Desarrollo
 
-## Development
+### Realizar migraciones
 
-### Perform migrations
+db.js tiene una sección denominada `tests only` al inicio y al final del archivo.
+- Arriba para importar.
+- Abajo para exportar.
 
-db.js has a `tests only` section at the top and at the bottom.
-- Top to import.
-- Bottom to export.
-
-Export data from branch master to have a way to test future migrations.
-Import the data and run the new migrations.
-If required perform a `indexedDB.deleteDatabase('sf');` in the JS console to start with an empty DB.
+Exporte datos del branch master para tener una forma de probar futuras migraciones.
+Importe los datos y ejecute las nuevas migraciones.
+Si se ocupa, llame la instrucción `indexedDB.deleteDatabase('sf');` en la consola de JS para empezar con una base de datos vacía.

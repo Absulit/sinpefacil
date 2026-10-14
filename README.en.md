@@ -83,31 +83,6 @@ The website has a TSL certificate. It also uses the [HSTS](https://en.wikipedia.
 
 The project uses Playwright to test the application in general and for things like XSS (cross site scripting)
 
-
-### Privacy Notice
-
-#### Compliance with Costa Rican Law N.° 8968
-
-This app follows the 8968 Costa Rican Law (Ley de Protección de la Persona frente al tratamiento de sus datos personales). Ley N.° 8968.
-
-#### Data Retention & Deletion
-
-This application processes and stores all data locally on your device using web browser storage (IndexedDB / localStorage). We do not operate a remote database, and your personal information is never transmitted to, stored on, or processed by external servers. You can permanently delete all app data at any time by clearing your browser site data or uninstalling the application.
-
-Note: After uninstalling this data is permanently lost and unrecoverable.
-
-#### Local Encryption
-
-All the data (phone numbers, selected bank and history) are encrypted and they remain strictly on your device.
-
-The developer and application do not collect, transmit or store your data on remote servers.
-
-
-#### Analytics
-
-The app uses Cloudflare to secure traffic and at the same time offers analytics without cookies.
-
-
 ### License
 
 SINPE Fácil is open-source software released under the [MIT License](LICENSE).
