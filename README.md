@@ -34,7 +34,7 @@ Es recomendado a los usuarios instalar la aplicación.
 
 Los usuarios también necesitan el PIN provisto por el vendedor para verificar el código QR.
 
-### Available Banks that offer the SINPE Móvil SMS service *
+### Bancos disponibles que ofrecen el servicio SINPE Móvil SMS *
 
 | Banco                           | Teléfono para enviar SMS |
 |---------------------------------|----------:|
