@@ -54,7 +54,7 @@ Los usuarios también necesitan el PIN provisto por el vendedor para verificar e
 [* ref: instituciones participantes y detalles](https://app.powerbi.com/view?r=eyJrIjoiZmVkOGM0M2MtODc1Mi00ZjZkLWE0MGYtYjZmMmJlMGY5NjA2IiwidCI6IjYxOGQwYTQ1LTI1YTYtNDYxOC05ZjgwLThmNzBhNDM1ZWU1MiJ9&pageName=0e70f300db35b554b200)
 
 
-### Segurida de la Aplicación
+### Seguridad de la Aplicación
 
 #### Encriptación de Datos Locales
 
