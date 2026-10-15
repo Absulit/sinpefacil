@@ -1,7 +1,5 @@
 # SINPE Fácil
 
-[README ENGLISH](README.en.md)
-
 Esta documentación está hecha principalmente para desarrolladores; para una explicación no técnica puede revisar la Política de Privacidad y los Términos del Servicio.
 
 ## Acerca de
