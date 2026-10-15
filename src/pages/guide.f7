@@ -1,0 +1,51 @@
+<template>
+  <div class="page" data-name="guide">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+          </a>
+        </div>
+        <div class="title">${i18next.t('guide:name')}</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block guide">
+        <div class="list links-list">
+          <ul>
+            <li>
+              <a href="/guide/seller" class="panel-close settings" data-view="current">
+                <div class="item-media">
+                  <i class="icon if-not-md f7-icons">bag</i>
+                  <i class="icon if-md material-icons">store</i>
+                </div>
+                <div class="item-inner">${i18next.t('guide:seller')}</div>
+              </a>
+            </li>
+            <li>
+              <a href="/guide/client" class="panel-close" data-view="current">
+                <div class="item-media">
+                  <i class="icon if-not-md f7-icons">person_crop_circle</i>
+                  <i class="icon if-md material-icons">person</i>
+                </div>
+                <div class="item-inner">${i18next.t('guide:client')}</div>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</template>
+<script>
+  import i18next from 'i18next';
+  export default async (props, { $f7, $el, $on }) => {
+
+    return $render;
+  }
+</script>

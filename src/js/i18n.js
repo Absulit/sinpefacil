@@ -154,6 +154,11 @@ const resources = {
             CTACheckbox: `By installing, you accept the `,
             CTADialog: `By using the app, you accept the `,
             TOSCheck: `I accept the Terms and Conditions`,
+        },
+        guide: {
+            name: `Guide`,
+            seller: `Seller`,
+            client: `Client`,
         }
     },
     es: {
@@ -307,6 +312,11 @@ const resources = {
             CTACheckbox: `Al instalar, usted acepta los `,
             CTADialog: `Al usar esta aplicación, acepta los `,
             TOSCheck: `Acepto los Términos y Condiciones`,
+        },
+        guide: {
+            name: `Guía de Uso`,
+            seller: `Vendedor`,
+            client: `Cliente`,
         }
     }
 };
