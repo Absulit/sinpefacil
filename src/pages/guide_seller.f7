@@ -13,7 +13,34 @@
     </div>
     <div class="page-content">
       <div class="block guide">
-        seller
+        <ul>
+          <li>
+            <strong>Agregar productos</strong>
+            <p>
+              Vaya a [mis qrs], haga click en [add new qr code] o el símbolo de más (+) para agregar un producto.
+              Llene los campos del formulario.
+              Recuerde que el número de teléfono es el número al que quiere que le paguen.
+              Puede agregar un número de teléfono global en [settings]
+            </p>
+          </li>
+          <li>
+            <strong>Generar QR con PIN</strong>
+
+            <p>
+              Seleccione un producto de la lista y el código QR se mostrará con los datos del producto y
+              un PIN que se renueva cada 60s.
+            </p>
+
+          </li>
+          <li>
+            <strong>Mostrar al [client]</strong>
+
+            <p>
+              Muestre el código QR al [client] para que pueda pasarle la información y pagarle via SMS
+            </p>
+
+          </li>
+        </ul>
       </div>
 
 

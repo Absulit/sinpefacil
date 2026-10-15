@@ -13,8 +13,40 @@
     </div>
     <div class="page-content">
       <div class="block guide">
-        client
+
+        <ul>
+          <li>
+            <strong>Escanear QR</strong>
+            <p>
+              Vaya a [read to pay], la cámara se enciende, con ella puede leer el código QR
+              del [client]
+            </p>
+          </li>
+          <li>
+            <strong>Digitar PIN</strong>
+
+            <p>
+              Leído el código QR, se le pedirá ingresar el PIN que se ve en la pantalla del
+              [seller], si es correcto sigue con el siguiente paso, sino tiene que leerlo de nuevo.
+            </p>
+
+          </li>
+          <li>
+            <strong>Validar y enviar SMS</strong>
+
+            <p>
+              Se le mostrará la información leída del código QR.
+              Debe verificar que sea la misma de la pantalla del [seller].
+              Si es correcta, al confirmar se le redireccionará a su aplicación de SMS.
+            </p>
+
+          </li>
+        </ul>
+
       </div>
+
+
+
 
 
     </div>

@@ -12,6 +12,7 @@
       </div>
     </div>
     <div class="page-content">
+      <app-info text="Seleccione [seller] si quiere vender. [client] si quiere pagar."></app-info>
       <div class="block guide">
         <div class="list links-list">
           <ul>
