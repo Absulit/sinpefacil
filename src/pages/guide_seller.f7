@@ -58,8 +58,6 @@
       content: i18next.t('guide:seller:showClient:content', { client }),
     }
 
-    const s = 'test'
-
     return $render;
   }
 </script>

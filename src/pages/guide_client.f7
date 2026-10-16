@@ -16,30 +16,16 @@
 
         <ul>
           <li>
-            <strong>Escanear QR</strong>
-            <p>
-              Vaya a [read to pay], la cámara se enciende, con ella puede leer el código QR
-              del [client]
-            </p>
+            <strong>${scanQR.title}</strong>
+            <p>${scanQR.content}</p>
           </li>
           <li>
-            <strong>Digitar PIN</strong>
-
-            <p>
-              Leído el código QR, se le pedirá ingresar el PIN que se ve en la pantalla del
-              [seller], si es correcto sigue con el siguiente paso, sino tiene que leerlo de nuevo.
-            </p>
-
+            <strong>${enterPIN.title}</strong>
+            <p>${enterPIN.content}</p>
           </li>
           <li>
-            <strong>Validar y enviar SMS</strong>
-
-            <p>
-              Se le mostrará la información leída del código QR.
-              Debe verificar que sea la misma de la pantalla del [seller].
-              Si es correcta, al confirmar se le redireccionará a su aplicación de SMS.
-            </p>
-
+            <strong>${validateAndSend.title}</strong>
+            <p>${validateAndSend.content}</p>
           </li>
         </ul>
 
@@ -57,6 +43,23 @@
   export default async (props, { $f7, $el, $on }) => {
     const seller = i18next.t('guide:seller:name');
     const client = i18next.t('guide:client:name');
+
+    const readToPay = i18next.t('read');
+
+    const scanQR = {
+      title: i18next.t('guide:client:scanQR:title'),
+      content: i18next.t('guide:client:scanQR:content', { seller,readToPay }),
+    }
+
+    const enterPIN = {
+      title: i18next.t('guide:client:enterPIN:title'),
+      content: i18next.t('guide:client:enterPIN:content', { seller }),
+    }
+
+    const validateAndSend = {
+      title: i18next.t('guide:client:validateAndSend:title'),
+      content: i18next.t('guide:client:validateAndSend:content', { seller }),
+    }
 
     return $render;
   }

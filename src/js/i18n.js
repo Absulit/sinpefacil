@@ -180,6 +180,23 @@ const resources = {
             },
             client: {
                 name: `Client`,
+                scanQR: {
+                    title: `Scan QR`,
+                    content: `Go to {{readToPay}}, the camera will start, with it you can read the {{seller}}'s QR code.`,
+                },
+                enterPIN: {
+                    title: `Enter PIN`,
+                    content: `Once read the QR code, you will be asked to enter the PIN that can bee seen in the {{seller}}'s screen,
+                     if correct, follow the next step, else read it again.`
+                },
+                validateAndSend: {
+                    title: `Validate and Send SMS`,
+                    content: `You will be shown back the information read from the QR code.
+                     You must verify that the info is the same from the {{seller}}'s screen.
+                     If correct, when you confirm it, you will be redirected to your SMS app.
+                    `,
+                },
+
             }
         }
     },
@@ -361,6 +378,22 @@ const resources = {
             },
             client: {
                 name: `Cliente`,
+                scanQR: {
+                    title: `Leer QR`,
+                    content: `Vaya a {{readToPay}}, la cámara se enciende, con ella puede
+                    leer el código QR del {{seller}}.`,
+                },
+                enterPIN: {
+                    title: `Digitar PIN`,
+                    content: `Leído el código QR, se le pedirá ingresar el PIN que se ve en la pantalla del {{seller}},
+                     si es correcto sigue con el siguiente paso, sino tiene que leerlo de nuevo.`,
+                },
+                validateAndSend: {
+                    title: `Validar y Enviar SMS`,
+                    content: `Se le mostrará la información leída del código QR.
+                     Debe verificar que sea la misma de la pantalla del {{seller}}.
+                     Si es correcta, al confirmar se le redireccionará a su aplicación de SMS.`,
+                },
             }
         }
     }
