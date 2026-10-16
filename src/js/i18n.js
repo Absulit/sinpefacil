@@ -157,8 +157,13 @@ const resources = {
         },
         guide: {
             name: `Guide`,
-            seller: `Seller`,
-            client: `Client`,
+            info: `Select {{seller}} if you want to sell. {{client}} if you want to pay.`,
+            seller:{
+                name: `Seller`,
+            },
+            client:{
+                name: `Client`,
+            }
         }
     },
     es: {
@@ -315,8 +320,13 @@ const resources = {
         },
         guide: {
             name: `Guía de Uso`,
-            seller: `Vendedor`,
-            client: `Cliente`,
+            info: `Seleccione {{seller}} si quiere vender. {{client}} si quiere pagar.`,
+            seller:{
+                name: `Vendedor`,
+            },
+            client:{
+                name: `Cliente`,
+            }
         }
     }
 };
