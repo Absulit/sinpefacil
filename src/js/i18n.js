@@ -162,15 +162,15 @@ const resources = {
                 name: `Seller`,
                 addProducts: {
                     title: `Add Products`,
-                    content: `Go to {{myQRs}}, click {{addQRCode}} button or plus sign (+)
+                    content: `Go to {{myQRs}}, click "{{addQRCode}}" button or plus sign (+)
                     to add a product. Complete the form fields. Remember that the phone field is the
                     phone number you want to get paid to. You can add a global phone number
                     on {{settings}}.`,
                 },
                 generateQR: {
-                    title: `Generar QR con PIN`,
-                    content: `Seleccione un producto de la lista y el código QR se mostrará con los datos
-                    del producto y un PIN que se renueva cada 60 segundos.`,
+                    title: `Generate a QR with a PIN`,
+                    content: `Select a product from the list and the QR code will show up with the product's
+                    data and a PIN that renews every 60 seconds.`,
                 },
                 showClient: {
                     title: `Show to {{client}}`,
@@ -342,7 +342,7 @@ const resources = {
                 name: `Vendedor`,
                 addProducts: {
                     title: `Agregar Productos`,
-                    content: `Vaya a {{myQRs}}, haga click en {{addQRCode}} o en el símbolo de más (+)
+                    content: `Vaya a {{myQRs}}, haga click en "{{addQRCode}}" o en el símbolo de más (+)
                     para agregar un producto. Llene los campos del formulario. Recuerde que el número
                     de teléfono es el número al que quiere que le paguen. Puede agregar un número de
                     teléfono global en {{settings}}.`,

@@ -15,30 +15,16 @@
       <div class="block guide">
         <ul>
           <li>
-            <strong>Agregar productos</strong>
-            <p>
-              Vaya a [mis qrs], haga click en [add new qr code] o el símbolo de más (+) para agregar un producto.
-              Llene los campos del formulario.
-              Recuerde que el número de teléfono es el número al que quiere que le paguen.
-              Puede agregar un número de teléfono global en [settings]
-            </p>
+            <strong>${addProducts.title}</strong>
+            <p>${addProducts.content}</p>
           </li>
           <li>
-            <strong>Generar QR con PIN</strong>
-
-            <p>
-              Seleccione un producto de la lista y el código QR se mostrará con los datos del producto y
-              un PIN que se renueva cada 60s.
-            </p>
-
+            <strong>${generateQR.title}</strong>
+            <p>${generateQR.content}</p>
           </li>
           <li>
             <strong>${showClient.title}</strong>
-
-            <p>
-              ${showClient.content}
-            </p>
-
+            <p>${showClient.content}</p>
           </li>
         </ul>
       </div>
@@ -53,10 +39,13 @@
     const seller = i18next.t('guide:seller:name');
     const client = i18next.t('guide:client:name');
 
+    const myQRs = i18next.t('codes');
+    const addQRCode = i18next.t('codes:addNew');
+    const settings = i18next.t('settings');
 
     const addProducts = {
       title: i18next.t('guide:seller:addProducts:title'),
-      content: i18next.t('guide:seller:addProducts:content'),
+      content: i18next.t('guide:seller:addProducts:content', { myQRs, addQRCode, settings }),
     }
 
     const generateQR = {
