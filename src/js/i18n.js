@@ -158,10 +158,27 @@ const resources = {
         guide: {
             name: `Guide`,
             info: `Select {{seller}} if you want to sell. {{client}} if you want to pay.`,
-            seller:{
+            seller: {
                 name: `Seller`,
+                addProducts: {
+                    title: `Add Products`,
+                    content: `Go to {{myQRs}}, click {{addQRCode}} button or plus sign (+)
+                    to add a product. Complete the form fields. Remember that the phone field is the
+                    phone number you want to get paid to. You can add a global phone number
+                    on {{settings}}.`,
+                },
+                generateQR: {
+                    title: `Generar QR con PIN`,
+                    content: `Seleccione un producto de la lista y el código QR se mostrará con los datos
+                    del producto y un PIN que se renueva cada 60 segundos.`,
+                },
+                showClient: {
+                    title: `Show to {{client}}`,
+                    content: `Show the QR code to the {{client}} so you can share your information and
+                    they to pay via SMS.`,
+                },
             },
-            client:{
+            client: {
                 name: `Client`,
             }
         }
@@ -321,10 +338,28 @@ const resources = {
         guide: {
             name: `Guía de Uso`,
             info: `Seleccione {{seller}} si quiere vender. {{client}} si quiere pagar.`,
-            seller:{
+            seller: {
                 name: `Vendedor`,
+                addProducts: {
+                    title: `Agregar Productos`,
+                    content: `Vaya a {{myQRs}}, haga click en {{addQRCode}} o en el símbolo de más (+)
+                    para agregar un producto. Llene los campos del formulario. Recuerde que el número
+                    de teléfono es el número al que quiere que le paguen. Puede agregar un número de
+                    teléfono global en {{settings}}.`,
+                },
+                generateQR: {
+                    title: `Generar QR con PIN`,
+                    content: `Seleccione un producto de la lista y el código QR se mostrará con los datos
+                    del producto y un PIN que se renueva cada 60 segundos.`,
+                },
+                showClient: {
+                    title: `Mostrar al {{client}}`,
+                    content: `Muestre el código QR al {{client}} para que pueda pasarle la información
+                    y pagarle via SMS.`,
+                },
+
             },
-            client:{
+            client: {
                 name: `Cliente`,
             }
         }

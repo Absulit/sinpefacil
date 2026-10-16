@@ -33,10 +33,10 @@
 
           </li>
           <li>
-            <strong>Mostrar al [client]</strong>
+            <strong>${showClient.title}</strong>
 
             <p>
-              Muestre el código QR al [client] para que pueda pasarle la información y pagarle via SMS
+              ${showClient.content}
             </p>
 
           </li>
@@ -53,6 +53,23 @@
     const seller = i18next.t('guide:seller:name');
     const client = i18next.t('guide:client:name');
 
+
+    const addProducts = {
+      title: i18next.t('guide:seller:addProducts:title'),
+      content: i18next.t('guide:seller:addProducts:content'),
+    }
+
+    const generateQR = {
+      title: i18next.t('guide:seller:generateQR:title'),
+      content: i18next.t('guide:seller:generateQR:content'),
+    }
+
+    const showClient = {
+      title: i18next.t('guide:seller:showClient:title', { client }),
+      content: i18next.t('guide:seller:showClient:content', { client }),
+    }
+
+    const s = 'test'
 
     return $render;
   }
