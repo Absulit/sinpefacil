@@ -1,0 +1,63 @@
+<template>
+  <div class="page" data-name="guide-seller">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+          </a>
+        </div>
+        <div class="title">${seller}</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block guide">
+        <ul>
+          <li>
+            <strong>${addProducts.title}</strong>
+            <p>${addProducts.content}</p>
+          </li>
+          <li>
+            <strong>${generateQR.title}</strong>
+            <p>${generateQR.content}</p>
+          </li>
+          <li>
+            <strong>${showClient.title}</strong>
+            <p>${showClient.content}</p>
+          </li>
+        </ul>
+      </div>
+
+
+    </div>
+  </div>
+</template>
+<script>
+  import i18next from 'i18next';
+  export default async (props, { $f7, $el, $on }) => {
+    const seller = i18next.t('guide:seller:name');
+    const client = i18next.t('guide:client:name');
+
+    const myQRs = i18next.t('codes');
+    const addQRCode = i18next.t('codes:addNew');
+    const settings = i18next.t('settings');
+
+    const addProducts = {
+      title: i18next.t('guide:seller:addProducts:title'),
+      content: i18next.t('guide:seller:addProducts:content', { myQRs, addQRCode, settings }),
+    }
+
+    const generateQR = {
+      title: i18next.t('guide:seller:generateQR:title'),
+      content: i18next.t('guide:seller:generateQR:content'),
+    }
+
+    const showClient = {
+      title: i18next.t('guide:seller:showClient:title', { client }),
+      content: i18next.t('guide:seller:showClient:content', { client }),
+    }
+
+    return $render;
+  }
+</script>

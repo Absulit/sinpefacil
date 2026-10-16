@@ -154,6 +154,50 @@ const resources = {
             CTACheckbox: `By installing, you accept the `,
             CTADialog: `By using the app, you accept the `,
             TOSCheck: `I accept the Terms and Conditions`,
+        },
+        guide: {
+            name: `Guide`,
+            info: `Select {{seller}} if you want to sell. {{client}} if you want to pay.`,
+            seller: {
+                name: `Seller`,
+                addProducts: {
+                    title: `Add Products`,
+                    content: `Go to {{myQRs}}, click "{{addQRCode}}" button or plus sign (+)
+                    to add a product. Complete the form fields. Remember that the phone field is the
+                    phone number you want to get paid to. You can add a global phone number
+                    on {{settings}}.`,
+                },
+                generateQR: {
+                    title: `Generate a QR with a PIN`,
+                    content: `Select a product from the list and the QR code will show up with the product's
+                    data and a PIN that renews every 60 seconds.`,
+                },
+                showClient: {
+                    title: `Show to {{client}}`,
+                    content: `Show the QR code to the {{client}} so you can share your information and
+                    they to pay via SMS.`,
+                },
+            },
+            client: {
+                name: `Client`,
+                scanQR: {
+                    title: `Scan QR`,
+                    content: `Go to {{readToPay}}, the camera will start, with it you can read the {{seller}}'s QR code.`,
+                },
+                enterPIN: {
+                    title: `Enter PIN`,
+                    content: `Once read the QR code, you will be asked to enter the PIN that can bee seen in the {{seller}}'s screen,
+                     if correct, follow the next step, else read it again.`
+                },
+                validateAndSend: {
+                    title: `Validate and Send SMS`,
+                    content: `You will be shown back the information read from the QR code.
+                     You must verify that the info is the same from the {{seller}}'s screen.
+                     If correct, when you confirm it, you will be redirected to your SMS app.
+                    `,
+                },
+
+            }
         }
     },
     es: {
@@ -307,6 +351,50 @@ const resources = {
             CTACheckbox: `Al instalar, usted acepta los `,
             CTADialog: `Al usar esta aplicación, acepta los `,
             TOSCheck: `Acepto los Términos y Condiciones`,
+        },
+        guide: {
+            name: `Guía de Uso`,
+            info: `Seleccione {{seller}} si quiere vender. {{client}} si quiere pagar.`,
+            seller: {
+                name: `Vendedor`,
+                addProducts: {
+                    title: `Agregar Productos`,
+                    content: `Vaya a {{myQRs}}, haga click en "{{addQRCode}}" o en el símbolo de más (+)
+                    para agregar un producto. Llene los campos del formulario. Recuerde que el número
+                    de teléfono es el número al que quiere que le paguen. Puede agregar un número de
+                    teléfono global en {{settings}}.`,
+                },
+                generateQR: {
+                    title: `Generar QR con PIN`,
+                    content: `Seleccione un producto de la lista y el código QR se mostrará con los datos
+                    del producto y un PIN que se renueva cada 60 segundos.`,
+                },
+                showClient: {
+                    title: `Mostrar al {{client}}`,
+                    content: `Muestre el código QR al {{client}} para que pueda pasarle la información
+                    y pagarle via SMS.`,
+                },
+
+            },
+            client: {
+                name: `Cliente`,
+                scanQR: {
+                    title: `Leer QR`,
+                    content: `Vaya a {{readToPay}}, la cámara se enciende, con ella puede
+                    leer el código QR del {{seller}}.`,
+                },
+                enterPIN: {
+                    title: `Digitar PIN`,
+                    content: `Leído el código QR, se le pedirá ingresar el PIN que se ve en la pantalla del {{seller}},
+                     si es correcto sigue con el siguiente paso, sino tiene que leerlo de nuevo.`,
+                },
+                validateAndSend: {
+                    title: `Validar y Enviar SMS`,
+                    content: `Se le mostrará la información leída del código QR.
+                     Debe verificar que sea la misma de la pantalla del {{seller}}.
+                     Si es correcta, al confirmar se le redireccionará a su aplicación de SMS.`,
+                },
+            }
         }
     }
 };

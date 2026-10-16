@@ -51,6 +51,15 @@
                   </a>
                 </li>
                 <li>
+                  <a href="/guide/" class="panel-close" data-view="current">
+                    <div class="item-media">
+                      <i class="icon if-not-md f7-icons">compass</i>
+                      <i class="icon if-md material-icons">explore</i>
+                    </div>
+                    <div class="item-inner">${i18next.t('guide:name')}</div>
+                  </a>
+                </li>
+                <li>
                   <a href="/privacy/" class="panel-close" data-view="current">
                     <div class="item-media">
                       <i class="icon if-not-md f7-icons">lock</i>

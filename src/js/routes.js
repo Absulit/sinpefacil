@@ -9,6 +9,9 @@ import SettingsPage from '../pages/settings.f7';
 import NotFoundPage from '../pages/404.f7';
 import PrivacyPage from '../pages/privacy.f7';
 import TOSPage from '../pages/tos.f7';
+import GuidePage from '../pages/guide.f7';
+import GuideSellerPage from '../pages/guide_seller.f7';
+import GuideClientPage from '../pages/guide_client.f7';
 
 var routes = [
   {
@@ -46,6 +49,18 @@ var routes = [
   {
     path: '/tos/',
     component: TOSPage,
+  },
+  {
+    path: '/guide/',
+    component: GuidePage,
+  },
+  {
+    path: '/guide/seller',
+    component: GuideSellerPage,
+  },
+  {
+    path: '/guide/client',
+    component: GuideClientPage,
   },
   {
     path: '(.*)',
