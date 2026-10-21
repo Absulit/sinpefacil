@@ -75,8 +75,6 @@
           <ul>
             <li><a href="#" class="list-button popover-close" @click=${()=>deleteProduct()}>${i18next.t('delete')}</a>
             </li>
-            <li><a href="#" class="list-button popover-close" @click=${()=>printProduct()}>${i18next.t('print')}</a>
-            </li>
           </ul>
         </div>
       </div>
@@ -273,10 +271,6 @@
           closeTimeout: 2000,
         }).open();
       });
-    }
-
-    const printProduct = () => {
-      window.print();
     }
 
     const share = async () => {
